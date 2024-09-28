@@ -1,0 +1,39 @@
+{
+  "name": "@smartleadmagnet/database",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "migrate:prisma:run": "prisma migrate dev",
+    "migrate:prisma:generate": "prisma generate",
+    "migrate:prisma:seed": "prisma db seed",
+    "migrate:prisma:push": "prisma db push"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./tools": "./src/tools.ts",
+    "./models": "./src/models.ts",
+    "./people": "./src/people.ts",
+    "./user": "./src/user.ts",
+    "./slugs": "./src/slugs.ts",
+    "./bookmarks": "./src/bookmarks.ts",
+    "./jobs": "./src/jobs.ts",
+    "./companies": "./src/companies.ts",
+    "./gptStores": "./src/gptStores.ts",
+    "./subscriptions": "./src/subscriptions.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seeds/seed.ts",
+    "schema": "prisma/schema.prisma",
+    "migration": "prisma/migrations"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prisma": "latest",
+    "@smartleadmagnet/eslint-config": "*",
+    "@smartleadmagnet/typescript-config": "*"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0",
+    "@prisma/client": "latest"
+  }
+}
