@@ -67,3 +67,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+/* builder page css */
+.builder-item span {
+  display: block;
+}
+
+.builder-item {
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  cursor: grab;
+}
+
+.builder-item svg {
+  margin: 0 auto;
+}
