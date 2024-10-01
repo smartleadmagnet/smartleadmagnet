@@ -7,11 +7,7 @@ import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 
 const useBuilder = () => {
   const [elementsList, setElementsList] = useState<BuilderComponentProps[]>([
-    {
-      title: "Title",
-      icon: "title",
-      id: uuid(),
-    },
+    
   ]);
 
   const reorder = (list: BuilderComponentProps[], startIndex: number, endIndex: number) => {
