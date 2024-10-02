@@ -87,11 +87,10 @@ bun run migrate:prisma:generate
 
 ## Step 7: Running the Development Server
 
-If you are working with Next.js 15 beta, you may encounter an issue with the `next dev --turbo` command. To avoid this, you can navigate to the `apps/web` directory and run the following command instead:
+Run your development server using the following command:
 
 ```bash
-cd apps/web
-next dev
+bun run dev
 ```
 
 This will start the development server for the **SmartLeadMagnet** project.
