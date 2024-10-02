@@ -68,7 +68,6 @@
   }
 }
 
-
 /* builder page css */
 .builder-item span {
   display: block;
@@ -78,9 +77,65 @@
   padding: 20px;
   text-align: center;
   font-size: 16px;
-  cursor: grab;
 }
 
 .builder-item svg {
   margin: 0 auto;
 }
+.handle {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  user-select: none;
+  margin: -0.5rem 0.5rem -0.5rem -0.5rem;
+  padding: 0.5rem;
+  line-height: 1.5;
+  border-radius: 3px 0 0 3px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  color: #000;
+}
+.drag-item {
+  display: flex;
+  user-select: none;
+  padding: 0.5rem;
+  margin: 0 0 0.5rem 0;
+  align-items: flex-start;
+  align-content: flex-start;
+  line-height: 1.5;
+  border-radius: 3px;
+  background: #fff;
+  border: 1px solid #ddd;
+  position: relative;
+}
+.trigger-btn {
+  position: absolute;
+  right: -15px;
+  top: 1px;
+}
+.edit_btns {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.form-element {
+  position: relative;
+  width: 100%;
+  padding-left: 60px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.handle {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+}
+.builder-column {
+  height: calc(100vh - 75px);
+  overflow-y: auto;
+}
+
+
+
