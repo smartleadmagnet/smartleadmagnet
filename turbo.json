@@ -7,6 +7,11 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
+    "migrate:prisma:generate": {
+      "cache": false,
+      "dependsOn": ["^migrate:prisma:generate"],
+      "outputs": ["../../node_modules/.prisma/client"]
+    },
     "lint": {
       "dependsOn": ["^lint"]
     },

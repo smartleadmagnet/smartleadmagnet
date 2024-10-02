@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "migrate:prisma:generate": "turbo migrate:prisma:generate",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
@@ -19,5 +20,10 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "next-auth": "^5.0.0-beta.22",
+    "react": "^19.0.0-rc-d8c90fa4-20241001",
+    "react-dom": "^19.0.0-rc-d8c90fa4-20241001"
+  }
 }

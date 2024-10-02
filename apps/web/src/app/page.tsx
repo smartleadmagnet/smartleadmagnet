@@ -3,9 +3,9 @@ import MainLayout from "@smartleadmagnet/ui/components/layouts/MainLayout";
 
 
 export default function Home() {
-  return (
-    <MainLayout> <Button>
-    Open alert
-  </Button></MainLayout>
-  );
+	return (
+		<MainLayout> <Button>
+			Open alert
+		</Button></MainLayout>
+	);
 }
