@@ -77,7 +77,15 @@ Run the following command in the root of the project:
 bun install
 ```
 
-## Step 6: Running the Development Server
+## Step 6: Generating Prisma Schema
+
+After setting up MongoDB and environment variables, you need to generate the Prisma schema. Run the following command from the root of the project to generate the Prisma client:
+
+```bash
+bun run migrate:prisma:generate
+```
+
+## Step 7: Running the Development Server
 
 If you are working with Next.js 15 beta, you may encounter an issue with the `next dev --turbo` command. To avoid this, you can navigate to the `apps/web` directory and run the following command instead:
 
