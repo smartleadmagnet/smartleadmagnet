@@ -9,17 +9,7 @@
     "migrate:prisma:push": "prisma db push"
   },
   "exports": {
-    ".": "./src/index.ts",
-    "./tools": "./src/tools.ts",
-    "./models": "./src/models.ts",
-    "./people": "./src/people.ts",
-    "./user": "./src/user.ts",
-    "./slugs": "./src/slugs.ts",
-    "./bookmarks": "./src/bookmarks.ts",
-    "./jobs": "./src/jobs.ts",
-    "./companies": "./src/companies.ts",
-    "./gptStores": "./src/gptStores.ts",
-    "./subscriptions": "./src/subscriptions.ts"
+    ".": "./src/index.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seeds/seed.ts",

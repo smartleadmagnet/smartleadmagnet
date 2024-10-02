@@ -10,9 +10,10 @@
   },
   "dependencies": {
     "@smartleadmagnet/ui": "*",
-    "next": "14.2.6",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "next": "15.0.0-canary.111",
+    "react": "19.0.0-rc-187dd6a7-20240806",
+    "react-dom": "19.0.0-rc-187dd6a7-20240806",
+    "@auth/prisma-adapter": "^2.5.3"
   },
   "devDependencies": {
     "@smartleadmagnet/eslint-config": "*",
