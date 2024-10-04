@@ -6,9 +6,6 @@
     "ui": "bunx shadcn@latest",
     "lint": "eslint ."
   },
-  "peerDependencies": {
-    "react": "^19"
-  },
   "devDependencies": {
     "@smartleadmagnet/eslint-config": "*",
     "@smartleadmagnet/typescript-config": "*",
