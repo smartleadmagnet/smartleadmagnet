@@ -232,15 +232,27 @@ const Icon: React.FC<IconProps> = ({
             fill={color}
             focusable="false"
             aria-hidden="true"
-            viewBox="0 0 24 24"
-            data-testid="DragHandleIcon"
-            tabindex="-1"
-            title="DragHandle"
+            
+            
+            
+            
           >
             <path
               d="M14 6a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2h-1a1 1 0 0 1-1-1ZM15 9a1 1 0 1 0 0 2h1a1 1 0 1 0 0-2h-1ZM15 13a1 1 0 1 0 0 2h1a1 1 0 1 0 0-2h-1ZM9 9a1 1 0 0 0 0 2h1a1 1 0 1 0 0-2H9ZM8 14a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1ZM15 17a1 1 0 1 0 0 2h1a1 1 0 1 0 0-2h-1ZM8 18a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1ZM9 5a1 1 0 0 0 0 2h1a1 1 0 1 0 0-2H9Z"
-              fill="#000000"
+              fill={color}
             />
+          </svg>
+        );
+      case "search":
+        return (
+          <svg
+            height={height}
+            width={width}
+            focusable="false"
+            aria-hidden="true"
+            fill={color}
+          >
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path>
           </svg>
         );
 

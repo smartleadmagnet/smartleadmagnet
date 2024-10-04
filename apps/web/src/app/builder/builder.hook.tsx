@@ -5,12 +5,27 @@ import { DropResult } from "react-beautiful-dnd";
 import { BuilderComponentProps } from "@smartleadmagnet/ui/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 
-const useBuilder = () => {
-  const [elementsList, setElementsList] = useState<BuilderComponentProps[]>([
-    
-  ]);
 
-  const reorder = (list: BuilderComponentProps[], startIndex: number, endIndex: number) => {
+
+const useBuilder = () => {
+  const [elementsList, setElementsList] = useState<BuilderComponentProps[]>([]);
+  const [selectedFormStyle, setSelectedFormStyle] = useState("default");
+
+  const [formStyles, setFormStyles] = useState({
+    textColor: "#000000",
+    backgroundColor: "#ffffff",
+    buttonColor: "#000000",
+    buttonTextColor: "#ffffff",
+    labelColor: "#000000",
+    buttonText: "Submit",
+  });
+  
+
+  const reorder = (
+    list: BuilderComponentProps[],
+    startIndex: number,
+    endIndex: number
+  ) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -57,10 +72,14 @@ const useBuilder = () => {
         setElementsList(reorder(elementsList, source.index, destination.index));
         break;
       case "layout_elements":
-        setElementsList(copy(builderItems[0].children, elementsList, source, destination));
+        setElementsList(
+          copy(builderItems[0].children, elementsList, source, destination)
+        );
         break;
       case "form_elements":
-        setElementsList(copy(builderItems[1].children, elementsList, source, destination));
+        setElementsList(
+          copy(builderItems[1].children, elementsList, source, destination)
+        );
         break;
       default:
         break;
@@ -70,6 +89,8 @@ const useBuilder = () => {
   return {
     elementsList,
     onDragEnd,
+    selectedFormStyle, 
+    setSelectedFormStyle
   };
 };
 
