@@ -79,3 +79,22 @@ export const builderItems = [
 
   }
 ];
+
+export const formStyleOptions = [
+  {
+    title: "Default",
+    value: "default",
+  },
+  {
+    title: "Linear",
+    value: "linear",
+  },
+  {
+    title: "Round",
+    value: "round",
+  },
+  {
+    title: "Sharp",
+    value: "sharp",
+  },
+];

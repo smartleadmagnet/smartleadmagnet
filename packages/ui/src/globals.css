@@ -154,3 +154,25 @@
 }
 
 
+.form-linear .border-input {
+  border-width: 0 0 2px 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.form-round .border-input,.form-round button {
+  border-radius: 25px;
+}
+
+.form-sharp .border-input,.form-sharp button {
+  border-radius:0px;
+}
+#font-picker {box-shadow: none;}
+
+#font-picker .dropdown-button {
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+

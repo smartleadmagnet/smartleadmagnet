@@ -5,9 +5,21 @@ import { DropResult } from "react-beautiful-dnd";
 import { BuilderComponentProps } from "@smartleadmagnet/ui/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 
+
+
 const useBuilder = () => {
   const [elementsList, setElementsList] = useState<BuilderComponentProps[]>([]);
-  const [activeTab, setActiveTab] = useState("style-preview");
+  const [selectedFormStyle, setSelectedFormStyle] = useState("default");
+
+  const [formStyles, setFormStyles] = useState({
+    textColor: "#000000",
+    backgroundColor: "#ffffff",
+    buttonColor: "#000000",
+    buttonTextColor: "#ffffff",
+    labelColor: "#000000",
+    buttonText: "Submit",
+  });
+  
 
   const reorder = (
     list: BuilderComponentProps[],
@@ -77,8 +89,8 @@ const useBuilder = () => {
   return {
     elementsList,
     onDragEnd,
-    activeTab, 
-    setActiveTab
+    selectedFormStyle, 
+    setSelectedFormStyle
   };
 };
 
