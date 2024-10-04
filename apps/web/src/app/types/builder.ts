@@ -1,13 +1,23 @@
+
+
 // Define types for the child item
-type ChildItem = {
+export type ChildItem = {
     icon: string;
-    title: string;
+    id: string;
+    type: string;
+    name: string;
+    label: string;
+    value: string;
+    formElement?: boolean;
+    required?: boolean;
   };
   
   // Define types for the parent item
-  type BuilderItem = {
+  export type BuilderItem = {
     title: string;
     children: ChildItem[];
+    id: string;
+    
   };
   
   // Define props for the BuilderComponent

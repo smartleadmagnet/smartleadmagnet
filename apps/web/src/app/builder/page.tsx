@@ -31,22 +31,27 @@ import {
   builderItems,
   formStyleOptions,
 } from "@smartleadmagnet/ui/lib/constants";
-import AIForm from "@smartleadmagnet/ui/components/AiForm";
+import AIForm from "../components/AiForm";
 import SearchInput from "@smartleadmagnet/ui/components/SearchInput";
 import BuilderElement from "@smartleadmagnet/ui/components/BuilderElement";
-import ColorPicker from '@smartleadmagnet/ui/components/ColorPicker';
+import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 import FontSelector from "@smartleadmagnet/ui/components/ui/FontSelector";
+import BuilderEditor from "../components/BuilderEditor";
+
+
+
 
 
 export default function Builder() {
-  const { elementsList, onDragEnd,selectedFormStyle, setSelectedFormStyle } = useBuilder(); // Use the custom hook
-  const [color, setColor] = React.useState<string>('#ffffff'); // Default color
+  const { elementsList, onDragEnd, selectedFormStyle, setSelectedFormStyle,removeElement,handleEdit,selctedItem ,handleEditChange} =
+    useBuilder(); // Use the custom hook
+  const [color, setColor] = React.useState<string>("#ffffff"); // Default color
   const handleColorChange = (newColor: string) => {
     setColor(newColor); // Update the state with the new color
   };
 
   return (
-    <Tabs defaultValue="style-preview">
+    <Tabs defaultValue="form">
       <div className="min-h-screen flex flex-col">
         {/* Header  */}
         <div className="flex items-center justify-between p-4 bg-gray-900 text-white">
@@ -85,7 +90,13 @@ export default function Builder() {
           <DragDropContext onDragEnd={onDragEnd}>
             <div className="flex flex-1">
               <aside className="w-1/4 p-4 builder-column ">
-                <SearchInput placeholder="Search for form and layout elements." />
+                {selctedItem !==null? <BuilderEditor data={selctedItem} onClose={()=>{
+                  handleEdit(null)
+                }}
+                updateData={handleEditChange}
+                />:(
+                  <>
+                  <SearchInput placeholder="Search for form and layout elements." />
                 <div className="grid gap-4">
                   {builderItems.map((item, index) => (
                     <div key={index} className="py-2">
@@ -125,7 +136,7 @@ export default function Builder() {
                                           height="50px"
                                           width="50px"
                                         />
-                                        <span>{child.title}</span>
+                                        <span>{child.label}</span>
                                       </Card>
                                       {snapshot.isDragging && (
                                         <Card className="builder-item clone">
@@ -148,6 +159,11 @@ export default function Builder() {
                     </div>
                   ))}
                 </div>
+                  </>
+
+                )} 
+                
+                
               </aside>
 
               <div className="flex flex-1">
@@ -174,17 +190,20 @@ export default function Builder() {
                                   >
                                     <Icon
                                       name="drag-handle"
-                                      height="50px"
-                                      width="50px"
+                                      height="30px"
+                                      width="30px"
                                     />
                                   </div>
                                   <BuilderElement
                                     type={item.type}
                                     data={item}
                                     editable={true}
-                                    onEdit={() => console.log("Edit clicked")}
+                                    
+                                    onEdit={() => {
+                                      handleEdit(item);
+                                    }}
                                     onDelete={() =>
-                                      console.log("Delete clicked")
+                                      removeElement(item.id)
                                     }
                                   />
                                 </div>
@@ -220,30 +239,32 @@ export default function Builder() {
                 <AccordionItem value="item-1">
                   <AccordionTrigger>Input Options</AccordionTrigger>
                   <AccordionContent>
-                  <div className="py-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {formStyleOptions.map((item, index) => (
-        <Card
-          key={index}
-          className={`p-4 shadow-md cursor-pointer ${selectedFormStyle === item.value ? 'bg-blue-50 border border-blue-300' : ''} form-${item.value}`} // Highlight style
-          onClick={() => setSelectedFormStyle(item.value)} // Set selected item on click
-        >
-          <form>
-            <h3 className="text-lg font-semibold mb-4">{item.title}</h3>
-            {/* Input and Button */}
-            <div className="space-y-4">
-              <Input
-                type="text"
-                placeholder="Enter your form name"
-                className="w-full pointer-events-none "
-              />
-              <Button className="px-4 py-2 bg-orange-600 text-white shadow-md hover:bg-orange-700 pointer-events-none">
-                Submit
-              </Button>
-            </div>
-          </form>
-        </Card>
-      ))}
-    </div>
+                    <div className="py-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {formStyleOptions.map((item, index) => (
+                        <Card
+                          key={index}
+                          className={`p-4 shadow-md cursor-pointer ${selectedFormStyle === item.value ? "bg-blue-50 border border-blue-300" : ""} form-${item.value}`} // Highlight style
+                          onClick={() => setSelectedFormStyle(item.value)} // Set selected item on click
+                        >
+                          <form>
+                            <h3 className="text-lg font-semibold mb-4">
+                              {item.title}
+                            </h3>
+                            {/* Input and Button */}
+                            <div className="space-y-4">
+                              <Input
+                                type="text"
+                                placeholder="Enter your form name"
+                                className="w-full pointer-events-none "
+                              />
+                              <Button className="px-4 py-2 bg-orange-600 text-white shadow-md hover:bg-orange-700 pointer-events-none">
+                                Submit
+                              </Button>
+                            </div>
+                          </form>
+                        </Card>
+                      ))}
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
@@ -253,8 +274,16 @@ export default function Builder() {
                       Font Family
                     </Label>
                     <FontSelector />
-                    <ColorPicker label="Label Color" color={color} onChange={handleColorChange} />
-                  <ColorPicker label="Label Color" color={color} onChange={handleColorChange} />
+                    <ColorPicker
+                      label="Label Color"
+                      color={color}
+                      onChange={handleColorChange}
+                    />
+                    <ColorPicker
+                      label="Label Color"
+                      color={color}
+                      onChange={handleColorChange}
+                    />
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -284,5 +313,6 @@ export default function Builder() {
         </TabsContent>
       </div>
     </Tabs>
+    
   );
 }

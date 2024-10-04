@@ -1,8 +1,9 @@
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { Label } from "./ui/label";
-import { Checkbox } from "./ui/checkbox";
+import { useContext,createContext } from "react";
+import { Button } from "@smartleadmagnet/ui/components/ui/button";
+import { Input } from "@smartleadmagnet/ui/components/ui/input";
+import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
+import { Label } from "@smartleadmagnet/ui/components/ui/label";
+import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -11,12 +12,12 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+} from "@smartleadmagnet/ui/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/radio-group";
 import { Popover,
     PopoverContent,
-    PopoverTrigger, } from "./ui/popover";
-
+    PopoverTrigger, } from "@smartleadmagnet/ui/components/ui/popover";
+    
 export default function AIForm() {
   return (
     <div className="w-full flex flex-col bg-white p-4 rounded-md justify-between relative">

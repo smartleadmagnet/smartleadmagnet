@@ -2,13 +2,14 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { DropResult } from "react-beautiful-dnd";
-import { BuilderComponentProps } from "@smartleadmagnet/ui/types/builder";
+import { ChildItem } from "../types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
-
-
+import { useLayoutContext } from "../context/LayoutContext";
 
 const useBuilder = () => {
-  const [elementsList, setElementsList] = useState<BuilderComponentProps[]>([]);
+  const { elementsList, setElementsList } = useLayoutContext();
+  const [selctedItem, setSelectedItem] = useState<ChildItem | null>(null);
+
   const [selectedFormStyle, setSelectedFormStyle] = useState("default");
 
   const [formStyles, setFormStyles] = useState({
@@ -19,13 +20,44 @@ const useBuilder = () => {
     labelColor: "#000000",
     buttonText: "Submit",
   });
-  
 
-  const reorder = (
-    list: BuilderComponentProps[],
-    startIndex: number,
-    endIndex: number
-  ) => {
+  const removeElement = (id: string) => {
+    const newList = elementsList.filter((element) => element.id !== id);
+    setElementsList(newList);
+  };
+
+  const handleEdit = (item: ChildItem | null) => {
+    setSelectedItem(item);
+  };
+
+  const handleEditChange = (key: string, value: string | boolean) => {
+    if (!selctedItem) return;
+
+    const index = elementsList.findIndex(
+      (element) => element.id === selctedItem.id
+    );
+    if (index === -1) return;
+
+    const updatedItem = { ...selctedItem, [key]: value };
+
+    setElementsList((prevList) =>
+      prevList.map((item, i) => (i === index ? updatedItem : item))
+    );
+
+    setSelectedItem(updatedItem);
+  };
+
+  const generateName = (type: string) => {
+    let index = 1;
+    let name = `${type}_${index}`;
+    while (elementsList.some((element) => element.name === name)) {
+      index++;
+      name = `${type}_${index}`;
+    }
+    return name;
+  };
+
+  const reorder = (list: ChildItem[], startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -33,32 +65,23 @@ const useBuilder = () => {
   };
 
   const copy = (
-    source: BuilderComponentProps[],
-    destination: BuilderComponentProps[],
+    source: ChildItem[],
+    destination: ChildItem[],
     droppableSource: DropResult,
     droppableDestination: DropResult
   ) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
     const item = sourceClone[droppableSource.index];
-    destClone.splice(droppableDestination.index, 0, { ...item, id: uuid() });
+    const name = generateName(item.type);
+    console.log(name);
+    destClone.splice(droppableDestination.index, 0, {
+      ...item,
+      id: uuid(),
+      name,
+    });
+    console.log(destClone);
     return destClone;
-  };
-
-  const move = (
-    source: BuilderComponentProps[],
-    destination: BuilderComponentProps[],
-    droppableSource: DropResult,
-    droppableDestination: DropResult
-  ) => {
-    const sourceClone = Array.from(source);
-    const destClone = Array.from(destination);
-    const [removed] = sourceClone.splice(droppableSource.index, 1);
-    destClone.splice(droppableDestination.index, 0, removed);
-    const result = {};
-    result[droppableSource.droppableId] = sourceClone;
-    result[droppableDestination.droppableId] = destClone;
-    return result;
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -89,8 +112,12 @@ const useBuilder = () => {
   return {
     elementsList,
     onDragEnd,
-    selectedFormStyle, 
-    setSelectedFormStyle
+    selectedFormStyle,
+    setSelectedFormStyle,
+    removeElement,
+    handleEdit,
+    selctedItem,
+    handleEditChange,
   };
 };
 
