@@ -20,8 +20,9 @@ model User {
   // Optional for WebAuthn support
   Authenticator    Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  LeadMagnet LeadMagnet[]
 
   @@map("users")
 }
@@ -87,4 +88,18 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("authenticators")
+}
+
+model LeadMagnet {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @db.ObjectId
+  status     String // Active, Inactive
+  prompt     String // Custom AI prompt
+  iframeCode String
+  components Json // JSON object for drag-and-drop components
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  promptId   String?  @db.ObjectId
 }

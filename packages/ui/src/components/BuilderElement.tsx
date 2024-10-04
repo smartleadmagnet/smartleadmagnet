@@ -1,7 +1,6 @@
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { Label } from "./ui/label";
 import { Checkbox } from "./ui/checkbox";
 import {
   Select,
@@ -13,8 +12,6 @@ import {
   SelectValue,
 } from "./ui/select";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import Icon from "./icon";
-import Card from "./ui/card";
 
 type BuilderElementProps = {
   type: "input" | "textarea" | "checkbox" | "select" | "radio-group" | "title" | "subtitle"; // Add more types as needed
@@ -83,9 +80,6 @@ export default function BuilderElement({
         <div>
             {renderElement()}
         </div>
-          
-        
-
         {editable && (
           <div className="flex items-center edit_btns">
             {/* Button Group */}
