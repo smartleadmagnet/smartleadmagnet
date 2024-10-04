@@ -136,6 +136,21 @@
   height: calc(100vh - 75px);
   overflow-y: auto;
 }
-
+.cm-form-input input{
+  width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    outline: 0;
+    height: auto;
+    padding: 0;
+    box-shadow: none !important;
+}
+.cm-form-input input::placeholder{
+  color: #fff;
+  opacity: 1;
+}
 
 

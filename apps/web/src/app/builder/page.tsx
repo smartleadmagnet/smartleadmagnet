@@ -3,6 +3,13 @@ import React from "react";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Icon from "@smartleadmagnet/ui/components/icon";
 import { Card } from "@smartleadmagnet/ui/components/ui/card";
+import { Input } from "@smartleadmagnet/ui/components/ui/input";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@smartleadmagnet/ui/components/ui/tabs"
 import {
   DragDropContext,
   Droppable,
@@ -14,41 +21,66 @@ import {
 import useBuilder from "./builder.hook"; // Import the custom hook
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 import AIForm from "@smartleadmagnet/ui/components/AiForm";
+import SearchInput from "@smartleadmagnet/ui/components/SearchInput";
 import BuilderElement from "@smartleadmagnet/ui/components/BuilderElement";
 
-const ButtonBar = () => {
+
+
+
+export default function Builder() {
+  const { elementsList, onDragEnd,activeTab, 
+    setActiveTab } = useBuilder(); // Use the custom hook
+
   return (
-    <div className="flex items-center justify-between p-4 bg-gray-100">
+    <div className="min-h-screen flex flex-col">
+      {/* Header  */}
+      <div className="flex items-center justify-between p-4 bg-gray-900 text-white">
       <div className="flex items-center">
         <Button className="px-4 py-2 bg-gray-300 text-black shadow-md hover:bg-gray-400">
           ← Back
         </Button>
       </div>
-      <div className="flex space-x-4">
-        <Button>Builder</Button>
-        <Button>Design</Button>
-        <Button>Integration</Button>
-        <Button>Settings</Button>
+      <div className="flex space-x-4 cm-form-input">
+      <Input placeholder="Enter your form name" />
       </div>
       <div className="flex items-center">
         <Button className="px-4 py-2 bg-green-600 text-white shadow-md hover:bg-green-700">
           Publish
         </Button>
       </div>
+      </div>
+      {/* end Header  */}
+      {/* Tabs  */}
+      <div className="flex items-center justify-between p-4 bg-gray-600 ">
+      <div className="flex items-center">
+        
+      </div>
+      <div className="flex space-x-4">
+        <Button
+        onClick={() => setActiveTab("form")}
+        >Form</Button>
+        <Button
+          onClick={() => setActiveTab("options")}
+        >Options</Button>
+        <Button
+          onClick={() => setActiveTab("style-preview")}
+        >Style & Preview</Button>
+        <Button
+        onClick={() => setActiveTab("prompt")}
+        >Prompt</Button>
+        
+      </div>
+      <div className="flex items-center">
+      <Button className="px-4 py-2 bg-gray-300 text-black shadow-md hover:bg-gray-400">
+          Embed
+        </Button>
+      </div>
     </div>
-  );
-};
-
-export default function Builder() {
-  const { elementsList, onDragEnd } = useBuilder(); // Use the custom hook
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <ButtonBar />
-
+      {activeTab === "form" && (
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="flex flex-1">
-          <aside className="w-1/4 p-4 builder-column ">
+          <aside className="w-1/3 p-4 builder-column ">
+              <SearchInput placeholder="Search for form and layout elements." />
             <div className="grid gap-4">
               {builderItems.map((item, index) => (
                 <div key={index} className="py-2">
@@ -161,14 +193,29 @@ export default function Builder() {
                 )}
               </Droppable>
             </main>
-            <main className="flex-1 bg-gray-200 p-4 builder-column">
-              <h2 className="text-lg font-bold">
-                <AIForm />
-              </h2>
-            </main>
+            
           </div>
         </div>
       </DragDropContext>
+      )}
+       {activeTab === "style-preview" && (
+      
+        <div className="flex flex-1">
+          <aside className="w-1/3 p-4 builder-column ">
+              <SearchInput placeholder="Search for form and layout elements." />
+            <div className="grid gap-4">
+              
+            </div>
+          </aside>
+
+          <div className="flex flex-1">
+            <main className="flex-1 bg-gray-100 p-4 drop-area builder-column">
+              <h3 className="text-lg font-semibold mb-2">Style & Preview</h3>
+            </main>
+            
+          </div>
+        </div>
+      )}
     </div>
   );
 }
