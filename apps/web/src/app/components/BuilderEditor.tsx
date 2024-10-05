@@ -3,6 +3,14 @@ import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import { Switch } from "@smartleadmagnet/ui/components/ui/switch";
+import MultiSelectCreatable from "@smartleadmagnet/ui/components/MultiSelectCreatable";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@smartleadmagnet/ui/components/ui/select";
 
 import { ChildItem } from "../types/builder";
 
@@ -27,28 +35,54 @@ export default function BuilderEditor(props: BuilderEditorProps) {
 
       {/* Edit Options Rendered from Data */}
       <div>
-        <Label className="text-sm font-semibold mb-2 block">{data.label}</Label>
+        {![
+          "image",
+          "file",
+          "radio",
+          "select",
+          "checkbox-group",
+          "checkbox",
+        ].includes(data.type) && (
+          <div>
+            <Label className="text-sm font-semibold mb-2 block">
+              {data.label}
+            </Label>
 
-        <div className="flex flex-col mb-4">
-          <Input
-            value={data.value}
-            onChange={(e) => {
-              updateData("value", e.target.value);
-            }}
-            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+            <div className="flex flex-col mb-4">
+              <Input
+                value={data.value}
+                onChange={(e) => {
+                  updateData("value", e.target.value);
+                }}
+                className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        )}
         {data.formElement && (
           <div>
+            {data.type === "checkbox" && (
+              <div className="flex items-center space-x-2 mb-[20px]">
+                <Switch
+                  id="value"
+                  checked={data.value === "true"}
+                  onCheckedChange={(checked) => {
+                    updateData("value", checked ? "true" : "false");
+                  }}
+                />
+                <Label htmlFor="value">Active</Label>
+              </div>
+            )}
+
             <div className="flex items-center space-x-2 mb-[20px]">
               <Switch
-                id="airplane-mode"
+                id="required"
                 checked={data.required}
                 onCheckedChange={(checked) => {
                   updateData("required", checked);
                 }}
               />
-              <Label htmlFor="airplane-mode">Required</Label>
+              <Label htmlFor="required">Required</Label>
             </div>
             <Label className="text-sm font-semibold mb-2 block">Name</Label>
             <div className="flex flex-col mb-4">
@@ -60,6 +94,45 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                 className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
+
+            {["radio", "select", "checkbox-group"].includes(data.type) && (
+              <div>
+                <div className="mb-[20px]">
+                  <Label className="text-sm font-semibold mb-2 block">
+                    Default Option
+                  </Label>
+                  <Select
+                    onValueChange={(value) => {
+                      updateData("value", value);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a Default Option" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {data.options &&
+                        data.options.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <Label className="text-sm font-semibold mb-2 block">
+                  Options
+                </Label>
+                <MultiSelectCreatable
+                  options={data.options}
+                  onChange={(value) => {
+                    console.log(value);
+                    updateData("options", value);
+                  }}
+                  placeholder="Create options"
+                />
+              </div>
+            )}
           </div>
         )}
       </div>

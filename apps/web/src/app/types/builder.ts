@@ -1,5 +1,10 @@
+import { Option } from './misc';
 
-
+export type Option = {
+  label: string;
+  value: string;
+  
+};
 // Define types for the child item
 export type ChildItem = {
     icon: string;
@@ -10,6 +15,7 @@ export type ChildItem = {
     value: string;
     formElement?: boolean;
     required?: boolean;
+    options?: Option[];
   };
   
   // Define types for the parent item

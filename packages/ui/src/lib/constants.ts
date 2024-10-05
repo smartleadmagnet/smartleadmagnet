@@ -80,14 +80,29 @@ export const builderItems = [
             value: "option3",
           },
         ],
-        id: "7",
+        id: "12",
       },
+      
       {
         label: "Radio",
         icon: "radio",
         type: "radio",
         id: "8",
         formElement: true,
+        options: [
+          {
+            label: "Option 1",
+            value: "option1",
+          },
+          {
+            label: "Option 2",
+            value: "option2",
+          },
+          {
+            label: "Option 3",
+            value: "option3",
+          },
+        ],
       },
       {
         label: "Dropdown",
@@ -95,6 +110,20 @@ export const builderItems = [
         type: "select",
         id: "9",
         formElement: true,
+        options: [
+          {
+            label: "Option 1",
+            value: "option1",
+          },
+          {
+            label: "Option 2",
+            value: "option2",
+          },
+          {
+            label: "Option 3",
+            value: "option3",
+          },
+        ],
       },
       {
         label: "File",
@@ -110,6 +139,7 @@ export const builderItems = [
         id: "11",
         formElement: true,
       },
+      
     ],
 
       

@@ -6,15 +6,16 @@ import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@smartleadmagnet/ui/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/radio-group";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@smartleadmagnet/ui/components/ui/radio-group";
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
-import {ChildItem} from "";
+import { ChildItem, Option } from "../types/builder";
 
 import Icon from "@smartleadmagnet/ui/components/icon";
 
@@ -66,18 +67,18 @@ export default function BuilderElement({
             <h2 className="text-2xl font-semibold">{data.value}</h2>
           </div>
         );
-        case "paragraph":
+      case "paragraph":
         return (
           <div className="text-center">
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
             </label>
-            <p >{data.value}</p>
+            <p>{data.value}</p>
           </div>
         );
       case "separator":
         return (
-          <div >  
+          <div>
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
             </label>
@@ -86,36 +87,37 @@ export default function BuilderElement({
         );
       case "text_field":
         return (
-          <>
+          <div>
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
-              {data.required && (
-                <span className="text-red-500">*</span>)}
+              {data.required && <span className="text-red-500">*</span>}
               <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
                 {data.name}
               </span>
             </label>
             <Input value={data.value} readOnly />
-          </>
+          </div>
         );
       case "textarea":
         return (
-          <>
+          <div>
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
+              {data.required && <span className="text-red-500">*</span>}{" "}
               <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
                 {data.name}
               </span>
             </label>
             <Textarea />
-          </>
+          </div>
         );
       case "checkbox":
         return (
           <div className="flex items-center">
-            <Checkbox />
+            <Checkbox checked={data.value === "true"} />
             <label className="text-sm font-semibold ml-[10px] block">
               {data.label}{" "}
+              {data.required && <span className="text-red-500">*</span>}
               <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
                 {data.name}
               </span>
@@ -127,47 +129,55 @@ export default function BuilderElement({
           <div>
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
+              {data.required && <span className="text-red-500">*</span>}{" "}
               <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
                 {data.name}
               </span>
             </label>
-            <div className="mb-4">
-              {data.options.map((option, index) => (
-                <div key={index} className="flex items-center mb-2">
-                  <Checkbox />
-                  <Label
-                    htmlFor={option.value}
-                    className="text-sm font-semibold ml-[10px] block"
-                  >
-                    {option.label}{" "}
-                  </Label>
-                </div>
-              ))}
-            </div>
+            {data.options && (
+              <div className="mb-4">
+                {data.options.map((option: Option, index: number) => (
+                  <div key={index} className="flex items-center mb-2">
+                    <Checkbox />
+                    <Label
+                      htmlFor={option.value}
+                      className="text-sm font-semibold ml-[10px] block"
+                    >
+                      {option.label}{" "}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         );
       case "select":
         return (
-          <>
-            <label className="text-sm font-semibold mb-[10px] block">
+          <div>
+            <Label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
+              {data.required && <span className="text-red-500">*</span>}{" "}
               <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
                 {data.name}
               </span>
-            </label>
-            <Select>
+            </Label>
+            <Select value={data.value}>
               <SelectTrigger>
                 <SelectValue placeholder="Select an option" />
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Options</SelectLabel>
-                  <SelectItem value="option1">Option 1</SelectItem>
-                  <SelectItem value="option2">Option 2</SelectItem>
-                </SelectGroup>
+                {data.options && (
+                    <div className="mb-4">
+                      {data.options.map((option: Option, index: number) => (
+                        <SelectItem key={index} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </div>
+                )}
               </SelectContent>
             </Select>
-          </>
+          </div>
         );
       case "radio":
         return (
@@ -179,18 +189,16 @@ export default function BuilderElement({
               </span>
             </label>
             <RadioGroup defaultValue="comfortable">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="default" id="r1" />
-                <Label htmlFor="r1">Default</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="comfortable" id="r2" />
-                <Label htmlFor="r2">Comfortable</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="compact" id="r3" />
-                <Label htmlFor="r3">Compact</Label>
-              </div>
+            {data.options && (
+                <>
+                  {data.options.map((option: Option, index: number) => (
+                    <div className="flex items-center space-x-2" key={index}>
+                      <RadioGroupItem value={option.value} id={`item_${index}`} />
+                      <Label htmlFor={`item_${index}`}>{option.label}</Label>
+                    </div>
+                  ))}
+                </>
+              )}
             </RadioGroup>
           </>
         );
@@ -199,6 +207,7 @@ export default function BuilderElement({
           <>
             <Label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
+              {data.required && <span className="text-red-500">*</span>}{" "}
               <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block">
                 {data.name}
               </span>
@@ -216,7 +225,8 @@ export default function BuilderElement({
         return (
           <>
             <Label className="text-sm font-semibold mb-[10px] block">
-              {data.label}{" "}
+              {data.label}
+              {data.required && <span className="text-red-500">*</span>}{" "}
               <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block">
                 {data.name}
               </span>
@@ -264,14 +274,14 @@ export default function BuilderElement({
           <div className="flex items-center edit_btns">
             {/* Button Group */}
             <div className="inline-flex shadow-sm" role="group">
-              {data.type !=='separator' && (
-              <Button
-                onClick={onEdit}
-                variant="outline"
-                className="bg-grey-200 rounded-l-md  rounded-r-none  hover:z-10 focus:z-10"
-              >
-                <Icon name="edit" />
-              </Button>
+              {data.type !== "separator" && (
+                <Button
+                  onClick={onEdit}
+                  variant="outline"
+                  className="bg-grey-200 rounded-l-md  rounded-r-none  hover:z-10 focus:z-10"
+                >
+                  <Icon name="edit" />
+                </Button>
               )}
               <Button
                 onClick={onDelete}
