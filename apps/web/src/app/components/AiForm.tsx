@@ -103,7 +103,7 @@ export default function AIForm() {
           <ul className="list-disc text-sm">
             <li>
               Variables:{" "}
-              <small>{elementsList.map(element=> (
+              <small>{elementsList.filter(item=> item.formElement).map(element=> (
                 <span className="bg-gray-300 px-2 py-1 inline-block rounded mr-2" key={element.id}>{"{{"} {element.name} {"}}"}</span>
               ))}</small>
             </li>

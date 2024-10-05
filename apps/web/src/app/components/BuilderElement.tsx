@@ -2,6 +2,7 @@ import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
+import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import {
   Select,
   SelectContent,
