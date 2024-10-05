@@ -33,7 +33,7 @@ import {
 } from "@smartleadmagnet/ui/lib/constants";
 import AIForm from "../components/AiForm";
 import SearchInput from "@smartleadmagnet/ui/components/SearchInput";
-import BuilderElement from "@smartleadmagnet/ui/components/BuilderElement";
+import BuilderElement from "../components/BuilderElement";
 import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 import FontSelector from "@smartleadmagnet/ui/components/ui/FontSelector";
 import BuilderEditor from "../components/BuilderEditor";

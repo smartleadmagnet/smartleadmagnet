@@ -1,8 +1,7 @@
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { Label } from "./ui/label";
-import { Checkbox } from "./ui/checkbox";
+import { Button } from "@smartleadmagnet/ui/components/ui/button";
+import { Input } from "@smartleadmagnet/ui/components/ui/input";
+import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
+import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -11,12 +10,12 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Separator } from "./ui/separator";
-import {ChildItem} from "../types/builder";
+} from "@smartleadmagnet/ui/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/radio-group";
+import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
+import {ChildItem} from "";
 
-import Icon from "./icon";
+import Icon from "@smartleadmagnet/ui/components/icon";
 
 export type BuilderElementProps = {
   type:
@@ -257,7 +256,7 @@ export default function BuilderElement({
 
   return (
     <div className="form-element">
-      <div className="">
+      <div>
         <div>{renderElement()}</div>
 
         {editable && (

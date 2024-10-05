@@ -1,9 +1,11 @@
-import { useContext,createContext } from "react";
+
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
+import { useLayoutContext } from "../context/LayoutContext";
+
 import {
   Select,
   SelectContent,
@@ -13,12 +15,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@smartleadmagnet/ui/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/radio-group";
-import { Popover,
-    PopoverContent,
-    PopoverTrigger, } from "@smartleadmagnet/ui/components/ui/popover";
-    
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@smartleadmagnet/ui/components/ui/radio-group";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@smartleadmagnet/ui/components/ui/popover";
+
 export default function AIForm() {
+  const { elementsList } = useLayoutContext();
   return (
     <div className="w-full flex flex-col bg-white p-4 rounded-md justify-between relative">
       <div className="flex flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 p-1">
@@ -95,7 +103,9 @@ export default function AIForm() {
           <ul className="list-disc text-sm">
             <li>
               Variables:{" "}
-              <small>You will see variables from form elements here.</small>
+              <small>{elementsList.map(element=> (
+                <span className="bg-gray-300 px-2 py-1 inline-block rounded mr-2" key={element.id}>{"{{"} {element.name} {"}}"}</span>
+              ))}</small>
             </li>
           </ul>
         </div>
@@ -105,33 +115,31 @@ export default function AIForm() {
           <Label className="mb-[10px]">
             System Prompt
             <Popover>
-            <PopoverTrigger asChild className="trigger-btn">
-              <svg
-                stroke="currentColor"
-                fill="currentColor"
-                strokeWidth="0"
-                viewBox="0 0 24 24"
-                className="ml-1 text-md text-gray-400 cursor-pointer"
-                height="1em"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
-                <path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path>
-              </svg>
-            </PopoverTrigger>
-            <PopoverContent className="w-80">
-            You are an experienced fitness coach skilled in meal planning...
-            </PopoverContent>
+              <PopoverTrigger asChild className="trigger-btn">
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 24 24"
+                  className="ml-1 text-md text-gray-400 cursor-pointer"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
+                  <path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path>
+                </svg>
+              </PopoverTrigger>
+              <PopoverContent className="w-80">
+                You are an experienced fitness coach skilled in meal planning...
+              </PopoverContent>
             </Popover>
           </Label>
-            <Textarea
-                id="system-prompt"
-                className="min-h-[100px] min-w-full"
-                placeholder="Generate a meal plan considering I am a {{age}} years">
-
-                </Textarea>
-          
+          <Textarea
+            id="system-prompt"
+            className="min-h-[100px] min-w-full"
+            placeholder="Generate a meal plan considering I am a {{age}} years"
+          ></Textarea>
         </div>
 
         {/* Output Type and Provider */}
@@ -139,7 +147,7 @@ export default function AIForm() {
           <div className="form-control w-full mb-4">
             <Label>Output Type</Label>
             <Select>
-              <SelectTrigger >
+              <SelectTrigger>
                 <SelectValue placeholder="Select a fruit" />
               </SelectTrigger>
               <SelectContent>
