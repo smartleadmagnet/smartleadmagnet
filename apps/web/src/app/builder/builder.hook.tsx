@@ -9,6 +9,8 @@ import { useLayoutContext } from "../context/LayoutContext";
 const useBuilder = () => {
   const { elementsList, setElementsList } = useLayoutContext();
   const [selctedItem, setSelectedItem] = useState<ChildItem | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [editMode, setEditMode] = useState(false);
 
   const [selectedFormStyle, setSelectedFormStyle] = useState("default");
 
@@ -28,24 +30,72 @@ const useBuilder = () => {
 
   const handleEdit = (item: ChildItem | null) => {
     setSelectedItem(item);
+    setEditMode(item ? true : false);
   };
 
-  const handleEditChange = (key: string, value: string | boolean) => {
-    if (!selctedItem) return;
-
+  const handleEditChange = (
+    key: string, 
+    value: string | boolean, 
+    builderSelected?: ChildItem
+  ) => {
+    const selctedItemCopy = builderSelected || selctedItem;
+    if (!selctedItemCopy) return;
+  
     const index = elementsList.findIndex(
-      (element) => element.id === selctedItem.id
+      (element) => element.id === selctedItemCopy.id
     );
     if (index === -1) return;
-
-    const updatedItem = { ...selctedItem, [key]: value };
-
+  
+    let updatedItem = { ...selctedItemCopy, [key]: value };
+  
+    // Website validation
+    if (selctedItemCopy.type === "website") {
+      const websiteRegex = /^(https?:\/\/)?([\w\d-]+\.)+\w{2,}(\/[\w\d-]*)*\/?$/;
+      const isValidWebsite = websiteRegex.test(value as string);
+      if (!isValidWebsite) {
+        updatedItem = { 
+          ...updatedItem, 
+          error: "Invalid website URL" 
+        };
+      } else {
+        updatedItem = { 
+          ...updatedItem, 
+          error: "" // Clear error if valid
+        };
+      }
+    }
+  
+    // Email validation
+    if (selctedItemCopy.type === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isValidEmail = emailRegex.test(value as string);
+      if (!isValidEmail) {
+        updatedItem = { 
+          ...updatedItem, 
+          error: "Invalid email address" 
+        };
+      } else {
+        updatedItem = { 
+          ...updatedItem, 
+          error: "" // Clear error if valid
+        };
+      }
+    }
+  
+    // Update the elements list with the modified item
     setElementsList((prevList) =>
       prevList.map((item, i) => (i === index ? updatedItem : item))
     );
-
+  
+    // If builderSelected exists, return the updated item
+    if (builderSelected) {
+      return updatedItem;
+    }
+  
+    // Otherwise, update the selected item state
     setSelectedItem(updatedItem);
   };
+  
 
   const generateName = (type: string) => {
     let index = 1;
@@ -118,6 +168,9 @@ const useBuilder = () => {
     handleEdit,
     selctedItem,
     handleEditChange,
+    searchTerm, 
+    setSearchTerm,
+    editMode
   };
 };
 

@@ -11,7 +11,7 @@ interface LayoutContextType {
 const LayoutContext = createContext<LayoutContextType | undefined>(undefined);
 
 export const LayoutProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [elementsList, setElementsList] = useState<ChildItem[]>(builderItems[1].children);
+  const [elementsList, setElementsList] = useState<ChildItem[]>([]);
 
   return (
     <LayoutContext.Provider value={{ elementsList, setElementsList }}>

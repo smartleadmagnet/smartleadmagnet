@@ -175,5 +175,11 @@
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+.webiste_link svg {
+  transform: rotate(45deg);
+}
+.mention-text-area-box textarea {
+  outline: none;
+}
 
 

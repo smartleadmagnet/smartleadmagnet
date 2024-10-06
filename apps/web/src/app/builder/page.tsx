@@ -43,12 +43,23 @@ import BuilderEditor from "../components/BuilderEditor";
 
 
 export default function Builder() {
-  const { elementsList, onDragEnd, selectedFormStyle, setSelectedFormStyle,removeElement,handleEdit,selctedItem ,handleEditChange} =
+  const { elementsList, onDragEnd, selectedFormStyle, setSelectedFormStyle,removeElement,handleEdit,selctedItem ,handleEditChange,searchTerm, 
+    setSearchTerm,editMode} =
     useBuilder(); // Use the custom hook
   const [color, setColor] = React.useState<string>("#ffffff"); // Default color
   const handleColorChange = (newColor: string) => {
     setColor(newColor); // Update the state with the new color
   };
+
+  const filterItems = (searchTerm: string) => {
+    if(!searchTerm) return builderItems;
+    return builderItems.map((item) => ({
+      ...item,
+      children: item.children.filter((child) =>
+        child.label.toLowerCase().includes(searchTerm.toLowerCase())
+      ),
+    }));
+  }
 
   return (
     <Tabs defaultValue="form">
@@ -90,19 +101,22 @@ export default function Builder() {
           <DragDropContext onDragEnd={onDragEnd}>
             <div className="flex flex-1">
               <aside className="w-1/4 p-4 builder-column ">
-                {selctedItem !==null? <BuilderEditor data={selctedItem} onClose={()=>{
+                {editMode ? <BuilderEditor data={selctedItem} onClose={()=>{
                   handleEdit(null)
                 }}
                 updateData={handleEditChange}
                 />:(
                   <>
-                  <SearchInput placeholder="Search for form and layout elements." />
+                  <SearchInput placeholder="Search for form and layout elements." value={searchTerm} onChange={(value)=>{
+                    setSearchTerm(value)
+                  }} />
                 <div className="grid gap-4">
-                  {builderItems.map((item, index) => (
+                  {filterItems(searchTerm).map((item, index) => (
                     <div key={index} className="py-2">
                       <h3 className="text-lg font-semibold mb-2">
                         {item.title}
                       </h3>
+                      {item.children.length > 0 && (
                       <Card className="p-4 shadow-md">
                         <Droppable
                           droppableId={item.dropletId}
@@ -156,6 +170,7 @@ export default function Builder() {
                           )}
                         </Droppable>
                       </Card>
+                    )}
                     </div>
                   ))}
                 </div>
@@ -168,9 +183,9 @@ export default function Builder() {
 
               <div className="flex flex-1">
                 <main className="flex-1 bg-gray-100 p-4 drop-area builder-column">
-                  <Droppable droppableId="droppable-main">
+                  <Droppable droppableId="droppable-main"  >
                     {(provided: DroppableProvided) => (
-                      <div ref={provided.innerRef} {...provided.droppableProps}>
+                      <div ref={provided.innerRef} {...provided.droppableProps} className="h-full">
                         {elementsList.length ? (
                           elementsList.map((item, index) => (
                             <Draggable
@@ -198,6 +213,7 @@ export default function Builder() {
                                     type={item.type}
                                     data={item}
                                     editable={true}
+                                    updateData={handleEditChange}
                                     
                                     onEdit={() => {
                                       handleEdit(item);
@@ -211,8 +227,8 @@ export default function Builder() {
                             </Draggable>
                           ))
                         ) : (
-                          <div className="text-center text-gray-500 border-2 border-dashed border-gray-300 rounded-lg p-6">
-                            Drag and drop elements here
+                          <div className="text-center h-full justify-center items-center flex text-gray-500 border-2 border-dashed border-gray-300 rounded-lg p-6">
+                            <h2 className="text-xl">Drag and drop elements here</h2>
                           </div>
                         )}
                         {provided.placeholder}

@@ -4,6 +4,7 @@ import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import { Switch } from "@smartleadmagnet/ui/components/ui/switch";
 import MultiSelectCreatable from "@smartleadmagnet/ui/components/MultiSelectCreatable";
+import MultiSelect from "@smartleadmagnet/ui/components/MultiSelect";
 import {
   Select,
   SelectContent,
@@ -15,13 +16,14 @@ import {
 import { ChildItem } from "../types/builder";
 
 interface BuilderEditorProps {
-  data: ChildItem;
+  data: ChildItem | null; // You can pass the data as
   onClose: () => void; // You can pass a close function as a prop
   updateData: (key: string, value: string | boolean) => void; // You can pass an update function as a prop
 }
 
 export default function BuilderEditor(props: BuilderEditorProps) {
   const { data, onClose, updateData } = props;
+  if (!data) return null;
 
   return (
     <div className="w-full flex flex-col bg-white p-4 rounded-md justify-between relative">
@@ -42,6 +44,9 @@ export default function BuilderEditor(props: BuilderEditorProps) {
           "select",
           "checkbox-group",
           "checkbox",
+          "number",
+          "color",
+          ,
         ].includes(data.type) && (
           <div>
             <Label className="text-sm font-semibold mb-2 block">
@@ -54,6 +59,27 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                 onChange={(e) => {
                   updateData("value", e.target.value);
                 }}
+                className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            {data.error && (
+              <p className="text-sm text-red-500 mt-2">{data.error}</p>
+            )}
+          </div>
+        )}
+        {data.type === "number" && (
+          <div>
+            <Label className="text-sm font-semibold mb-2 block">
+              {data.label}
+            </Label>
+
+            <div className="flex flex-col mb-4">
+              <Input
+                value={data.value}
+                onChange={(e) => {
+                  updateData("value", e.target.value);
+                }}
+                type="number"
                 className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -101,23 +127,35 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                   <Label className="text-sm font-semibold mb-2 block">
                     Default Option
                   </Label>
-                  <Select
-                    onValueChange={(value) => {
-                      updateData("value", value);
-                    }}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a Default Option" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {data.options &&
-                        data.options.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                    </SelectContent>
-                  </Select>
+                  {["radio", "select"].includes(data.type) ? (
+                    <Select
+                      onValueChange={(value) => {
+                        updateData("value", value);
+                      }}
+                      value={data.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a Default Option" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {data.options &&
+                          data.options.map((option) => (
+                            <SelectItem key={option.value} value={option.value}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <MultiSelect
+                      options={data.options}
+                      onChange={(value) => {
+                        updateData("value", value);
+                      }}
+                      value={data.value}
+                      placeholder="Select Options"
+                    />
+                  )}
                 </div>
 
                 <Label className="text-sm font-semibold mb-2 block">
@@ -126,7 +164,6 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                 <MultiSelectCreatable
                   options={data.options}
                   onChange={(value) => {
-                    console.log(value);
                     updateData("options", value);
                   }}
                   placeholder="Create options"

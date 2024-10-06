@@ -33,11 +33,22 @@ export type BuilderElementProps = {
     | "image"
     | "paragraph"
     | "separator"
-    | "radio"; // Add more types as needed
+    | "radio"
+    | "email"
+    | "website"
+    | "color"
+    | "number";
+
+  // Add more types as needed
   data: ChildItem;
   editable: boolean;
   onEdit: () => void;
   onDelete: () => void;
+  updateData: (
+    key: string,
+    value: string | boolean,
+    selectedItem: ChildItem
+  ) => void;
 };
 
 export default function BuilderElement({
@@ -46,6 +57,7 @@ export default function BuilderElement({
   editable,
   onEdit,
   onDelete,
+  updateData,
 }: BuilderElementProps) {
   const renderElement = () => {
     switch (type) {
@@ -95,9 +107,86 @@ export default function BuilderElement({
                 {data.name}
               </span>
             </label>
-            <Input value={data.value} readOnly />
+            <Input
+              value={data.value}
+              onChange={(e) => {
+                updateData("value", e.target.value, data);
+              }}
+            />
           </div>
         );
+      case "website":
+        return (
+          <div>
+            <label className="text-sm font-semibold mb-[10px] block">
+              {data.label}{" "}
+              {data.required && <span className="text-red-500">*</span>}
+              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
+                {data.name}
+              </span>
+            </label>
+            <div className="relative webiste_link">
+              <div className="icon-section bg-gray-100 rounded-l-md flex items-center justify-center absolute top-0 left-0 h-full w-12">
+                <Icon name="link" />
+              </div>
+              <Input
+                type="text"
+                placeholder="Enter your website URL"
+                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 pl-14"
+                value={data.value}
+                onChange={(e) => {
+                  updateData("value", e.target.value, data);
+                }}
+              />
+            </div>
+          </div>
+        );
+      case "email":
+        return (
+          <div>
+            <label className="text-sm font-semibold mb-[10px] block">
+              {data.label}{" "}
+              {data.required && <span className="text-red-500">*</span>}
+              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
+                {data.name}
+              </span>
+            </label>
+            <div className="relative">
+              <div className="icon-section bg-gray-100 rounded-l-md flex items-center justify-center absolute top-0 left-0 h-full w-12">
+                <Icon name="email" />
+              </div>
+              <Input
+                type="email"
+                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 pl-14"
+                value={data.value}
+                onChange={(e) => {
+                  updateData("value", e.target.value, data);
+                }}
+              />
+            </div>
+          </div>
+        );
+      case "number":
+        return (
+          <div>
+            <label className="text-sm font-semibold mb-[10px] block">
+              {data.label}{" "}
+              {data.required && <span className="text-red-500">*</span>}
+              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
+                {data.name}
+              </span>
+            </label>
+            <Input
+              type="number" // Ensure the input type is set to number
+              value={data.value}
+              className="border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => {
+                updateData("value", e.target.value, data);
+              }}
+            />
+          </div>
+        );
+
       case "textarea":
         return (
           <div>
@@ -108,13 +197,23 @@ export default function BuilderElement({
                 {data.name}
               </span>
             </label>
-            <Textarea />
+            <Textarea
+              value={data.value}
+              onChange={(e) => {
+                updateData("value", e.target.value, data);
+              }}
+            />
           </div>
         );
       case "checkbox":
         return (
           <div className="flex items-center">
-            <Checkbox checked={data.value === "true"} />
+            <Checkbox
+              checked={data.value === "true"}
+              onCheckedChange={(checked) => {
+                updateData("value", checked ? "true" : "false", data);
+              }}
+            />
             <label className="text-sm font-semibold ml-[10px] block">
               {data.label}{" "}
               {data.required && <span className="text-red-500">*</span>}
@@ -138,7 +237,15 @@ export default function BuilderElement({
               <div className="mb-4">
                 {data.options.map((option: Option, index: number) => (
                   <div key={index} className="flex items-center mb-2">
-                    <Checkbox />
+                    <Checkbox checked={data.value?.some((item:Option)=> item.value===option.value)}
+                    onCheckedChange={(checked) => {
+                      const updatedValue = checked
+                        ? [...data?.value || [], option]
+                        : data.value?.filter((item:Option) => item.value !== option.value);
+                      updateData("value", updatedValue, data);
+                    }
+                    }
+                    />
                     <Label
                       htmlFor={option.value}
                       className="text-sm font-semibold ml-[10px] block"
@@ -167,13 +274,13 @@ export default function BuilderElement({
               </SelectTrigger>
               <SelectContent>
                 {data.options && (
-                    <div className="mb-4">
-                      {data.options.map((option: Option, index: number) => (
-                        <SelectItem key={index} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </div>
+                  <div className="mb-4">
+                    {data.options.map((option: Option, index: number) => (
+                      <SelectItem key={index} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </div>
                 )}
               </SelectContent>
             </Select>
@@ -188,12 +295,18 @@ export default function BuilderElement({
                 {data.name}
               </span>
             </label>
-            <RadioGroup defaultValue="comfortable">
-            {data.options && (
+            <RadioGroup defaultValue="comfortable" value={data.value} onValueChange={(value)=>{
+              updateData("value", value, data);
+            }}>
+              {data.options && (
                 <>
                   {data.options.map((option: Option, index: number) => (
                     <div className="flex items-center space-x-2" key={index}>
-                      <RadioGroupItem value={option.value} id={`item_${index}`} />
+                      <RadioGroupItem
+                        value={option.value}
+                        id={`item_${index}`}
+                        
+                      />
                       <Label htmlFor={`item_${index}`}>{option.label}</Label>
                     </div>
                   ))}
@@ -269,6 +382,9 @@ export default function BuilderElement({
     <div className="form-element">
       <div>
         <div>{renderElement()}</div>
+        {data.error && (
+          <p className="text-sm text-red-500 mt-2">{data.error}</p>
+        )}
 
         {editable && (
           <div className="flex items-center edit_btns">
@@ -278,7 +394,7 @@ export default function BuilderElement({
                 <Button
                   onClick={onEdit}
                   variant="outline"
-                  className="bg-grey-200 rounded-l-md  rounded-r-none  hover:z-10 focus:z-10"
+                  className="bg-gray-700 text-white rounded-l-lg  hover:bg-gray-800 hover:text-white  rounded-r-none  hover:z-10 focus:z-10"
                 >
                   <Icon name="edit" />
                 </Button>
@@ -287,7 +403,7 @@ export default function BuilderElement({
                 onClick={onDelete}
                 variant="outline"
                 color="red"
-                className="  rounded-r-md  rounded-l-none  hover:z-10 focus:z-10"
+                className="bg-orange-700 text-white hover:text-white rounded-r-lg rounded-l-none hover:bg-orange-800  hover:z-10 focus:z-10"
               >
                 <Icon name="delete" />
               </Button>

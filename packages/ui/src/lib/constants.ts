@@ -48,6 +48,27 @@ export const builderItems = [
         formElement: true,
       },
       {
+        label: "Email Field",
+        icon: "email",
+        type: "email",
+        id: "14",
+        formElement: true,
+      },
+      {
+        label: "Number Field",
+        icon: "number",
+        type: "number",
+        id: "15",
+        formElement: true,
+      },
+      {
+        label: "Website URL",
+        icon: "website",
+        type: "website",
+        id: "16",
+        formElement: true,
+      },
+      {
         label: "Textarea",
         icon: "textarea",
         type:'textarea',
@@ -139,6 +160,14 @@ export const builderItems = [
         id: "11",
         formElement: true,
       },
+      {
+        label: "Color Picker",
+        icon: "color",
+        type: "color",
+        id: "20",
+        formElement: true,
+      },
+      
       
     ],
 

@@ -5,6 +5,8 @@ import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import { useLayoutContext } from "../context/LayoutContext";
+import MentionTextArea from "@smartleadmagnet/ui/components/MentionTextArea";
+
 
 import {
   Select,
@@ -81,20 +83,26 @@ export default function AIForm() {
           </Modal> */}
 
         {/* AI Prompt Section */}
+        
         <div className="form-control w-full max-w-xl">
           <div className="flex w-full justify-between items-center mb-[10px]">
-            <Label>AI Prompt</Label>
-            <div className="flex gap-2">
+            <Label>Prompt</Label>
+            {/* <div className="flex gap-2">
               <Button variant="outline" size="sm">
                 Advanced
               </Button>
               <Button size="sm">Upload files</Button>
-            </div>
+            </div> */}
           </div>
-          <Textarea
-            id="prompt-textarea"
-            className="min-h-[200px] min-w-full mb-[10px]"
-            placeholder="Generate a meal plan considering I am a {{age}} years old {{gender}}"
+          <MentionTextArea 
+            options={elementsList
+              .filter(item => item.formElement)
+              .map(element => ({
+                id: element.name,
+                display: "{{"+element.name+"}}"
+              }))
+            }
+            
           />
         </div>
 
@@ -110,37 +118,6 @@ export default function AIForm() {
           </ul>
         </div>
 
-        {/* System Prompt Section */}
-        <div className="form-control w-full mb-4">
-          <Label className="mb-[10px]">
-            System Prompt
-            <Popover>
-              <PopoverTrigger asChild className="trigger-btn">
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  strokeWidth="0"
-                  viewBox="0 0 24 24"
-                  className="ml-1 text-md text-gray-400 cursor-pointer"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
-                  <path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path>
-                </svg>
-              </PopoverTrigger>
-              <PopoverContent className="w-80">
-                You are an experienced fitness coach skilled in meal planning...
-              </PopoverContent>
-            </Popover>
-          </Label>
-          <Textarea
-            id="system-prompt"
-            className="min-h-[100px] min-w-full"
-            placeholder="Generate a meal plan considering I am a {{age}} years"
-          ></Textarea>
-        </div>
 
         {/* Output Type and Provider */}
         <div className="flex gap-2 w-full">

@@ -12,10 +12,11 @@ export type ChildItem = {
     type: string;
     name: string;
     label: string;
-    value: string;
+    value: string | boolean | Option; 
     formElement?: boolean;
     required?: boolean;
     options?: Option[];
+    error?: string;
   };
   
   // Define types for the parent item
