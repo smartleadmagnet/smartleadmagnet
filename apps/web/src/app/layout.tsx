@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import  "@smartleadmagnet/ui/globals.css";
 import {LayoutProvider} from './context/LayoutContext'
 import { Providers } from "./providers";
