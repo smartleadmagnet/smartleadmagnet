@@ -37,7 +37,7 @@ export default async function DashboardLayout({
       <DesktopNav/>
       <div className="flex flex-col sm:gap-4 sm:pl-14">
         <header
-          className="sticky top-0 z-30 flex h-14 items-center gap-4 sm:py-2 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:px-6 bg-gray-100 ">
+          className="sticky top-0 z-30 flex items-center gap-4 sm:py-2 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:px-6 bg-gray-900 h-36 ">
           <MobileNav/>
           <div className="flex-1"/>
           {/*<User/>*/}
