@@ -18,6 +18,7 @@ import { NavItem } from './nav-item';
 import { getSessionUser } from '@/services/user';
 import { redirect } from 'next/navigation';
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
+import { User } from "@/components/user";
 
 export default async function DashboardLayout({
   children
@@ -40,7 +41,7 @@ export default async function DashboardLayout({
           className="sticky top-0 z-30 flex items-center gap-4 sm:py-2 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:px-6 bg-gray-900 h-36 ">
           <MobileNav/>
           <div className="flex-1"/>
-          {/*<User/>*/}
+          <User/>
         </header>
         <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-4 bg-muted/40">
           {children}
