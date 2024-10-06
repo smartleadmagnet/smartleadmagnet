@@ -123,8 +123,9 @@
   position: relative;
   width: 100%;
   padding-left: 60px;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 10px;
 }
 
 .handle {
@@ -173,6 +174,12 @@
     background: transparent;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+.webiste_link svg {
+  transform: rotate(45deg);
+}
+.mention-text-area-box textarea {
+  outline: none;
 }
 
 

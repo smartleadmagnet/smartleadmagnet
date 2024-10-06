@@ -1,13 +1,30 @@
+import { Option } from './misc';
+
+export type Option = {
+  label: string;
+  value: string;
+  
+};
 // Define types for the child item
-type ChildItem = {
+export type ChildItem = {
     icon: string;
-    title: string;
+    id: string;
+    type: string;
+    name: string;
+    label: string;
+    value: string | boolean | Option; 
+    formElement?: boolean;
+    required?: boolean;
+    options?: Option[];
+    error?: string;
   };
   
   // Define types for the parent item
-  type BuilderItem = {
+  export type BuilderItem = {
     title: string;
     children: ChildItem[];
+    id: string;
+    
   };
   
   // Define props for the BuilderComponent

@@ -1,23 +1,28 @@
 import { Input } from "./ui/input";
-import  Icon  from "./icon";
-
-
+import Icon from "./icon";
 
 interface SearchInputProps {
-    placeholder?: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
-const SearchInput = (props:SearchInputProps) => {
-    const { placeholder = "Search..." } = props;
+const SearchInput = (props: SearchInputProps) => {
+  const { placeholder = "Search..." } = props;
   return (
-    <div className="relative">
-      <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-      <Icon name="search"   />
+    <div className="relative w-full max-w-lg">
+      {/* Icon on the left side */}
+      <span className="absolute inset-y-0 left-0 flex items-center pl-4">
+        <Icon name="search"  />
       </span>
+
+      {/* Large Input Field */}
       <Input
         type="text"
         placeholder={placeholder}
-        className="pl-10" // Add padding to the left to accommodate the icon
+        value={props.value}
+        onChange={(e) => props.onChange?.(e.target.value)}
+        className="pl-12 py-3 text-lg w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
     </div>
   );

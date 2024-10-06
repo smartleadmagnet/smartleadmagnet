@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import  "@smartleadmagnet/ui/globals.css";
-
+import {LayoutProvider} from './context/LayoutContext'
 import { Providers } from "./providers";
 
 
@@ -26,9 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`bg-[#FCFCFC] dark:bg-black`}>
+      <LayoutProvider>
       <Providers>
         {children}
       </Providers>
+      </LayoutProvider>  
       </body>
     </html>
   );

@@ -6,6 +6,6 @@
       "@smartleadmagnet/ui/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "../../apps/web/src/app/components/BuilderElement.tsx"],
   "exclude": ["node_modules"]
 }

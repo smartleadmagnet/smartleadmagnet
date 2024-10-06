@@ -6,27 +6,31 @@ export const builderItems = [
     dropletId: "layout_elements",
     children: [
       {
-        title: "Title",
+        label: "Title",
+        value: "Title",
         icon: "title",
         type: "title",
         id: "1",
       },
       {
-        title: "Subtitle",
+        label: "Subtitle",
         icon: "subtitle",
         type: "subtitle",
+        value: "Subtitle",
 
         id: "2",
       },
       {
-        title: "Paragraph",
+        label: "Paragraph",
         icon: "paragraph",
         type: "paragraph",
+        value: "Paragraph",
         id: "3",
       },
       {
-        title: "Separator",
+        label: "Separator",
         icon: "separator",
+        value: "Separator",
         type: "separator",
         id: "4",
       },
@@ -37,41 +41,134 @@ export const builderItems = [
     dropletId: "form_elements",
     children: [
       {
-        title: "Input",
+        label: "Text Field",
         icon: "input",
-        type: "text",
+        type: "text_field",
         id: "5",
+        formElement: true,
       },
       {
-        title: "Textarea",
+        label: "Email Field",
+        icon: "email",
+        type: "email",
+        id: "14",
+        formElement: true,
+      },
+      {
+        label: "Number Field",
+        icon: "number",
+        type: "number",
+        id: "15",
+        formElement: true,
+      },
+      {
+        label: "Website URL",
+        icon: "website",
+        type: "website",
+        id: "16",
+        formElement: true,
+      },
+      {
+        label: "Textarea",
         icon: "textarea",
         type:'textarea',
         id: "6",
+        formElement: true,
       },
       {
-        title: "Checkbox",
+        label: "Single Checkbox",
         icon: "checkbox",
         type: "checkbox",
         id: "7",
+        formElement: true,
       },
       {
-        title: "Radio",
+        label: "Chekbox Group",
+        icon: "checkbox-group",
+        type: "checkbox-group",
+        formElement: true,
+        options: [
+          {
+            label: "Option 1",
+            value: "option1",
+          },
+          {
+            label: "Option 2",
+            value: "option2",
+          },
+          {
+            label: "Option 3",
+            value: "option3",
+          },
+        ],
+        id: "12",
+      },
+      
+      {
+        label: "Radio",
         icon: "radio",
         type: "radio",
         id: "8",
+        formElement: true,
+        options: [
+          {
+            label: "Option 1",
+            value: "option1",
+          },
+          {
+            label: "Option 2",
+            value: "option2",
+          },
+          {
+            label: "Option 3",
+            value: "option3",
+          },
+        ],
       },
       {
-        title: "Dropdown",
+        label: "Dropdown",
         icon: "select",
         type: "select",
         id: "9",
+        formElement: true,
+        options: [
+          {
+            label: "Option 1",
+            value: "option1",
+          },
+          {
+            label: "Option 2",
+            value: "option2",
+          },
+          {
+            label: "Option 3",
+            value: "option3",
+          },
+        ],
       },
       {
-        title: "File",
+        label: "File",
         icon: "file",
         type: "file",
         id: "10",
+        formElement: true,
       },
+      {
+        label: "Image",
+        icon: "image",
+        type: "image",
+        id: "11",
+        formElement: true,
+      },
+      {
+        label: "Color Picker",
+        icon: "color",
+        type: "color",
+        id: "20",
+        formElement: true,
+      },
+      
+      
     ],
 
       
@@ -82,19 +179,19 @@ export const builderItems = [
 
 export const formStyleOptions = [
   {
-    title: "Default",
+    label: "Default",
     value: "default",
   },
   {
-    title: "Linear",
+    label: "Linear",
     value: "linear",
   },
   {
-    title: "Round",
+    label: "Round",
     value: "round",
   },
   {
-    title: "Sharp",
+    label: "Sharp",
     value: "sharp",
   },
 ];
