@@ -2,14 +2,13 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { DropResult } from "react-beautiful-dnd";
-import { ChildItem } from "../types/builder";
+import { ChildItem } from "@/app/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
-import { useLayoutContext } from "../context/LayoutContext";
-import { title } from "process";
+import { useLayoutContext } from "@/app/context/LayoutContext";
 
 const useBuilder = () => {
   const { elementsList, setElementsList } = useLayoutContext();
-  const [selctedItem, setSelectedItem] = useState<ChildItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [editMode, setEditMode] = useState(false);
   const [activeOption, setActiveOption] = useState("info");
@@ -80,7 +79,7 @@ const useBuilder = () => {
     value: string | boolean,
     builderSelected?: ChildItem
   ) => {
-    const selctedItemCopy = builderSelected || selctedItem;
+    const selctedItemCopy = builderSelected || selectedItem;
     if (!selctedItemCopy) return;
 
     const index = elementsList.findIndex(
@@ -206,7 +205,7 @@ const useBuilder = () => {
     onDragEnd,
     removeElement,
     handleEdit,
-    selctedItem,
+    selctedItem: selectedItem,
     handleEditChange,
     searchTerm,
     setSearchTerm,
