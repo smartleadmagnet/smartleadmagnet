@@ -10,7 +10,7 @@ const useBuilder = () => {
   const { elementsList, setElementsList } = useLayoutContext();
   const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [embedOpen, setEmbedOpen] = useState(false);
+  const [embedOpen, setEmbedOpen] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [activeOption, setActiveOption] = useState("info");
   const [selectedView, setSelectedView] = useState("Form");
