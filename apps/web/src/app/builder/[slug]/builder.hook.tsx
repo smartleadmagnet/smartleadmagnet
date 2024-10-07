@@ -10,10 +10,12 @@ const useBuilder = () => {
   const { elementsList, setElementsList } = useLayoutContext();
   const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [embedOpen, setEmbedOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [activeOption, setActiveOption] = useState("info");
   const [selectedView, setSelectedView] = useState("Form");
-  const textContent = "This is a plain text example. It is used to demonstrate how plain text can be presented without any formatting or special characters.";
+  const textContent =
+    "This is a plain text example. It is used to demonstrate how plain text can be presented without any formatting or special characters.";
   const markdownContent = `
   # Markdown Example
   
@@ -42,7 +44,8 @@ const useBuilder = () => {
   const codeContent = `const greet = (name) => {
     console.log("Hello, " + name);
   }`;
-  const imageUrl = "https://smartleadmagnet.com/wp-content/uploads/2024/09/ai-help.jpg"; // Replace with your image URL
+  const imageUrl =
+    "https://smartleadmagnet.com/wp-content/uploads/2024/09/ai-help.jpg"; // Replace with your image URL
 
   const [formStyles, setFormStyles] = useState({
     textColor: "#333333", // Dark gray for text
@@ -218,7 +221,10 @@ const useBuilder = () => {
     markdownContent,
     codeContent,
     imageUrl,
-    activeOption, setActiveOption
+    activeOption,
+    setActiveOption,
+    embedOpen,
+    setEmbedOpen,
   };
 };
 
