@@ -5,6 +5,7 @@ import { DropResult } from "react-beautiful-dnd";
 import { ChildItem } from "../types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 import { useLayoutContext } from "../context/LayoutContext";
+import { title } from "process";
 
 const useBuilder = () => {
   const { elementsList, setElementsList } = useLayoutContext();
@@ -12,16 +13,29 @@ const useBuilder = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [editMode, setEditMode] = useState(false);
 
-  const [selectedFormStyle, setSelectedFormStyle] = useState("default");
+  
 
   const [formStyles, setFormStyles] = useState({
-    textColor: "#000000",
-    backgroundColor: "#ffffff",
-    buttonColor: "#000000",
-    buttonTextColor: "#ffffff",
-    labelColor: "#000000",
-    buttonText: "Submit",
+    textColor: "#333333",          // Dark gray for text
+    backgroundColor: "#f9f9f9",    // Light gray for background
+    buttonColor: "#4CAF50",        // Green for buttons (pleasant and eye-catching)
+    buttonTextColor: "#ffffff",    // White text on buttons for contrast
+    labelColor: "#666666",         // Medium gray for labels (subtle but visible)
+    titleColor: "#2C3E50",         // Dark blue for titles (professional feel)
+    subtitleColor: "#34495E",      // Slightly lighter blue for subtitles
+    buttonText: "Submit",          // Button text
+    selectedFont: "Open Sans",         // Default font
+    selectedFormStyle: "default",   // Default form style
   });
+  
+
+  const handleStyleUpdate = (key:string,newColor: string) => {
+    setFormStyles((prev) => ({
+      ...prev,
+      [key]: newColor,
+    }));
+    
+  };
 
   const removeElement = (id: string) => {
     const newList = elementsList.filter((element) => element.id !== id);
@@ -49,7 +63,7 @@ const useBuilder = () => {
     let updatedItem = { ...selctedItemCopy, [key]: value };
   
     // Website validation
-    if (selctedItemCopy.type === "website") {
+    if (selctedItemCopy.type === "website" && key === "value") {
       const websiteRegex = /^(https?:\/\/)?([\w\d-]+\.)+\w{2,}(\/[\w\d-]*)*\/?$/;
       const isValidWebsite = websiteRegex.test(value as string);
       if (!isValidWebsite) {
@@ -66,7 +80,7 @@ const useBuilder = () => {
     }
   
     // Email validation
-    if (selctedItemCopy.type === "email") {
+    if (selctedItemCopy.type === "email" && key === "value")  {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const isValidEmail = emailRegex.test(value as string);
       if (!isValidEmail) {
@@ -162,15 +176,16 @@ const useBuilder = () => {
   return {
     elementsList,
     onDragEnd,
-    selectedFormStyle,
-    setSelectedFormStyle,
     removeElement,
     handleEdit,
     selctedItem,
     handleEditChange,
     searchTerm, 
     setSearchTerm,
-    editMode
+    editMode,
+    handleStyleUpdate,
+    formStyles,
+    
   };
 };
 

@@ -155,19 +155,35 @@
 }
 
 
-.form-linear .border-input {
+.form-linear input,
+.form-linear textarea {
   border-width: 0 0 2px 0;
   border-radius: 0;
   box-shadow: none;
 }
+.form-linear .icon-section{
+  border-radius: 0;
+}
 
-.form-round .border-input,.form-round button {
+.form-round input,
+.form-round textarea,
+.form-round button {
   border-radius: 25px;
 }
+.form-round .icon-section{
+  border-radius: 25px 0 0 25px;
+}
 
-.form-sharp .border-input,.form-sharp button {
+
+.form-sharp input,
+.form-sharp textarea,
+.form-sharp button {
   border-radius:0px;
 }
+.form-sharp .icon-section{
+  border-radius: 0;
+}
+
 #font-picker {box-shadow: none;}
 
 #font-picker .dropdown-button {
@@ -181,5 +197,6 @@
 .mention-text-area-box textarea {
   outline: none;
 }
+
 
 
