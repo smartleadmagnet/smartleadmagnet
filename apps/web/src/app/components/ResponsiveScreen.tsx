@@ -12,6 +12,7 @@ interface ScreenNodeProps {
   children: ReactNode; // Define the type for children
   title: string; // Title for the screen
   width: string; // Width for the screen
+
 }
 
 const TitleBar: React.FC<{ title: string }> = ({ title }) => (
@@ -27,13 +28,13 @@ const TitleBar: React.FC<{ title: string }> = ({ title }) => (
 );
 
 const BrowserScreen: React.FC<ScreenNodeProps> = ({ children, title, width }) => (
-  <div className={`relative w-[${width}] bg-white rounded-lg shadow-lg border border-gray-300`}>
+  <div className={`relative  bg-white rounded-lg shadow-lg border border-gray-300`} style={{width:width}}>
     <TitleBar title={title} />
     <div className="h-[70vh] p-5 overflow-y-auto">{children}</div>
   </div>
 );
 
-const ResponsiveScreen: React.FC<{ children: ReactNode }> = ({ children }) => {
+const ResponsiveScreen: React.FC<{ children: ReactNode,activeView:String,setActiveView:Function }> = ({ children,activeView,setActiveView }) => {
   const [activeScreen, setActiveScreen] = useState("desktop");
 
   // Function to handle button click
@@ -47,13 +48,15 @@ const ResponsiveScreen: React.FC<{ children: ReactNode }> = ({ children }) => {
       <div className="flex justify-between items-center space-x-4">
         {/* Left Select dropdown */}
         <div className="w-1/2">
-          <Select value="form">
+          <Select value={activeView} onValueChange={(value)=>{
+            setActiveView(value)
+          }}>
             <SelectTrigger className="w-full border rounded-md px-3 py-2">
-              <SelectValue>Select an Option</SelectValue>
+              <SelectValue >{activeView}</SelectValue>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="form">Form</SelectItem>
-              <SelectItem value="prompt">Prompt</SelectItem>
+              <SelectItem value="Form">Form</SelectItem>
+              <SelectItem value="Prompt">Prompt</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -121,7 +124,7 @@ const ResponsiveScreen: React.FC<{ children: ReactNode }> = ({ children }) => {
 
       {/* Display the selected screen */}
       {activeScreen === "desktop" && (
-        <BrowserScreen title="Desktop" width="767px">
+        <BrowserScreen title="Desktop" width="100%">
           {children}
         </BrowserScreen>
       )}
@@ -131,7 +134,7 @@ const ResponsiveScreen: React.FC<{ children: ReactNode }> = ({ children }) => {
         </BrowserScreen>
       )}
       {activeScreen === "mobile" && (
-        <BrowserScreen title="Mobile" width="320px">
+        <BrowserScreen title="Mobile" width="400px">
           {children}
         </BrowserScreen>
       )}

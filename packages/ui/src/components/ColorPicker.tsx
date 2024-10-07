@@ -6,7 +6,7 @@ import { Label } from "./ui/label";
 interface ColorPickerProps {
   color: string; // Accept a color prop as a string
   onChange: (color: string) => void; // Callback to handle color change
-  label: string;
+  label?: string;
 }
 
 const ColorPicker: React.FC<ColorPickerProps> = ({ color, onChange,label }) => {

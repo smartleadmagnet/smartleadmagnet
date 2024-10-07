@@ -5,8 +5,11 @@ import Icon from "@smartleadmagnet/ui/components/icon";
 import { Card } from "@smartleadmagnet/ui/components/ui/card";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
-import styled from 'styled-components';
-
+import styled from "styled-components";
+import ContentViewer from "../components/ContentViewer";
+import SettingsForm from "../components/SettingsForm";
+import WebhookForm from "../components/WebhookForm";
+import EmailForm from "../components/EmailForm";
 
 import {
   Tabs,
@@ -47,11 +50,11 @@ const FormWrapper = styled.div`
   max-width: 600px;
   color: ${(props) => props.theme.textColor};
   margin: 0 auto;
- 
+
   padding: 20px;
   border-radius: 5px;
   font-family: ${(props) => props.theme.selectedFont};
-  .form-element{
+  .form-element {
     margin: 0 0 20px 0;
     padding: 0;
   }
@@ -71,7 +74,6 @@ const FormWrapper = styled.div`
   }
 
   input {
-    
     color: ${(props) => props.theme.textColor};
     &:focus {
       border-color: ${(props) => props.theme.buttonColor};
@@ -106,8 +108,14 @@ export default function Builder() {
     formStyles,
     setSearchTerm,
     editMode,
+    selectedView,
+    setSelectedView,
+    textContent,
+    markdownContent,
+    codeContent,
+    activeOption, setActiveOption,
+    imageUrl,
   } = useBuilder(); // Use the custom hook
-  const [color, setColor] = React.useState<string>("#ffffff"); // Default color
 
   const filterItems = (searchTerm: string) => {
     if (!searchTerm) return builderItems;
@@ -120,7 +128,7 @@ export default function Builder() {
   };
 
   return (
-    <Tabs defaultValue="style-preview">
+    <Tabs defaultValue="options">
       <div className="min-h-screen flex flex-col">
         {/* Header  */}
         <div className="flex items-center justify-between p-4 bg-gray-900 text-white">
@@ -326,7 +334,7 @@ export default function Builder() {
                         <Card
                           key={index}
                           className={`p-4 shadow-md cursor-pointer ${formStyles.selectedFormStyle === item.value ? "bg-blue-50 border border-blue-300" : ""} form-${item.value}`} // Highlight style
-                          onClick={() => 
+                          onClick={() =>
                             handleStyleUpdate("selectedFormStyle", item.value)
                           } // Set selected item on click
                         >
@@ -358,11 +366,12 @@ export default function Builder() {
                       <Label className="block text-sm font-medium text-gray-700">
                         Font Family
                       </Label>
-                      <FontSelector onChange={(fontFamily)=>{
-                        handleStyleUpdate("selectedFont", fontFamily);
-                      }}
-                      activeFontFamily={formStyles.selectedFont}
-                       />
+                      <FontSelector
+                        onChange={(fontFamily) => {
+                          handleStyleUpdate("selectedFont", fontFamily);
+                        }}
+                        activeFontFamily={formStyles.selectedFont}
+                      />
                     </div>
 
                     <div className="grid grid-cols-2 grid-rows-4 gap-[10px]">
@@ -447,32 +456,54 @@ export default function Builder() {
             <div className="flex flex-1">
               <main className="flex-1 bg-gray-100 p-4 drop-area builder-column">
                 <h3 className="text-lg font-semibold mb-2">Style & Preview</h3>
-                <ResponsiveScreen>
-                <FormWrapper theme={formStyles} className={`form-${formStyles.selectedFormStyle}`}>
-                    {elementsList.length &&
-                      elementsList.map((item, index) => (
-                        <div>
-                          <div className="form-item">
-                            <BuilderElement
-                              type={item.type}
-                              data={item}
-                              editable={false}
-                              
-                              updateData={handleEditChange}
-                              onEdit={() => {
-                                handleEdit(item);
-                              }}
-                              onDelete={() => removeElement(item.id)}
-                            />
-                          </div>
+                <ResponsiveScreen
+                  activeView={selectedView}
+                  setActiveView={setSelectedView}
+                >
+                  <FormWrapper
+                    theme={formStyles}
+                    className={`form-${formStyles.selectedFormStyle}`}
+                  >
+                    {selectedView === "Form" ? (
+                      <>
+                        {elementsList.length &&
+                          elementsList.map((item, index) => (
+                            <div>
+                              <div className="form-item">
+                                <BuilderElement
+                                  type={item.type}
+                                  data={item}
+                                  editable={false}
+                                  updateData={handleEditChange}
+                                  onEdit={() => {
+                                    handleEdit(item);
+                                  }}
+                                  onDelete={() => removeElement(item.id)}
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        <div className="form-item text-center">
+                          <Button type="submit">{formStyles.buttonText}</Button>
                         </div>
-                      ))}
-                      <div className="form-item text-center">
-                      <Button type="submit" >
-                        {formStyles.buttonText}
-                      </Button>
-                      </div>
-
+                      </>
+                    ) : (
+                      <>
+                        {/* <ContentViewer 
+                    type="text"
+                    content={textContent}
+                      /> */}
+                        {/* <ContentViewer 
+                      type="markdown"
+                      content={markdownContent}
+                        /> */}
+                        {/* <ContentViewer 
+                      type="code"
+                      content={codeContent}
+                        /> */}
+                        <ContentViewer type="image" content={imageUrl} />
+                      </>
+                    )}
                   </FormWrapper>
                 </ResponsiveScreen>
               </main>
@@ -481,14 +512,77 @@ export default function Builder() {
         </TabsContent>
         <TabsContent value="options">
           <div className="flex flex-1">
-            <aside className="w-1/4 p-4 builder-column ">
-              <SearchInput placeholder="Search for form and layout elements." />
-              <div className="grid gap-4"></div>
-            </aside>
+            {/* Left Column */}
+            <div className="w-1/3 p-4">
+        <div className="grid grid-cols-1 gap-4">
+          {/* Card 1 - Information */}
+          <div
+            onClick={() => setActiveOption("info")}
+            className={`bg-white p-4 rounded shadow cursor-pointer transition-transform ${
+              activeOption === "info" ? "bg-blue-500 border border-blue-300" : ""
+            }`}
+          >
+            <div className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full mb-4">
+              <Icon name="info" />
+            </div>
+            <h3 className="text-lg font-semibold">Information</h3>
+            <p className="text-sm">
+              Update the basic information of your app here: icon, title,
+              description, etc.
+            </p>
+          </div>
 
-            <div className="flex flex-1">
-              <main className="flex-1 bg-gray-100 p-4 drop-area builder-column">
-                <h3 className="text-lg font-semibold mb-2">Options</h3>
+          {/* Card 2 - Webhook */}
+          <div
+            onClick={() => setActiveOption("webhook")}
+            className={`bg-white p-4 rounded shadow cursor-pointer transition-transform ${
+              activeOption === "webhook" ? "bg-blue-500 border border-blue-300" : ""
+            }`}
+          >
+            <div className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full mb-4">
+              <Icon name="webhook" />
+            </div>
+            <h3 className="text-lg font-semibold">Webhook Integration</h3>
+            <p className="text-sm">
+              Connect your form with your favorite tools like Zapier and other third-party tools.
+            </p>
+          </div>
+
+          {/* Card 3 - Email */}
+          <div
+            onClick={() => setActiveOption("email")}
+            className={`bg-white p-4 rounded shadow cursor-pointer transition-transform ${
+              activeOption === "email" ? "bg-blue-500 border border-blue-300" : ""
+            }`}
+          >
+            <div className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full mb-4">
+              <Icon name="email" />
+            </div>
+            <h3 className="text-lg font-semibold">Automated Email</h3>
+            <p className="text-sm text-gray-600 mt-2">
+              Automatically send an email to your leads when they submit the form.
+              <br />
+              <span className="font-semibold text-red-500">Note:</span> Email address is required to send the message.
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+            {/* Right Column */}
+            <div className="w-2/3 p-4">
+              <main className="bg-gray-100 p-4 drop-area builder-column">
+                <div className="grid grid-cols-1 gap-4">
+                  {activeOption === "info" && (
+                  <SettingsForm />
+                  )}
+                  {activeOption === "webhook" && (
+                    <WebhookForm />
+                  )}
+                  {activeOption === "email" && (
+                    <EmailForm />
+                  )}
+                </div>
               </main>
             </div>
           </div>

@@ -16,6 +16,7 @@ import {
 } from "@smartleadmagnet/ui/components/ui/radio-group";
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
 import { ChildItem, Option } from "../types/builder";
+import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 
 import Icon from "@smartleadmagnet/ui/components/icon";
 
@@ -201,6 +202,22 @@ export default function BuilderElement({
             />
           </div>
         );
+        case "color":
+          return (
+            <div>
+              <label className="text-sm font-semibold mb-[10px] block">
+                {data.label}{" "}
+                {data.required && <span className="text-red-500">*</span>}{" "}
+                {internalName}
+              </label>
+              <ColorPicker
+                color={data.value}
+                onChange={(color) => {
+                  updateData("value", color, data);
+                }}
+                />
+            </div>
+          );  
       case "checkbox":
         return (
           <div className="flex items-center">
@@ -258,7 +275,9 @@ export default function BuilderElement({
               {data.required && <span className="text-red-500">*</span>}{" "}
               {internalName}
             </Label>
-            <Select value={data.value}>
+            <Select value={data.value} onValueChange={(value)=>{
+              updateData("value", value, data);
+            }}>
               <SelectTrigger>
                 <SelectValue placeholder="Select an option" />
               </SelectTrigger>
