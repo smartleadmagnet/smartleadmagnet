@@ -43,6 +43,7 @@ import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 import FontSelector from "@smartleadmagnet/ui/components/ui/FontSelector";
 import BuilderEditor from "../components/BuilderEditor";
 import ResponsiveScreen from "../components/ResponsiveScreen";
+import EmbedModal from "../components/EmbedModal";
 
 const FormWrapper = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
@@ -113,6 +114,7 @@ export default function Builder() {
     textContent,
     markdownContent,
     codeContent,
+    embedOpen, setEmbedOpen,
     activeOption, setActiveOption,
     imageUrl,
   } = useBuilder(); // Use the custom hook
@@ -129,6 +131,7 @@ export default function Builder() {
 
   return (
     <Tabs defaultValue="options">
+      <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen}/>
       <div className="min-h-screen flex flex-col">
         {/* Header  */}
         <div className="flex items-center justify-between p-4 bg-gray-900 text-white">
@@ -158,7 +161,9 @@ export default function Builder() {
             </TabsList>
           </div>
           <div className="flex items-center">
-            <Button className="px-4 py-2 bg-gray-300 text-black shadow-md hover:bg-gray-400">
+            <Button className="px-4 py-2 bg-gray-300 text-black shadow-md hover:bg-gray-400"
+              onClick={() => setEmbedOpen(true)}
+              >
               Embed
             </Button>
           </div>
