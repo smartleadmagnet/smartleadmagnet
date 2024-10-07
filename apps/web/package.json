@@ -15,7 +15,9 @@
     "next-auth": "^5.0.0-beta.22",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tailwind-merge": "^2.5.2"
+    "tailwind-merge": "^2.5.2",
+    "unique-names-generator": "^4.7.1",
+    "@smartleadmagnet/services": "*"
   },
   "devDependencies": {
     "@smartleadmagnet/eslint-config": "*",

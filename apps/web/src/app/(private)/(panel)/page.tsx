@@ -1,7 +1,16 @@
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
+import { createLead } from "@/actions/lead-magnet";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
+	const onCreate = async () => {
+		"use server";
+		const lead = await createLead();
+		console.log({ lead })
+		redirect(`/builder/${lead.id!}`)
+	};
+	
 	return (
 		<div className="flex size-full px-5 flex-col">
 			<div className="flex justify-between">
@@ -16,7 +25,16 @@ export default async function Home() {
 				<div className='my-4 flex items-end justify-between sm:my-0 sm:items-center'>
 					<div className='flex flex-col gap-4 sm:my-4 sm:flex-row'>
 					</div>
-					<Button>Build New App</Button>
+					<form className="flex justify-end mb-4">
+						<Button
+							formAction={onCreate}
+							variant="outline"
+							size="sm"
+							className="flex items-center space-x-1 text-green-500 border-green-500 hover:bg-green-100"
+						>
+							Build New App
+						</Button>
+					</form>
 				</div>
 			</div>
 			<Separator className='shadow w-full mt-3'/>
