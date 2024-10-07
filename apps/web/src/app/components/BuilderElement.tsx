@@ -16,6 +16,7 @@ import {
 } from "@smartleadmagnet/ui/components/ui/radio-group";
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
 import { ChildItem, Option } from "../types/builder";
+import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 
 import Icon from "@smartleadmagnet/ui/components/icon";
 
@@ -59,6 +60,12 @@ export default function BuilderElement({
   onDelete,
   updateData,
 }: BuilderElementProps) {
+
+  const internalName = editable ? (
+    <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
+      {data.name}
+    </span>
+    ) : null;
   const renderElement = () => {
     switch (type) {
       case "title":
@@ -103,9 +110,7 @@ export default function BuilderElement({
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
               {data.required && <span className="text-red-500">*</span>}
-              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
-                {data.name}
-              </span>
+              {internalName}
             </label>
             <Input
               value={data.value}
@@ -121,12 +126,10 @@ export default function BuilderElement({
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
               {data.required && <span className="text-red-500">*</span>}
-              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
-                {data.name}
-              </span>
+              {internalName}
             </label>
             <div className="relative webiste_link">
-              <div className="icon-section bg-gray-100 rounded-l-md flex items-center justify-center absolute top-0 left-0 h-full w-12">
+              <div className="icon-section bg-gray-400 rounded-l-md flex items-center justify-center absolute top-0 left-0 h-full w-12">
                 <Icon name="link" />
               </div>
               <Input
@@ -147,13 +150,11 @@ export default function BuilderElement({
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
               {data.required && <span className="text-red-500">*</span>}
-              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
-                {data.name}
-              </span>
+              {internalName}
             </label>
             <div className="relative">
-              <div className="icon-section bg-gray-100 rounded-l-md flex items-center justify-center absolute top-0 left-0 h-full w-12">
-                <Icon name="email" />
+              <div className="icon-section bg-gray-400 rounded-l-md flex items-center justify-center absolute top-0 left-0 h-full w-12">
+                <Icon name="email"  />
               </div>
               <Input
                 type="email"
@@ -172,9 +173,7 @@ export default function BuilderElement({
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
               {data.required && <span className="text-red-500">*</span>}
-              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
-                {data.name}
-              </span>
+              {internalName}
             </label>
             <Input
               type="number" // Ensure the input type is set to number
@@ -193,9 +192,7 @@ export default function BuilderElement({
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
               {data.required && <span className="text-red-500">*</span>}{" "}
-              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
-                {data.name}
-              </span>
+              {internalName}
             </label>
             <Textarea
               value={data.value}
@@ -205,6 +202,22 @@ export default function BuilderElement({
             />
           </div>
         );
+        case "color":
+          return (
+            <div>
+              <label className="text-sm font-semibold mb-[10px] block">
+                {data.label}{" "}
+                {data.required && <span className="text-red-500">*</span>}{" "}
+                {internalName}
+              </label>
+              <ColorPicker
+                color={data.value}
+                onChange={(color) => {
+                  updateData("value", color, data);
+                }}
+                />
+            </div>
+          );  
       case "checkbox":
         return (
           <div className="flex items-center">
@@ -217,9 +230,7 @@ export default function BuilderElement({
             <label className="text-sm font-semibold ml-[10px] block">
               {data.label}{" "}
               {data.required && <span className="text-red-500">*</span>}
-              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
-                {data.name}
-              </span>
+              {internalName}
             </label>
           </div>
         );
@@ -229,9 +240,7 @@ export default function BuilderElement({
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
               {data.required && <span className="text-red-500">*</span>}{" "}
-              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
-                {data.name}
-              </span>
+              {internalName}
             </label>
             {data.options && (
               <div className="mb-4">
@@ -264,11 +273,11 @@ export default function BuilderElement({
             <Label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
               {data.required && <span className="text-red-500">*</span>}{" "}
-              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
-                {data.name}
-              </span>
+              {internalName}
             </Label>
-            <Select value={data.value}>
+            <Select value={data.value} onValueChange={(value)=>{
+              updateData("value", value, data);
+            }}>
               <SelectTrigger>
                 <SelectValue placeholder="Select an option" />
               </SelectTrigger>
@@ -291,9 +300,7 @@ export default function BuilderElement({
           <>
             <label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
-              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
-                {data.name}
-              </span>
+              {internalName}
             </label>
             <RadioGroup defaultValue="comfortable" value={data.value} onValueChange={(value)=>{
               updateData("value", value, data);
@@ -321,9 +328,7 @@ export default function BuilderElement({
             <Label className="text-sm font-semibold mb-[10px] block">
               {data.label}{" "}
               {data.required && <span className="text-red-500">*</span>}{" "}
-              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block">
-                {data.name}
-              </span>
+              {internalName}
             </Label>
 
             <div className="relative w-full">
@@ -340,9 +345,7 @@ export default function BuilderElement({
             <Label className="text-sm font-semibold mb-[10px] block">
               {data.label}
               {data.required && <span className="text-red-500">*</span>}{" "}
-              <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block">
-                {data.name}
-              </span>
+              {internalName}
             </Label>
 
             <div className="flex items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition-colors duration-200">
@@ -350,15 +353,12 @@ export default function BuilderElement({
                 type="file"
                 accept="image/*" // Accepts image files only
                 className="hidden" // Hides the actual file input
-                onChange={(e) => {
-                  if (e.target.files.length) {
-                    console.log(e.target.files[0]); // Handle the uploaded file
-                  }
-                }}
+                onChange={() => {
+               }}
               />
               <label
                 htmlFor="file-upload"
-                className="flex flex-col items-center justify-center w-full h-full cursor-pointer text-gray-500"
+                className="flex flex-col items-center justify-center w-full h-full cursor-pointer text-gray-500 p-4"
               >
                 <span className="text-lg">📁</span>
                 <span className="mt-2 text-sm">

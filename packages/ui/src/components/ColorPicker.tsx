@@ -6,7 +6,7 @@ import { Label } from "./ui/label";
 interface ColorPickerProps {
   color: string; // Accept a color prop as a string
   onChange: (color: string) => void; // Callback to handle color change
-  label: string;
+  label?: string;
 }
 
 const ColorPicker: React.FC<ColorPickerProps> = ({ color, onChange,label }) => {
@@ -17,7 +17,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ color, onChange,label }) => {
   return (
     <div >
     <Label>{label}</Label>
-    <div className="flex items-center  space-x-2">
+    <div className="flex items-center   space-x-2">
       <Input
         value={color}
         className="w-[150px]"
@@ -28,7 +28,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ color, onChange,label }) => {
       <Popover>
         <PopoverTrigger asChild>
           <div
-            className="w-12 h-12 rounded-full cursor-pointer"
+            className="w-12 h-12 rounded-full cursor-pointer border border-gray-300"
             style={{ backgroundColor: color }}
           />
         </PopoverTrigger>
