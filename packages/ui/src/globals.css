@@ -197,6 +197,10 @@
 .mention-text-area-box textarea {
   outline: none;
 }
+.modal-header {
+  margin: -24px -24px 0;
+  width: calc(100% + 48px);
+}
 
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */

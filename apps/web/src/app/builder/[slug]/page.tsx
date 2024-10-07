@@ -131,8 +131,9 @@ export default function Builder() {
   };
 
   return (
+    <>
     <Tabs defaultValue="options">
-      <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen}/>
+      
       <div className="min-h-screen flex flex-col">
         {/* Header  */}
         <div className="flex items-center justify-between p-4 bg-gray-900 text-white">
@@ -595,5 +596,7 @@ export default function Builder() {
         </TabsContent>
       </div>
     </Tabs>
+    <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen}/>
+    </>
   );
 }
