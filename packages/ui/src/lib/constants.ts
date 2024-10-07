@@ -166,6 +166,7 @@ export const builderItems = [
         type: "color",
         id: "20",
         formElement: true,
+        value: "#000000",
       },
       
       

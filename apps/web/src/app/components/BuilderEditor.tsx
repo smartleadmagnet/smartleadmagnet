@@ -153,7 +153,7 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                         updateData("value", value);
                       }}
                       value={data.value}
-                      placeholder="Select Options"
+                      placeholder="Select Opr"
                     />
                   )}
                 </div>

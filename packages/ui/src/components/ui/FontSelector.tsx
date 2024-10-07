@@ -1,22 +1,23 @@
-import React, { useState } from "react";
 import FontPicker from "font-picker-react";
 
-const FontSelector: React.FC = () => {
-    const [activeFontFamily, setActiveFontFamily] = useState<string>("Open Sans");
-    const [searchTerm, setSearchTerm] = useState<string>("");
+interface FontSelectorProps {
+    activeFontFamily: string;
+    onChange: (fontFamily: string) => void; // Use onChange as the callback
+}
+
+const FontSelector = (props: FontSelectorProps) => {
+    const { activeFontFamily, onChange } = props; // Destructure onChange
 
     return (
         <div>
             <FontPicker
                 apiKey="AIzaSyAOSZtIN2QS_O1H3z6dsnle1rPBW7nxj9Y" // Replace with your actual API key
                 activeFontFamily={activeFontFamily}
-                onChange={(nextFont) => setActiveFontFamily(nextFont.family)}
-                search={searchTerm} // Pass the search term
-                onSearchChange={(term) => setSearchTerm(term)} // Update search term
+                onChange={(nextFont) => onChange(nextFont.family)} // Call onChange instead
             />
-            <p className="apply-font" style={{ fontFamily: activeFontFamily }}>
+            {/* <p className="apply-font" style={{ fontFamily: activeFontFamily }}>
                 The font will be applied to this text.
-            </p>
+            </p> */}
         </div>
     );
 };
