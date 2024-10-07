@@ -97,9 +97,7 @@ model LeadMagnet {
   userId     String   @db.ObjectId
   status     String // Active, Inactive
   prompt     String // Custom AI prompt
-  iframeCode String
   components Json // JSON object for drag-and-drop components
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  promptId   String?  @db.ObjectId
 }

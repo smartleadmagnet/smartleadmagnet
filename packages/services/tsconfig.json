@@ -1,0 +1,14 @@
+{
+  "extends": "@smartleadmagnet/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+  },
+  "include": [
+    "src",
+  ],
+  "exclude": ["node_modules"]
+}

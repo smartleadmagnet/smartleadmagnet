@@ -6,10 +6,10 @@ import { Card } from "@smartleadmagnet/ui/components/ui/card";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import styled from "styled-components";
-import ContentViewer from "../components/ContentViewer";
-import SettingsForm from "../components/SettingsForm";
-import WebhookForm from "../components/WebhookForm";
-import EmailForm from "../components/EmailForm";
+import ContentViewer from "@/app/components/ContentViewer";
+import SettingsForm from "@/app/components/SettingsForm";
+import WebhookForm from "@/app/components/WebhookForm";
+import EmailForm from "@/app/components/EmailForm";
 
 import {
   Tabs,
@@ -36,13 +36,13 @@ import {
   builderItems,
   formStyleOptions,
 } from "@smartleadmagnet/ui/lib/constants";
-import AIForm from "../components/AiForm";
+import AIForm from "@/app/components/AiForm";
 import SearchInput from "@smartleadmagnet/ui/components/SearchInput";
-import BuilderElement from "../components/BuilderElement";
+import BuilderElement from "@/app/components/BuilderElement";
 import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 import FontSelector from "@smartleadmagnet/ui/components/ui/FontSelector";
-import BuilderEditor from "../components/BuilderEditor";
-import ResponsiveScreen from "../components/ResponsiveScreen";
+import BuilderEditor from "@/app/components/BuilderEditor";
+import ResponsiveScreen from "@/app/components/ResponsiveScreen";
 
 const FormWrapper = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
@@ -489,15 +489,15 @@ export default function Builder() {
                       </>
                     ) : (
                       <>
-                        {/* <ContentViewer 
+                        {/* <ContentViewer
                     type="text"
                     content={textContent}
                       /> */}
-                        {/* <ContentViewer 
+                        {/* <ContentViewer
                       type="markdown"
                       content={markdownContent}
                         /> */}
-                        {/* <ContentViewer 
+                        {/* <ContentViewer
                       type="code"
                       content={codeContent}
                         /> */}
