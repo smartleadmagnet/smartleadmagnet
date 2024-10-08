@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 import { DropResult } from "react-beautiful-dnd";
 import { BuilderItem, ChildItem } from "@/app/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
-import { useLayoutContext } from "@/app/context/LayoutContext";
+import { useLayoutContext } from "@/context/LayoutContext";
 
 const useBuilder = () => {
   const { elementsList, setElementsList } = useLayoutContext();

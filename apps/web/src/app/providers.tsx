@@ -3,7 +3,7 @@
 import { ThemeProvider } from "next-themes";
 import { TooltipProvider } from "@smartleadmagnet/ui/components/ui/tooltip";
 import { ReactNode } from "react";
-import { LayoutProvider } from "@/app/context/LayoutContext";
+import { LayoutProvider } from "@/context/LayoutContext";
 
 export function Providers({children}: { children: ReactNode }) {
 	return (

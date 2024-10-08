@@ -4,8 +4,6 @@ import { createLead, getByUser } from "@/actions/lead-magnet";
 import { redirect } from "next/navigation";
 import AppCard from "@smartleadmagnet/ui/components/AppCard";
 
-export const runtime = "edge";
-
 export default async function Home() {
 	const leads = await getByUser()
 	

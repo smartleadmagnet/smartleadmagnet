@@ -6,10 +6,10 @@ import { Card } from "@smartleadmagnet/ui/components/ui/card";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import styled from "styled-components";
-import ContentViewer from "@/app/components/ContentViewer";
-import SettingsForm from "@/app/components/SettingsForm";
-import WebhookForm from "@/app/components/WebhookForm";
-import EmailForm from "@/app/components/EmailForm";
+import ContentViewer from "@/components/ContentViewer";
+import SettingsForm from "@/components/SettingsForm";
+import WebhookForm from "@/components/WebhookForm";
+import EmailForm from "@/components/EmailForm";
 
 import {
   Tabs,
@@ -31,19 +31,19 @@ import {
   DroppableProvided,
   DraggableStateSnapshot,
 } from "react-beautiful-dnd";
-import useBuilder from "./builder.hook"; // Import the custom hook
+import useBuilder from "@/hooks/builder.hook"; // Import the custom hook
 import {
   builderItems,
   formStyleOptions,
 } from "@smartleadmagnet/ui/lib/constants";
-import AIForm from "@/app/components/AiForm";
+import AIForm from "@/components/AiForm";
 import SearchInput from "@smartleadmagnet/ui/components/SearchInput";
-import BuilderElement from "@/app/components/BuilderElement";
+import BuilderElement from "@/components/BuilderElement";
 import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 import FontSelector from "@smartleadmagnet/ui/components/ui/FontSelector";
-import BuilderEditor from "@/app/components/BuilderEditor";
-import ResponsiveScreen from "@/app/components/ResponsiveScreen";
-import EmbedModal from "@/app/components/EmbedModal";
+import BuilderEditor from "@/components/BuilderEditor";
+import ResponsiveScreen from "@/components/ResponsiveScreen";
+import EmbedModal from "@/components/EmbedModal";
 
 export const runtime = 'edge'
 
@@ -121,6 +121,8 @@ export default function Builder() {
     activeOption, setActiveOption,
     imageUrl,
   } = useBuilder(); // Use the custom hook
+  
+  console.log({ elementsList })
 
   const filterItems = (searchTerm: string) => {
     if (!searchTerm) return builderItems;
@@ -134,8 +136,7 @@ export default function Builder() {
 
   return (
     <>
-    <Tabs defaultValue="options">
-      
+    <Tabs defaultValue="form">
       <div className="min-h-screen flex flex-col">
         {/* Header  */}
         <div className="flex items-center justify-between p-4 bg-gray-900 text-white">
@@ -160,8 +161,8 @@ export default function Builder() {
           <div className="flex space-x-4">
             <TabsList className="grid w-full grid-cols-3 bg-gray-900 text-white">
               <TabsTrigger value="form">Form</TabsTrigger>
-              <TabsTrigger value="options">Options</TabsTrigger>
-              <TabsTrigger value="style-preview">Style & Preview</TabsTrigger>
+              <TabsTrigger value="style-preview" disabled={elementsList?.length === 0}>Style & Preview</TabsTrigger>
+              <TabsTrigger value="options" disabled={elementsList?.length === 0}>Options</TabsTrigger>
             </TabsList>
           </div>
           <div className="flex items-center">
@@ -577,8 +578,6 @@ export default function Builder() {
           </div>
         </div>
       </div>
-
-
             {/* Right Column */}
             <div className="w-2/3 p-4">
               <main className="bg-gray-100 p-4 drop-area builder-column">

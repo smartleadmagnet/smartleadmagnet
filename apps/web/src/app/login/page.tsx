@@ -1,5 +1,3 @@
-export const runtime = "edge";
-
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 
 import {

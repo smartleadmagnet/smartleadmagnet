@@ -18,9 +18,7 @@ import { NavItem } from './nav-item';
 import { getSessionUser } from '@/services/user';
 import { redirect } from 'next/navigation';
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
-import { User } from "@/app/components/User";
-
-export const runtime = "edge";
+import { User } from "@/components/User";
 
 export default async function DashboardLayout({
   children
