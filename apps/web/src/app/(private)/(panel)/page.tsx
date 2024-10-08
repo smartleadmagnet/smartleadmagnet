@@ -1,13 +1,16 @@
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
-import { createLead } from "@/actions/lead-magnet";
+import { createLead, getByUser } from "@/actions/lead-magnet";
 import { redirect } from "next/navigation";
+import AppCard from "@smartleadmagnet/ui/components/AppCard";
 
 export default async function Home() {
+	const leads = await getByUser()
+	
 	const onCreate = async () => {
 		"use server";
 		const lead = await createLead();
-		console.log({ lead })
+		console.log({lead})
 		redirect(`/builder/${lead.id!}`)
 	};
 	
@@ -39,29 +42,12 @@ export default async function Home() {
 			</div>
 			<Separator className='shadow w-full mt-3'/>
 			<ul className='faded-bottom no-scrollbar grid gap-4 overflow-auto pb-16 pt-4 md:grid-cols-2 lg:grid-cols-3'>
-				<li
-					key="Test"
-					className='rounded-lg border p-4 shadow-md hover:shadow-lg'
-				>
-					<div className='mb-8 flex items-center justify-between'>
-						<div
-							className={`flex size-10 items-center justify-center rounded-lg bg-muted p-2`}
-						>
-							Test Logo
-						</div>
-						<Button
-							variant='outline'
-							size='sm'
-							className="border border-blue-300 bg-blue-50 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-950 dark:hover:bg-blue-900"
-						>
-							Connected
-						</Button>
-					</div>
-					<div>
-						<h2 className='mb-1 font-semibold'>Test</h2>
-						<p className='line-clamp-2 text-gray-500'>This is test app.</p>
-					</div>
-				</li>
+				{
+					leads.map((lead) => (
+						<li key={lead.id}><AppCard name={lead.name} description={lead.desription}
+						                           analytics={{impressions: 0, used: 0}}/></li>
+					))
+				}
 			</ul>
 		</div>
 	);
