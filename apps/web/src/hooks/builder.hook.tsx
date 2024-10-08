@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { DropResult } from "react-beautiful-dnd";
-import { BuilderItem, ChildItem } from "@/app/types/builder";
+import { ChildItem } from "@/app/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 import { useLayoutContext } from "@/context/LayoutContext";
+import axios from "axios";
+import { LeadMagnet } from "@smartleadmagnet/database";
 
-const useBuilder = () => {
+const useBuilder = ({ leadMagnet }: {leadMagnet: LeadMagnet }) => {
   const { elementsList, setElementsList } = useLayoutContext();
   const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -60,6 +62,26 @@ const useBuilder = () => {
     selectedFont: "Open Sans", // Default font
     selectedFormStyle: "default", // Default form style
   });
+  
+  const updateData = async () => {
+    try {
+      await axios.post(`/api/lead/${leadMagnet.id}`, { components: elementsList });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  
+  useEffect(() => {
+    // make an API call to update the components
+    if (elementsList?.length) {
+      updateData();
+    }
+    
+  }, [elementsList]);
+  
+  useEffect(() => {
+    setElementsList(leadMagnet.components)
+  }, [])
 
   const handleStyleUpdate = (key: string, newColor: string) => {
     setFormStyles((prev) => ({
@@ -183,7 +205,6 @@ const useBuilder = () => {
         });
       }
     }
-    console.log(destClone);
     return destClone;
   };
 

@@ -1,6 +1,6 @@
 "use server";
 
-import { createLeadMagnet, getLeadMagnetsByUser } from "@smartleadmagnet/services";
+import { createLeadMagnet, getLeadMagnetById, getLeadMagnetsByUser } from "@smartleadmagnet/services";
 import { uniqueNamesGenerator, Config, names, starWars, adjectives } from 'unique-names-generator';
 import { getSessionUser } from "@/services/user";
 
@@ -30,4 +30,8 @@ export async function getByUser() {
 	const user = await getSessionUser();
 	const leads = await getLeadMagnetsByUser(user?.id!);
 	return leads || [];
+}
+
+export async function getById(id: string) {
+	return getLeadMagnetById(id);
 }
