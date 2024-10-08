@@ -20,6 +20,8 @@ import { redirect } from 'next/navigation';
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { User } from "@/app/components/User";
 
+export const runtime = "edge";
+
 export default async function DashboardLayout({
   children
 }: {

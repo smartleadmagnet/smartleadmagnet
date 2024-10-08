@@ -1,5 +1,3 @@
-import { Option } from './misc';
-
 export type Option = {
   label: string;
   value: string;
@@ -12,7 +10,7 @@ export type ChildItem = {
     type: string;
     name: string;
     label: string;
-    value: string | boolean | Option; 
+    value: string | boolean | Option;
     formElement?: boolean;
     required?: boolean;
     options?: Option[];

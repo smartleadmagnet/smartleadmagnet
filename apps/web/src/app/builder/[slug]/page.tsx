@@ -41,9 +41,11 @@ import SearchInput from "@smartleadmagnet/ui/components/SearchInput";
 import BuilderElement from "@/app/components/BuilderElement";
 import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 import FontSelector from "@smartleadmagnet/ui/components/ui/FontSelector";
-import BuilderEditor from "../../components/BuilderEditor";
-import ResponsiveScreen from "../../components/ResponsiveScreen";
-import EmbedModal from "../../components/EmbedModal";
+import BuilderEditor from "@/app/components/BuilderEditor";
+import ResponsiveScreen from "@/app/components/ResponsiveScreen";
+import EmbedModal from "@/app/components/EmbedModal";
+
+export const runtime = 'edge'
 
 
 const FormWrapper = styled.div`
@@ -233,14 +235,15 @@ export default function Builder() {
                                               />
                                               <span>{child.label}</span>
                                             </Card>
-                                            {snapshot.isDragging && (
+                                            {snapshot?.isDragging && (
                                               <Card className="builder-item clone">
                                                 <Icon
                                                   name={child.icon}
                                                   height="50px"
                                                   width="50px"
                                                 />
-                                                <span>{child.title}</span>
+                                                {/* @ts-ignore */}
+                                                <span>{child?.title}</span>
                                               </Card>
                                             )}
                                           </React.Fragment>
@@ -269,7 +272,7 @@ export default function Builder() {
                         className="h-full"
                       >
                         {elementsList.length ? (
-                          elementsList.map((item, index) => (
+                          elementsList.map((item: any, index: number) => (
                             <Draggable
                               key={item.id}
                               draggableId={item.id}
@@ -474,7 +477,7 @@ export default function Builder() {
                     {selectedView === "Form" ? (
                       <>
                         {elementsList.length &&
-                          elementsList.map((item, index) => (
+                          elementsList.map((item: any) => (
                             <div>
                               <div className="form-item">
                                 <BuilderElement

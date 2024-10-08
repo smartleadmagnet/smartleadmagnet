@@ -1,8 +1,9 @@
-// useBuilder.ts
+"use client";
+
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { DropResult } from "react-beautiful-dnd";
-import { ChildItem } from "@/app/types/builder";
+import { BuilderItem, ChildItem } from "@/app/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 import { useLayoutContext } from "@/app/context/LayoutContext";
 
@@ -68,13 +69,13 @@ const useBuilder = () => {
   };
 
   const removeElement = (id: string) => {
-    const newList = elementsList.filter((element) => element.id !== id);
-    setElementsList(newList);
+    const newList = elementsList.filter((element: any) => element.id !== id);
+    setElementsList(newList as any);
   };
 
   const handleEdit = (item: ChildItem | null) => {
     setSelectedItem(item);
-    setEditMode(item ? true : false);
+    setEditMode(!!item);
   };
 
   const handleEditChange = (
@@ -82,18 +83,18 @@ const useBuilder = () => {
     value: string | boolean,
     builderSelected?: ChildItem
   ) => {
-    const selctedItemCopy = builderSelected || selectedItem;
-    if (!selctedItemCopy) return;
+    const selectedItemCopy = builderSelected || selectedItem;
+    if (!selectedItemCopy) return;
 
     const index = elementsList.findIndex(
-      (element) => element.id === selctedItemCopy.id
+      (element: any) => element.id === selectedItemCopy.id
     );
     if (index === -1) return;
 
-    let updatedItem = { ...selctedItemCopy, [key]: value };
+    let updatedItem = { ...selectedItemCopy, [key]: value };
 
     // Website validation
-    if (selctedItemCopy.type === "website" && key === "value") {
+    if (selectedItemCopy.type === "website" && key === "value") {
       const websiteRegex =
         /^(https?:\/\/)?([\w\d-]+\.)+\w{2,}(\/[\w\d-]*)*\/?$/;
       const isValidWebsite = websiteRegex.test(value as string);
@@ -111,7 +112,7 @@ const useBuilder = () => {
     }
 
     // Email validation
-    if (selctedItemCopy.type === "email" && key === "value") {
+    if (selectedItemCopy.type === "email" && key === "value") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const isValidEmail = emailRegex.test(value as string);
       if (!isValidEmail) {
@@ -144,7 +145,7 @@ const useBuilder = () => {
   const generateName = (type: string) => {
     let index = 1;
     let name = `${type}_${index}`;
-    while (elementsList.some((element) => element.name === name)) {
+    while (elementsList.some((element: any) => element.name === name)) {
       index++;
       name = `${type}_${index}`;
     }
@@ -154,7 +155,10 @@ const useBuilder = () => {
   const reorder = (list: ChildItem[], startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
+    if (removed) {
+      result.splice(endIndex, 0, removed);
+    }
+  
     return result;
   };
 
@@ -166,14 +170,19 @@ const useBuilder = () => {
   ) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
-    const item = sourceClone[droppableSource.index];
-    const name = generateName(item.type);
-    console.log(name);
-    destClone.splice(droppableDestination.index, 0, {
-      ...item,
-      id: uuid(),
-      name,
-    });
+    if (droppableSource) {
+      // TODO need to check
+      // @ts-ignore
+      const [removed] = sourceClone.splice(droppableSource.index, 1);
+      if (removed) {
+        // @ts-ignore
+        destClone.splice(droppableDestination.index, 0, {
+          ...removed,
+          id: uuid(),
+          name: generateName(removed.type),
+        });
+      }
+    }
     console.log(destClone);
     return destClone;
   };
@@ -186,17 +195,26 @@ const useBuilder = () => {
 
     switch (source.droppableId) {
       case destination.droppableId:
-        setElementsList(reorder(elementsList, source.index, destination.index));
+        setElementsList(reorder(elementsList as any, source.index, destination.index));
         break;
       case "layout_elements":
-        setElementsList(
-          copy(builderItems[0].children, elementsList, source, destination)
-        );
+        if (builderItems?.[0]?.children) {
+          // @ts-ignore
+          setElementsList(
+            // @ts-ignore
+            copy(builderItems?.[0]?.children, elementsList, source, destination)
+          );
+        }
+        
         break;
       case "form_elements":
-        setElementsList(
-          copy(builderItems[1].children, elementsList, source, destination)
-        );
+        if (builderItems?.[1]?.children) {
+          // @ts-ignore
+          setElementsList(
+            // @ts-ignore
+            copy(builderItems?.[1]?.children, elementsList, source, destination)
+          );
+        }
         break;
       default:
         break;

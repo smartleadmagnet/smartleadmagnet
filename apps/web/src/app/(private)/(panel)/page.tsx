@@ -4,13 +4,14 @@ import { createLead, getByUser } from "@/actions/lead-magnet";
 import { redirect } from "next/navigation";
 import AppCard from "@smartleadmagnet/ui/components/AppCard";
 
+export const runtime = "edge";
+
 export default async function Home() {
 	const leads = await getByUser()
 	
 	const onCreate = async () => {
 		"use server";
 		const lead = await createLead();
-		console.log({lead})
 		redirect(`/builder/${lead.id!}`)
 	};
 	
@@ -43,7 +44,7 @@ export default async function Home() {
 			<Separator className='shadow w-full mt-3'/>
 			<ul className='faded-bottom no-scrollbar grid gap-4 overflow-auto pb-16 pt-4 md:grid-cols-2 lg:grid-cols-3'>
 				{
-					leads.map((lead) => (
+					leads.map((lead: any) => (
 						<li key={lead.id}><AppCard id={lead.id} name={lead.name} description={lead.description}
 						                           analytics={{impressions: 0, used: 0}}/></li>
 					))

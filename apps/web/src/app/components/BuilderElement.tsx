@@ -41,14 +41,14 @@ export type BuilderElementProps = {
     | "number";
 
   // Add more types as needed
-  data: ChildItem;
+  data: any;
   editable: boolean;
   onEdit: () => void;
   onDelete: () => void;
   updateData: (
     key: string,
     value: string | boolean,
-    selectedItem: ChildItem
+    selectedItem: any
   ) => void;
 };
 
@@ -217,7 +217,7 @@ export default function BuilderElement({
                 }}
                 />
             </div>
-          );  
+          );
       case "checkbox":
         return (
           <div className="flex items-center">

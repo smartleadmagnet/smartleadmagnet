@@ -10,7 +10,7 @@ export default function WebhookForm() {
   });
 
   // Handle input change
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setWebhookData({ ...webhookData, [name]: value });
   };
