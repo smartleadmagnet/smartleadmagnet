@@ -1,13 +1,14 @@
 "use server";
 
-import { createLeadMagnet } from "@smartleadmagnet/services";
+import { createLeadMagnet, getLeadMagnetsByUser } from "@smartleadmagnet/services";
 import { uniqueNamesGenerator, Config, names, starWars, adjectives } from 'unique-names-generator';
 import { getSessionUser } from "@/services/user";
+
 const config: Config = {
 	dictionaries: [names, starWars, adjectives]
 }
 
-export async function createLead(){
+export async function createLead() {
 	const user = await getSessionUser();
 	try {
 		return createLeadMagnet({
@@ -16,9 +17,16 @@ export async function createLead(){
 			prompt: "",
 			components: [],
 			userId: user.id,
+			description: ""
 		})
 	} catch (error: any) {
 		console.error('Error creating lead:', error);
 		throw new Error(error.message);
 	}
+}
+
+export async function getByUser() {
+	const user = await getSessionUser();
+	const leads = await getLeadMagnetsByUser(user.id);
+	return leads || [];
 }
