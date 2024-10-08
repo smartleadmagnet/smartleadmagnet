@@ -50,6 +50,7 @@ import EmbedModal from "@/components/EmbedModal";
 
 const FormWrapper = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
+  border: 1px solid #ccc;
   width: 90%;
   max-width: 600px;
   color: ${(props) => props.theme.textColor};
