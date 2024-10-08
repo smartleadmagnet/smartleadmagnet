@@ -50,6 +50,7 @@ import EmbedModal from "@/components/EmbedModal";
 
 const FormWrapper = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
+  border: 1px solid #ccc;
   width: 90%;
   max-width: 600px;
   color: ${(props) => props.theme.textColor};
@@ -322,7 +323,7 @@ export default function Builder({ leadMagnet }: {leadMagnet: LeadMagnet }) {
 										</Droppable>
 									</main>
 									<main className="flex-1 bg-gray-100 p-4 drop-area builder-column">
-										<AIForm/>
+										<AIForm leadMagnet={leadMagnet} />
 									</main>
 								</div>
 							</div>
