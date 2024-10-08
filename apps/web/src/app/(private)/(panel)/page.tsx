@@ -44,7 +44,7 @@ export default async function Home() {
 			<ul className='faded-bottom no-scrollbar grid gap-4 overflow-auto pb-16 pt-4 md:grid-cols-2 lg:grid-cols-3'>
 				{
 					leads.map((lead) => (
-						<li key={lead.id}><AppCard name={lead.name} description={lead.desription}
+						<li key={lead.id}><AppCard id={lead.id} name={lead.name} description={lead.description}
 						                           analytics={{impressions: 0, used: 0}}/></li>
 					))
 				}
