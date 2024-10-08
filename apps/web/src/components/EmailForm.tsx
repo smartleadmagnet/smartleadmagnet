@@ -14,13 +14,13 @@ export default function AutomatedEmailForm() {
   });
 
   // Handle input change
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setEmailData({ ...emailData, [name]: value });
   };
 
   // Handle rich text editor change
-  const handleContentChange = (value) => {
+  const handleContentChange = (value: any) => {
     setEmailData({ ...emailData, content: value });
   };
 

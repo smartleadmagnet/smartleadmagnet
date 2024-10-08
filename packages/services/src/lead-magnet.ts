@@ -14,9 +14,9 @@ export const getLeadMagnetById = async (id: string) => {
 	});
 };
 
-export const updateLeadMagnet = async (id: string, data: Partial<LeadMagnet>) => {
+export const updateLeadMagnet = async (id: string, userId: string, data: Partial<LeadMagnet>) => {
 	return prisma.leadMagnet.update({
-		where: {id},
+		where: {id, userId},
 		data: {
 			...data,
 			updatedAt: new Date(),

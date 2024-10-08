@@ -1,9 +1,6 @@
 
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
-import { Input } from "@smartleadmagnet/ui/components/ui/input";
-import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
-import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import { useLayoutContext } from "../context/LayoutContext";
 import MentionTextArea from "@smartleadmagnet/ui/components/MentionTextArea";
 
@@ -94,12 +91,12 @@ export default function AIForm() {
               <Button size="sm">Upload files</Button>
             </div> */}
           </div>
-          <MentionTextArea 
+          <MentionTextArea
             options={elementsList
-              .filter(item => item.formElement)
-              .map(element => ({
+              .filter((item: any) => item.formElement)
+              .map((element: any) => ({
                 id: element.name,
-                display: "{{"+element.name+"}}"
+                display: `{{${element.name}}}`
               }))
             }
             
@@ -111,7 +108,7 @@ export default function AIForm() {
           <ul className="list-disc text-sm">
             <li>
               Variables:{" "}
-              <small>{elementsList.filter(item=> item.formElement).map(element=> (
+              <small>{elementsList.filter((item: any)=> item.formElement).map((element: any)=> (
                 <span className="bg-gray-300 px-2 py-1 inline-block rounded mr-2" key={element.id}>{"{{"} {element.name} {"}}"}</span>
               ))}</small>
             </li>

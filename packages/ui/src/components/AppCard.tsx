@@ -1,9 +1,12 @@
+import React from "react";
 import { Button } from "./ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "./ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 
 interface Props {
+	id: string,
 	name: string,
 	description: string,
 	analytics?: {
@@ -12,10 +15,10 @@ interface Props {
 	}
 }
 
-export default function AppCard({ name, description, analytics }: Props) {
+export default function AppCard({id, name, description, analytics}: Props) {
 	return (
 		<Card className="p-4">
-			<CardHeader className="flex items-start">
+			<CardHeader className="flex flex-row justify-between items-start">
 				<div>
 					<CardTitle>{name}</CardTitle>
 					<CardDescription>
@@ -24,13 +27,20 @@ export default function AppCard({ name, description, analytics }: Props) {
 				</div>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button variant="ghost" size="icon">
-							<MoreHorizontal className="w-5 h-5" />
+						<Button variant="outline" className="flex flex-row items-center justify-between">
+							<span>Actions</span>
+							<ChevronDown className="h-4 w-4  ml-5"/>
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
-						<DropdownMenuItem>Edit</DropdownMenuItem>
-						<DropdownMenuItem>Delete</DropdownMenuItem>
+						<div className="flex flex-col p-1">
+							<Link
+								href={`/builder/${id}`}
+								className="p-1 hover:cursor hover:bg-gray-100"
+							>
+								Edit
+							</Link>
+						</div>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</CardHeader>

@@ -5,10 +5,12 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "migrate:prisma:generate": "turbo migrate:prisma:generate",
+    "pages:build": "turbo pages:build",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.5",
     "prettier": "^3.2.5",
     "turbo": "^2.1.2",
     "typescript": "^5.4.5"

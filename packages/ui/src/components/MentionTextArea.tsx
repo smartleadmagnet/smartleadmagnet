@@ -8,9 +8,8 @@ interface Props {
 export default function MentionTextArea({ options }: Props) {
   const [value, setValue] = useState("");
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (event: any) => {
     setValue(event.target.value);
-    console.log(event.target.value);
   };
 
   

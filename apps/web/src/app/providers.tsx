@@ -2,13 +2,17 @@
 
 import { ThemeProvider } from "next-themes";
 import { TooltipProvider } from "@smartleadmagnet/ui/components/ui/tooltip";
+import { ReactNode } from "react";
+import { LayoutProvider } from "@/context/LayoutContext";
 
-export function Providers({children}: { children: React.ReactNode }) {
+export function Providers({children}: { children: ReactNode }) {
 	return (
-		<ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
-			<TooltipProvider>
-				{children}
-			</TooltipProvider>
-		</ThemeProvider>
+		<LayoutProvider>
+			<ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
+				<TooltipProvider>
+					{children}
+				</TooltipProvider>
+			</ThemeProvider>
+		</LayoutProvider>
 	);
 }

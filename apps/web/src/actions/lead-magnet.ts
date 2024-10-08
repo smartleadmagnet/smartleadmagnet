@@ -1,6 +1,6 @@
 "use server";
 
-import { createLeadMagnet, getLeadMagnetsByUser } from "@smartleadmagnet/services";
+import { createLeadMagnet, getLeadMagnetById, getLeadMagnetsByUser } from "@smartleadmagnet/services";
 import { uniqueNamesGenerator, Config, names, starWars, adjectives } from 'unique-names-generator';
 import { getSessionUser } from "@/services/user";
 
@@ -11,12 +11,13 @@ const config: Config = {
 export async function createLead() {
 	const user = await getSessionUser();
 	try {
+		// @ts-ignore
 		return createLeadMagnet({
 			name: uniqueNamesGenerator(config),
 			status: "pending",
 			prompt: "",
-			components: [],
-			userId: user.id,
+			components: [] as any,
+			userId: user?.id!,
 			description: ""
 		})
 	} catch (error: any) {
@@ -27,6 +28,10 @@ export async function createLead() {
 
 export async function getByUser() {
 	const user = await getSessionUser();
-	const leads = await getLeadMagnetsByUser(user.id);
+	const leads = await getLeadMagnetsByUser(user?.id!);
 	return leads || [];
+}
+
+export async function getById(id: string) {
+	return getLeadMagnetById(id);
 }

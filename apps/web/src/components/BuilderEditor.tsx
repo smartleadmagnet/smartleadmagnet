@@ -1,7 +1,6 @@
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
-import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import { Switch } from "@smartleadmagnet/ui/components/ui/switch";
 import MultiSelectCreatable from "@smartleadmagnet/ui/components/MultiSelectCreatable";
 import MultiSelect from "@smartleadmagnet/ui/components/MultiSelect";
@@ -13,10 +12,8 @@ import {
   SelectValue,
 } from "@smartleadmagnet/ui/components/ui/select";
 
-import { ChildItem } from "../types/builder";
-
 interface BuilderEditorProps {
-  data: ChildItem | null; // You can pass the data as
+  data: any | null; // You can pass the data as
   onClose: () => void; // You can pass a close function as a prop
   updateData: (key: string, value: string | boolean) => void; // You can pass an update function as a prop
 }
@@ -130,16 +127,19 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                   {["radio", "select"].includes(data.type) ? (
                     <Select
                       onValueChange={(value) => {
+                        // TODO
+                        // @ts-ignore
                         updateData("value", value);
                       }}
-                      value={data.value}
+                      // TODO
+                      // @ts-ignore
+                      value={data?.value}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select a Default Option" />
                       </SelectTrigger>
                       <SelectContent>
-                        {data.options &&
-                          data.options.map((option) => (
+                        {data.options?.map((option: any) => (
                             <SelectItem key={option.value} value={option.value}>
                               {option.label}
                             </SelectItem>
@@ -148,11 +148,13 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                     </Select>
                   ) : (
                     <MultiSelect
-                      options={data.options}
+                      options={data?.options || []}
                       onChange={(value) => {
+                        // TODO
+                        // @ts-ignore
                         updateData("value", value);
                       }}
-                      value={data.value}
+                      value={data?.value}
                       placeholder="Select Opr"
                     />
                   )}
@@ -162,8 +164,10 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                   Options
                 </Label>
                 <MultiSelectCreatable
-                  options={data.options}
+                  options={data?.options || []}
                   onChange={(value) => {
+                    // TODO
+                    // @ts-ignore
                     updateData("options", value);
                   }}
                   placeholder="Create options"
