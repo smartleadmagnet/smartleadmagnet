@@ -21,7 +21,17 @@ import { LeadMagnet } from "@smartleadmagnet/database";
 
 
 export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
-	const {prompt, setPrompt} = useAIForm({leadMagnet})
+	const {
+		prompt,
+		setPrompt,
+		providers,
+		onProviderChange,
+		selectedProvider,
+		selectedModel,
+		setSelectedModel,
+		setOutputType,
+		outputType
+	} = useAIForm({leadMagnet})
 	const {elementsList} = useLayoutContext();
 	return (
 		<div className="w-full flex flex-col bg-white p-4 rounded-md justify-between relative">
@@ -48,7 +58,7 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 					</svg>
 					<span className="mx-4">Generate tool with AI</span>
 				</Button>
-				<div className="form-control w-full max-w-xl">
+				<div className="form-control w-full">
 					<div className="flex w-full justify-between items-center mb-[10px]">
 						<Label>Prompt</Label>
 					</div>
@@ -83,37 +93,31 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 				{/* Output Type and Provider */}
 				<div className="flex gap-2 w-full">
 					<div className="form-control w-full mb-4">
-						<Label>Output Type</Label>
-						<Select>
+						<Label>Provider</Label>
+						<Select defaultValue={selectedProvider.name} onValueChange={onProviderChange}>
 							<SelectTrigger>
-								<SelectValue placeholder="Select a fruit"/>
+								<SelectValue placeholder="Select a LLM Provider"/>
 							</SelectTrigger>
 							<SelectContent>
-								<SelectGroup>
-									<SelectLabel>Fruits</SelectLabel>
-									<SelectItem value="apple">Apple</SelectItem>
-									<SelectItem value="banana">Banana</SelectItem>
-									<SelectItem value="blueberry">Blueberry</SelectItem>
-									<SelectItem value="grapes">Grapes</SelectItem>
-									<SelectItem value="pineapple">Pineapple</SelectItem>
-								</SelectGroup>
+								{
+									providers?.map(provider => (
+										<SelectItem key={provider.name} value={provider.name}>{provider.name}</SelectItem>
+									))
+								}
 							</SelectContent>
 						</Select>
 					</div>
 					<div className="form-control w-full mb-4">
-						<Label>Provider</Label>
-						<Select>
+						<Label>Output Type</Label>
+						<Select value={outputType} onValueChange={setOutputType}>
 							<SelectTrigger>
-								<SelectValue placeholder="Select a fruit"/>
+								<SelectValue placeholder="Select the output type"/>
 							</SelectTrigger>
 							<SelectContent>
 								<SelectGroup>
-									<SelectLabel>Fruits</SelectLabel>
-									<SelectItem value="apple">Apple</SelectItem>
-									<SelectItem value="banana">Banana</SelectItem>
-									<SelectItem value="blueberry">Blueberry</SelectItem>
-									<SelectItem value="grapes">Grapes</SelectItem>
-									<SelectItem value="pineapple">Pineapple</SelectItem>
+									<SelectItem value="text">Text</SelectItem>
+									<SelectItem value="markdown">Markdown/Code</SelectItem>
+									<SelectItem value="image">Image</SelectItem>
 								</SelectGroup>
 							</SelectContent>
 						</Select>
@@ -124,25 +128,20 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 				<div className="w-full flex flex-col gap-2">
 					<div className="bg-white rounded-lg p-3 border w-full border-primary">
 						<div className="flex justify-between items-center mb-1">
-							<span className="font-semibold text-gray-700">API Usage</span>
-							<Button>Manage API keys</Button>
+							<h3>Models</h3>
 						</div>
-						<div className="flex gap-2">
-							<RadioGroup defaultValue="comfortable">
-								<div className="flex items-center space-x-2">
-									<RadioGroupItem value="default" id="r1"/>
-									<Label htmlFor="r1">Default</Label>
-								</div>
-								<div className="flex items-center space-x-2">
-									<RadioGroupItem value="comfortable" id="r2"/>
-									<Label htmlFor="r2">Comfortable</Label>
-								</div>
-								<div className="flex items-center space-x-2">
-									<RadioGroupItem value="compact" id="r3"/>
-									<Label htmlFor="r3">Compact</Label>
-								</div>
-							</RadioGroup>
-						</div>
+						<RadioGroup value={selectedModel} className="flex gap-4 gap-x-5 mt-2 flex-wrap overflow-hidde" onValueChange={setSelectedModel}>
+							{
+								selectedProvider.models.map(model =>
+									(
+										<div className="flex items-center space-x-2 cursor-pointer" key={model.name}>
+											<RadioGroupItem value={model.name}
+											                id={model.name}>{model.displayName}</RadioGroupItem>
+											<Label htmlFor={model.name}>{model.displayName}</Label>
+										</div>
+									))
+							}
+						</RadioGroup>
 					</div>
 				</div>
 			</div>
