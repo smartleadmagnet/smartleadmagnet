@@ -148,7 +148,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
               <Button
                 className="px-4 py-2 bg-gray-300 text-black shadow-md hover:bg-gray-400"
                 onClick={() => {
-                  router.push("/");
+                  router.push("/my-forms");
                 }}
               >
                 ← Back

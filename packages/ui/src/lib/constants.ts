@@ -1,5 +1,3 @@
-
-
 export const builderItems = [
   {
     title: "Layout Elements",
@@ -37,7 +35,7 @@ export const builderItems = [
     ],
   },
   {
-    title:"Form Elements",
+    title: "Form Elements",
     dropletId: "form_elements",
     children: [
       {
@@ -71,7 +69,7 @@ export const builderItems = [
       {
         label: "Textarea",
         icon: "textarea",
-        type:'textarea',
+        type: "textarea",
         id: "6",
         formElement: true,
       },
@@ -103,7 +101,7 @@ export const builderItems = [
         ],
         id: "12",
       },
-      
+
       {
         label: "Radio",
         icon: "radio",
@@ -168,14 +166,8 @@ export const builderItems = [
         formElement: true,
         value: "#000000",
       },
-      
-      
     ],
-
-      
-    
-
-  }
+  },
 ];
 
 export const formStyleOptions = [
@@ -194,5 +186,60 @@ export const formStyleOptions = [
   {
     label: "Sharp",
     value: "sharp",
+  },
+];
+
+export const templateCategories = [
+  {
+    name: "Marketing",
+    id: "1",
+  },
+  {
+    name: "SEO",
+    id: "2",
+  },
+  {
+    name: "Design",
+    id: "3",
+  },
+  {
+    name: "Development",
+    id: "3",
+  },
+  {
+    name: "Fun Tools",
+    id: "4",
+  },
+  {
+    name: "Social Media",
+    id: "5",
+  },
+  {
+    name: "Content Creation",
+    id: "6",
+  },
+  {
+    name: "Email Genrator",
+    id: "7",
+  },
+  {
+    name: "Hashtag Genrator",
+    id: "8",
+  },
+  {
+    name: "Fitness",
+    id: "9",
+  },
+  {
+    name: "SALES",
+    id: "10",
+  },
+  {
+    name: "Finance",
+    id: "11",
+  },
+  {
+    name: "Other",
+    id: "12",
   },
 ];

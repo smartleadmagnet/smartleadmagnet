@@ -1,5 +1,6 @@
 import { Button } from '@smartleadmagnet/ui/components/ui/button';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +12,7 @@ import {
 import { getSessionUser } from '@/services/user';
 import React from 'react';
 import { signOut } from '@/lib/auth';
+import {redirect} from "next/navigation";
 
 export async function User() {
   let user = await getSessionUser();
@@ -35,6 +37,9 @@ export async function User() {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem >
+          <Link href="/my-forms">My Forms</Link>
+          </DropdownMenuItem>
         <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuSeparator />
