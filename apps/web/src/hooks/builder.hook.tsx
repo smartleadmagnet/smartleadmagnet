@@ -7,14 +7,18 @@ import { ChildItem } from "@/app/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 import { useLayoutContext } from "@/context/LayoutContext";
 import axios from "axios";
+import { useRouter } from 'next/navigation'
 import { LeadMagnet } from "@smartleadmagnet/database";
 
 const useBuilder = ({ leadMagnet }: {leadMagnet: LeadMagnet }) => {
+  const router = useRouter()
   const { elementsList, setElementsList } = useLayoutContext();
   const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [embedOpen, setEmbedOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [formName, setFormName] = useState("");
+  
   const [activeOption, setActiveOption] = useState("info");
   const [selectedView, setSelectedView] = useState("Form");
   const textContent =
@@ -264,6 +268,8 @@ const useBuilder = ({ leadMagnet }: {leadMagnet: LeadMagnet }) => {
     setActiveOption,
     embedOpen,
     setEmbedOpen,
+    router,
+    formName, setFormName
   };
 };
 
