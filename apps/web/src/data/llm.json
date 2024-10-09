@@ -3,20 +3,20 @@
     "name": "Open AI",
     "models": [
       {
-        "displayName": "GPT-4o",
-        "name": "gpt-4o",
-        "cost": {
-          "incomingToken": 10.0,
-          "completionToken": 30.0
-        }
-      },
-      {
         "displayName": "GPT 4 Mini",
         "name": "gpt-4o-mini",
         "default": true,
         "cost": {
           "incomingToken": 0.15,
           "completionToken": 0.6
+        }
+      },
+      {
+        "displayName": "GPT-4o",
+        "name": "gpt-4o",
+        "cost": {
+          "incomingToken": 10.0,
+          "completionToken": 30.0
         }
       },
       {

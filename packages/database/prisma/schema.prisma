@@ -98,6 +98,8 @@ model LeadMagnet {
   userId      String    @db.ObjectId
   status      String    @default("pending")
   prompt      String    @default("")
+  provider    String    @default("Open AI")
+  model       String    @default("gpt-4o-mini")
   components  Json?
   createdAt   DateTime? @default(now())
   updatedAt   DateTime? @default(now()) @updatedAt

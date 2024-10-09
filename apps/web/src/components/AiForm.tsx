@@ -128,18 +128,16 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 						<div className="flex justify-between items-center mb-1">
 							<h3>Models</h3>
 						</div>
-						<RadioGroup defaultValue={selectedModel} className="flex gap-4 gap-x-5 mt-2">
+						<RadioGroup value={selectedModel} className="flex gap-4 gap-x-5 mt-2 flex-wrap overflow-hidde" onValueChange={setSelectedModel}>
 							{
-								selectedProvider.models.map(model => {
-									console.log(model);
-									return (
+								selectedProvider.models.map(model =>
+									(
 										<div className="flex items-center space-x-2 cursor-pointer" key={model.name}>
 											<RadioGroupItem value={model.name}
 											                id={model.name}>{model.displayName}</RadioGroupItem>
 											<Label htmlFor={model.name}>{model.displayName}</Label>
 										</div>
-									);
-								})
+									))
 							}
 						</RadioGroup>
 					</div>
