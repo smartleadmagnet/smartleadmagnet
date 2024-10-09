@@ -8,11 +8,17 @@ const useAIForm = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 	const defaultLLMProvider = leadMagnet?.provider ? llm.find((provider) => provider.name === leadMagnet.provider) : llm[0];
 	const [prompt, setPrompt] = useState<string>(leadMagnet?.prompt || "");
 	const [selectedProvider, setSelectedProvider] = useState<LLMProvider>(defaultLLMProvider);
-	const [selectedModel, setSelectedModel] = useState<string>(leadMagnet.modelName || selectedProvider?.models[0]?.name || "");
+	const [selectedModel, setSelectedModel] = useState<string>(leadMagnet.model || selectedProvider?.models[0]?.name || "");
+	const [outputType, setOutputType] = useState<string>(leadMagnet?.output || "text");
 	
 	const updateData = async () => {
 		try {
-			await axios.post(`/api/lead/${leadMagnet.id}`, {prompt, providerName: selectedProvider?.name, selectedModel});
+			await axios.post(`/api/lead/${leadMagnet.id}`, {
+				prompt,
+				provider: selectedProvider?.name,
+				model: selectedModel,
+				output: outputType
+			});
 		} catch (e) {
 			console.log(e);
 		}
@@ -32,9 +38,19 @@ const useAIForm = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 		return () => {
 			clearTimeout(handler); // Cleanup the timeout on unmount or when prompt changes
 		};
-	}, [prompt, selectedModel]);
+	}, [prompt, selectedModel, outputType]);
 	
-	return {prompt, setPrompt, providers: llm, onProviderChange, selectedProvider, selectedModel, setSelectedModel}; // Return prompt and setPrompt for usage in your component
+	return {
+		prompt,
+		setPrompt,
+		providers: llm,
+		onProviderChange,
+		selectedProvider,
+		selectedModel,
+		setSelectedModel,
+		outputType,
+		setOutputType
+	}; // Return prompt and setPrompt for usage in your component
 };
 
 export default useAIForm;

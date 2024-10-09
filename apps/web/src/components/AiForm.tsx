@@ -28,7 +28,9 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 		onProviderChange,
 		selectedProvider,
 		selectedModel,
-		setSelectedModel
+		setSelectedModel,
+		setOutputType,
+		outputType
 	} = useAIForm({leadMagnet})
 	const {elementsList} = useLayoutContext();
 	return (
@@ -107,7 +109,7 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 					</div>
 					<div className="form-control w-full mb-4">
 						<Label>Output Type</Label>
-						<Select defaultValue="text">
+						<Select value={outputType} onValueChange={setOutputType}>
 							<SelectTrigger>
 								<SelectValue placeholder="Select the output type"/>
 							</SelectTrigger>
