@@ -40,7 +40,9 @@ export async function User() {
         <DropdownMenuItem >
           <Link href="/my-forms">My Forms</Link>
           </DropdownMenuItem>
-        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuItem>
+        <Link href="/settings">Settings</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
