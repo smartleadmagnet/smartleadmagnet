@@ -101,6 +101,7 @@ model LeadMagnet {
   provider    String    @default("Open AI")
   model       String    @default("gpt-4o-mini")
   output      String    @default("text")
+  styles      Json?     @default("{}")
   components  Json?
   createdAt   DateTime? @default(now())
   updatedAt   DateTime? @default(now()) @updatedAt
