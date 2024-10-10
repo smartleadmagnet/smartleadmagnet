@@ -94,6 +94,7 @@ model LeadMagnet {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String    @default("")
+  image       String?   @default("")
   user        User      @relation(fields: [userId], references: [id])
   userId      String    @db.ObjectId
   status      String    @default("pending")

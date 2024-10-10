@@ -11,6 +11,14 @@ const nextConfig = {
 		remotePatterns: [
 			{
 				protocol: 'https',
+				hostname: 'media.smartleadmagnet.com'
+			},
+			{
+				protocol: 'https',
+				hostname: 'd3uu14lxe8399z.cloudfront.net'
+			},
+			{
+				protocol: 'https',
 				hostname: 'avatars.githubusercontent.com'
 			},
 			{
