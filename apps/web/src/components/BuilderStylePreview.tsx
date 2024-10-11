@@ -128,8 +128,8 @@ export default function BuilderStylePreview({
 											<div className="space-y-4">
 												<Input
 													type="text"
-													placeholder="Enter your form name"
-													className="w-full pointer-events-none "
+													placeholder="Enter the Lead Magnet Name"
+													className="w-full pointer-events-none"
 												/>
 												<Button className="btn-primary pointer-events-none">
 													Submit

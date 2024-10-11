@@ -4,9 +4,6 @@ import React from "react";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Icon from "@smartleadmagnet/ui/components/icon";
 import { Card } from "@smartleadmagnet/ui/components/ui/card";
-import SettingsForm from "@/components/SettingsForm";
-import WebhookForm from "@/components/WebhookForm";
-import EmailForm from "@/components/EmailForm";
 import EditableInput from "@/components/EditableInput";
 import { LeadMagnet } from "@smartleadmagnet/database";
 

@@ -252,8 +252,12 @@
     white-space: nowrap;
     text-align: left;
   }
-  
+
   .mobile-link{
     @apply flex items-center gap-4 px-2.5 text-gray-200 hover:text-white;
   }
+}
+
+.ql-editor {
+  min-height: 100px;
 }

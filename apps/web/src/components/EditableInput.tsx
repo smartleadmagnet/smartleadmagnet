@@ -5,10 +5,11 @@ import { Button } from "@smartleadmagnet/ui/components/ui/button";
 
 interface FormWithIconProps {
   value: string;
+  // eslint-disable-next-line no-unused-vars
   setValue: (newValue: string) => void;
 }
 
-const FormWithIcon: FC<FormWithIconProps> = ({ value, setValue }) => {
+const EditableInput: FC<FormWithIconProps> = ({ value, setValue }) => {
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null); // Type for inputRef
 
@@ -22,13 +23,13 @@ const FormWithIcon: FC<FormWithIconProps> = ({ value, setValue }) => {
     setIsTyping(true); // Hide the icon when it's clicked
     inputRef.current?.focus(); // Focus on the input field
   };
-  const inputWidth = value.length ? `${value.length * 10 + 30}px` : "220px"; 
+  const inputWidth = value.length ? `${value.length * 10 + 30}px` : "220px";
 
   return (
     <div className="flex cm-form-input space-x-1">
       <Input
         value={value} // Control the value with props
-        placeholder="Enter your form name"
+        placeholder="Enter your Lead Magnet name"
         onChange={handleInputChange}
         ref={inputRef} // Attach ref to the input
         onKeyDownCapture={(e) => {
@@ -51,4 +52,4 @@ const FormWithIcon: FC<FormWithIconProps> = ({ value, setValue }) => {
   );
 };
 
-export default FormWithIcon;
+export default EditableInput;

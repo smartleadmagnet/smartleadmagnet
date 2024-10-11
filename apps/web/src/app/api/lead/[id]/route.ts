@@ -12,6 +12,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 			await updateLeadMagnet(params.id, user?.id, payload);
 			return NextResponse.json({});
 		} catch (error: any) {
+			console.log(error);
 			return NextResponse.json({ error: error.message || error }, { status: 500 });
 		}
 	}
