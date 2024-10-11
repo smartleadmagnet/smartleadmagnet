@@ -2,9 +2,11 @@ import { LeadMagnet } from "@smartleadmagnet/database";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import llm from "@/data/llm.json";
-import { LLMProvider } from "@/types/llm";
+import { LLMProvider, LLMModel } from "@/types/llm";
+import { useLayoutContext } from "@/context/LayoutContext";
 
-const useAIForm = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
+const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
+	const {elementsList} = useLayoutContext();
 	const defaultLLMProvider = leadMagnet?.provider ? llm.find((provider) => provider.name === leadMagnet.provider) : llm[0];
 	const [prompt, setPrompt] = useState<string>(leadMagnet?.prompt || "");
 	const [selectedProvider, setSelectedProvider] = useState<LLMProvider>(defaultLLMProvider);
@@ -24,56 +26,70 @@ const useAIForm = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 		}
 	};
 	
+	const filterProviders = (providers: LLMProvider[], output?: string): LLMProvider[] => {
+		const type = output || outputType;
+		return providers.filter(provider =>
+			provider.models.some(model => {
+				if (type === "image") return model.generateImage;
+				if (type === "text"|| type === "markdown") return model.text;
+				return true;
+			})
+		);
+	};
+	
+	const filterModels = (models: LLMModel[]): LLMModel[] => {
+		const hasImageOrFile = elementsList.some(element => element.type === "image" || element.type === "file");
+		
+		return models.filter(model => {
+			if (outputType === "image") return model.generateImage;
+			if (outputType === "text" || outputType === "markdown") {
+				if (hasImageOrFile) return model.text && model.vision;
+				return model.text;
+			}
+			return true;
+		});
+	};
+	
+	const onOutputTypeChange = (type: string) => {
+		setOutputType(type);
+		const filteredProviders = filterProviders(llm, type);
+		const filteredModels = filterModels(selectedProvider?.models || []);
+		
+		if (!filteredProviders.find(provider => provider.name === selectedProvider?.name)) {
+			setSelectedProvider(filteredProviders[0]);
+		}
+		
+		if (!filteredModels.find(model => model.name === selectedModel)) {
+			setSelectedModel(filteredModels[0]?.name || "");
+		}
+	}
+	
 	const onProviderChange = (provider: string) => {
 		const newProvider = llm.find((p) => p.name === provider);
 		setSelectedProvider(newProvider);
 		
-		// Select the first model that supports image generation if outputType is "image"
-		if (outputType === "image") {
-			const imageModel = newProvider?.models.find(model => model.generateImage);
-			setSelectedModel(imageModel ? imageModel.name : newProvider?.models[0]?.name || "");
-		} else {
-			setSelectedModel(newProvider?.models[0]?.name || "");
-		}
+		const filteredModels = filterModels(newProvider?.models || []);
+		setSelectedModel(filteredModels[0]?.name || "");
 	};
 	
 	useEffect(() => {
-		// Automatically switch provider and model if output type is "image"
-		if (outputType === "image") {
-			let providerWithImageModel = selectedProvider;
-			let imageModel = selectedProvider?.models.find(model => model.generateImage);
-			
-			// If current provider does not support image models, find a new provider that does
-			if (!imageModel) {
-				providerWithImageModel = llm.find(provider => provider.models.some(model => model.generateImage));
-				setSelectedProvider(providerWithImageModel);
-				imageModel = providerWithImageModel?.models.find(model => model.generateImage);
-			}
-			
-			// Set the image-generating model
-			if (imageModel) {
-				setSelectedModel(imageModel.name);
-			}
+		const filteredModels = filterModels(selectedProvider?.models || []);
+		
+		if (!filteredModels.find(model => model.name === selectedModel)) {
+			setSelectedModel(filteredModels[0]?.name || "");
 		}
 		
 		const handler = setTimeout(() => {
 			updateData();
-		}, 500); // Adjust the delay as needed
+		}, 500);
 		
 		return () => {
-			clearTimeout(handler); // Cleanup the timeout on unmount or when prompt changes
+			clearTimeout(handler);
 		};
-	}, [prompt, selectedModel, outputType, selectedProvider]);
+	}, [prompt, selectedModel, outputType, selectedProvider, elementsList]);
 	
-	// Filter providers based on output type
-	const filteredProviders = outputType === "image"
-		? llm.filter(provider => provider.models.some(model => model.generateImage))
-		: llm;
-	
-	// Filter models based on output type
-	const filteredModels = outputType === "image"
-		? selectedProvider?.models.filter(model => model.generateImage)
-		: selectedProvider?.models;
+	const filteredProviders = filterProviders(llm);
+	const filteredModels = filterModels(selectedProvider?.models || []);
 	
 	return {
 		prompt,
@@ -84,9 +100,9 @@ const useAIForm = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 		selectedModel,
 		setSelectedModel,
 		outputType,
-		setOutputType,
+		setOutputType: onOutputTypeChange,
 		filteredModels
-	}; // Return filteredProviders and filteredModels for usage in your component
+	};
 };
 
 export default useAIForm;

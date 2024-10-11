@@ -20,6 +20,7 @@ import { Badge } from "@smartleadmagnet/ui/components/ui/badge";
 
 
 export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
+	const {elementsList} = useLayoutContext();
 	const {
 		prompt,
 		setPrompt,
@@ -31,8 +32,7 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 		setOutputType,
 		filteredModels,
 		outputType
-	} = useAIForm({leadMagnet})
-	const {elementsList} = useLayoutContext();
+	} = useAIForm({leadMagnet, elementsList})
 	return (
 		<div className="w-full flex flex-col bg-white p-4 rounded-md justify-between relative">
 			<div
@@ -104,8 +104,8 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 										<RadioGroupItem value={model.name} id={model.name}/>
 										<Label htmlFor={model.name}>{model.displayName}</Label>
 										{
-											model.hasVision && (
-												<Badge className="text-[8px] !min-w-[80px]" variant="destructive">Support File</Badge>
+											model.vision && (
+												<Badge className="text-[8px] !min-w-[60px]" variant="destructive">Support File</Badge>
 											)
 										}
 										{

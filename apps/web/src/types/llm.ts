@@ -9,7 +9,8 @@ export interface LLMModel {
 	cost: Cost
 	default?: boolean
 	generateImage?: boolean
-	hasVision?: boolean
+	text?: boolean
+	vision?: boolean
 }
 
 export interface Cost {
