@@ -1,4 +1,3 @@
-import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import { useLayoutContext } from "@/context/LayoutContext";
 import MentionTextArea from "@smartleadmagnet/ui/components/MentionTextArea";
@@ -8,7 +7,6 @@ import {
 	SelectContent,
 	SelectGroup,
 	SelectItem,
-	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from "@smartleadmagnet/ui/components/ui/select";
@@ -18,6 +16,7 @@ import {
 } from "@smartleadmagnet/ui/components/ui/radio-group";
 import useAIForm from "@/hooks/aiform.hook";
 import { LeadMagnet } from "@smartleadmagnet/database";
+import { Badge } from "@smartleadmagnet/ui/components/ui/badge";
 
 
 export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
@@ -30,6 +29,7 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 		selectedModel,
 		setSelectedModel,
 		setOutputType,
+		filteredModels,
 		outputType
 	} = useAIForm({leadMagnet})
 	const {elementsList} = useLayoutContext();
@@ -53,26 +53,26 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 						}
 					/>
 				</div>
-				
-				{/* Variables Section */}
-				<div className="w-full max-w-xl mb-4">
-					<ul className="list-disc text-sm">
-						<li>
-							Variables:{" "}
-							<small>{elementsList.filter((item: any) => item.formElement).map((element: any) => (
-								<span className="bg-gray-300 px-2 py-1 inline-block rounded mr-2"
-								      key={element.id}>{"{{"} {element.name} {"}}"}</span>
-							))}</small>
-						</li>
-					</ul>
+				<div className="form-control w-full mb-4">
+					<Label>Output Type</Label>
+					<Select value={outputType} onValueChange={setOutputType}>
+						<SelectTrigger>
+							<SelectValue placeholder="Select the output type"/>
+						</SelectTrigger>
+						<SelectContent>
+							<SelectGroup>
+								<SelectItem value="text">Text</SelectItem>
+								<SelectItem value="markdown">Markdown/Code</SelectItem>
+								<SelectItem value="image">Image</SelectItem>
+							</SelectGroup>
+						</SelectContent>
+					</Select>
 				</div>
-				
-				
 				{/* Output Type and Provider */}
 				<div className="flex gap-2 w-full">
 					<div className="form-control w-full mb-4">
 						<Label>Provider</Label>
-						<Select defaultValue={selectedProvider.name} onValueChange={onProviderChange}>
+						<Select value={selectedProvider.name} onValueChange={onProviderChange}>
 							<SelectTrigger>
 								<SelectValue placeholder="Select a LLM Provider"/>
 							</SelectTrigger>
@@ -85,21 +85,6 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 							</SelectContent>
 						</Select>
 					</div>
-					<div className="form-control w-full mb-4">
-						<Label>Output Type</Label>
-						<Select value={outputType} onValueChange={setOutputType}>
-							<SelectTrigger>
-								<SelectValue placeholder="Select the output type"/>
-							</SelectTrigger>
-							<SelectContent>
-								<SelectGroup>
-									<SelectItem value="text">Text</SelectItem>
-									<SelectItem value="markdown">Markdown/Code</SelectItem>
-									<SelectItem value="image">Image</SelectItem>
-								</SelectGroup>
-							</SelectContent>
-						</Select>
-					</div>
 				</div>
 				
 				{/* API Usage Section */}
@@ -108,16 +93,26 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 						<div className="flex justify-between items-center mb-1">
 							<h3>Models</h3>
 						</div>
-						<RadioGroup value={selectedModel} className="flex gap-4 gap-x-5 mt-2 flex-wrap overflow-hidde" onValueChange={setSelectedModel}>
+						<RadioGroup
+							value={selectedModel}
+							className="grid grid-cols-3 gap-4 mt-2 overflow-hidden"
+							onValueChange={setSelectedModel}
+						>
 							{
-								selectedProvider.models.map(model =>
-									(
-										<div className="flex items-center space-x-2 cursor-pointer" key={model.name}>
-											<RadioGroupItem value={model.name}
-											                id={model.name}>{model.displayName}</RadioGroupItem>
-											<Label htmlFor={model.name}>{model.displayName}</Label>
-										</div>
-									))
+								filteredModels.map(model => (
+									<div className="flex items-center space-x-2 cursor-pointer" key={model.name}>
+										<RadioGroupItem value={model.name} id={model.name}/>
+										<Label htmlFor={model.name}>{model.displayName}</Label>
+										{
+											model.hasVision && (
+												<Badge className="text-[8px] !min-w-[80px]" variant="destructive">Support File</Badge>
+											)
+										}
+										{
+											model.generateImage && <Badge className="text-[8px] !min-w-[80px]">Generate Image</Badge>
+										}
+									</div>
+								))
 							}
 						</RadioGroup>
 					</div>
