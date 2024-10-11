@@ -77,10 +77,26 @@ const config = {
   					height: '0'
   				}
   			},
-  		},
+			  pulse: {
+				  '0%, 100%': { opacity: 1 },
+				  '50%': { opacity: 0.5 },
+			  },
+			  ripple: {
+				  '0%': {
+					  transform: 'scale(0.8)',
+					  opacity: 1,
+				  },
+				  '100%': {
+					  transform: 'scale(1.2)',
+					  opacity: 0,
+				  },
+			  },
+		  },
   		animation: {
+			  'ripple-pulse': 'ripple 1s infinite ease-out',
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
+			  'custom-pulse': 'pulse 1.5s ease-in-out infinite',
   		}
   	}
   },
