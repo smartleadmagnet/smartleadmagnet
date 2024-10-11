@@ -58,7 +58,7 @@ const Icon: React.FC<IconProps> = ({
             viewBox="0 0 24 24"
             fill={color}
           >
-            <g id="heading-2" transform="translate(-2 -4)">
+            <g id="heading-2" >
               <path
                 id="primary"
                 d="M16,12v-.5A2.5,2.5,0,0,1,18.5,9h0A2.5,2.5,0,0,1,21,11.5v.33A2.52,2.52,0,0,1,19.74,14l-1.26.72A4.91,4.91,0,0,0,16,19h5"
