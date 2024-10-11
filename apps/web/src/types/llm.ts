@@ -8,6 +8,8 @@ export interface LLMModel {
 	name: string
 	cost: Cost
 	default?: boolean
+	generateImage?: boolean
+	hasVision?: boolean
 }
 
 export interface Cost {
