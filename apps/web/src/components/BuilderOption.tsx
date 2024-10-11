@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function BuilderOption({activeOption, setActiveOption, leadMagnet}: Props) {
-	return (<div className="flex flex-1">
+	return (<div className="flex flex-1 builder-wrapper">
 		<div className="w-1/3 p-4">
 			<div className="grid grid-cols-1 gap-4">
 				<div

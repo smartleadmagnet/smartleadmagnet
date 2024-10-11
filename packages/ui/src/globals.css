@@ -69,19 +69,25 @@
 }
 
 /* builder page css */
-.builder-item span {
-  display: block;
-}
-
 .builder-item {
   padding: 20px;
   text-align: center;
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .builder-item svg {
-  margin: 0 auto;
+  width: 30px;
+  height: 30px;
+  display: block;
 }
+.builder-item .title {
+  font-size: 17px;
+  margin-left: 6px;
+}
+
 .handle {
   display: flex;
   align-items: center;

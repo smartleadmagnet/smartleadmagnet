@@ -99,7 +99,7 @@ export default function BuilderStylePreview({
   imageUrl,
 }: Props) {
   return (
-    <div className="flex flex-1">
+    <div className="flex flex-1 builder-wrapper">
       <aside className="w-1/3 p-4 builder-column ">
         <Accordion
           type="single"
