@@ -92,6 +92,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
             </div>
 
             <div className="flex items-center">
+              <p className="mr-4 font-bold">Last Saved (2 min ago)</p>
               <Button className="btn-primary ">Publish</Button>
             </div>
           </div>
