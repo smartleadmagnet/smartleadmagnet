@@ -1,0 +1,28 @@
+{
+  "name": "@smartleadmagnet/llm",
+  "module": "index.ts",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/xml2js": "^0.4.14"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0",
+    "@smartleadmagnet/database": "*",
+    "@smartleadmagnet/eslint-config": "*",
+    "@smartleadmagnet/typescript-config": "*",
+    "@langchain/community": "^0.3.4",
+    "@langchain/groq": "^0.1.2",
+    "@langchain/openai": "^0.3.7",
+    "@aws-crypto/sha256-js": "^5.2.0",
+    "@aws-sdk/credential-provider-node": "^3.669.0",
+    "@aws-sdk/types": "^3.664.0"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "xml2js": "^0.6.2"
+  }
+}

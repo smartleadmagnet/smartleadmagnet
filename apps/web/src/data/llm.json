@@ -1,11 +1,10 @@
 [
-
   {
     "name": "AWS BedRock",
     "models": [
       {
         "displayName": "Claude 3.5 Sonnet",
-        "name": "anthropic.claude-3-5-sonnet-20240620-v1:0:18k",
+        "name": "anthropic.claude-3-5-sonnet-20240620-v1:0",
         "generateImage": false,
         "text": true,
         "vision": true,
@@ -41,7 +40,7 @@
       },
       {
         "displayName": "Claude 3 Haiku",
-        "name": "anthropic.claude-3-haiku-20240307-v1:0:48k",
+        "name": "anthropic.claude-3-haiku-20240307-v1:0",
         "text": true,
         "vision": true,
         "free": true,
@@ -74,15 +73,6 @@
           "incomingToken": 0.25,
           "completionToken": 1.25
         }
-      },
-      {
-        "displayName": "Stability AI",
-        "name": "stability.stable-diffusion-xl-v1",
-        "text": false,
-        "vision": true,
-        "free": true,
-        "generateImage": true,
-        "perImage": 0.04
       }
     ]
   },

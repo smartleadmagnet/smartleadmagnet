@@ -26,6 +26,36 @@ const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
 		}
 	};
 	
+	const onValidatePrompt = async () => {
+		console.log({ elementsList });
+		const textPayload = elementsList.reduce((acc, element) => {
+			if (!(element.type === "image" || element.type === "file")) {
+				acc[element.name] = element.value;
+			}
+			return acc;
+		}, {});
+		// //
+		// const imagePayload = elementsList.reduce((acc, element) => {
+		// 	if (element.type === "image" || element.type === "file") {
+		// 		acc.push({ "type": "image_url", "image_url": { "url": element.value } });
+		// 	}
+		// 	return acc;
+		// }, []);
+		
+		try {
+			// const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, [
+			// 	{"type": "text", "text": JSON.stringify(textPayload)},
+			// 	...imagePayload,
+			// ]);
+			
+			
+			const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, textPayload);
+		} catch (e) {
+			console.log(e);
+		}
+		
+	}
+	
 	const filterProviders = (providers: LLMProvider[], output?: string): LLMProvider[] => {
 		const type = output || outputType;
 		return providers.filter(provider =>
@@ -101,7 +131,8 @@ const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
 		setSelectedModel,
 		outputType,
 		setOutputType: onOutputTypeChange,
-		filteredModels
+		filteredModels,
+		onValidatePrompt
 	};
 };
 

@@ -15,7 +15,7 @@ import {
   RadioGroupItem,
 } from "@smartleadmagnet/ui/components/ui/radio-group";
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
-import { ChildItem, Option } from "../types/builder";
+import { Option } from "@/app/types/builder";
 import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 
 import Icon from "@smartleadmagnet/ui/components/icon";
@@ -330,11 +330,21 @@ export default function BuilderElement({
               {data.required && <span className="text-red-500">*</span>}{" "}
               {internalName}
             </Label>
-
+            
             <div className="relative w-full">
               <Input
                 type="file"
                 className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 focus:outline-none h-auto"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                      updateData("value", reader.result as string, data); // Base64 data
+                    };
+                    reader.readAsDataURL(file); // Convert file to base64
+                  }
+                }}
               />
             </div>
           </>
@@ -347,14 +357,22 @@ export default function BuilderElement({
               {data.required && <span className="text-red-500">*</span>}{" "}
               {internalName}
             </Label>
-
+            
             <div className="flex items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition-colors duration-200">
               <Input
                 type="file"
                 accept="image/*" // Accepts image files only
                 className="hidden" // Hides the actual file input
-                onChange={() => {
-               }}
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                      updateData("value", reader.result as string, data); // Base64 data
+                    };
+                    reader.readAsDataURL(file); // Convert image to base64
+                  }
+                }}
               />
               <label
                 htmlFor="file-upload"
@@ -362,11 +380,11 @@ export default function BuilderElement({
               >
                 <span className="text-lg">📁</span>
                 <span className="mt-2 text-sm">
-                  Drag and drop an image here, or click to select one
-                </span>
+              Drag and drop an image here, or click to select one
+            </span>
               </label>
             </div>
-
+            
             <p className="text-xs text-gray-500 mt-2">
               Please upload an image (JPG, PNG, GIF).
             </p>
@@ -388,7 +406,6 @@ export default function BuilderElement({
 
         {editable && (
           <div className="flex items-center edit_btns">
-            {/* Button Group */}
             <div className="inline-flex shadow-sm" role="group">
               {data.type !== "separator" && (
                 <Button

@@ -134,7 +134,7 @@
   height: 100%;
 }
 .builder-column {
-  height: calc(100vh - 75px);
+  /*height: calc(100vh - 75px);*/
   overflow-y: auto;
 }
 .cm-form-input input {
