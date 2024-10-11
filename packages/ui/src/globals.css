@@ -209,6 +209,96 @@
   width: 30px;
   height: 30px;
 }
+
+/* homepage */
+.hero-section{
+  h1{
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 1.2;
+    
+  }
+  .hero-shape {
+    position: absolute;
+    z-index: -1;
+    animation: upDown 4s ease-in-out infinite; /* Add animation */
+    
+    /* Base shape styles */
+    &.shape-1 {
+      top: 12%;
+      right: 10%;
+      width: 3.5%;
+    }
+    &.shape-2 {
+      top: 43%;
+      left: 10%;
+      width: 4.25%;
+    }
+    &.shape-3 {
+      top: 50%;
+      right: 10%;
+      width: 5%;
+      z-index: 2;
+    }
+  }
+  .cta-shape {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+  
+
+  @media (max-width: 991px) {
+    h1{
+      font-size: 64px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    h1{
+      font-size: 48px;
+    }
+    .hero-shape
+    {
+      display: none;
+    }
+  }
+}
+.cta-shape {
+  position: absolute;
+  right: 20px;
+  top: 0;
+}
+.ql-editor {
+  min-height: 100px;
+}
+
+/* price page */
+.price-table {
+  input:checked + label .checkbox-switch {
+    transform: translateX(100%);
+  }
+  
+  input:checked ~ .border .pricing-monthly {
+    display: none;
+  }
+  
+  input:checked ~ .border .pricing-yearly {
+    display: inline;
+  }
+  input:checked ~ .yearly-table {
+    display: flex;
+  }
+  input:checked ~ .monthly-table {
+    display: none;
+  }
+  
+
+  .pricing-yearly {
+    display: none;
+  }
+}
+
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
@@ -258,6 +348,14 @@
   }
 }
 
-.ql-editor {
-  min-height: 100px;
+
+/* Keyframes for up-and-down animation */
+@keyframes upDown {
+  0%, 100% {
+    transform: translateY(0); /* Start and end in the original position */
+  }
+  50% {
+    transform: translateY(-50px); /* Move up by 20px at 50% */
+  }
 }
+
