@@ -31,7 +31,7 @@ const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const [embedOpen, setEmbedOpen] = useState(false);
 	const [editMode, setEditMode] = useState(false);
-	const [formName, setFormName] = useState("");
+	const [formName, setFormName] = useState(leadMagnet?.name);
 	
 	const [activeOption, setActiveOption] = useState("info");
 	const [selectedView, setSelectedView] = useState("Form");
@@ -75,7 +75,7 @@ const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 	
 	const updateData = async () => {
 		try {
-			await axios.post(`/api/lead/${leadMagnet.id}`, {components: elementsList, styles: formStyles});
+			await axios.post(`/api/lead/${leadMagnet.id}`, {components: elementsList, styles: formStyles, name: formName});
 		} catch (e) {
 			console.log(e);
 		}
@@ -88,6 +88,16 @@ const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 		}
 		
 	}, [elementsList, formStyles]);
+	
+	useEffect(() => {
+		const handler = setTimeout(() => {
+			updateData();
+		}, 500); // Adjust the delay as needed
+		
+		return () => {
+			clearTimeout(handler); // Cleanup the timeout on unmount or when prompt changes
+		};
+	}, [formName]);
 	
 	useEffect(() => {
 		setElementsList(leadMagnet.components)

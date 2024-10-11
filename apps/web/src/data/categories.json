@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Marketing",
+    "id": "marketing"
+  },
+  {
+    "name": "SEO",
+    "id": "seo"
+  },
+  {
+    "name": "Design",
+    "id": "design"
+  },
+  {
+    "name": "Development",
+    "id": "development"
+  },
+  {
+    "name": "Fun Tools",
+    "id": "funtools"
+  },
+  {
+    "name": "Social Media",
+    "id": "socialmedia"
+  },
+  {
+    "name": "Content Creation",
+    "id": "contentcreation"
+  },
+  {
+    "name": "Email Generator",
+    "id": "emailgenerator"
+  },
+  {
+    "name": "Hashtag Generator",
+    "id": "hashtaggenerator"
+  },
+  {
+    "name": "Fitness",
+    "id": "fitness"
+  },
+  {
+    "name": "SALES",
+    "id": "sales"
+  },
+  {
+    "name": "Finance",
+    "id": "finance"
+  },
+  {
+    "name": "Other",
+    "id": "other"
+  }
+]

@@ -4,9 +4,6 @@ import React from "react";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Icon from "@smartleadmagnet/ui/components/icon";
 import { Card } from "@smartleadmagnet/ui/components/ui/card";
-import SettingsForm from "@/components/SettingsForm";
-import WebhookForm from "@/components/WebhookForm";
-import EmailForm from "@/components/EmailForm";
 import EditableInput from "@/components/EditableInput";
 import { LeadMagnet } from "@smartleadmagnet/database";
 
@@ -119,13 +116,38 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
                 </TabsTrigger>
               </TabsList>
             </div>
-            <div className="flex items-center">
-              <Button
-                className="px-4 py-2 bg-gray-300 text-black shadow-md hover:bg-gray-400"
-                onClick={() => setEmbedOpen(true)}
-              >
-                Embed
-              </Button>
+            <div className="flex flex-row justify-center items-center gap-2">
+              <div className="relative mr-2">
+                <span
+                  className="absolute inline-flex h-full w-full rounded-md bg-blue-500 opacity-75 animate-ripple-pulse"></span>
+                <Button
+                  className="relative btn btn-primary flex items-center px-4 py-2"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    viewBox="0 0 24 24"
+                    className="text-lg"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    {/* Icon */}
+                    <path
+                      d="m11 4-.5-1-.5 1-1 .125.834.708L9.5 6l1-.666 1 .666-.334-1.167.834-.708zm8.334 10.666L18.5 13l-.834 1.666-1.666.209 1.389 1.181L16.834 18l1.666-1.111L20.166 18l-.555-1.944L21 14.875zM6.667 6.333 6 5l-.667 1.333L4 6.5l1.111.944L4.667 9 6 8.111 7.333 9l-.444-1.556L8 6.5zM3.414 17c0 .534.208 1.036.586 1.414L5.586 20c.378.378.88.586 1.414.586s1.036-.208 1.414-.586L20 8.414c.378-.378.586-.88.586-1.414S20.378 5.964 20 5.586L18.414 4c-.756-.756-2.072-.756-2.828 0L4 15.586c-.378.378-.586.88-.586 1.414zM17 5.414 18.586 7 15 10.586 13.414 9 17 5.414z"></path>
+                  </svg>
+                  <span className="mx-2">Generate tool with AI</span>
+                </Button>
+              </div>
+              <div className="flex items-center">
+                <Button
+                  className="px-4 py-2 bg-gray-300 text-black shadow-md hover:bg-gray-400"
+                  onClick={() => setEmbedOpen(true)}
+                >
+                  Embed
+                </Button>
+              </div>
             </div>
           </div>
           <TabsContent value="form">

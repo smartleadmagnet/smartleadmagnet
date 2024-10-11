@@ -25,12 +25,37 @@ const useAIForm = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 	};
 	
 	const onProviderChange = (provider: string) => {
-		setSelectedProvider(llm.find((p) => p.name === provider));
-		const newModalName = llm.find((p) => p.name === provider)?.models[0]?.name || "";
-		setSelectedModel(newModalName);
-	}
+		const newProvider = llm.find((p) => p.name === provider);
+		setSelectedProvider(newProvider);
+		
+		// Select the first model that supports image generation if outputType is "image"
+		if (outputType === "image") {
+			const imageModel = newProvider?.models.find(model => model.generateImage);
+			setSelectedModel(imageModel ? imageModel.name : newProvider?.models[0]?.name || "");
+		} else {
+			setSelectedModel(newProvider?.models[0]?.name || "");
+		}
+	};
 	
 	useEffect(() => {
+		// Automatically switch provider and model if output type is "image"
+		if (outputType === "image") {
+			let providerWithImageModel = selectedProvider;
+			let imageModel = selectedProvider?.models.find(model => model.generateImage);
+			
+			// If current provider does not support image models, find a new provider that does
+			if (!imageModel) {
+				providerWithImageModel = llm.find(provider => provider.models.some(model => model.generateImage));
+				setSelectedProvider(providerWithImageModel);
+				imageModel = providerWithImageModel?.models.find(model => model.generateImage);
+			}
+			
+			// Set the image-generating model
+			if (imageModel) {
+				setSelectedModel(imageModel.name);
+			}
+		}
+		
 		const handler = setTimeout(() => {
 			updateData();
 		}, 500); // Adjust the delay as needed
@@ -38,19 +63,30 @@ const useAIForm = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 		return () => {
 			clearTimeout(handler); // Cleanup the timeout on unmount or when prompt changes
 		};
-	}, [prompt, selectedModel, outputType]);
+	}, [prompt, selectedModel, outputType, selectedProvider]);
+	
+	// Filter providers based on output type
+	const filteredProviders = outputType === "image"
+		? llm.filter(provider => provider.models.some(model => model.generateImage))
+		: llm;
+	
+	// Filter models based on output type
+	const filteredModels = outputType === "image"
+		? selectedProvider?.models.filter(model => model.generateImage)
+		: selectedProvider?.models;
 	
 	return {
 		prompt,
 		setPrompt,
-		providers: llm,
+		providers: filteredProviders,
 		onProviderChange,
 		selectedProvider,
 		selectedModel,
 		setSelectedModel,
 		outputType,
-		setOutputType
-	}; // Return prompt and setPrompt for usage in your component
+		setOutputType,
+		filteredModels
+	}; // Return filteredProviders and filteredModels for usage in your component
 };
 
 export default useAIForm;
