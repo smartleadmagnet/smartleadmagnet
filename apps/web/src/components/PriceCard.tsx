@@ -14,86 +14,72 @@ const PriceCard: React.FC = () => {
     <>
       <div className="price-table">
         {/* Checkbox to toggle pricing */}
-        <input type="checkbox" id="pricing-toggle" className="hidden"/>
+        <input type="checkbox" id="pricing-toggle" className="hidden" />
 
         {/* Custom switch using label and checkbox */}
-        <label
-          htmlFor="pricing-toggle"
-          className="relative cursor-pointer flex items-center justify-center mb-8"
-        >
-          <p className="text-sm text-gray-500 mr-2">Monthly</p>
-          <div className="w-10 h-5 bg-gray-300 rounded-full relative">
-            <div
-              className="absolute top-0 left-0 w-5 h-5 bg-cyan-500 rounded-full transform transition-transform duration-300 ease-in-out checkbox-switch"></div>
+        <label htmlFor="pricing-toggle" className="relative mb-8 flex cursor-pointer items-center justify-center">
+          <p className="mr-2 text-sm text-gray-500">Monthly</p>
+          <div className="relative h-5 w-10 rounded-full bg-gray-300">
+            <div className="checkbox-switch absolute left-0 top-0 h-5 w-5 transform rounded-full bg-cyan-500 transition-transform duration-300 ease-in-out"></div>
           </div>
           <p className="ml-2 text-sm text-gray-500">Yearly</p>
         </label>
 
-        <div className="border w-full max-w-[1000px] mx-auto flex flex-col md:flex-row monthly-table">
-          <div className="p-[70px] border-b md:border-b-0 md:border-r flex-1">
-            <span className="text-lg font-bold text-gray-700">
-              For business
-            </span>
+        <div className="monthly-table mx-auto flex w-full max-w-[1000px] flex-col border md:flex-row">
+          <div className="flex-1 border-b p-[70px] md:border-b-0 md:border-r">
+            <span className="text-lg font-bold text-gray-700">For business</span>
 
-            <h2 className="text-4xl font-semibold mt-2">
-              <span className="text-gray-800 text-5xl dynamic-value">$39</span>
+            <h2 className="mt-2 text-4xl font-semibold">
+              <span className="dynamic-value text-5xl text-gray-800">$39</span>
               <span className="text-lg text-gray-600">/Per Month</span>
             </h2>
-            <p className="text-gray-600 mt-2">
-              One way to determine how much money you need is to do a break-even
-              analysis.
+            <p className="mt-2 text-gray-600">
+              One way to determine how much money you need is to do a break-even analysis.
             </p>
           </div>
-          <div className="p-[70px] flex-1">
-            <h3 className="text-xl font-semibold text-gray-700 mb-4">
-              That includes:
-            </h3>
-            <ul className="space-y-4 mb-10">
+          <div className="flex-1 p-[70px]">
+            <h3 className="mb-4 text-xl font-semibold text-gray-700">That includes:</h3>
+            <ul className="mb-10 space-y-4">
               {listItems.map((item, index) => (
                 <li key={index} className="flex items-center">
-                  <Icon name="list_icon" color="cyan"/>
-                  <span className="ml-4 text-gray-700 font-bold">{item}</span>
+                  <Icon name="list_icon" color="cyan" />
+                  <span className="ml-4 font-bold text-gray-700">{item}</span>
                 </li>
               ))}
             </ul>
 
             <div className="mt-4">
-              <Button className="w-full btn-primary">
+              <Button className="btn-primary w-full">
                 <span>Choose Plan</span>
               </Button>
             </div>
           </div>
         </div>
-        <div className="border w-full max-w-[1000px] mx-auto flex flex-col md:flex-row yearly-table hidden">
-          <div className="p-[70px] border-b md:border-b-0 md:border-r flex-1">
-            <span className="text-lg font-bold text-gray-700">
-              For business
-            </span>
+        <div className="yearly-table mx-auto flex hidden w-full max-w-[1000px] flex-col border md:flex-row">
+          <div className="flex-1 border-b p-[70px] md:border-b-0 md:border-r">
+            <span className="text-lg font-bold text-gray-700">For business</span>
 
-            <h2 className="text-4xl font-semibold mt-2">
-              <span className="text-gray-800 text-5xl dynamic-value">$399</span>
+            <h2 className="mt-2 text-4xl font-semibold">
+              <span className="dynamic-value text-5xl text-gray-800">$399</span>
               <span className="text-lg text-gray-600">/Per Year</span>
             </h2>
-            <p className="text-gray-600 mt-2">
-              One way to determine how much money you need is to do a break-even
-              analysis.
+            <p className="mt-2 text-gray-600">
+              One way to determine how much money you need is to do a break-even analysis.
             </p>
           </div>
-          <div className="p-[70px] flex-1">
-            <h3 className="text-xl font-semibold text-gray-700 mb-4">
-              That includes:
-            </h3>
-            <ul className="space-y-4 mb-10">
+          <div className="flex-1 p-[70px]">
+            <h3 className="mb-4 text-xl font-semibold text-gray-700">That includes:</h3>
+            <ul className="mb-10 space-y-4">
               {listItems.map((item, index) => (
                 <li key={index} className="flex items-center">
-                  <Icon name="list_icon" color="cyan"/>
-                  <span className="ml-4 text-gray-700 font-bold">{item}</span>
+                  <Icon name="list_icon" color="cyan" />
+                  <span className="ml-4 font-bold text-gray-700">{item}</span>
                 </li>
               ))}
             </ul>
 
             <div className="mt-4">
-              <Button className="w-full btn-primary">
+              <Button className="btn-primary w-full">
                 <span>Choose Plan</span>
               </Button>
             </div>

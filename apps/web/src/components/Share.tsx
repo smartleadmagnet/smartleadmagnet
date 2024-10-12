@@ -61,24 +61,14 @@ const FormWrapper = styled.div`
   }
 `;
 
-export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
-  const {
-    elementsList,
-    removeElement,
-    handleEdit,
-    handleEditChange,
-    formStyles,
-    selectedView,
-    imageUrl,
-  } = useBuilder({leadMagnet}); // Use the custom hook
-
+export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
+  const { elementsList, removeElement, handleEdit, handleEditChange, formStyles, selectedView, imageUrl } = useBuilder({
+    leadMagnet,
+  }); // Use the custom hook
 
   return (
     <div className="py-10">
-      <FormWrapper
-        theme={formStyles}
-        className={`form-${formStyles.selectedFormStyle}`}
-      >
+      <FormWrapper theme={formStyles} className={`form-${formStyles.selectedFormStyle}`}>
         {selectedView === "Form" ? (
           <>
             {elementsList.length &&
@@ -116,11 +106,12 @@ export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
                       type="code"
                       content={codeContent}
                         /> */}
-            <ContentViewer type="image" content={imageUrl}/>
+            <ContentViewer type="image" content={imageUrl} />
           </>
         )}
-        <p className="text-center py-[20px]">This form is created by <a
-          href="https://smartleadmagnet.com/">SmartLeadMagnet</a></p>
+        <p className="py-[20px] text-center">
+          This form is created by <a href="https://smartleadmagnet.com/">SmartLeadMagnet</a>
+        </p>
       </FormWrapper>
     </div>
   );

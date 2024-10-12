@@ -25,16 +25,18 @@ function extractLeadContent(htmlString: string): string | null {
   return match && match.length > 1 ? match[1] : null;
 }
 
-
 export async function callTextLLM(leadMagnet: LeadMagnet, promptInput: any) {
   console.log({
     promptInput,
   });
   // console.log(promptInput);
   let llmModel = getTextLLMModel(leadMagnet.provider, leadMagnet.model);
-  const messages = [new SystemMessage(`${leadMagnet.prompt}${resultFormat}`), new HumanMessage({
-    content: promptInput
-  })];
+  const messages = [
+    new SystemMessage(`${leadMagnet.prompt}${resultFormat}`),
+    new HumanMessage({
+      content: promptInput,
+    }),
+  ];
   let retryCount = 0;
   const llmApiCall: any = async () => {
     try {
@@ -60,7 +62,7 @@ export async function callImageLLM(leadMagnet: LeadMagnet, promptInput: any) {
   let retryCount = 0;
   const llmApiCall: any = async () => {
     try {
-      console.log("Prompt: ", replacePlaceholders(leadMagnet.prompt, promptInput))
+      console.log("Prompt: ", replacePlaceholders(leadMagnet.prompt, promptInput));
       return await llmModel.invoke(replacePlaceholders(leadMagnet.prompt, promptInput));
     } catch (error: any) {
       console.log(error);
@@ -74,4 +76,3 @@ export async function callImageLLM(leadMagnet: LeadMagnet, promptInput: any) {
   };
   return llmApiCall();
 }
-

@@ -15,13 +15,13 @@ export default function AutomatedEmailForm() {
 
   // Handle input change
   const handleChange = (e: any) => {
-    const {name, value} = e.target;
-    setEmailData({...emailData, [name]: value});
+    const { name, value } = e.target;
+    setEmailData({ ...emailData, [name]: value });
   };
 
   // Handle rich text editor change
   const handleContentChange = (value: any) => {
-    setEmailData({...emailData, content: value});
+    setEmailData({ ...emailData, content: value });
   };
 
   // Handle sending test email
@@ -38,12 +38,10 @@ export default function AutomatedEmailForm() {
   };
 
   return (
-    <div className="w-full flex flex-col bg-white p-4 rounded-md">
+    <div className="flex w-full flex-col rounded-md bg-white p-4">
       {/* Recipient Email Input */}
-      <div className="form-control w-full mb-4">
-        <Label className="text-sm font-semibold mb-[10px] block">
-          Recipient Email
-        </Label>
+      <div className="form-control mb-4 w-full">
+        <Label className="mb-[10px] block text-sm font-semibold">Recipient Email</Label>
         <Input
           name="recipient"
           type="email"
@@ -56,10 +54,8 @@ export default function AutomatedEmailForm() {
       </div>
 
       {/* Subject Input */}
-      <div className="form-control w-full mb-4">
-        <Label className="text-sm font-semibold mb-[10px] block">
-          Subject
-        </Label>
+      <div className="form-control mb-4 w-full">
+        <Label className="mb-[10px] block text-sm font-semibold">Subject</Label>
         <Input
           name="subject"
           value={emailData.subject}
@@ -71,10 +67,8 @@ export default function AutomatedEmailForm() {
       </div>
 
       {/* Email Content Rich Text Editor */}
-      <div className="form-control w-full mb-4">
-        <Label className="text-sm font-semibold mb-[10px] block">
-          Email Content
-        </Label>
+      <div className="form-control mb-4 w-full">
+        <Label className="mb-[10px] block text-sm font-semibold">Email Content</Label>
         <ReactQuill
           value={emailData.content}
           onChange={handleContentChange}
@@ -83,21 +77,18 @@ export default function AutomatedEmailForm() {
           className="w-full"
           modules={{
             toolbar: [
-              [{header: [1, 2, false]}],
-              ['bold', 'italic', 'underline', 'strike'],
-              [{list: 'ordered'}, {list: 'bullet'}],
-              ['link', 'image'],
-              ['clean'], // Remove formatting button
+              [{ header: [1, 2, false] }],
+              ["bold", "italic", "underline", "strike"],
+              [{ list: "ordered" }, { list: "bullet" }],
+              ["link", "image"],
+              ["clean"], // Remove formatting button
             ],
           }}
         />
       </div>
 
       {/* Send Test Button */}
-      <Button
-        className="mt-4"
-        onClick={handleSendTest}
-      >
+      <Button className="mt-4" onClick={handleSendTest}>
         Send Test
       </Button>
     </div>

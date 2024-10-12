@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 
-const useAIForm = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
+const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
   const {
     elementsList,
     setPrompt,
@@ -31,26 +31,24 @@ const useAIForm = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
     try {
       if (outputType === "image") {
         const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, textPayload);
-        console.log({result})
-
+        console.log({ result });
       } else {
         const imagePayload = elementsList.reduce((acc, element) => {
           if (element.type === "image" || element.type === "file") {
-            acc.push({"type": "image_url", "image_url": {"url": element.value}});
+            acc.push({ type: "image_url", image_url: { url: element.value } });
           }
           return acc;
         }, []);
         const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, [
-          {"type": "text", "text": JSON.stringify(textPayload)},
+          { type: "text", text: JSON.stringify(textPayload) },
           ...imagePayload,
         ]);
       }
-
     } catch (e) {
       console.log(e);
     }
     setProcessing(false);
-  }
+  };
 
   return {
     prompt,
@@ -65,7 +63,7 @@ const useAIForm = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
     filteredModels,
     onValidatePrompt,
     processing,
-    elementsList
+    elementsList,
   };
 };
 

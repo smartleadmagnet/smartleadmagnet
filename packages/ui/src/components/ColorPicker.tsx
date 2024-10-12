@@ -9,7 +9,7 @@ interface ColorPickerProps {
   label?: string;
 }
 
-const ColorPicker: React.FC<ColorPickerProps> = ({color, onChange, label}) => {
+const ColorPicker: React.FC<ColorPickerProps> = ({ color, onChange, label }) => {
   const handleColorChange = (newColor: { hex: string }) => {
     onChange(newColor.hex); // Pass the selected color back to the parent component
   };
@@ -29,7 +29,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({color, onChange, label}) => {
           <PopoverTrigger asChild>
             <div
               className="h-12 w-12 cursor-pointer rounded-full border border-gray-300"
-              style={{backgroundColor: color}}
+              style={{ backgroundColor: color }}
             />
           </PopoverTrigger>
           <PopoverContent className="color-picker-popup">

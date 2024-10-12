@@ -85,51 +85,40 @@ const FormWrapper = styled.div`
 `;
 
 export default function BuilderStylePreview({
-                                              formStyles,
-                                              handleStyleUpdate,
-                                              elementsList,
-                                              handleEditChange,
-                                              handleEdit,
-                                              removeElement,
-                                              selectedView,
-                                              setSelectedView,
-                                              imageUrl,
-                                            }: Props) {
+  formStyles,
+  handleStyleUpdate,
+  elementsList,
+  handleEditChange,
+  handleEdit,
+  removeElement,
+  selectedView,
+  setSelectedView,
+  imageUrl,
+}: Props) {
   return (
-    <div className="flex flex-1 builder-wrapper">
-      <aside className="w-1/3 p-4 builder-column ">
-        <Accordion
-          type="single"
-          collapsible
-          className="w-full"
-          defaultValue="item-1"
-        >
+    <div className="builder-wrapper flex flex-1">
+      <aside className="builder-column w-1/3 p-4 ">
+        <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
           <AccordionItem value="item-1">
             <AccordionTrigger>Input Options</AccordionTrigger>
             <AccordionContent>
-              <div className="py-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 py-2 sm:grid-cols-2">
                 {formStyleOptions.map((item, index) => (
                   <Card
                     key={index}
-                    className={`p-4 shadow-md cursor-pointer ${formStyles.selectedFormStyle === item.value ? "bg-blue-50 border border-blue-300" : ""} form-${item.value}`} // Highlight style
-                    onClick={() =>
-                      handleStyleUpdate("selectedFormStyle", item.value)
-                    } // Set selected item on click
+                    className={`cursor-pointer p-4 shadow-md ${formStyles.selectedFormStyle === item.value ? "border border-blue-300 bg-blue-50" : ""} form-${item.value}`} // Highlight style
+                    onClick={() => handleStyleUpdate("selectedFormStyle", item.value)} // Set selected item on click
                   >
                     <form>
-                      <h3 className="text-lg font-semibold mb-4">
-                        {item.label}
-                      </h3>
+                      <h3 className="mb-4 text-lg font-semibold">{item.label}</h3>
                       {/* Input and Button */}
                       <div className="space-y-4">
                         <Input
                           type="text"
                           placeholder="Enter the Lead Magnet Name"
-                          className="w-full pointer-events-none"
+                          className="pointer-events-none w-full"
                         />
-                        <Button className="btn-primary pointer-events-none">
-                          Submit
-                        </Button>
+                        <Button className="btn-primary pointer-events-none">Submit</Button>
                       </div>
                     </form>
                   </Card>
@@ -141,9 +130,7 @@ export default function BuilderStylePreview({
             <AccordionTrigger>Style</AccordionTrigger>
             <AccordionContent>
               <div className="pb-[20px]">
-                <Label className="block text-sm font-medium text-gray-700">
-                  Font Family
-                </Label>
+                <Label className="block text-sm font-medium text-gray-700">Font Family</Label>
                 <FontSelector
                   onChange={(fontFamily) => {
                     handleStyleUpdate("selectedFont", fontFamily);
@@ -157,9 +144,7 @@ export default function BuilderStylePreview({
                   <ColorPicker
                     label="Background Color"
                     color={formStyles.backgroundColor}
-                    onChange={(color) =>
-                      handleStyleUpdate("backgroundColor", color)
-                    }
+                    onChange={(color) => handleStyleUpdate("backgroundColor", color)}
                   />
                 </div>
                 <div>
@@ -173,9 +158,7 @@ export default function BuilderStylePreview({
                   <ColorPicker
                     label="Subtitle Color"
                     color={formStyles.subtitleColor}
-                    onChange={(color) =>
-                      handleStyleUpdate("subtitleColor", color)
-                    }
+                    onChange={(color) => handleStyleUpdate("subtitleColor", color)}
                   />
                 </div>
                 <div>
@@ -203,9 +186,7 @@ export default function BuilderStylePreview({
                   <ColorPicker
                     label="Button Color"
                     color={formStyles.buttonColor}
-                    onChange={(color) =>
-                      handleStyleUpdate("buttonColor", color)
-                    }
+                    onChange={(color) => handleStyleUpdate("buttonColor", color)}
                   />
                 </div>
                 <div>
@@ -224,16 +205,10 @@ export default function BuilderStylePreview({
       </aside>
 
       <div className="flex flex-1">
-        <main className="flex-1 bg-gray-100 p-4 drop-area builder-column">
-          <h3 className="text-lg font-semibold mb-2">Style & Preview</h3>
-          <ResponsiveScreen
-            activeView={selectedView}
-            setActiveView={setSelectedView}
-          >
-            <FormWrapper
-              theme={formStyles}
-              className={`form-${formStyles.selectedFormStyle}`}
-            >
+        <main className="drop-area builder-column flex-1 bg-gray-100 p-4">
+          <h3 className="mb-2 text-lg font-semibold">Style & Preview</h3>
+          <ResponsiveScreen activeView={selectedView} setActiveView={setSelectedView}>
+            <FormWrapper theme={formStyles} className={`form-${formStyles.selectedFormStyle}`}>
               {selectedView === "Form" ? (
                 <>
                   {elementsList.length &&
@@ -271,7 +246,7 @@ export default function BuilderStylePreview({
                       type="code"
                       content={codeContent}
                         /> */}
-                  <ContentViewer type="image" content={imageUrl}/>
+                  <ContentViewer type="image" content={imageUrl} />
                 </>
               )}
             </FormWrapper>

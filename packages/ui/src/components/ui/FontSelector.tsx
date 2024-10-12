@@ -6,7 +6,7 @@ interface FontSelectorProps {
 }
 
 const FontSelector = (props: FontSelectorProps) => {
-  const {activeFontFamily, onChange} = props; // Destructure onChange
+  const { activeFontFamily, onChange } = props; // Destructure onChange
 
   return (
     <div>

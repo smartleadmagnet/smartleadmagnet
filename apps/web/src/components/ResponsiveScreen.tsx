@@ -12,34 +12,33 @@ interface ScreenNodeProps {
   children: ReactNode; // Define the type for children
   title: string; // Title for the screen
   width: string; // Width for the screen
-
 }
 
-const TitleBar: React.FC<{ title: string }> = ({title}) => (
-  <div className="flex items-center justify-between p-2 bg-gray-700 rounded-t-lg border-b">
+const TitleBar: React.FC<{ title: string }> = ({ title }) => (
+  <div className="flex items-center justify-between rounded-t-lg border-b bg-gray-700 p-2">
     <div className="flex space-x-2">
-      <div className="w-3 h-3 bg-red-500 rounded-full"/>
-      <div className="w-3 h-3 bg-yellow-500 rounded-full"/>
-      <div className="w-3 h-3 bg-green-500 rounded-full"/>
+      <div className="h-3 w-3 rounded-full bg-red-500" />
+      <div className="h-3 w-3 rounded-full bg-yellow-500" />
+      <div className="h-3 w-3 rounded-full bg-green-500" />
     </div>
     <span className="text-white">{title}</span>
-    <div className="w-3 h-3"/>
+    <div className="h-3 w-3" />
     {/* Empty space for title bar */}
   </div>
 );
 
-const BrowserScreen: React.FC<ScreenNodeProps> = ({children, title, width}) => (
-  <div className={`relative  bg-white rounded-lg shadow-lg border border-gray-300`} style={{width: width}}>
-    <TitleBar title={title}/>
-    <div className="h-[70vh] p-5 overflow-y-auto">{children}</div>
+const BrowserScreen: React.FC<ScreenNodeProps> = ({ children, title, width }) => (
+  <div className={`relative  rounded-lg border border-gray-300 bg-white shadow-lg`} style={{ width: width }}>
+    <TitleBar title={title} />
+    <div className="h-[70vh] overflow-y-auto p-5">{children}</div>
   </div>
 );
 
-const ResponsiveScreen: React.FC<{ children: ReactNode, activeView: string, setActiveView: Function }> = ({
-                                                                                                            children,
-                                                                                                            activeView,
-                                                                                                            setActiveView
-                                                                                                          }) => {
+const ResponsiveScreen: React.FC<{ children: ReactNode; activeView: string; setActiveView: Function }> = ({
+  children,
+  activeView,
+  setActiveView,
+}) => {
   const [activeScreen, setActiveScreen] = useState("desktop");
 
   // Function to handle button click
@@ -50,13 +49,16 @@ const ResponsiveScreen: React.FC<{ children: ReactNode, activeView: string, setA
   return (
     <div>
       {/* Two-column layout: Left select and Right 3-button group */}
-      <div className="flex justify-between items-center space-x-4">
+      <div className="flex items-center justify-between space-x-4">
         {/* Left Select dropdown */}
         <div className="w-1/2">
-          <Select value={activeView} onValueChange={(value: any) => {
-            setActiveView(value)
-          }}>
-            <SelectTrigger className="w-full border rounded-md px-3 py-2">
+          <Select
+            value={activeView}
+            onValueChange={(value: any) => {
+              setActiveView(value);
+            }}
+          >
+            <SelectTrigger className="w-full rounded-md border px-3 py-2">
               <SelectValue>{activeView}</SelectValue>
             </SelectTrigger>
             <SelectContent>
@@ -67,22 +69,22 @@ const ResponsiveScreen: React.FC<{ children: ReactNode, activeView: string, setA
         </div>
 
         {/* Right 3-button group */}
-        <div className="inline-flex shadow-sm mb-[30px]" role="group">
+        <div className="mb-[30px] inline-flex shadow-sm" role="group">
           <Button
             onClick={() => handleClick("desktop")}
             className={`
-              bg-gray-300
               rounded-l-lg
-              text-sm
-              text-gray-600
-              px-5
-              py-2
-              border border-gray-400
-              hover:bg-gray-800
-              hover:text-white
-              hover:shadow-lg
               rounded-r-none
-              transition-all duration-300 ease-in-out
+              border
+              border-gray-400
+              bg-gray-300
+              px-5
+              py-2 text-sm
+              text-gray-600
+              transition-all
+              duration-300
+              ease-in-out
+              hover:bg-gray-800 hover:text-white hover:shadow-lg
               ${activeScreen === "desktop" ? "bg-gray-800 text-white" : "text-gray-600"}
             `}
           >
@@ -91,16 +93,16 @@ const ResponsiveScreen: React.FC<{ children: ReactNode, activeView: string, setA
           <Button
             onClick={() => handleClick("tablet")}
             className={`
-              bg-gray-300
-              border border-gray-400
-              py-2
-              px-5
-              hover:bg-gray-800
               rounded-l-none
-              rounded-r-none
-              hover:text-white
-              hover:shadow-lg
-              transition-all duration-300 ease-in-out
+              rounded-r-none border
+              border-gray-400
+              bg-gray-300
+              px-5
+              py-2
+              transition-all
+              duration-300
+              ease-in-out
+              hover:bg-gray-800 hover:text-white hover:shadow-lg
               ${activeScreen === "tablet" ? "bg-gray-800 text-white" : "text-gray-600"}
             `}
           >
@@ -109,16 +111,16 @@ const ResponsiveScreen: React.FC<{ children: ReactNode, activeView: string, setA
           <Button
             onClick={() => handleClick("mobile")}
             className={`
-              bg-gray-300
+              rounded-l-none
+              rounded-r-lg
+              border
+              border-gray-400 bg-gray-300
               px-5
               py-2
-              border border-gray-400
-              rounded-r-lg
-              rounded-l-none
-              hover:bg-gray-800
-              hover:text-white
-              hover:shadow-lg
-              transition-all duration-300 ease-in-out
+              transition-all
+              duration-300
+              ease-in-out
+              hover:bg-gray-800 hover:text-white hover:shadow-lg
               ${activeScreen === "mobile" ? "bg-gray-800 text-white" : "text-gray-600"}
             `}
           >
@@ -145,6 +147,6 @@ const ResponsiveScreen: React.FC<{ children: ReactNode, activeView: string, setA
       )}
     </div>
   );
-}
+};
 
 export default ResponsiveScreen;

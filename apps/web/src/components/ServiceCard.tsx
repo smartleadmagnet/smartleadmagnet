@@ -10,25 +10,25 @@ interface ServiceCardProps {
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({
-                                                   to = "/",
-                                                   className = "",
-                                                   iconSrc,
-                                                   title,
-                                                   text,
-                                                   linkText = "Discover More",
-                                                 }) => {
+  to = "/",
+  className = "",
+  iconSrc,
+  title,
+  text,
+  linkText = "Discover More",
+}) => {
   return (
-    <Link href={to}
-          className={`flex flex-col bg-white border border-gray-200 shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-300 rounded-lg p-6 ${className}`}
-          passHref>
-
-
+    <Link
+      href={to}
+      className={`flex flex-col rounded-lg border border-gray-200 bg-white p-6 shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-lg ${className}`}
+      passHref
+    >
       <div className="mb-4">
-        <img src={iconSrc} alt={title} className="w-12 h-12"/>
+        <img src={iconSrc} alt={title} className="h-12 w-12" />
       </div>
       <div>
-        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-gray-600 mb-4 min-h-[50px]">{text}</p>
+        <h3 className="mb-2 text-xl font-semibold">{title}</h3>
+        <p className="mb-4 min-h-[50px] text-gray-600">{text}</p>
         <span className="text-black-500 font-bold hover:underline">{linkText}</span>
       </div>
     </Link>
