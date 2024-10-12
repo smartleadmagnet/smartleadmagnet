@@ -303,7 +303,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
                       )}
                     </Droppable>
                   </main>
-                  <main className="flex-1 bg-gray-100 p-4 drop-area builder-column">
+                  <main className="flex-1 bg-gray-100 p-4  builder-column">
                     <AIForm leadMagnet={leadMagnet} />
                   </main>
                 </div>
