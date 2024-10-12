@@ -5,7 +5,7 @@ const ImageContentSection = () => {
     <div className="py-24 content-section-one"> {/* Adjusted section padding */}
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap">
-          <div className="w-full lg:w-6/12" >
+          <div className="w-full lg:w-6/12">
             <div className="relative">
               {/* Main image */}
               <div className="content-image--mobile-width">
@@ -26,10 +26,12 @@ const ImageContentSection = () => {
                   🧠 AI-Powered Lead Magnets
                 </h2>
                 <p className="mt-4 text-xl leading-[1.2]">
-                  Our platform utilizes cutting-edge AI to generate powerful lead magnets that are relevant to your audience’s needs. Tailor your content with a few clicks, and let our AI do the heavy lifting.
+                  Our platform utilizes cutting-edge AI to generate powerful lead magnets that are relevant to your
+                  audience’s needs. Tailor your content with a few clicks, and let our AI do the heavy lifting.
                 </p>
               </div>
-              <div className="border-b border-gray-300 my-[40px]" /> {/* Divider */}
+              <div className="border-b border-gray-300 my-[40px]"/>
+              {/* Divider */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="stat-single text-center">
                   <span className="block text-5xl font-bold text-cyan-500 mb-2">80%</span>

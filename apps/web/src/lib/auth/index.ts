@@ -4,7 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import prisma from "@smartleadmagnet/database";
 
 // @ts-ignore
-const nextAuth  = NextAuth({
+const nextAuth = NextAuth({
   debug: true,
   adapter: PrismaAdapter(prisma),
   providers: [Google],
@@ -23,7 +23,7 @@ const nextAuth  = NextAuth({
   },
   callbacks: {
     // @ts-ignore
-    async session({ session, token, user }: any) {
+    async session({session, token, user}: any) {
       if (user?.id) session.user.id = user.id;
       if (token?.sub) session.user.id = token.sub;
       if (user?.role) session.user.role = user.role;
@@ -42,5 +42,5 @@ const nextAuth  = NextAuth({
   },
 });
 
-export const { handlers, signIn, signOut } = nextAuth;
+export const {handlers, signIn, signOut} = nextAuth;
 export const auth: NextAuthResult["auth"] = nextAuth.auth;

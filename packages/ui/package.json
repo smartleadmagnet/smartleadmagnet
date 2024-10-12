@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "ui": "bunx shadcn@latest",
-    "lint": "eslint ."
+    "lint": "eslint . && prettier --write ."
   },
   "devDependencies": {
     "@smartleadmagnet/eslint-config": "*",

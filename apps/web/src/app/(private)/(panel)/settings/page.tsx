@@ -10,8 +10,8 @@ export default function SettingsProfilePage() {
           This is how others will see you on the site.
         </p>
       </div>
-      <Separator />
-      <ProfileForm />
+      <Separator/>
+      <ProfileForm/>
     </div>
   )
 }

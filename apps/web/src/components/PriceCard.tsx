@@ -14,7 +14,7 @@ const PriceCard: React.FC = () => {
     <>
       <div className="price-table">
         {/* Checkbox to toggle pricing */}
-        <input type="checkbox" id="pricing-toggle" className="hidden" />
+        <input type="checkbox" id="pricing-toggle" className="hidden"/>
 
         {/* Custom switch using label and checkbox */}
         <label
@@ -23,7 +23,8 @@ const PriceCard: React.FC = () => {
         >
           <p className="text-sm text-gray-500 mr-2">Monthly</p>
           <div className="w-10 h-5 bg-gray-300 rounded-full relative">
-            <div className="absolute top-0 left-0 w-5 h-5 bg-cyan-500 rounded-full transform transition-transform duration-300 ease-in-out checkbox-switch"></div>
+            <div
+              className="absolute top-0 left-0 w-5 h-5 bg-cyan-500 rounded-full transform transition-transform duration-300 ease-in-out checkbox-switch"></div>
           </div>
           <p className="ml-2 text-sm text-gray-500">Yearly</p>
         </label>
@@ -50,7 +51,7 @@ const PriceCard: React.FC = () => {
             <ul className="space-y-4 mb-10">
               {listItems.map((item, index) => (
                 <li key={index} className="flex items-center">
-                  <Icon name="list_icon" color="cyan" />
+                  <Icon name="list_icon" color="cyan"/>
                   <span className="ml-4 text-gray-700 font-bold">{item}</span>
                 </li>
               ))}
@@ -85,7 +86,7 @@ const PriceCard: React.FC = () => {
             <ul className="space-y-4 mb-10">
               {listItems.map((item, index) => (
                 <li key={index} className="flex items-center">
-                  <Icon name="list_icon" color="cyan" />
+                  <Icon name="list_icon" color="cyan"/>
                   <span className="ml-4 text-gray-700 font-bold">{item}</span>
                 </li>
               ))}

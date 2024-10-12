@@ -48,8 +48,12 @@ fetch('https://www.foxyapps.ai/api/app', {
             To get started with FoxyApps, generate your API key from your profile settings. Here’s how:
           </p>
           <ol className="list-decimal list-inside mt-4 text-gray-600">
-            <li>Log into your FoxyApps account at <a href="https://app.smartleadmagnet.com/" className="text-indigo-600 hover:underline">https://app.smartleadmagnet.com/</a>.</li>
-            <li>Navigate to the API settings at <a href="https://app.smartleadmagnet.com/api" className="text-indigo-600 hover:underline">https://app.smartleadmagnet.com/api</a>.</li>
+            <li>Log into your FoxyApps account at <a href="https://app.smartleadmagnet.com/"
+                                                     className="text-indigo-600 hover:underline">https://app.smartleadmagnet.com/</a>.
+            </li>
+            <li>Navigate to the API settings at <a href="https://app.smartleadmagnet.com/api"
+                                                   className="text-indigo-600 hover:underline">https://app.smartleadmagnet.com/api</a>.
+            </li>
             <li>Click <strong>Generate new API token</strong>.</li>
           </ol>
           <p className="mt-4 text-gray-500 italic">
@@ -61,7 +65,8 @@ fetch('https://www.foxyapps.ai/api/app', {
           <h2 className="text-2xl font-semibold mb-2 text-gray-700">Using the API</h2>
           <p className="text-gray-600">To make a request using your app, follow these steps:</p>
           <ol className="list-decimal list-inside mt-4 text-gray-600">
-            <li>Send a POST request to: <span className="bg-gray-100 p-1 rounded text-gray-800">https://app.smartleadmagnet.com/api/app</span></li>
+            <li>Send a POST request to: <span
+              className="bg-gray-100 p-1 rounded text-gray-800">https://app.smartleadmagnet.com/api/app</span></li>
             <li>Include your API key in the request headers (example below).</li>
             <li>Pass the <code>id</code> of your app and any input fields in the request body.</li>
           </ol>
@@ -85,7 +90,8 @@ fetch('https://www.foxyapps.ai/api/app', {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-2 text-gray-700">Credits and API Key Usage</h2>
           <p className="text-gray-600">
-            Depending on your app’s model provider, the API will either use your credits or your own API key. Here's how it works:
+            Depending on your app’s model provider, the API will either use your credits or your own API key. Here's how
+            it works:
           </p>
           <ul className="list-disc list-inside mt-4 text-gray-600">
             <li>If OpenAI is your model provider and you’ve set an OpenAI key, it will use your API key.</li>

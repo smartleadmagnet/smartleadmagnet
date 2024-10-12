@@ -7,7 +7,7 @@ interface EmbedModalProps {
 }
 
 const EmbedModal = (props: EmbedModalProps) => {
-  const { open, setIsOpen } = props;
+  const {open, setIsOpen} = props;
   const [activeTab, setActiveTab] = useState<'embed' | 'share'>('embed');
 
   const toggleModal = () => {
@@ -43,12 +43,13 @@ const EmbedModal = (props: EmbedModalProps) => {
               className="absolute top-4 right-4 p-1 text-white"
               onClick={toggleModal}
             >
-              <Icon name="close" />
+              <Icon name="close"/>
             </button>
 
             {/* Modal Title with Gradient Background */}
             <div className="text-center mb-6">
-              <div className="modal-header inline-flex items-center justify-center w-full py-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-t-lg">
+              <div
+                className="modal-header inline-flex items-center justify-center w-full py-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-t-lg">
                 <h2 className="text-2xl font-semibold">Embed/Share</h2>
               </div>
             </div>
@@ -115,11 +116,11 @@ const EmbedModal = (props: EmbedModalProps) => {
 
                 {/* Social Media Icons */}
                 <div className="flex mt-4 space-x-4">
-                  <Icon name="facebook"  />
-                  <Icon name="twitter" />
-                  <Icon name="linkedin"  />
-                  <Icon name="whatsapp"  />
-                  <Icon name="email"  />
+                  <Icon name="facebook"/>
+                  <Icon name="twitter"/>
+                  <Icon name="linkedin"/>
+                  <Icon name="whatsapp"/>
+                  <Icon name="email"/>
                 </div>
                 <p className="text-gray-500 mt-2">
                   Share this link to give others access.

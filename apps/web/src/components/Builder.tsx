@@ -7,24 +7,17 @@ import { Card } from "@smartleadmagnet/ui/components/ui/card";
 import EditableInput from "@/components/EditableInput";
 import { LeadMagnet } from "@smartleadmagnet/database";
 
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@smartleadmagnet/ui/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger, } from "@smartleadmagnet/ui/components/ui/tabs";
 import {
   DragDropContext,
-  Droppable,
   Draggable,
   DraggableProvided,
-  DroppableProvided,
   DraggableStateSnapshot,
+  Droppable,
+  DroppableProvided,
 } from "react-beautiful-dnd";
 import useBuilder from "@/hooks/builder.hook"; // Import the custom hook
-import {
-  builderItems,
-} from "@smartleadmagnet/ui/lib/constants";
+import { builderItems, } from "@smartleadmagnet/ui/lib/constants";
 import AIForm from "@/components/AiForm";
 import SearchInput from "@smartleadmagnet/ui/components/SearchInput";
 import BuilderElement from "@/components/BuilderElement";
@@ -33,13 +26,13 @@ import EmbedModal from "@/components/EmbedModal";
 import BuilderStylePreview from "@/components/BuilderStylePreview";
 import BuilderOption from "@/components/BuilderOption";
 
-export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
+export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
   const {
     elementsList,
     onDragEnd,
     removeElement,
     handleEdit,
-    selctedItem,
+    selectedItem,
     handleEditChange,
     searchTerm,
     handleStyleUpdate,
@@ -57,9 +50,9 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
     setActiveOption,
     imageUrl,
     router,
-    formName,
-    setFormName,
-  } = useBuilder({ leadMagnet }); // Use the custom hook
+    name,
+    setName,
+  } = useBuilder({leadMagnet}); // Use the custom hook
 
   const filterItems = (searchTerm: string) => {
     if (!searchTerm) return builderItems;
@@ -88,7 +81,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
               </Button>
             </div>
             <div className="flex">
-              <EditableInput value={formName} setValue={setFormName} />
+              <EditableInput value={name} setValue={setName}/>
             </div>
 
             <div className="flex items-center">
@@ -167,7 +160,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
                   <div className="flex-grow overflow-y-auto pb-[50px]">
                     {editMode ? (
                       <BuilderEditor
-                        data={selctedItem}
+                        data={selectedItem}
                         onClose={() => {
                           handleEdit(null);
                         }}
@@ -246,7 +239,8 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
                 </aside>
 
                 <div className="flex flex-1">
-                  <main className="flex-1 bg-gray-100 drop-area builder-column border-dashed border-2 border-gray-300 rounded-lg mx-2 p-2">
+                  <main
+                    className="flex-1 bg-gray-100 drop-area builder-column border-dashed border-2 border-gray-300 rounded-lg mx-2 p-2">
                     <Droppable droppableId="droppable-main">
                       {(provided: DroppableProvided) => (
                         <div
@@ -304,7 +298,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
                     </Droppable>
                   </main>
                   <main className="flex-1 bg-gray-100 p-4  builder-column">
-                    <AIForm leadMagnet={leadMagnet} />
+                    <AIForm leadMagnet={leadMagnet}/>
                   </main>
                 </div>
               </div>
@@ -327,11 +321,11 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
             />
           </TabsContent>
           <TabsContent value="options">
-            <BuilderOption activeOption={activeOption} setActiveOption={setActiveOption} leadMagnet={leadMagnet} />
+            <BuilderOption activeOption={activeOption} setActiveOption={setActiveOption} leadMagnet={leadMagnet}/>
           </TabsContent>
         </div>
       </Tabs>
-      <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen} />
+      <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen}/>
     </>
   );
 }

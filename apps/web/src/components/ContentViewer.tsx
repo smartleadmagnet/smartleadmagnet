@@ -8,7 +8,7 @@ interface ContentViewerProps {
   content: string;
 }
 
-const ContentViewer: React.FC<ContentViewerProps> = ({ type, content }) => {
+const ContentViewer: React.FC<ContentViewerProps> = ({type, content}) => {
   // Function to copy content to clipboard
   const copyToClipboard = () => {
     navigator.clipboard.writeText(content).then(() => {
@@ -33,7 +33,7 @@ const ContentViewer: React.FC<ContentViewerProps> = ({ type, content }) => {
         <>
           <div
             className="prose"
-            dangerouslySetInnerHTML={{ __html: marked(content) }}
+            dangerouslySetInnerHTML={{__html: marked(content)}}
           />
           <button onClick={copyToClipboard} className="mt-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-600">
             Copy
@@ -53,7 +53,7 @@ const ContentViewer: React.FC<ContentViewerProps> = ({ type, content }) => {
       )}
 
       {type === 'image' && (
-        <div className='text-center'>        
+        <div className='text-center'>
           <img
             src={content}
             alt="Content"

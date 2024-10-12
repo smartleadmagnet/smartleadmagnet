@@ -1,8 +1,9 @@
 import { POST } from "next-s3-upload/route";
 import { v4 } from "uuid";
+
 const getFileExtension = (filename: string) => filename.split(".").pop();
 
-const handler = POST.configure({
+const uploadAPIHandler = POST.configure({
   async key(req, filename) {
     const uniqueId = v4();
     const fileExtension = getFileExtension(filename);
@@ -10,4 +11,5 @@ const handler = POST.configure({
   },
 });
 
-export { handler as POST };
+// @ts-ignore
+export { uploadAPIHandler as POST };

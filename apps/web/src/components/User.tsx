@@ -16,15 +16,17 @@ import { signOut } from '@/lib/auth';
 export async function User() {
   let user = await getSessionUser();
 
-  console.log({ user });
+  console.log({user});
 
   if (!user) {
     return (
       <div className="gap-2 hidden md:flex">
-        <Link href="/login" className='bg-cyan-500 text-white font-bold py-3 px-6 rounded-lg  hover:bg-cyan-600 sm:py-4 sm:px-10 '>
+        <Link href="/login"
+              className='bg-cyan-500 text-white font-bold py-3 px-6 rounded-lg  hover:bg-cyan-600 sm:py-4 sm:px-10 '>
           Login
         </Link>
-        <Link href="/login" className='border-2 border-cyan-500 text-cyan-500 font-bold py-3 px-6 rounded-lg  hover:bg-cyan-500 hover:text-white sm:py-4 sm:px-8'>
+        <Link href="/login"
+              className='border-2 border-cyan-500 text-cyan-500 font-bold py-3 px-6 rounded-lg  hover:bg-cyan-500 hover:text-white sm:py-4 sm:px-8'>
           Sign Up
         </Link>
       </div>
@@ -50,7 +52,7 @@ export async function User() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator/>
         <DropdownMenuItem>
           <Link href="/my-forms">My Forms</Link>
         </DropdownMenuItem>
@@ -58,7 +60,7 @@ export async function User() {
           <Link href="/settings">Settings</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator/>
         <DropdownMenuItem>
           <form
             action={async () => {

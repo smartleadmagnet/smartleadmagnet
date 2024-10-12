@@ -55,7 +55,6 @@ const data: Testimonial[] = [
 ];
 
 
-
 const ClientSection = () => {
   return (
     <div className="bg-gray-50 py-20" id="testimonial">
@@ -67,19 +66,19 @@ const ClientSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {data.map((item, index) => (
             <div key={index} className="flex justify-center">
-              
-                <TestimonialCard {...item} />
-              
+
+              <TestimonialCard {...item} />
+
             </div>
           ))}
         </div>
         <div className="text-center mt-20">
-        <Link
-                  className="bg-cyan-500 text-white font-bold py-3 px-6 rounded-lg text-xl hover:bg-cyan-600 sm:py-4 sm:px-8 sm:text-2xl"
-                  href="/app"
-                >
-                  Read All The Reviews On Trustpilot.com
-                </Link>
+          <Link
+            className="bg-cyan-500 text-white font-bold py-3 px-6 rounded-lg text-xl hover:bg-cyan-600 sm:py-4 sm:px-8 sm:text-2xl"
+            href="/app"
+          >
+            Read All The Reviews On Trustpilot.com
+          </Link>
         </div>
       </div>
     </div>

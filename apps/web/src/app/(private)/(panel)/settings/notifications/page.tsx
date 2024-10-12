@@ -10,8 +10,8 @@ export default function SettingsNotificationsPage() {
           Configure how you receive notifications.
         </p>
       </div>
-      <Separator />
-      <NotificationsForm />
+      <Separator/>
+      <NotificationsForm/>
     </div>
   )
 }

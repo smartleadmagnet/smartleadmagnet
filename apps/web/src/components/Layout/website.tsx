@@ -1,21 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import Icon from "@smartleadmagnet/ui/components/icon"
-import {
-  PanelLeft,
-  ChevronDown,
-} from "lucide-react";
+import { ChevronDown, PanelLeft, } from "lucide-react";
 import { templateCategories } from "@smartleadmagnet/ui/lib/constants";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@smartleadmagnet/ui/components/ui/sheet";
-
-;
+import { Sheet, SheetContent, SheetTrigger, } from "@smartleadmagnet/ui/components/ui/sheet";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { User } from "@/components/User";
+
+;
 
 const CategoryGrid = () => {
   return (
@@ -30,32 +23,31 @@ const CategoryGrid = () => {
 };
 
 export default async function WebisteLayout({
-  children,
-}: {
+                                              children,
+                                            }: {
   children: React.ReactNode;
 }) {
-  
 
-  
 
   return (
     <main className="flex min-h-screen w-full flex-col bg-muted/40">
       <div className="flex flex-col sm:gap-4 ">
-        <header className="sticky top-0 z-30 flex  items-center gap-4 sm:py-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:px-6 bg-gray-900 h-36 ">
-          <MobileNav />
+        <header
+          className="sticky top-0 z-30 flex  items-center gap-4 sm:py-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:px-6 bg-gray-900 h-36 ">
+          <MobileNav/>
           <div className="flex-1">
             <Link href="/">
-            <Image
-              src="/images/logo/logo.png"
-              alt="Logo"
-              width={200}
-              height={0}
-            />
+              <Image
+                src="/images/logo/logo.png"
+                alt="Logo"
+                width={200}
+                height={0}
+              />
             </Link>
           </div>
-          <DesktopNav />
+          <DesktopNav/>
           <div className="flex-1 flex justify-end items-end">
-            <User />
+            <User/>
           </div>
         </header>
         <main className="flex flex-col">{children}</main>
@@ -79,10 +71,10 @@ function DesktopNav() {
             href="/templates"
             className="flex items-center hover:text-gray-500"
           >
-            Templates <ChevronDown className="h-4 w-4 ml-1 pt-1" />
+            Templates <ChevronDown className="h-4 w-4 ml-1 pt-1"/>
           </Link>
           <div className="mega-menu">
-            <CategoryGrid />
+            <CategoryGrid/>
           </div>
         </li>
         <li>
@@ -102,10 +94,10 @@ function DesktopNav() {
 
 function MobileNav() {
   return (
-    <Sheet >
+    <Sheet>
       <SheetTrigger asChild>
         <Button size="icon" variant="outline" className="sm:hidden">
-          <PanelLeft className="h-5 w-5" />
+          <PanelLeft className="h-5 w-5"/>
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
@@ -115,18 +107,18 @@ function MobileNav() {
             href="#"
             className="mobile-link"
           >
-            
+
             Home
           </Link>
           <div>
-          <Link
-            href="#"
-            className="mobile-link"
-          >
-            
-            Templates
-          </Link>
-          <ul className="ml-4 mt-2 space-y-2">
+            <Link
+              href="#"
+              className="mobile-link"
+            >
+
+              Templates
+            </Link>
+            <ul className="ml-4 mt-2 space-y-2">
               {templateCategories.map((category) => (
                 <li key={category.id}>
                   <Link
@@ -138,31 +130,33 @@ function MobileNav() {
                 </li>
               ))}
             </ul>
-            </div>  
+          </div>
           <Link
             href="#"
             className="mobile-link"
           >
-              
-              Pricing
+
+            Pricing
           </Link>
           <Link
             href="#"
             className="mobile-link"
           >
-                
-                Blog
+
+            Blog
           </Link>
           <div className="flex gap-2">
-        <Link href="/login" className='bg-cyan-500 text-white font-bold py-3 px-6 rounded-lg  hover:bg-cyan-600 sm:py-4 sm:px-10 '>
-          Login
-        </Link>
-        <Link href="/login" className='border-2 border-cyan-500 text-cyan-500 font-bold py-3 px-6 rounded-lg  hover:bg-cyan-500 hover:text-white sm:py-4 sm:px-8'>
-          Sign Up
-        </Link>
-      </div>
+            <Link href="/login"
+                  className='bg-cyan-500 text-white font-bold py-3 px-6 rounded-lg  hover:bg-cyan-600 sm:py-4 sm:px-10 '>
+              Login
+            </Link>
+            <Link href="/login"
+                  className='border-2 border-cyan-500 text-cyan-500 font-bold py-3 px-6 rounded-lg  hover:bg-cyan-500 hover:text-white sm:py-4 sm:px-8'>
+              Sign Up
+            </Link>
+          </div>
 
-          
+
         </nav>
       </SheetContent>
     </Sheet>
@@ -187,7 +181,7 @@ function Footer() {
             Skyrocket Your Conversions
           </p>
         </div>
-        
+
         {/* Categories Section */}
         <div className="mb-6">
           <h3 className="text-xl font-bold mb-2">Categories</h3>
@@ -221,13 +215,13 @@ function Footer() {
           <h3 className="text-xl font-semibold mb-2">Follow Us</h3>
           <div className="flex space-x-4">
             <Link href="https://facebook.com" target="_blank" className="hover:text-gray-500">
-              <Icon name="facebook" />
+              <Icon name="facebook"/>
             </Link>
             <Link href="https://twitter.com" target="_blank" className="hover:text-gray-500">
-              <Icon name="twitter" />
+              <Icon name="twitter"/>
             </Link>
             <Link href="https://linkedin.com" target="_blank" className="hover:text-gray-500">
-              <Icon name="linkedin" />
+              <Icon name="linkedin"/>
             </Link>
           </div>
         </div>

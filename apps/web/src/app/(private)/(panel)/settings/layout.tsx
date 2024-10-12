@@ -28,7 +28,7 @@ interface SettingsLayoutProps {
   children: React.ReactNode
 }
 
-export default function SettingsLayout({ children }: SettingsLayoutProps) {
+export default function SettingsLayout({children}: SettingsLayoutProps) {
   return (
     <>
       <div className="md:hidden">
@@ -54,10 +54,10 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
             Manage your account settings and api keys.
           </p>
         </div>
-        <Separator className="my-6" />
+        <Separator className="my-6"/>
         <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
           <aside className="-mx-4 lg:w-1/5">
-            <SidebarNav items={sidebarNavItems} />
+            <SidebarNav items={sidebarNavItems}/>
           </aside>
           <div className="flex-1 lg:max-w-2xl">{children}</div>
         </div>
