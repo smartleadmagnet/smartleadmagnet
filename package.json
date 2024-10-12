@@ -7,16 +7,22 @@
     "migrate:prisma:generate": "turbo migrate:prisma:generate",
     "pages:build": "turbo pages:build",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.5",
     "@smartleadmagnet/eslint-config": "*",
     "@smartleadmagnet/typescript-config": "*",
-    "@cloudflare/next-on-pages": "^1.13.5",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "turbo": "^2.1.2",
     "typescript": "^5.4.5"
+  },
+  "lint-staged": {
+    "*": ["bun run format", "bun run lint"]
   },
   "engines": {
     "node": ">=18"
