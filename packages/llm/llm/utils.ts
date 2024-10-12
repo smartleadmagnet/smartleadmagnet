@@ -1,21 +1,38 @@
 import { getImageLLMModel, getTextLLMModel } from "./index";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
+import { LeadMagnet } from "@smartleadmagnet/database";
 
 const totalRetry = 1;
 
 function replacePlaceholders(template, values) {
-	return template.replace(/{{(.*?)}}/g, (match, key) => {
-		return values[key] || match; // Replace with value or keep the placeholder if not found
+	// Regex to match the whole @[{{number_1}}](number_1) pattern
+	return template.replace(/@\[\{\{(.*?)\}\}\]\((.*?)\)/g, (match, key) => {
+		return values[key] || match; // Replace with value from object or keep the pattern if not found
 	});
 }
 
-export async function callTextLLM(prompt: string, promptInput: any) {
+const resultFormat = `
+
+The response should be inside <lead> tag
+<rrr>AI Generated Response</rrr>
+`;
+
+function extractLeadContent(htmlString: string): string | null {
+	const regex = /<lead>([\s\S]*?)<\/lead>/;
+	const match = htmlString.match(regex);
+	
+	// If a match is found, return the content inside the <lead> tag
+	return match && match.length > 1 ? match[1] : null;
+}
+
+
+export async function callTextLLM(leadMagnet: LeadMagnet, promptInput: any) {
 	console.log({
 		promptInput,
 	});
 	// console.log(promptInput);
-	let llmModel = getTextLLMModel();
-	const messages = [new SystemMessage(prompt), new HumanMessage({
+	let llmModel = getTextLLMModel(leadMagnet.provider, leadMagnet.model);
+	const messages = [new SystemMessage(`${leadMagnet.prompt}${resultFormat}`), new HumanMessage({
 		content: promptInput
 	})];
 	let retryCount = 0;
@@ -23,7 +40,7 @@ export async function callTextLLM(prompt: string, promptInput: any) {
 		try {
 			const result = await llmModel.invoke(messages);
 			// console.log(result?.content);
-			return result.content;
+			return extractLeadContent(result.content as string);
 		} catch (error: any) {
 			console.log(error);
 			if (retryCount < totalRetry) {
@@ -37,18 +54,14 @@ export async function callTextLLM(prompt: string, promptInput: any) {
 	return llmApiCall();
 }
 
-export async function callImageLLM(prompt: string, promptInput: any) {
-	console.log({
-		promptInput,
-	});
+export async function callImageLLM(leadMagnet: LeadMagnet, promptInput: any) {
 	// console.log(promptInput);
-	let llmModel = getImageLLMModel();
+	let llmModel = getImageLLMModel(leadMagnet?.provider);
 	let retryCount = 0;
 	const llmApiCall: any = async () => {
 		try {
-			const result = await llmModel.invoke(replacePlaceholders(prompt, promptInput));
-			// console.log(result?.content);
-			return result;
+			console.log("Prompt: ", replacePlaceholders(leadMagnet.prompt, promptInput))
+			return await llmModel.invoke(replacePlaceholders(leadMagnet.prompt, promptInput));
 		} catch (error: any) {
 			console.log(error);
 			if (retryCount < totalRetry) {
