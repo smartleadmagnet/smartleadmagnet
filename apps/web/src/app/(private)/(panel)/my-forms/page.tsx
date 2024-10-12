@@ -10,7 +10,7 @@ export default async function MyForms() {
   const onCreate = async () => {
     "use server";
     const lead = await createLead();
-    redirect(`/builder/${lead.id!}`);
+    redirect(`/builder/${lead?.id!}`);
   };
 
   return (

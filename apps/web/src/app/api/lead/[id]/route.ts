@@ -10,8 +10,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
   if (user?.id) {
     try {
       const payload = await req.json();
-      await updateLeadMagnet(params.id, user?.id, payload);
-      return NextResponse.json({});
+      const updatedLead = await updateLeadMagnet(params.id, user?.id, payload);
+      return NextResponse.json(updatedLead);
     } catch (error: any) {
       console.log(error);
       return NextResponse.json({ error: error.message || error }, { status: 500 });

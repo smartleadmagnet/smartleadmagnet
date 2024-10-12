@@ -3,12 +3,13 @@
 import { createLeadMagnet, getLeadMagnetById, getLeadMagnetsByUser } from "@smartleadmagnet/services";
 import { adjectives, Config, names, starWars, uniqueNamesGenerator } from "unique-names-generator";
 import { getSessionUser } from "@/services/user";
+import { LeadMagnet } from "@smartleadmagnet/database";
 
 const config: Config = {
   dictionaries: [names, starWars, adjectives],
 };
 
-export async function createLead() {
+export async function createLead(): Promise<LeadMagnet> {
   const user = await getSessionUser();
   try {
     // @ts-ignore

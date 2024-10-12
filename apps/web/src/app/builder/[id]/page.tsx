@@ -3,5 +3,6 @@ import BuilderContainer from "@/app/builder/[id]/BuilderContainer";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const leadMagnet = await getLeadMagnetById(params.id);
+  console.log(leadMagnet);
   return <BuilderContainer leadMagnet={leadMagnet} />;
 }
