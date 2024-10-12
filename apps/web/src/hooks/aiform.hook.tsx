@@ -1,11 +1,10 @@
-import { LeadMagnet } from "@smartleadmagnet/database";
 import { useState } from "react";
 import axios from "axios";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 
 interface Preview {
-  text: string;
-  image: string;
+  type: string;
+  content: string;
 }
 
 const useAIForm = () => {
@@ -24,7 +23,7 @@ const useAIForm = () => {
     setSelectedModel,
   } = useBuilderContext();
   const [processing, setProcessing] = useState(false);
-  const [preview, setPreview] = useState(false);
+  const [preview, setPreview] = useState<Preview | undefined>();
 
   const onValidatePrompt = async () => {
     setProcessing(true);
@@ -38,7 +37,7 @@ const useAIForm = () => {
     try {
       if (outputType === "image") {
         const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, textPayload);
-        console.log({ result });
+        setPreview({ type: "image", content: result.data?.message });
       } else {
         const imagePayload = elementsList.reduce((acc, element) => {
           if (element.type === "image" || element.type === "file") {
@@ -50,6 +49,7 @@ const useAIForm = () => {
           { type: "text", text: JSON.stringify(textPayload) },
           ...imagePayload,
         ]);
+        setPreview({ type: "text", content: result.data?.message });
       }
     } catch (e) {
       console.log(e);
@@ -71,6 +71,7 @@ const useAIForm = () => {
     onValidatePrompt,
     processing,
     elementsList,
+    preview,
   };
 };
 

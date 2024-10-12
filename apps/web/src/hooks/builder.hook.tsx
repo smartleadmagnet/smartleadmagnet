@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { DropResult } from "react-beautiful-dnd";
 import { ChildItem } from "@/app/types/builder";
