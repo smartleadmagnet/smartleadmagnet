@@ -267,7 +267,7 @@ const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 		onDragEnd,
 		removeElement,
 		handleEdit,
-		selctedItem: selectedItem,
+		selectedItem,
 		handleEditChange,
 		searchTerm,
 		setSearchTerm,

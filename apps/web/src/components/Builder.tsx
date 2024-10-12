@@ -39,7 +39,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
     onDragEnd,
     removeElement,
     handleEdit,
-    selctedItem,
+    selectedItem,
     handleEditChange,
     searchTerm,
     handleStyleUpdate,
@@ -167,7 +167,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
                   <div className="flex-grow overflow-y-auto pb-[50px]">
                     {editMode ? (
                       <BuilderEditor
-                        data={selctedItem}
+                        data={selectedItem}
                         onClose={() => {
                           handleEdit(null);
                         }}

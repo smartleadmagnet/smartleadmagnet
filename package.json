@@ -10,8 +10,11 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@smartleadmagnet/eslint-config": "*",
+    "@smartleadmagnet/typescript-config": "*",
     "@cloudflare/next-on-pages": "^1.13.5",
     "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.14",
     "turbo": "^2.1.2",
     "typescript": "^5.4.5"
   },
