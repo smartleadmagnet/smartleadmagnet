@@ -191,55 +191,59 @@ export const formStyleOptions = [
 
 export const templateCategories = [
   {
+    name: "All",
+    id: "all",
+  },
+  {
     name: "Marketing",
-    id: "1",
+    id: "marketing",
   },
   {
     name: "SEO",
-    id: "2",
+    id: "seo",
   },
   {
     name: "Design",
-    id: "3",
+    id: "design",
   },
   {
     name: "Development",
-    id: "3",
+    id: "development",
   },
   {
     name: "Fun Tools",
-    id: "4",
+    id: "fun-tools",
   },
   {
     name: "Social Media",
-    id: "5",
+    id: "social-media",
   },
   {
     name: "Content Creation",
-    id: "6",
+    id: "content-creation",
   },
   {
     name: "Email Genrator",
-    id: "7",
+    id: "email-genrator",
   },
   {
     name: "Hashtag Genrator",
-    id: "8",
+    id: "hashtag-genrator",
   },
   {
     name: "Fitness",
-    id: "9",
+    id: "fitness",
   },
   {
     name: "SALES",
-    id: "10",
+    id: "sales",
   },
   {
     name: "Finance",
-    id: "11",
+    id: "finance",
   },
   {
     name: "Other",
-    id: "12",
+    id: "other",
   },
 ];
