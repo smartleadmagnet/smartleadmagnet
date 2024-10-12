@@ -19,13 +19,13 @@ interface BuilderEditorProps {
 }
 
 export default function BuilderEditor(props: BuilderEditorProps) {
-  const {data, onClose, updateData} = props;
+  const { data, onClose, updateData } = props;
   if (!data) return null;
 
   return (
-    <div className="w-full flex flex-col bg-white p-4 rounded-md justify-between relative">
+    <div className="relative flex w-full flex-col justify-between rounded-md bg-white p-4">
       {/* Header with Close Button */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="mb-4 flex items-center justify-between">
         <h1 className="text-lg font-bold">Edit Form Feild</h1>
         <Button onClick={onClose} className="bg-red-500 text-white">
           Close
@@ -34,50 +34,36 @@ export default function BuilderEditor(props: BuilderEditorProps) {
 
       {/* Edit Options Rendered from Data */}
       <div>
-        {![
-          "image",
-          "file",
-          "radio",
-          "select",
-          "checkbox-group",
-          "checkbox",
-          "number",
-          "color",
-          ,
-        ].includes(data.type) && (
+        {!["image", "file", "radio", "select", "checkbox-group", "checkbox", "number", "color", ,].includes(
+          data.type
+        ) && (
           <div>
-            <Label className="text-sm font-semibold mb-2 block">
-              {data.label}
-            </Label>
+            <Label className="mb-2 block text-sm font-semibold">{data.label}</Label>
 
-            <div className="flex flex-col mb-4">
+            <div className="mb-4 flex flex-col">
               <Input
                 value={data.value}
                 onChange={(e) => {
                   updateData("value", e.target.value);
                 }}
-                className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            {data.error && (
-              <p className="text-sm text-red-500 mt-2">{data.error}</p>
-            )}
+            {data.error && <p className="mt-2 text-sm text-red-500">{data.error}</p>}
           </div>
         )}
         {data.type === "number" && (
           <div>
-            <Label className="text-sm font-semibold mb-2 block">
-              {data.label}
-            </Label>
+            <Label className="mb-2 block text-sm font-semibold">{data.label}</Label>
 
-            <div className="flex flex-col mb-4">
+            <div className="mb-4 flex flex-col">
               <Input
                 value={data.value}
                 onChange={(e) => {
                   updateData("value", e.target.value);
                 }}
                 type="number"
-                className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -85,7 +71,7 @@ export default function BuilderEditor(props: BuilderEditorProps) {
         {data.formElement && (
           <div>
             {data.type === "checkbox" && (
-              <div className="flex items-center space-x-2 mb-[20px]">
+              <div className="mb-[20px] flex items-center space-x-2">
                 <Switch
                   id="value"
                   checked={data.value === "true"}
@@ -97,7 +83,7 @@ export default function BuilderEditor(props: BuilderEditorProps) {
               </div>
             )}
 
-            <div className="flex items-center space-x-2 mb-[20px]">
+            <div className="mb-[20px] flex items-center space-x-2">
               <Switch
                 id="required"
                 checked={data.required}
@@ -107,23 +93,21 @@ export default function BuilderEditor(props: BuilderEditorProps) {
               />
               <Label htmlFor="required">Required</Label>
             </div>
-            <Label className="text-sm font-semibold mb-2 block">Name</Label>
-            <div className="flex flex-col mb-4">
+            <Label className="mb-2 block text-sm font-semibold">Name</Label>
+            <div className="mb-4 flex flex-col">
               <Input
                 value={data.name}
                 onChange={(e) => {
                   updateData("name", e.target.value);
                 }}
-                className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             {["radio", "select", "checkbox-group"].includes(data.type) && (
               <div>
                 <div className="mb-[20px]">
-                  <Label className="text-sm font-semibold mb-2 block">
-                    Default Option
-                  </Label>
+                  <Label className="mb-2 block text-sm font-semibold">Default Option</Label>
                   {["radio", "select"].includes(data.type) ? (
                     <Select
                       onValueChange={(value) => {
@@ -136,7 +120,7 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                       value={data?.value}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a Default Option"/>
+                        <SelectValue placeholder="Select a Default Option" />
                       </SelectTrigger>
                       <SelectContent>
                         {data.options?.map((option: any) => (
@@ -160,9 +144,7 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                   )}
                 </div>
 
-                <Label className="text-sm font-semibold mb-2 block">
-                  Options
-                </Label>
+                <Label className="mb-2 block text-sm font-semibold">Options</Label>
                 <MultiSelectCreatable
                   options={data?.options || []}
                   onChange={(value) => {

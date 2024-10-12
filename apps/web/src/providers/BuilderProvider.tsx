@@ -1,6 +1,6 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { ChildItem } from '@/app/types/builder';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { ChildItem } from "@/app/types/builder";
 import { LeadMagnet } from "@smartleadmagnet/database";
 import axios from "axios";
 import llm from "@/data/llm.json";
@@ -21,7 +21,9 @@ interface BuilderContextType {
   setSelectedModel?: (value: string | ((prevState: string) => string)) => void;
   setOutputType?: (value: string | ((prevState: string) => string)) => void;
   setPrompt: (value: string | ((prevState: string) => string)) => void;
-  setFormStyles: (value: typeof defaultFormStyles | ((prevState: typeof defaultFormStyles) => typeof defaultFormStyles)) => void;
+  setFormStyles: (
+    value: typeof defaultFormStyles | ((prevState: typeof defaultFormStyles) => typeof defaultFormStyles)
+  ) => void;
   onProviderChange: (provider: string) => void;
   filteredProviders: LLMProvider[];
   onOutputTypeChange: (type: string) => void;
@@ -43,16 +45,20 @@ const defaultFormStyles = {
   selectedFormStyle: "default", // Default form style
 };
 
-export const BuilderProvider: React.FC<{ children: React.ReactNode, leadMagnet: LeadMagnet }> = ({
-                                                                                                   children,
-                                                                                                   leadMagnet
-                                                                                                 }) => {
+export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: LeadMagnet }> = ({
+  children,
+  leadMagnet,
+}) => {
   const [elementsList, setElementsList] = useState<ChildItem[]>(leadMagnet.components || []);
   const [name, setName] = useState<string>(leadMagnet?.name || "");
-  const defaultLLMProvider = leadMagnet?.provider ? llm.find((provider) => provider.name === leadMagnet.provider) : llm[0];
+  const defaultLLMProvider = leadMagnet?.provider
+    ? llm.find((provider) => provider.name === leadMagnet.provider)
+    : llm[0];
   const [prompt, setPrompt] = useState<string>(leadMagnet?.prompt || "");
   const [selectedProvider, setSelectedProvider] = useState<LLMProvider>(defaultLLMProvider);
-  const [selectedModel, setSelectedModel] = useState<string>(leadMagnet.model || selectedProvider?.models[0]?.name || "");
+  const [selectedModel, setSelectedModel] = useState<string>(
+    leadMagnet.model || selectedProvider?.models[0]?.name || ""
+  );
   const [outputType, setOutputType] = useState<string>(leadMagnet?.output || "text");
 
   // Ensure formStyles has the correct type and merge it properly
@@ -75,7 +81,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode, leadMagnet: 
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const updateSettingFormData = async (form: BuilderSchemaForm) => {
     try {
@@ -83,18 +89,17 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode, leadMagnet: 
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   useEffect(() => {
     // make an API call to update the components
     updateData();
-
   }, [elementsList, formStyles]);
 
   useEffect(() => {
     const filteredModels = filterModels(selectedProvider?.models || []);
 
-    if (!filteredModels.find(model => model.name === selectedModel)) {
+    if (!filteredModels.find((model) => model.name === selectedModel)) {
       setSelectedModel(filteredModels[0]?.name || "");
     }
 
@@ -113,8 +118,8 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode, leadMagnet: 
 
   const filterProviders = (providers: LLMProvider[], output?: string): LLMProvider[] => {
     const type = output || outputType;
-    return providers.filter(provider =>
-      provider.models.some(model => {
+    return providers.filter((provider) =>
+      provider.models.some((model) => {
         if (type === "image") return model.generateImage;
         if (type === "text" || type === "markdown") return model.text;
         return true;
@@ -123,9 +128,9 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode, leadMagnet: 
   };
 
   const filterModels = (models: LLMModel[]): LLMModel[] => {
-    const hasImageOrFile = elementsList.some(element => element.type === "image" || element.type === "file");
+    const hasImageOrFile = elementsList.some((element) => element.type === "image" || element.type === "file");
 
-    return models.filter(model => {
+    return models.filter((model) => {
       if (outputType === "image") return model.generateImage;
       if (outputType === "text" || outputType === "markdown") {
         if (hasImageOrFile) return model.text && model.vision;
@@ -140,14 +145,14 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode, leadMagnet: 
     const filteredProviders = filterProviders(llm, type);
     const filteredModels = filterModels(selectedProvider?.models || []);
 
-    if (!filteredProviders.find(provider => provider.name === selectedProvider?.name)) {
+    if (!filteredProviders.find((provider) => provider.name === selectedProvider?.name)) {
       setSelectedProvider(filteredProviders[0]);
     }
 
-    if (!filteredModels.find(model => model.name === selectedModel)) {
+    if (!filteredModels.find((model) => model.name === selectedModel)) {
       setSelectedModel(filteredModels[0]?.name || "");
     }
-  }
+  };
 
   const onProviderChange = (provider: string) => {
     const newProvider = llm.find((p) => p.name === provider);
@@ -157,43 +162,43 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode, leadMagnet: 
     setSelectedModel(filteredModels[0]?.name || "");
   };
 
-
   const filteredProviders = filterProviders(llm);
   const filteredModels = filterModels(selectedProvider?.models || []);
 
   return (
-    <BuilderContext.Provider value={{
-      elementsList,
-      formStyles,
-      name,
-      selectedProvider,
-      selectedModel,
-      outputType,
-      prompt,
-      setElementsList,
-      setName,
-      setSelectedProvider,
-      setSelectedModel,
-      setOutputType,
-      setPrompt,
-      setFormStyles,
-      onProviderChange,
-      filteredProviders,
-      onOutputTypeChange,
-      filteredModels,
-      updateSettingFormData,
-      leadMagnet,
-    }}>
+    <BuilderContext.Provider
+      value={{
+        elementsList,
+        formStyles,
+        name,
+        selectedProvider,
+        selectedModel,
+        outputType,
+        prompt,
+        setElementsList,
+        setName,
+        setSelectedProvider,
+        setSelectedModel,
+        setOutputType,
+        setPrompt,
+        setFormStyles,
+        onProviderChange,
+        filteredProviders,
+        onOutputTypeChange,
+        filteredModels,
+        updateSettingFormData,
+        leadMagnet,
+      }}
+    >
       {children}
     </BuilderContext.Provider>
   );
 };
 
-
 export const useBuilderContext = (): BuilderContextType => {
   const context = useContext(BuilderContext);
   if (context === undefined) {
-    throw new Error('useBuilderContext must be used within a BuilderProvider');
+    throw new Error("useBuilderContext must be used within a BuilderProvider");
   }
   return context;
 };

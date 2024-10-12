@@ -20,7 +20,7 @@ interface EmbedModalProps {
 }
 
 const AddKeyModal = (props: EmbedModalProps) => {
-  const {open, setIsOpen} = props;
+  const { open, setIsOpen } = props;
   const [selectedKey, setSelectedKey] = useState<string>("Open AI"); // Default selection
   const [isDefault, setIsDefault] = useState<boolean>(false);
 
@@ -41,47 +41,35 @@ const AddKeyModal = (props: EmbedModalProps) => {
       {/* Modal Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
           onClick={toggleModal}
         >
           {/* Modal Content */}
           <div
-            className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-xl"
+            className="relative w-full max-w-xl rounded-lg bg-white p-6 shadow-lg"
             onClick={(e) => e.stopPropagation()} // Prevent closing on content click
           >
             {/* Close Button */}
-            <button
-              className="absolute top-4 right-4 p-1 text-white"
-              onClick={toggleModal}
-            >
-              <Icon name="close"/>
+            <button className="absolute right-4 top-4 p-1 text-white" onClick={toggleModal}>
+              <Icon name="close" />
             </button>
 
             {/* Modal Title with Gradient Background */}
-            <div className="text-center mb-6">
-              <div
-                className="modal-header inline-flex items-center justify-center w-full py-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-t-lg">
+            <div className="mb-6 text-center">
+              <div className="modal-header inline-flex w-full items-center justify-center rounded-t-lg bg-gradient-to-r from-orange-500 to-pink-500 py-4 text-white">
                 <h2 className="text-2xl font-semibold">Add New Api Key</h2>
               </div>
             </div>
             <form className="space-y-4">
               <FormItem>
-                <Label className="text-sm font-semibold mb-2 block">
-                  Key Name
-                </Label>
-                <Input
-                  type="text"
-                  placeholder="Enter Key Name"
-                  className="w-full"
-                />
+                <Label className="mb-2 block text-sm font-semibold">Key Name</Label>
+                <Input type="text" placeholder="Enter Key Name" className="w-full" />
               </FormItem>
               <FormItem>
-                <Label className="text-sm font-semibold mb-2 block">
-                  API Key Provider
-                </Label>
+                <Label className="mb-2 block text-sm font-semibold">API Key Provider</Label>
                 <Select>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select an option"/>
+                    <SelectValue placeholder="Select an option" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="option1">Option 1</SelectItem>
@@ -89,21 +77,12 @@ const AddKeyModal = (props: EmbedModalProps) => {
                 </Select>
               </FormItem>
               <FormItem>
-                <Label className="text-sm font-semibold mb-2 block">
-                  API Key
-                </Label>
-                <Input
-                  type="text"
-                  placeholder="Enter API Key"
-                  className="w-full"
-                />
+                <Label className="mb-2 block text-sm font-semibold">API Key</Label>
+                <Input type="text" placeholder="Enter API Key" className="w-full" />
               </FormItem>
               <div className="flex items-center space-x-2">
-                <Checkbox id="terms2" disabled/>
-                <Label
-                  htmlFor="terms2"
-                  className="text-sm font-medium"
-                >
+                <Checkbox id="terms2" disabled />
+                <Label htmlFor="terms2" className="text-sm font-medium">
                   Set as Default
                 </Label>
               </div>
@@ -111,11 +90,7 @@ const AddKeyModal = (props: EmbedModalProps) => {
 
             {/* Submit and Cancel Buttons */}
             <div className="mt-4 flex justify-end">
-              <Button
-                className="mr-2"
-                variant="secondary"
-                onClick={toggleModal}
-              >
+              <Button className="mr-2" variant="secondary" onClick={toggleModal}>
                 Cancel
               </Button>
               <Button className="btn-primary" onClick={handleSubmit}>

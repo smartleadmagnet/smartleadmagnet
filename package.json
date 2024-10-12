@@ -22,7 +22,7 @@
     "typescript": "^5.4.5"
   },
   "lint-staged": {
-    "*": ["bun run format", "bun run lint"]
+    "*": "bun run lint"
   },
   "engines": {
     "node": ">=18"

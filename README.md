@@ -44,16 +44,16 @@ docker-compose down
 
 You need to create and fill the `.env` file in the root of the project with the following environment variables:
 
-| Variable Name         | Description                                        | Example Value                              |
-|-----------------------|----------------------------------------------------|--------------------------------------------|
-| `DATABASE_URL`         | MongoDB connection URL                            | `mongodb://root:prisma@localhost:27017/prisma-mongo?authSource=admin` |
-| `LLM_TYPE`            | Type of Large Language Model (LLM) used            | `groq`                                     |
-| `LLM_MODEL`           | Model of the LLM                                   | `llama-3.2-90b-text-preview`               |
-| `LLM_API_KEY`         | API key for accessing the LLM                      | `your_llm_api_key`                         |
-| `AUTH_GOOGLE_ID`      | Google OAuth Client ID                             | `your_google_auth_id`                      |
-| `AUTH_GOOGLE_SECRET`  | Google OAuth Client Secret                         | `your_google_auth_secret`                  |
-| `AUTH_SECRET`         | Secret used for authentication                     | `your_auth_secret`                         |
-| `AUTH_URL`            | URL for authentication callback                    | `http://localhost:3000`                    |
+| Variable Name        | Description                             | Example Value                                                         |
+| -------------------- | --------------------------------------- | --------------------------------------------------------------------- |
+| `DATABASE_URL`       | MongoDB connection URL                  | `mongodb://root:prisma@localhost:27017/prisma-mongo?authSource=admin` |
+| `LLM_TYPE`           | Type of Large Language Model (LLM) used | `groq`                                                                |
+| `LLM_MODEL`          | Model of the LLM                        | `llama-3.2-90b-text-preview`                                          |
+| `LLM_API_KEY`        | API key for accessing the LLM           | `your_llm_api_key`                                                    |
+| `AUTH_GOOGLE_ID`     | Google OAuth Client ID                  | `your_google_auth_id`                                                 |
+| `AUTH_GOOGLE_SECRET` | Google OAuth Client Secret              | `your_google_auth_secret`                                             |
+| `AUTH_SECRET`        | Secret used for authentication          | `your_auth_secret`                                                    |
+| `AUTH_URL`           | URL for authentication callback         | `http://localhost:3000`                                               |
 
 ## Step 4: Project Structure
 

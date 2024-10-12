@@ -6,12 +6,12 @@ import { DropResult } from "react-beautiful-dnd";
 import { ChildItem } from "@/app/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 import { useBuilderContext } from "@/providers/BuilderProvider";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { LeadMagnet } from "@smartleadmagnet/database";
 
-const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
-  const router = useRouter()
-  const {elementsList, setElementsList, setName, name, formStyles, setFormStyles} = useBuilderContext();
+const useBuilder = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
+  const router = useRouter();
+  const { elementsList, setElementsList, setName, name, formStyles, setFormStyles } = useBuilderContext();
   const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [embedOpen, setEmbedOpen] = useState(false);
@@ -49,12 +49,11 @@ const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
   const codeContent = `const greet = (name) => {
     console.log("Hello, " + name);
   }`;
-  const imageUrl =
-    "https://smartleadmagnet.com/wp-content/uploads/2024/09/ai-help.jpg"; // Replace with your image URL
+  const imageUrl = "https://smartleadmagnet.com/wp-content/uploads/2024/09/ai-help.jpg"; // Replace with your image URL
 
   useEffect(() => {
-    setElementsList(leadMagnet.components)
-  }, [])
+    setElementsList(leadMagnet.components);
+  }, []);
 
   const handleStyleUpdate = (key: string, newColor: string) => {
     setFormStyles((prev) => ({
@@ -73,25 +72,18 @@ const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
     setEditMode(!!item);
   };
 
-  const handleEditChange = (
-    key: string,
-    value: string | boolean,
-    builderSelected?: ChildItem
-  ) => {
+  const handleEditChange = (key: string, value: string | boolean, builderSelected?: ChildItem) => {
     const selectedItemCopy = builderSelected || selectedItem;
     if (!selectedItemCopy) return;
 
-    const index = elementsList.findIndex(
-      (element: any) => element.id === selectedItemCopy.id
-    );
+    const index = elementsList.findIndex((element: any) => element.id === selectedItemCopy.id);
     if (index === -1) return;
 
-    let updatedItem = {...selectedItemCopy, [key]: value};
+    let updatedItem = { ...selectedItemCopy, [key]: value };
 
     // Website validation
     if (selectedItemCopy.type === "website" && key === "value") {
-      const websiteRegex =
-        /^(https?:\/\/)?([\w\d-]+\.)+\w{2,}(\/[\w\d-]*)*\/?$/;
+      const websiteRegex = /^(https?:\/\/)?([\w\d-]+\.)+\w{2,}(\/[\w\d-]*)*\/?$/;
       const isValidWebsite = websiteRegex.test(value as string);
       if (!isValidWebsite) {
         updatedItem = {
@@ -124,9 +116,7 @@ const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
     }
 
     // Update the elements list with the modified item
-    setElementsList((prevList) =>
-      prevList.map((item, i) => (i === index ? updatedItem : item))
-    );
+    setElementsList((prevList) => prevList.map((item, i) => (i === index ? updatedItem : item)));
 
     // If builderSelected exists, return the updated item
     if (builderSelected) {
@@ -182,7 +172,7 @@ const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
   };
 
   const onDragEnd = (result: DropResult) => {
-    const {source, destination} = result;
+    const { source, destination } = result;
     if (!destination) {
       return; // Do nothing if dropped outside the list
     }
@@ -239,7 +229,7 @@ const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
     setEmbedOpen,
     router,
     name,
-    setName
+    setName,
   };
 };
 

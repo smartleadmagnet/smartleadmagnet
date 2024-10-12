@@ -9,15 +9,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@smartleadmagnet/ui/components/ui/select";
-import { RadioGroup, RadioGroupItem, } from "@smartleadmagnet/ui/components/ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/radio-group";
 import useAIForm from "@/hooks/aiform.hook";
 import { LeadMagnet } from "@smartleadmagnet/database";
 import { Badge } from "@smartleadmagnet/ui/components/ui/badge";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Spinner from "@smartleadmagnet/ui/components/Spinner";
 
-
-export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
+export default function AIForm({ leadMagnet }: { leadMagnet: LeadMagnet }) {
   const {
     prompt,
     setPrompt,
@@ -31,15 +30,14 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
     outputType,
     onValidatePrompt,
     processing,
-    elementsList
-  } = useAIForm({leadMagnet})
+    elementsList,
+  } = useAIForm({ leadMagnet });
   return (
-    <div className="w-full flex flex-col bg-white p-4 rounded-md justify-between relative h-full p-4">
-      <div
-        className="flex flex-col h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 p-1">
-        <div className="flex flex-col h-full">
+    <div className="relative flex h-full w-full flex-col justify-between rounded-md bg-white p-4 p-4">
+      <div className="scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 flex h-full flex-col overflow-y-auto p-1">
+        <div className="flex h-full flex-col">
           <div className="form-control w-full">
-            <div className="flex w-full justify-between items-center mb-[10px]">
+            <div className="mb-[10px] flex w-full items-center justify-between">
               <Label>Prompt</Label>
             </div>
             <MentionTextArea
@@ -49,16 +47,15 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
                 .filter((item: any) => item.formElement)
                 .map((element: any) => ({
                   id: element.name,
-                  display: `{{${element.name}}}`
-                }))
-              }
+                  display: `{{${element.name}}}`,
+                }))}
             />
           </div>
-          <div className="form-control w-full mb-4">
+          <div className="form-control mb-4 w-full">
             <Label>Output Type</Label>
             <Select value={outputType} onValueChange={setOutputType}>
               <SelectTrigger>
-                <SelectValue placeholder="Select the output type"/>
+                <SelectValue placeholder="Select the output type" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -70,65 +67,53 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
             </Select>
           </div>
           {/* Output Type and Provider */}
-          <div className="flex gap-2 w-full">
-            <div className="form-control w-full mb-4">
+          <div className="flex w-full gap-2">
+            <div className="form-control mb-4 w-full">
               <Label>Provider</Label>
               <Select value={selectedProvider.name} onValueChange={onProviderChange}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a LLM Provider"/>
+                  <SelectValue placeholder="Select a LLM Provider" />
                 </SelectTrigger>
                 <SelectContent>
-                  {
-                    providers?.map(provider => (
-                      <SelectItem key={provider.name} value={provider.name}>{provider.name}</SelectItem>
-                    ))
-                  }
+                  {providers?.map((provider) => (
+                    <SelectItem key={provider.name} value={provider.name}>
+                      {provider.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
           </div>
 
           {/* API Usage Section */}
-          <div className="w-full flex flex-col gap-2">
-            <div className="bg-white rounded-lg p-3 border w-full border-primary">
-              <div className="flex justify-between items-center mb-1">
+          <div className="flex w-full flex-col gap-2">
+            <div className="border-primary w-full rounded-lg border bg-white p-3">
+              <div className="mb-1 flex items-center justify-between">
                 <h3>Models</h3>
               </div>
-              <RadioGroup
-                value={selectedModel}
-                className="flex  gap-3 flex-wrap"
-                onValueChange={setSelectedModel}
-              >
-                {
-                  filteredModels.map(model => (
-                    <div className="flex items-center space-x-2 cursor-pointer" key={model.name}>
-                      <RadioGroupItem value={model.name} id={model.name}/>
-                      <Label htmlFor={model.name}>{model.displayName}</Label>
-                      {
-                        model.vision && (
-                          <Badge className="text-[8px] !min-w-[60px]" variant="destructive">Support File</Badge>
-                        )
-                      }
-                      {
-                        model.generateImage &&
-                        <Badge className="text-[10px] !min-w-[150px] justify-center">Generate Image</Badge>
-                      }
-                    </div>
-                  ))
-                }
+              <RadioGroup value={selectedModel} className="flex  flex-wrap gap-3" onValueChange={setSelectedModel}>
+                {filteredModels.map((model) => (
+                  <div className="flex cursor-pointer items-center space-x-2" key={model.name}>
+                    <RadioGroupItem value={model.name} id={model.name} />
+                    <Label htmlFor={model.name}>{model.displayName}</Label>
+                    {model.vision && (
+                      <Badge className="!min-w-[60px] text-[8px]" variant="destructive">
+                        Support File
+                      </Badge>
+                    )}
+                    {model.generateImage && (
+                      <Badge className="!min-w-[150px] justify-center text-[10px]">Generate Image</Badge>
+                    )}
+                  </div>
+                ))}
               </RadioGroup>
             </div>
           </div>
         </div>
         <Button className="flex" onClick={onValidatePrompt}>
-          {
-            processing && (<Spinner/>)
-          }
-          {
-            !processing && "Validate Prompt"
-          }
+          {processing && <Spinner />}
+          {!processing && "Validate Prompt"}
         </Button>
-
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 interface ProcessCardProps {
   step: number;
@@ -8,18 +8,20 @@ interface ProcessCardProps {
   className?: string;
 }
 
-const ProcessCard: React.FC<ProcessCardProps> = ({step, iconSrc, title, text, className}) => {
+const ProcessCard: React.FC<ProcessCardProps> = ({ step, iconSrc, title, text, className }) => {
   return (
     <div
-      className={`border border-gray-300 rounded-lg p-6 bg-gray-800 transition-transform duration-300 hover:scale-105 ${className}`}>
-      <div className="relative h-20 mb-10">
-        <Image src={iconSrc} alt="process card" width={80} height={80} objectFit="contain"/>
+      className={`rounded-lg border border-gray-300 bg-gray-800 p-6 transition-transform duration-300 hover:scale-105 ${className}`}
+    >
+      <div className="relative mb-10 h-20">
+        <Image src={iconSrc} alt="process card" width={80} height={80} objectFit="contain" />
       </div>
       <div className="text-left">
-        <div
-          className="border-b-2 border-[#BEF8FC]  inline-block  text-[#BEF8FC] text-3xl relative mb-10">Step {step}</div>
-        <h4 className="text-2xl text-white font-bold mb-2 text-2xl">{title}</h4>
-        <p className="text-white text-lg">{text}</p>
+        <div className="relative mb-10  inline-block  border-b-2 border-[#BEF8FC] text-3xl text-[#BEF8FC]">
+          Step {step}
+        </div>
+        <h4 className="mb-2 text-2xl text-2xl font-bold text-white">{title}</h4>
+        <p className="text-lg text-white">{text}</p>
       </div>
     </div>
   );
