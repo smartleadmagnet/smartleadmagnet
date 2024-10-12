@@ -9,7 +9,7 @@ interface FormWithIconProps {
   setValue: (newValue: string) => void;
 }
 
-const EditableInput: FC<FormWithIconProps> = ({value, setValue}) => {
+const EditableInput: FC<FormWithIconProps> = ({ value, setValue }) => {
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null); // Type for inputRef
 
@@ -26,7 +26,7 @@ const EditableInput: FC<FormWithIconProps> = ({value, setValue}) => {
   const inputWidth = value.length ? `${value.length * 10 + 30}px` : "220px";
 
   return (
-    <div className="flex cm-form-input space-x-1">
+    <div className="cm-form-input flex space-x-1">
       <Input
         value={value} // Control the value with props
         placeholder="Enter your Lead Magnet name"
@@ -40,12 +40,12 @@ const EditableInput: FC<FormWithIconProps> = ({value, setValue}) => {
           }
         }} // Hide the icon when the user presses Enter also remove focus
         onBlur={() => setIsTyping(false)} // Hide the icon when the user clicks outside
-        className="flex-grow min-w-0 m-0" // Adjust width dynamically
-        style={{width: inputWidth}} // Adjust width dynamically
+        className="m-0 min-w-0 flex-grow" // Adjust width dynamically
+        style={{ width: inputWidth }} // Adjust width dynamically
       />
       {!isTyping && (
         <Button onClick={handleIconClick} className="py-1 pt-[5px]">
-          <Icon name="edit"/>{" "}
+          <Icon name="edit" />{" "}
         </Button>
       )}
     </div>

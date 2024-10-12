@@ -1,7 +1,6 @@
 export type Option = {
   label: string;
   value: string;
-
 };
 // Define types for the child item
 export type ChildItem = {
@@ -22,7 +21,6 @@ export type BuilderItem = {
   title: string;
   children: ChildItem[];
   id: string;
-
 };
 
 // Define props for the BuilderComponent

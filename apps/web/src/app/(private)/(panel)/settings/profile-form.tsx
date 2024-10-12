@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
-import { z } from "zod"
+import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useFieldArray, useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { cn } from "@smartleadmagnet/ui/lib/utils"
-import { toast } from "@smartleadmagnet/ui/hooks/use-toast"
-import { Button } from "@smartleadmagnet/ui/components/ui/button"
+import { cn } from "@smartleadmagnet/ui/lib/utils";
+import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
+import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import {
   Form,
   FormControl,
@@ -16,16 +16,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@smartleadmagnet/ui/components/ui/form"
-import { Input } from "@smartleadmagnet/ui/components/ui/input"
+} from "@smartleadmagnet/ui/components/ui/form";
+import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@smartleadmagnet/ui/components/ui/select"
-import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea"
+} from "@smartleadmagnet/ui/components/ui/select";
+import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
 
 const profileFormSchema = z.object({
   username: z
@@ -45,34 +45,31 @@ const profileFormSchema = z.object({
   urls: z
     .array(
       z.object({
-        value: z.string().url({message: "Please enter a valid URL."}),
+        value: z.string().url({ message: "Please enter a valid URL." }),
       })
     )
     .optional(),
-})
+});
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
   bio: "I own a computer.",
-  urls: [
-    {value: "https://shadcn.com"},
-    {value: "http://twitter.com/shadcn"},
-  ],
-}
+  urls: [{ value: "https://shadcn.com" }, { value: "http://twitter.com/shadcn" }],
+};
 
 export function ProfileForm() {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues,
     mode: "onChange",
-  })
+  });
 
-  const {fields, append} = useFieldArray({
+  const { fields, append } = useFieldArray({
     name: "urls",
     control: form.control,
-  })
+  });
 
   function onSubmit(data: ProfileFormValues) {
     toast({
@@ -82,7 +79,7 @@ export function ProfileForm() {
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
         </pre>
       ),
-    })
+    });
   }
 
   return (
@@ -91,30 +88,30 @@ export function ProfileForm() {
         <FormField
           control={form.control}
           name="username"
-          render={({field}) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
+                This is your public display name. It can be your real name or a pseudonym. You can only change this once
+                every 30 days.
               </FormDescription>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
           name="email"
-          render={({field}) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display"/>
+                    <SelectValue placeholder="Select a verified email to display" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -124,31 +121,25 @@ export function ProfileForm() {
                 </SelectContent>
               </Select>
               <FormDescription>
-                You can manage verified email addresses in your{" "}
-                <Link href="/examples/forms">email settings</Link>.
+                You can manage verified email addresses in your <Link href="/examples/forms">email settings</Link>.
               </FormDescription>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
           name="bio"
-          render={({field}) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Bio</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
-                  {...field}
-                />
+                <Textarea placeholder="Tell us a little bit about yourself" className="resize-none" {...field} />
               </FormControl>
               <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
+                You can <span>@mention</span> other users and organizations to link to them.
               </FormDescription>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -158,34 +149,28 @@ export function ProfileForm() {
               control={form.control}
               key={field.id}
               name={`urls.${index}.value`}
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel className={cn(index !== 0 && "sr-only")}>
-                    URLs
-                  </FormLabel>
+                  <FormLabel className={cn(index !== 0 && "sr-only")}>URLs</FormLabel>
                   <FormDescription className={cn(index !== 0 && "sr-only")}>
                     Add links to your website, blog, or social media profiles.
                   </FormDescription>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
               )}
             />
           ))}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="mt-2"
-            onClick={() => append({value: ""})}
-          >
+          <Button type="button" variant="outline" size="sm" className="mt-2" onClick={() => append({ value: "" })}>
             Add URL
           </Button>
         </div>
-        <Button type="submit" className="btn-primary">Update profile</Button>
+        <Button type="submit" className="btn-primary">
+          Update profile
+        </Button>
       </form>
     </Form>
-  )
+  );
 }

@@ -1,12 +1,12 @@
 "use server";
 
 import { createLeadMagnet, getLeadMagnetById, getLeadMagnetsByUser } from "@smartleadmagnet/services";
-import { adjectives, Config, names, starWars, uniqueNamesGenerator } from 'unique-names-generator';
+import { adjectives, Config, names, starWars, uniqueNamesGenerator } from "unique-names-generator";
 import { getSessionUser } from "@/services/user";
 
 const config: Config = {
-  dictionaries: [names, starWars, adjectives]
-}
+  dictionaries: [names, starWars, adjectives],
+};
 
 export async function createLead() {
   const user = await getSessionUser();
@@ -18,10 +18,10 @@ export async function createLead() {
       prompt: "",
       components: [] as any,
       userId: user?.id!,
-      description: ""
-    })
+      description: "",
+    });
   } catch (error: any) {
-    console.error('Error creating lead:', error);
+    console.error("Error creating lead:", error);
     throw new Error(error.message);
   }
 }

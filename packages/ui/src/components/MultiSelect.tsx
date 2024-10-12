@@ -13,7 +13,7 @@ interface MultiSelectCreatableProps {
   placeholder?: string; // Optional placeholder
 }
 
-const MultiSelect: React.FC<MultiSelectCreatableProps> = ({options, onChange, placeholder, value}) => {
+const MultiSelect: React.FC<MultiSelectCreatableProps> = ({ options, onChange, placeholder, value }) => {
   return (
     <Select
       isMulti

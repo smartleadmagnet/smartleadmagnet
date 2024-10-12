@@ -2,7 +2,6 @@ import { BedrockChat } from "@langchain/community/chat_models/bedrock";
 import { ChatOpenAI, DallEAPIWrapper } from "@langchain/openai";
 import { ChatTogetherAI } from "@langchain/community/chat_models/togetherai";
 
-
 const timeout = 10 * 10000; // 5 seconds
 const maxRetries = 1;
 
@@ -15,8 +14,7 @@ export const getImageLLMModel = (llmType?: string) => {
     });
   }
   throw new Error("LLM not found in configuration");
-}
-
+};
 
 export const getTextLLMModel = (llmType?: string, modelName?: string) => {
   if (llmType === "AWS BedRock") {
@@ -58,7 +56,6 @@ export const getTextLLMModel = (llmType?: string, modelName?: string) => {
       timeout: timeout,
     });
   }
-
 
   throw new Error("LLM not found in configuration");
 };

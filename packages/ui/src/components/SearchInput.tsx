@@ -8,12 +8,12 @@ interface SearchInputProps {
 }
 
 const SearchInput = (props: SearchInputProps) => {
-  const {placeholder = "Search..."} = props;
+  const { placeholder = "Search..." } = props;
   return (
     <div className="relative w-full max-w-lg">
       {/* Icon on the left side */}
       <span className="absolute inset-y-0 left-0 flex items-center pl-4">
-        <Icon name="search"/>
+        <Icon name="search" />
       </span>
 
       {/* Large Input Field */}

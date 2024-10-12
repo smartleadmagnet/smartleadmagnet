@@ -15,7 +15,7 @@ interface Props {
   };
 }
 
-export default function AppCard({id, name, description, analytics}: Props) {
+export default function AppCard({ id, name, description, analytics }: Props) {
   return (
     <Card className="p-0 ">
       <CardHeader className="flex">
@@ -38,7 +38,7 @@ export default function AppCard({id, name, description, analytics}: Props) {
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="flex flex-row items-center justify-between">
                   <span>Actions</span>
-                  <ChevronDown className="ml-2 h-4 w-4"/>
+                  <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -54,7 +54,7 @@ export default function AppCard({id, name, description, analytics}: Props) {
       </CardHeader>
       <CardContent className="bg-gray-200 px-0">
         <div className="mb-4 flex items-center justify-center">
-          <div className="h-px w-full bg-gray-300 dark:bg-gray-600"/>
+          <div className="h-px w-full bg-gray-300 dark:bg-gray-600" />
         </div>
 
         <dl className="grid max-w-screen-xl grid-cols-2">

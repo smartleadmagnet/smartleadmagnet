@@ -2,19 +2,19 @@ import prisma, { LeadMagnet } from "@smartleadmagnet/database";
 
 export const createLeadMagnet = async (data: LeadMagnet) => {
   return prisma.leadMagnet.create({
-    data
-  })
+    data,
+  });
 };
 
 export const getLeadMagnetById = async (id: string): Promise<LeadMagnet> => {
   return prisma.leadMagnet.findUnique({
-    where: {id},
+    where: { id },
   });
 };
 
 export const updateLeadMagnet = async (id: string, userId: string, data: Partial<LeadMagnet>) => {
   return prisma.leadMagnet.update({
-    where: {id, userId},
+    where: { id, userId },
     data: {
       ...data,
       updatedAt: new Date(),
@@ -24,14 +24,12 @@ export const updateLeadMagnet = async (id: string, userId: string, data: Partial
 
 export const deleteLeadMagnet = async (id: string) => {
   return prisma.leadMagnet.delete({
-    where: {id},
+    where: { id },
   });
 };
 
 export const getLeadMagnetsByUser = async (userId: string) => {
   return prisma.leadMagnet.findMany({
-    where: {userId},
+    where: { userId },
   });
 };
-
-

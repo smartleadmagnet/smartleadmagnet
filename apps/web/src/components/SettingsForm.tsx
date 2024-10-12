@@ -7,7 +7,7 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@smartleadmagnet/ui/components/ui/select";
 import React, { useCallback, useState } from "react";
 import { useS3Upload } from "next-s3-upload";
@@ -16,20 +16,26 @@ import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { Controller, useForm } from "react-hook-form"; // Import react-hook-form
 import { zodResolver } from "@hookform/resolvers/zod"; // Import zod resolver for react-hook-form
-import ReactQuill from 'react-quill'; // Import ReactQuill
-import 'react-quill/dist/quill.snow.css'; // Import Quill CSS
+import ReactQuill from "react-quill"; // Import ReactQuill
+import "react-quill/dist/quill.snow.css"; // Import Quill CSS
 import templateCategories from "@/data/categories.json";
 import { BuilderSchemaForm, builderSchemaForm } from "@/types/builder";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 
 export default function SettingsForm() {
-  const {updateSettingFormData, leadMagnet} = useBuilderContext();
-  const {uploadToS3, files} = useS3Upload();
+  const { updateSettingFormData, leadMagnet } = useBuilderContext();
+  const { uploadToS3, files } = useS3Upload();
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>(leadMagnet?.image || "");
 
   // Integrating react-hook-form with zod validation
-  const {register, handleSubmit, setValue, control, formState: {errors, defaultValues}} = useForm<BuilderSchemaForm>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors, defaultValues },
+  } = useForm<BuilderSchemaForm>({
     resolver: zodResolver(builderSchemaForm), // Use Zod schema for validation
     defaultValues: {
       image: leadMagnet.image || "",
@@ -44,25 +50,25 @@ export default function SettingsForm() {
     const file = acceptedFiles[0]; // Only take the first file
     if (file) {
       setUploading(true); // Set uploading to true when upload starts
-      const {key} = await uploadToS3(file);
+      const { key } = await uploadToS3(file);
 
       const url = `${process.env.NEXT_PUBLIC_MEDIA_CDN_NAME}/${key}`;
       setImageUrl(url);
-      setValue("image", `${process.env.NEXT_PUBLIC_MEDIA_CDN_NAME}/${key}`)
+      setValue("image", `${process.env.NEXT_PUBLIC_MEDIA_CDN_NAME}/${key}`);
 
       setUploading(false); // Set uploading to false when upload finishes
     }
   }, []);
 
-  const {getRootProps, getInputProps} = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     multiple: false, // Only allow one file to be dropped at a time
     accept: {
-      'image/jpeg': [],
-      'image/png': [],
-      'image/webp': [],
-      'image/heic': [],
-      'image/jfif': [],
+      "image/jpeg": [],
+      "image/png": [],
+      "image/webp": [],
+      "image/heic": [],
+      "image/jfif": [],
     },
   });
 
@@ -71,7 +77,7 @@ export default function SettingsForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col bg-white p-4 rounded-md">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col rounded-md bg-white p-4">
       {/* Icon Image Upload */}
       <>
         <div
@@ -88,20 +94,19 @@ export default function SettingsForm() {
                   alt="Uploaded Thumbnail"
                   height={200}
                   width={200}
-                  className="rounded-lg max-h-[200px] w-auto"
+                  className="max-h-[200px] w-auto rounded-lg"
                 />
                 {files?.length > 0 && !uploading && (
-                  <h3 className="mt-5 text-center text-xl">Image Uploaded Successfully</h3>)}
+                  <h3 className="mt-5 text-center text-xl">Image Uploaded Successfully</h3>
+                )}
               </div>
             ) : (
               <>
                 <Button className="btn btn-primary flex flex-row">
-                  <IoCloudUploadOutline className="text-2xl mr-2"/>
+                  <IoCloudUploadOutline className="mr-2 text-2xl" />
                   Please upload an image (JPG, PNG, GIF).
                 </Button>
-                <h3 className="mt-5 text-center text-xl">
-                  Drag and drop an image here, or click to select one
-                </h3>
+                <h3 className="mt-5 text-center text-xl">Drag and drop an image here, or click to select one</h3>
               </>
             )}
             {uploading && (
@@ -116,39 +121,33 @@ export default function SettingsForm() {
               </>
             )}
 
-            {uploading && <div className="upload-overlay"/>}
+            {uploading && <div className="upload-overlay" />}
           </div>
         </div>
         {errors.image && <p className="text-red-500">{errors.image.message}</p>}
       </>
 
       {/* Title Input */}
-      <div className="form-control w-full my-4 mt-8">
+      <div className="form-control my-4 mt-8 w-full">
         <Label>Title</Label>
-        <Input
-          {...register("name")}
-          placeholder="Enter title"
-        />
+        <Input {...register("name")} placeholder="Enter title" />
         {errors.name && <p className="text-red-500">{errors.name.message}</p>}
       </div>
 
       {/* Subtitle Input */}
-      <div className="form-control w-full mb-4">
+      <div className="form-control mb-4 w-full">
         <Label>Tagline</Label>
-        <Input
-          {...register("tagline")}
-          placeholder="Enter Tagline"
-        />
+        <Input {...register("tagline")} placeholder="Enter Tagline" />
         {errors.tagline && <p className="text-red-500">{errors.tagline.message}</p>}
       </div>
 
       {/* Description ReactQuill */}
-      <div className="form-control w-full mb-4">
+      <div className="form-control mb-4 w-full">
         <Label>Description</Label>
         <Controller
           name="description"
           control={control}
-          render={({field: {value, onChange}}) => (
+          render={({ field: { value, onChange } }) => (
             <ReactQuill
               value={value || ""}
               onChange={onChange}
@@ -157,11 +156,11 @@ export default function SettingsForm() {
               className="w-full"
               modules={{
                 toolbar: [
-                  [{header: [1, 2, false]}],
-                  ['bold', 'italic', 'underline', 'strike'],
-                  [{list: 'ordered'}, {list: 'bullet'}],
-                  ['link'],
-                  ['clean'], // Remove formatting button
+                  [{ header: [1, 2, false] }],
+                  ["bold", "italic", "underline", "strike"],
+                  [{ list: "ordered" }, { list: "bullet" }],
+                  ["link"],
+                  ["clean"], // Remove formatting button
                 ],
               }}
             />
@@ -171,19 +170,18 @@ export default function SettingsForm() {
       </div>
 
       {/* Category Select */}
-      <div className="form-control w-full mb-4">
+      <div className="form-control mb-4 w-full">
         <Label>Category</Label>
-        <Select
-          defaultValue={defaultValues.category}
-          onValueChange={(value) => setValue("category", value)}
-        >
+        <Select defaultValue={defaultValues.category} onValueChange={(value) => setValue("category", value)}>
           <SelectTrigger>
-            <SelectValue placeholder="Select a category"/>
+            <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               {templateCategories.map((category) => (
-                <SelectItem key={category.id} value={category.id}>{category.name}</SelectItem>
+                <SelectItem key={category.id} value={category.id}>
+                  {category.name}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>

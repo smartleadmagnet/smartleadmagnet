@@ -7,7 +7,7 @@ import { Card } from "@smartleadmagnet/ui/components/ui/card";
 import EditableInput from "@/components/EditableInput";
 import { LeadMagnet } from "@smartleadmagnet/database";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger, } from "@smartleadmagnet/ui/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@smartleadmagnet/ui/components/ui/tabs";
 import {
   DragDropContext,
   Draggable,
@@ -17,7 +17,7 @@ import {
   DroppableProvided,
 } from "react-beautiful-dnd";
 import useBuilder from "@/hooks/builder.hook"; // Import the custom hook
-import { builderItems, } from "@smartleadmagnet/ui/lib/constants";
+import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 import AIForm from "@/components/AiForm";
 import SearchInput from "@smartleadmagnet/ui/components/SearchInput";
 import BuilderElement from "@/components/BuilderElement";
@@ -26,7 +26,7 @@ import EmbedModal from "@/components/EmbedModal";
 import BuilderStylePreview from "@/components/BuilderStylePreview";
 import BuilderOption from "@/components/BuilderOption";
 
-export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
+export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
   const {
     elementsList,
     onDragEnd,
@@ -52,27 +52,25 @@ export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
     router,
     name,
     setName,
-  } = useBuilder({leadMagnet}); // Use the custom hook
+  } = useBuilder({ leadMagnet }); // Use the custom hook
 
   const filterItems = (searchTerm: string) => {
     if (!searchTerm) return builderItems;
     return builderItems.map((item) => ({
       ...item,
-      children: item.children.filter((child) =>
-        child.label.toLowerCase().includes(searchTerm.toLowerCase())
-      ),
+      children: item.children.filter((child) => child.label.toLowerCase().includes(searchTerm.toLowerCase())),
     }));
   };
 
   return (
     <>
       <Tabs defaultValue="form">
-        <div className="min-h-screen flex flex-col">
+        <div className="flex min-h-screen flex-col">
           {/* Header  */}
-          <div className="flex items-center justify-between p-4 bg-gray-900 text-white">
+          <div className="flex items-center justify-between bg-gray-900 p-4 text-white">
             <div className="flex items-center">
               <Button
-                className="px-4 py-2 bg-gray-300 text-black shadow-md hover:bg-gray-400"
+                className="bg-gray-300 px-4 py-2 text-black shadow-md hover:bg-gray-400"
                 onClick={() => {
                   router.push("/my-forms");
                 }}
@@ -81,7 +79,7 @@ export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
               </Button>
             </div>
             <div className="flex">
-              <EditableInput value={name} setValue={setName}/>
+              <EditableInput value={name} setValue={setName} />
             </div>
 
             <div className="flex items-center">
@@ -91,32 +89,23 @@ export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
           </div>
           {/* end Header  */}
           {/* Tabs  */}
-          <div className="flex items-center justify-between p-4 bg-gray-200 ">
+          <div className="flex items-center justify-between bg-gray-200 p-4 ">
             <div className="flex items-center"></div>
             <div className="flex space-x-4">
               <TabsList className="grid w-full grid-cols-3 bg-gray-900 text-white">
                 <TabsTrigger value="form">Form</TabsTrigger>
-                <TabsTrigger
-                  value="style-preview"
-                  disabled={elementsList?.length === 0}
-                >
+                <TabsTrigger value="style-preview" disabled={elementsList?.length === 0}>
                   Style & Preview
                 </TabsTrigger>
-                <TabsTrigger
-                  value="options"
-                  disabled={elementsList?.length === 0}
-                >
+                <TabsTrigger value="options" disabled={elementsList?.length === 0}>
                   Options
                 </TabsTrigger>
               </TabsList>
             </div>
-            <div className="flex flex-row justify-center items-center gap-2">
+            <div className="flex flex-row items-center justify-center gap-2">
               <div className="relative mr-2">
-                <span
-                  className="absolute inline-flex h-full w-full rounded-md bg-blue-500 opacity-75 animate-ripple-pulse"></span>
-                <Button
-                  className="relative btn btn-primary flex items-center px-4 py-2"
-                >
+                <span className="animate-ripple-pulse absolute inline-flex h-full w-full rounded-md bg-blue-500 opacity-75"></span>
+                <Button className="btn btn-primary relative flex items-center px-4 py-2">
                   <svg
                     stroke="currentColor"
                     fill="currentColor"
@@ -128,15 +117,14 @@ export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     {/* Icon */}
-                    <path
-                      d="m11 4-.5-1-.5 1-1 .125.834.708L9.5 6l1-.666 1 .666-.334-1.167.834-.708zm8.334 10.666L18.5 13l-.834 1.666-1.666.209 1.389 1.181L16.834 18l1.666-1.111L20.166 18l-.555-1.944L21 14.875zM6.667 6.333 6 5l-.667 1.333L4 6.5l1.111.944L4.667 9 6 8.111 7.333 9l-.444-1.556L8 6.5zM3.414 17c0 .534.208 1.036.586 1.414L5.586 20c.378.378.88.586 1.414.586s1.036-.208 1.414-.586L20 8.414c.378-.378.586-.88.586-1.414S20.378 5.964 20 5.586L18.414 4c-.756-.756-2.072-.756-2.828 0L4 15.586c-.378.378-.586.88-.586 1.414zM17 5.414 18.586 7 15 10.586 13.414 9 17 5.414z"></path>
+                    <path d="m11 4-.5-1-.5 1-1 .125.834.708L9.5 6l1-.666 1 .666-.334-1.167.834-.708zm8.334 10.666L18.5 13l-.834 1.666-1.666.209 1.389 1.181L16.834 18l1.666-1.111L20.166 18l-.555-1.944L21 14.875zM6.667 6.333 6 5l-.667 1.333L4 6.5l1.111.944L4.667 9 6 8.111 7.333 9l-.444-1.556L8 6.5zM3.414 17c0 .534.208 1.036.586 1.414L5.586 20c.378.378.88.586 1.414.586s1.036-.208 1.414-.586L20 8.414c.378-.378.586-.88.586-1.414S20.378 5.964 20 5.586L18.414 4c-.756-.756-2.072-.756-2.828 0L4 15.586c-.378.378-.586.88-.586 1.414zM17 5.414 18.586 7 15 10.586 13.414 9 17 5.414z"></path>
                   </svg>
                   <span className="mx-2">Generate tool with AI</span>
                 </Button>
               </div>
               <div className="flex items-center">
                 <Button
-                  className="px-4 py-2 bg-gray-300 text-black shadow-md hover:bg-gray-400"
+                  className="bg-gray-300 px-4 py-2 text-black shadow-md hover:bg-gray-400"
                   onClick={() => setEmbedOpen(true)}
                 >
                   Embed
@@ -146,8 +134,8 @@ export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
           </div>
           <TabsContent value="form">
             <DragDropContext onDragEnd={onDragEnd}>
-              <div className="flex flex-1 builder-wrapper">
-                <aside className="flex flex-col w-1/4 p-4 builder-column h-screen">
+              <div className="builder-wrapper flex flex-1">
+                <aside className="builder-column flex h-screen w-1/4 flex-col p-4">
                   <div className="mb-4">
                     <SearchInput
                       placeholder="Search for form and layout elements."
@@ -170,62 +158,40 @@ export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
                       <div className="grid gap-4">
                         {filterItems(searchTerm).map((item, index) => (
                           <div key={index} className="py-2">
-                            <h3 className="text-lg font-semibold mb-2">
-                              {item.title}
-                            </h3>
+                            <h3 className="mb-2 text-lg font-semibold">{item.title}</h3>
                             {item.children.length > 0 && (
                               <Card className="p-4 shadow-md">
-                                <Droppable
-                                  droppableId={item.dropletId}
-                                  isDropDisabled={true}
-                                >
+                                <Droppable droppableId={item.dropletId} isDropDisabled={true}>
                                   {(provided: DroppableProvided) => (
                                     <div
                                       className="grid grid-cols-1 gap-2"
                                       ref={provided.innerRef}
                                       {...provided.droppableProps}
                                     >
-                                      {item.children.map(
-                                        (child, childIndex) => (
-                                          <Draggable
-                                            key={child.id}
-                                            draggableId={child.id}
-                                            index={childIndex}
-                                          >
-                                            {(
-                                              provided: DraggableProvided,
-                                              snapshot: DraggableStateSnapshot
-                                            ) => (
-                                              <React.Fragment>
-                                                <Card
-                                                  ref={provided.innerRef}
-                                                  {...provided.draggableProps}
-                                                  {...provided.dragHandleProps}
-                                                  className="builder-item"
-                                                >
-                                                  <Icon
-                                                    name={child.icon}
-                                                    height="30px"
-                                                    width="30px"
-                                                  />
-                                                  <span className="title">{child.label}</span>
+                                      {item.children.map((child, childIndex) => (
+                                        <Draggable key={child.id} draggableId={child.id} index={childIndex}>
+                                          {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
+                                            <React.Fragment>
+                                              <Card
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                className="builder-item"
+                                              >
+                                                <Icon name={child.icon} height="30px" width="30px" />
+                                                <span className="title">{child.label}</span>
+                                              </Card>
+                                              {snapshot?.isDragging && (
+                                                <Card className="builder-item clone">
+                                                  <Icon name={child.icon} height="30px" width="30px" />
+                                                  {/* @ts-ignore */}
+                                                  <span>{child?.title}</span>
                                                 </Card>
-                                                {snapshot?.isDragging && (
-                                                  <Card className="builder-item clone">
-                                                    <Icon
-                                                      name={child.icon}
-                                                      height="30px"
-                                                      width="30px"
-                                                    />
-                                                    {/* @ts-ignore */}
-                                                    <span>{child?.title}</span>
-                                                  </Card>
-                                                )}
-                                              </React.Fragment>
-                                            )}
-                                          </Draggable>
-                                        )
-                                      )}
+                                              )}
+                                            </React.Fragment>
+                                          )}
+                                        </Draggable>
+                                      ))}
                                     </div>
                                   )}
                                 </Droppable>
@@ -239,37 +205,17 @@ export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
                 </aside>
 
                 <div className="flex flex-1">
-                  <main
-                    className="flex-1 bg-gray-100 drop-area builder-column border-dashed border-2 border-gray-300 rounded-lg mx-2 p-2">
+                  <main className="drop-area builder-column mx-2 flex-1 rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 p-2">
                     <Droppable droppableId="droppable-main">
                       {(provided: DroppableProvided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.droppableProps}
-                          className="h-full"
-                        >
+                        <div ref={provided.innerRef} {...provided.droppableProps} className="h-full">
                           {elementsList.length ? (
                             elementsList.map((item: any, index: number) => (
-                              <Draggable
-                                key={item.id}
-                                draggableId={item.id}
-                                index={index}
-                              >
+                              <Draggable key={item.id} draggableId={item.id} index={index}>
                                 {(provided: DraggableProvided) => (
-                                  <div
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    className="drag-item"
-                                  >
-                                    <div
-                                      className="handle"
-                                      {...provided.dragHandleProps}
-                                    >
-                                      <Icon
-                                        name="drag-handle"
-                                        height="30px"
-                                        width="30px"
-                                      />
+                                  <div ref={provided.innerRef} {...provided.draggableProps} className="drag-item">
+                                    <div className="handle" {...provided.dragHandleProps}>
+                                      <Icon name="drag-handle" height="30px" width="30px" />
                                     </div>
                                     <BuilderElement
                                       type={item.type}
@@ -286,10 +232,8 @@ export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
                               </Draggable>
                             ))
                           ) : (
-                            <div className="text-center h-full justify-center items-center flex text-gray-500">
-                              <h2 className="text-xl">
-                                Drag and drop elements here
-                              </h2>
+                            <div className="flex h-full items-center justify-center text-center text-gray-500">
+                              <h2 className="text-xl">Drag and drop elements here</h2>
                             </div>
                           )}
                           {provided.placeholder}
@@ -297,8 +241,8 @@ export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
                       )}
                     </Droppable>
                   </main>
-                  <main className="flex-1 bg-gray-100 p-4  builder-column">
-                    <AIForm leadMagnet={leadMagnet}/>
+                  <main className="builder-column flex-1 bg-gray-100  p-4">
+                    <AIForm leadMagnet={leadMagnet} />
                   </main>
                 </div>
               </div>
@@ -321,11 +265,11 @@ export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
             />
           </TabsContent>
           <TabsContent value="options">
-            <BuilderOption activeOption={activeOption} setActiveOption={setActiveOption} leadMagnet={leadMagnet}/>
+            <BuilderOption activeOption={activeOption} setActiveOption={setActiveOption} leadMagnet={leadMagnet} />
           </TabsContent>
         </div>
       </Tabs>
-      <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen}/>
+      <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen} />
     </>
   );
 }
