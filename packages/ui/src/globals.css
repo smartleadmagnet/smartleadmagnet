@@ -210,25 +210,24 @@
   margin: -24px -24px 0;
   width: calc(100% + 48px);
 }
-.mobile-menu button svg{
+.mobile-menu button svg {
   color: #fff;
   width: 30px;
   height: 30px;
 }
 
 /* homepage */
-.hero-section{
-  h1{
+.hero-section {
+  h1 {
     font-size: 80px;
     font-weight: 700;
     line-height: 1.2;
-    
   }
   .hero-shape {
     position: absolute;
     z-index: -1;
     animation: upDown 4s ease-in-out infinite; /* Add animation */
-    
+
     /* Base shape styles */
     &.shape-1 {
       top: 12%;
@@ -251,21 +250,19 @@
     position: absolute;
     right: 0;
     top: 0;
-}
-  
+  }
 
   @media (max-width: 991px) {
-    h1{
+    h1 {
       font-size: 64px;
     }
   }
 
   @media (max-width: 768px) {
-    h1{
+    h1 {
       font-size: 48px;
     }
-    .hero-shape
-    {
+    .hero-shape {
       display: none;
     }
   }
@@ -284,11 +281,11 @@
   input:checked + label .checkbox-switch {
     transform: translateX(100%);
   }
-  
+
   input:checked ~ .border .pricing-monthly {
     display: none;
   }
-  
+
   input:checked ~ .border .pricing-yearly {
     display: inline;
   }
@@ -298,7 +295,6 @@
   input:checked ~ .monthly-table {
     display: none;
   }
-  
 
   .pricing-yearly {
     display: none;
@@ -320,13 +316,13 @@
     @apply after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:hidden after:h-32 after:w-full after:bg-[linear-gradient(180deg,_transparent_10%,_hsl(var(--background))_70%)] after:md:block;
   }
   .btn-primary {
-    @apply px-5 py-2 bg-cyan-500 text-white shadow-md;
+    @apply bg-cyan-500 px-5 py-2 text-white shadow-md;
   }
   .btn-primary:hover {
     @apply bg-cyan-600;
   }
   .mega-menu {
-    @apply absolute top-[65px] left-0 right-0 bg-gray-700 shadow-md rounded-lg;
+    @apply absolute left-0 right-0 top-[65px] rounded-lg bg-gray-700 shadow-md;
     margin: 0 auto;
     max-width: 700px;
     opacity: 0;
@@ -341,27 +337,26 @@
     top: -20px;
   }
   .group:hover .mega-menu {
-    @apply opacity-100 visible;
+    @apply visible opacity-100;
   }
   .cat-item {
-    @apply px-4 py-2 hover:bg-gray-900 rounded transition duration-200 ease-in-out;
+    @apply rounded px-4 py-2 transition duration-200 ease-in-out hover:bg-gray-900;
     white-space: nowrap;
     text-align: left;
   }
 
-  .mobile-link{
+  .mobile-link {
     @apply flex items-center gap-4 px-2.5 text-gray-200 hover:text-white;
   }
 }
 
-
 /* Keyframes for up-and-down animation */
 @keyframes upDown {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0); /* Start and end in the original position */
   }
   50% {
     transform: translateY(-50px); /* Move up by 20px at 50% */
   }
 }
-

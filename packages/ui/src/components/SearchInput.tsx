@@ -13,7 +13,7 @@ const SearchInput = (props: SearchInputProps) => {
     <div className="relative w-full max-w-lg">
       {/* Icon on the left side */}
       <span className="absolute inset-y-0 left-0 flex items-center pl-4">
-        <Icon name="search"  />
+        <Icon name="search" />
       </span>
 
       {/* Large Input Field */}
@@ -22,7 +22,7 @@ const SearchInput = (props: SearchInputProps) => {
         placeholder={placeholder}
         value={props.value}
         onChange={(e) => props.onChange?.(e.target.value)}
-        className="pl-12 py-3 text-lg w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full rounded-lg border border-gray-300 py-3 pl-12 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
     </div>
   );

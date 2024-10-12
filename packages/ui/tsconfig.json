@@ -1,11 +1,23 @@
 {
-  "extends": "@smartleadmagnet/typescript-config/react-library.json",
+  "extends": "@smartleadmagnet/typescript-config/nextjs.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "paths": {
-      "@smartleadmagnet/ui/*": ["./src/*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "../../apps/web/src/app/components/BuilderElement.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "next.config.js",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.json",
+    ".next/types/**/*.ts",
+    "postcss.config.mjs"
+  ],
   "exclude": ["node_modules"]
 }

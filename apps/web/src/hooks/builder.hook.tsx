@@ -9,20 +9,6 @@ import { useBuilderContext } from "@/providers/BuilderProvider";
 import { useRouter } from 'next/navigation'
 import { LeadMagnet } from "@smartleadmagnet/database";
 
-// TODO move to theme constants
-const defaultFormStyles = {
-	textColor: "#333333", // Dark gray for text
-	backgroundColor: "#f9f9f9", // Light gray for background
-	buttonColor: "#4CAF50", // Green for buttons (pleasant and eye-catching)
-	buttonTextColor: "#ffffff", // White text on buttons for contrast
-	labelColor: "#666666", // Medium gray for labels (subtle but visible)
-	titleColor: "#2C3E50", // Dark blue for titles (professional feel)
-	subtitleColor: "#34495E", // Slightly lighter blue for subtitles
-	buttonText: "Submit", // Button text
-	selectedFont: "Open Sans", // Default font
-	selectedFormStyle: "default", // Default form style
-};
-
 const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 	const router = useRouter()
 	const {elementsList, setElementsList, setName, name, formStyles, setFormStyles} = useBuilderContext();
