@@ -95,7 +95,7 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 						</div>
 						<RadioGroup
 							value={selectedModel}
-							className="grid grid-cols-3 gap-4 mt-2 overflow-hidden"
+							className="flex  gap-3 flex-wrap"
 							onValueChange={setSelectedModel}
 						>
 							{
@@ -105,11 +105,11 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 										<Label htmlFor={model.name}>{model.displayName}</Label>
 										{
 											model.hasVision && (
-												<Badge className="text-[8px] !min-w-[80px]" variant="destructive">Support File</Badge>
+												<Badge className="text-[10px] !min-w-[100px] justify-center" variant="destructive">Support File</Badge>
 											)
 										}
 										{
-											model.generateImage && <Badge className="text-[8px] !min-w-[80px]">Generate Image</Badge>
+											model.generateImage && <Badge className="text-[10px] !min-w-[150px] justify-center">Generate Image</Badge>
 										}
 									</div>
 								))
