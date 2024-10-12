@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Icon from "@smartleadmagnet/ui/components/icon"
 import { ChevronDown, PanelLeft, } from "lucide-react";
-import { templateCategories } from "@smartleadmagnet/ui/lib/constants";
+import templateCategories from "@/data/categories.json";
 
 import { Sheet, SheetContent, SheetTrigger, } from "@smartleadmagnet/ui/components/ui/sheet";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";

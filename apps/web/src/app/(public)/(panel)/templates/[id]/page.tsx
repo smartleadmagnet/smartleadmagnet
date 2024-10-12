@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { templateCategories } from "@smartleadmagnet/ui/lib/constants";
+import templateCategories from "@/data/categories.json";
 import Link from "next/link";
 
 export const templateData = [
