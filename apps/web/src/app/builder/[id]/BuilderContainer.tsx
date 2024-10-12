@@ -5,7 +5,7 @@ import { LeadMagnet } from "@smartleadmagnet/database";
 export default function BuilderContainer({ leadMagnet }: { leadMagnet: LeadMagnet }) {
   return (
     <BuilderProvider leadMagnet={leadMagnet}>
-      <Builder leadMagnet={leadMagnet} />
+      <Builder />
     </BuilderProvider>
   );
 }

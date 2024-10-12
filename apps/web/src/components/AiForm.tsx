@@ -11,12 +11,11 @@ import {
 } from "@smartleadmagnet/ui/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/radio-group";
 import useAIForm from "@/hooks/aiform.hook";
-import { LeadMagnet } from "@smartleadmagnet/database";
 import { Badge } from "@smartleadmagnet/ui/components/ui/badge";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Spinner from "@smartleadmagnet/ui/components/Spinner";
 
-export default function AIForm({ leadMagnet }: { leadMagnet: LeadMagnet }) {
+export default function AIForm() {
   const {
     prompt,
     setPrompt,
@@ -31,7 +30,7 @@ export default function AIForm({ leadMagnet }: { leadMagnet: LeadMagnet }) {
     onValidatePrompt,
     processing,
     elementsList,
-  } = useAIForm({ leadMagnet });
+  } = useAIForm();
   return (
     <div className="relative flex h-full w-full flex-col justify-between rounded-md bg-white p-4 p-4">
       <div className="scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 flex h-full flex-col overflow-y-auto p-1">

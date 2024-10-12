@@ -49,6 +49,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
   children,
   leadMagnet,
 }) => {
+  const [selectedLeadMagnet, setSelectedLeadMagnet] = useState<LeadMagnet>(leadMagnet);
   const [elementsList, setElementsList] = useState<ChildItem[]>(leadMagnet.components || []);
   const [name, setName] = useState<string>(leadMagnet?.name || "");
   const defaultLLMProvider = leadMagnet?.provider
@@ -67,9 +68,9 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
     ...(leadMagnet?.styles || {}),
   });
 
-  const updateData = async () => {
+  const updateData = async (data?: any) => {
     try {
-      await axios.post(`/api/lead/${leadMagnet.id}`, {
+      const leadResponse = await axios.post(`/api/lead/${leadMagnet.id}`, {
         components: elementsList,
         styles: formStyles,
         name,
@@ -77,8 +78,11 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         provider: selectedProvider?.name,
         model: selectedModel,
         output: outputType,
+        ...(data || {}),
       });
+      setSelectedLeadMagnet(leadResponse?.data);
     } catch (e) {
+      // TODO handle sentry error
       console.log(e);
     }
   };
@@ -91,30 +95,30 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
     }
   };
 
-  useEffect(() => {
-    // make an API call to update the components
-    updateData();
-  }, [elementsList, formStyles]);
+  const updateElementList = async (components: any) => {
+    setElementsList(components);
+    await updateData({ components });
+  };
 
-  useEffect(() => {
-    const filteredModels = filterModels(selectedProvider?.models || []);
+  const updatedSelectedModel = async (model: any) => {
+    setSelectedModel(model);
+    await updateData({ model });
+  };
 
-    if (!filteredModels.find((model) => model.name === selectedModel)) {
-      setSelectedModel(filteredModels[0]?.name || "");
-    }
+  const updateFormStyles = async (styles: any) => {
+    setFormStyles(styles);
+    await updateData({ styles });
+  };
 
-    const handler = setTimeout(() => {
-      updateData();
-    }, 500);
+  const updateName = async (name: string) => {
+    setName(name);
+    await updateData({ name });
+  };
 
-    return () => {
-      clearTimeout(handler);
-    };
-
-    return () => {
-      clearTimeout(handler); // Cleanup the timeout on unmount or when prompt changes
-    };
-  }, [name, prompt, selectedModel, outputType, selectedProvider]);
+  const updatePrompt = async (prompt: string) => {
+    setPrompt(prompt);
+    await updateData({ prompt });
+  };
 
   const filterProviders = (providers: LLMProvider[], output?: string): LLMProvider[] => {
     const type = output || outputType;
@@ -140,26 +144,34 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
     });
   };
 
-  const onOutputTypeChange = (type: string) => {
+  const onOutputTypeChange = async (type: string) => {
     setOutputType(type);
+    let provider = leadMagnet.provider;
+    let model = leadMagnet.model;
     const filteredProviders = filterProviders(llm, type);
     const filteredModels = filterModels(selectedProvider?.models || []);
 
     if (!filteredProviders.find((provider) => provider.name === selectedProvider?.name)) {
-      setSelectedProvider(filteredProviders[0]);
+      provider = filteredProviders[0];
+      setSelectedProvider(provider);
     }
 
     if (!filteredModels.find((model) => model.name === selectedModel)) {
-      setSelectedModel(filteredModels[0]?.name || "");
+      const model = filteredModels[0]?.name || "";
+      setSelectedModel(model);
     }
+    await updateData({ provider: provider?.name, model, output: type });
   };
 
-  const onProviderChange = (provider: string) => {
+  const onProviderChange = async (provider: string) => {
     const newProvider = llm.find((p) => p.name === provider);
     setSelectedProvider(newProvider);
 
     const filteredModels = filterModels(newProvider?.models || []);
-    setSelectedModel(filteredModels[0]?.name || "");
+    const model = filteredModels[0]?.name || "";
+    setSelectedModel(model);
+
+    await updateData({ provider, model });
   };
 
   const filteredProviders = filterProviders(llm);
@@ -175,19 +187,18 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         selectedModel,
         outputType,
         prompt,
-        setElementsList,
-        setName,
-        setSelectedProvider,
-        setSelectedModel,
+        setElementsList: updateElementList,
+        setName: updateName,
+        setSelectedModel: updatedSelectedModel,
         setOutputType,
-        setPrompt,
-        setFormStyles,
+        setPrompt: updatePrompt,
+        setFormStyles: updateFormStyles,
         onProviderChange,
         filteredProviders,
         onOutputTypeChange,
         filteredModels,
         updateSettingFormData,
-        leadMagnet,
+        leadMagnet: selectedLeadMagnet,
       }}
     >
       {children}

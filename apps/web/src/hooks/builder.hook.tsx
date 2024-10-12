@@ -7,11 +7,10 @@ import { ChildItem } from "@/app/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 import { useRouter } from "next/navigation";
-import { LeadMagnet } from "@smartleadmagnet/database";
 
-const useBuilder = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
+const useBuilder = () => {
+  const { elementsList, setElementsList, setName, name, formStyles, setFormStyles, leadMagnet } = useBuilderContext();
   const router = useRouter();
-  const { elementsList, setElementsList, setName, name, formStyles, setFormStyles } = useBuilderContext();
   const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [embedOpen, setEmbedOpen] = useState(false);
@@ -50,10 +49,6 @@ const useBuilder = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
     console.log("Hello, " + name);
   }`;
   const imageUrl = "https://smartleadmagnet.com/wp-content/uploads/2024/09/ai-help.jpg"; // Replace with your image URL
-
-  useEffect(() => {
-    setElementsList(leadMagnet.components);
-  }, []);
 
   const handleStyleUpdate = (key: string, newColor: string) => {
     setFormStyles((prev) => ({
@@ -206,6 +201,7 @@ const useBuilder = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
   };
 
   return {
+    leadMagnet,
     elementsList,
     onDragEnd,
     removeElement,

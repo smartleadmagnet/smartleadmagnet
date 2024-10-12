@@ -3,8 +3,14 @@ import { useState } from "react";
 import axios from "axios";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 
-const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
+interface Preview {
+  text: string;
+  image: string;
+}
+
+const useAIForm = () => {
   const {
+    leadMagnet,
     elementsList,
     setPrompt,
     prompt,
@@ -18,6 +24,7 @@ const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
     setSelectedModel,
   } = useBuilderContext();
   const [processing, setProcessing] = useState(false);
+  const [preview, setPreview] = useState(false);
 
   const onValidatePrompt = async () => {
     setProcessing(true);
