@@ -338,9 +338,10 @@
     scrollbar-width: none; /* Firefox */
   }
 
-  /*.faded-bottom {*/
-  /*  @apply after:bg-[linear-gradient(180deg, _transparent_10%,_hsl(var(--background))_70%)] after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:hidden after:h-32 after:w-full after:md:block;*/
-  /*}*/
+  .faded-bottom {
+    @apply relative after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:block after:h-32 after:w-full after:bg-gradient-to-b after:from-transparent after:to-[hsl(var(--background))] after:hidden md:after:block;
+  }
+  
 
   .btn-primary {
     @apply bg-cyan-500 px-5 py-2 text-white shadow-md;
