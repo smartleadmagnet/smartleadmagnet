@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
-import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
+import {setupDevPlatform} from '@cloudflare/next-on-pages/next-dev';
 
 const nextConfig = {
 	transpilePackages: ["@smartleadmagnet/ui"],
 	reactStrictMode: false,
 	compiler: {
 		styledComponents: true,
-	  },
+	},
 	images: {
 		remotePatterns: [
 			{
@@ -84,6 +84,7 @@ const nextConfig = {
 		],
 	},
 };
+
 
 if (process.env.NODE_ENV === 'development') {
 	await setupDevPlatform();

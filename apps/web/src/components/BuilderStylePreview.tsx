@@ -93,9 +93,6 @@ export default function BuilderStylePreview({
 	                                            removeElement,
 	                                            selectedView,
 	                                            setSelectedView,
-	                                            textContent,
-	                                            markdownContent,
-	                                            codeContent,
 	                                            imageUrl,
                                             }: Props) {
 	return (

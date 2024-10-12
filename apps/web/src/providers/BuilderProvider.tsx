@@ -89,7 +89,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode, leadMagnet: 
 		// make an API call to update the components
 		updateData();
 		
-	}, [elementsList, formStyles, image]);
+	}, [elementsList, formStyles]);
 	
 	useEffect(() => {
 		const filteredModels = filterModels(selectedProvider?.models || []);
