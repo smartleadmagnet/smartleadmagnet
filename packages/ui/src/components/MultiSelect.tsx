@@ -1,5 +1,5 @@
 import React from "react";
-import Select, { MultiValue, ActionMeta } from "react-select";
+import Select, { ActionMeta, MultiValue } from "react-select";
 
 interface Option {
   label: string;
@@ -13,7 +13,7 @@ interface MultiSelectCreatableProps {
   placeholder?: string; // Optional placeholder
 }
 
-const MultiSelect: React.FC<MultiSelectCreatableProps> = ({ options, onChange, placeholder, value }) => {
+const MultiSelect: React.FC<MultiSelectCreatableProps> = ({options, onChange, placeholder, value}) => {
   return (
     <Select
       isMulti

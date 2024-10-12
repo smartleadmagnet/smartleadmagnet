@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { MentionsInput, Mention } from "react-mentions";
+import { useRef, useState } from "react";
+import { Mention, MentionsInput } from "react-mentions";
 import { Badge } from "@smartleadmagnet/ui/components/ui/badge";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   defaultValue?: string;
 }
 
-export default function MentionTextArea({ options, onPromptChange, defaultValue }: Props) {
+export default function MentionTextArea({options, onPromptChange, defaultValue}: Props) {
   const [value, setValue] = useState(defaultValue || "");
   const mentionInputRef = useRef<any>(null); // To track the ref of MentionsInput for cursor position
   const [caretPosition, setCaretPosition] = useState(0); // State to hold caret position
@@ -42,7 +42,8 @@ export default function MentionTextArea({ options, onPromptChange, defaultValue 
 
   return (
     <>
-      <div className="mention-text-area-box border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring mb-[10px] flex w-full rounded-md border px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+      <div
+        className="mention-text-area-box border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring mb-[10px] flex w-full rounded-md border px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
         <MentionsInput
           ref={mentionInputRef}
           value={value}

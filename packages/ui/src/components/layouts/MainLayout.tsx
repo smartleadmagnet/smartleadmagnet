@@ -1,8 +1,9 @@
 import Header from "../Header";
-const MainLayout = ({ children }: { children: React.ReactNode }) => {
+
+const MainLayout = ({children}: { children: React.ReactNode }) => {
   return (
     <div className="global-layout">
-      <Header />
+      <Header/>
       <main>{children}</main>
     </div>
   );

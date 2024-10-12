@@ -2,15 +2,15 @@ import WebisteLayout from "@/components/Layout/website";
 
 
 export default async function DashboardLayout({
-	                                              children,
+                                                children,
                                               }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	
-	
-	return (
-		<WebisteLayout>
-			{children}
-		</WebisteLayout>
-	);
+
+
+  return (
+    <WebisteLayout>
+      {children}
+    </WebisteLayout>
+  );
 }
