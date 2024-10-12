@@ -12,6 +12,7 @@ const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
 	const [selectedProvider, setSelectedProvider] = useState<LLMProvider>(defaultLLMProvider);
 	const [selectedModel, setSelectedModel] = useState<string>(leadMagnet.model || selectedProvider?.models[0]?.name || "");
 	const [outputType, setOutputType] = useState<string>(leadMagnet?.output || "text");
+	const [processing, setProcessing] =  useState(false);
 	
 	const updateData = async () => {
 		try {
@@ -27,14 +28,13 @@ const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
 	};
 	
 	const onValidatePrompt = async () => {
+		setProcessing(true);
 		const textPayload = elementsList.reduce((acc, element) => {
 			if (!(element.type === "image" || element.type === "file")) {
 				acc[element.name] = element.value;
 			}
 			return acc;
 		}, {});
-		
-		console.log({ elementsList });
 	
 		try {
 			if (outputType === "image") {
@@ -52,15 +52,12 @@ const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
 					{"type": "text", "text": JSON.stringify(textPayload)},
 					...imagePayload,
 				]);
-				
-				console.log({ result })
-				
 			}
 			
 		} catch (e) {
 			console.log(e);
 		}
-		
+		setProcessing(false);
 	}
 	
 	const filterProviders = (providers: LLMProvider[], output?: string): LLMProvider[] => {
@@ -139,7 +136,8 @@ const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
 		outputType,
 		setOutputType: onOutputTypeChange,
 		filteredModels,
-		onValidatePrompt
+		onValidatePrompt,
+		processing
 	};
 };
 

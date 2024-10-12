@@ -18,6 +18,7 @@ import useAIForm from "@/hooks/aiform.hook";
 import { LeadMagnet } from "@smartleadmagnet/database";
 import { Badge } from "@smartleadmagnet/ui/components/ui/badge";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
+import Spinner from "@smartleadmagnet/ui/components/Spinner";
 
 
 export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
@@ -33,10 +34,11 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 		setOutputType,
 		filteredModels,
 		outputType,
-		onValidatePrompt
+		onValidatePrompt,
+		processing
 	} = useAIForm({leadMagnet})
 	return (
-		<div className="w-full flex flex-col bg-white rounded-md justify-between relative h-full p-4">
+		<div className="w-full flex flex-col bg-white p-4 rounded-md justify-between relative h-full p-4">
 			<div
 				className="flex flex-col h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 p-1">
 				<div className="flex flex-col h-full">
@@ -98,7 +100,7 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 							</div>
 							<RadioGroup
 								value={selectedModel}
-								className="grid grid-cols-3 gap-4 mt-2 overflow-hidden"
+							className="flex  gap-3 flex-wrap"
 								onValueChange={setSelectedModel}
 							>
 								{
@@ -112,7 +114,7 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 												)
 											}
 											{
-												model.generateImage && <Badge className="text-[8px] !min-w-[80px]">Generate Image</Badge>
+											model.generateImage && <Badge className="text-[10px] !min-w-[150px] justify-center">Generate Image</Badge>
 											}
 										</div>
 									))
@@ -121,7 +123,15 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 						</div>
 					</div>
 				</div>
-				<Button className="flex" onClick={onValidatePrompt}>Validate Prompt</Button>
+				<Button className="flex" onClick={onValidatePrompt}>
+					{
+						processing && (<Spinner />)
+					}
+					{
+						!processing && "Validate Prompt"
+					}
+				</Button>
+				
 			</div>
 		</div>
 	);

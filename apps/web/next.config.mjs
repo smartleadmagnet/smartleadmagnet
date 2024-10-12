@@ -72,6 +72,14 @@ const nextConfig = {
 			{
 				protocol: 'https',
 				hostname: 'smartereply.canny.io'
+			},
+			{
+				protocol: 'https',
+				hostname: 'placehold.co'
+			},
+			{
+				protocol: 'https',
+				hostname: 'source.unsplash.com'
 			}
 		],
 	},

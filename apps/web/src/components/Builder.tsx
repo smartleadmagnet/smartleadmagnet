@@ -92,6 +92,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
             </div>
 
             <div className="flex items-center">
+              <p className="mr-4 font-bold">Last Saved (2 min ago)</p>
               <Button className="btn-primary ">Publish</Button>
             </div>
           </div>
@@ -187,7 +188,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
                                 >
                                   {(provided: DroppableProvided) => (
                                     <div
-                                      className="grid grid-cols-2 gap-2"
+                                      className="grid grid-cols-1 gap-2"
                                       ref={provided.innerRef}
                                       {...provided.droppableProps}
                                     >
@@ -211,17 +212,17 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
                                                 >
                                                   <Icon
                                                     name={child.icon}
-                                                    height="50px"
-                                                    width="50px"
+                                                    height="30px"
+                                                    width="30px"
                                                   />
-                                                  <span>{child.label}</span>
+                                                  <span className="title">{child.label}</span>
                                                 </Card>
                                                 {snapshot?.isDragging && (
                                                   <Card className="builder-item clone">
                                                     <Icon
                                                       name={child.icon}
-                                                      height="50px"
-                                                      width="50px"
+                                                      height="30px"
+                                                      width="30px"
                                                     />
                                                     {/* @ts-ignore */}
                                                     <span>{child?.title}</span>
@@ -302,7 +303,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
                       )}
                     </Droppable>
                   </main>
-                  <main className="flex-1 bg-gray-100 p-4 drop-area builder-column">
+                  <main className="flex-1 bg-gray-100 p-4  builder-column">
                     <AIForm leadMagnet={leadMagnet} />
                   </main>
                 </div>

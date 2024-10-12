@@ -19,6 +19,8 @@ import { Option } from "@/app/types/builder";
 import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 
 import Icon from "@smartleadmagnet/ui/components/icon";
+import { useState } from "react";
+import { useDropzone } from "react-dropzone";
 
 export type BuilderElementProps = {
   type:
@@ -60,6 +62,27 @@ export default function BuilderElement({
   onDelete,
   updateData,
 }: BuilderElementProps) {
+  
+  const [preview, setPreview] = useState<string | null>(null);
+  const onDrop = (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        setPreview(result); // Show preview
+        updateData("value", result, data); // Update the data with base64 image
+      };
+      reader.readAsDataURL(file); // Convert image to base64
+    }
+  };
+  
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "image/*": [],
+    },
+  });
 
   const internalName = editable ? (
     <span className="bg-blue-200 p-1 px-3 text-sm rounded-md inline-block ">
@@ -355,39 +378,40 @@ export default function BuilderElement({
             <Label className="text-sm font-semibold mb-[10px] block">
               {data.label}
               {data.required && <span className="text-red-500">*</span>}{" "}
-              {internalName}
             </Label>
             
-            <div className="flex items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition-colors duration-200">
-              <Input
-                type="file"
-                accept="image/*" // Accepts image files only
-                className="hidden" // Hides the actual file input
-                onChange={async (e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                      updateData("value", reader.result as string, data); // Base64 data
-                    };
-                    reader.readAsDataURL(file); // Convert image to base64
-                  }
-                }}
-              />
-              <label
-                htmlFor="file-upload"
-                className="flex flex-col items-center justify-center w-full h-full cursor-pointer text-gray-500 p-4"
-              >
+            <div
+              {...getRootProps()}
+              className={`flex items-center justify-center w-full h-40 border-2 border-dashed rounded-lg transition-colors duration-200 ${
+                isDragActive ? "border-blue-500" : "border-gray-300"
+              }`}
+            >
+              <input {...getInputProps()} />
+              <label className="flex flex-col items-center justify-center w-full h-full cursor-pointer text-gray-500 p-4">
                 <span className="text-lg">📁</span>
                 <span className="mt-2 text-sm">
-              Drag and drop an image here, or click to select one
-            </span>
+                {isDragActive
+                  ? "Drop the image here..."
+                  : "Drag and drop an image here, or click to select one"}
+              </span>
               </label>
             </div>
             
             <p className="text-xs text-gray-500 mt-2">
               Please upload an image (JPG, PNG, GIF).
             </p>
+            
+            {/* Image preview */}
+            {preview && (
+              <div className="mt-4">
+                <p className="text-sm font-semibold">Image Preview:</p>
+                <img
+                  src={preview}
+                  alt="Preview"
+                  className="mt-2 max-w-full h-auto border rounded"
+                />
+              </div>
+            )}
           </>
         );
 
