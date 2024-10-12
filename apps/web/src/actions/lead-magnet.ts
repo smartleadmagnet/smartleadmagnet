@@ -1,7 +1,7 @@
 "use server";
 
 import { createLeadMagnet, getLeadMagnetById, getLeadMagnetsByUser } from "@smartleadmagnet/services";
-import { uniqueNamesGenerator, Config, names, starWars, adjectives } from 'unique-names-generator';
+import { adjectives, Config, names, starWars, uniqueNamesGenerator } from 'unique-names-generator';
 import { getSessionUser } from "@/services/user";
 
 const config: Config = {

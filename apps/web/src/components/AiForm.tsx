@@ -1,5 +1,4 @@
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
-import { useLayoutContext } from "@/context/LayoutContext";
 import MentionTextArea from "@smartleadmagnet/ui/components/MentionTextArea";
 
 import {
@@ -10,10 +9,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@smartleadmagnet/ui/components/ui/select";
-import {
-	RadioGroup,
-	RadioGroupItem,
-} from "@smartleadmagnet/ui/components/ui/radio-group";
+import { RadioGroup, RadioGroupItem, } from "@smartleadmagnet/ui/components/ui/radio-group";
 import useAIForm from "@/hooks/aiform.hook";
 import { LeadMagnet } from "@smartleadmagnet/database";
 import { Badge } from "@smartleadmagnet/ui/components/ui/badge";
@@ -22,7 +18,6 @@ import Spinner from "@smartleadmagnet/ui/components/Spinner";
 
 
 export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
-	const {elementsList} = useLayoutContext();
 	const {
 		prompt,
 		setPrompt,
@@ -35,7 +30,8 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 		filteredModels,
 		outputType,
 		onValidatePrompt,
-		processing
+		processing,
+		elementsList
 	} = useAIForm({leadMagnet})
 	return (
 		<div className="w-full flex flex-col bg-white p-4 rounded-md justify-between relative h-full p-4">
@@ -100,7 +96,7 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 							</div>
 							<RadioGroup
 								value={selectedModel}
-							className="flex  gap-3 flex-wrap"
+								className="flex  gap-3 flex-wrap"
 								onValueChange={setSelectedModel}
 							>
 								{
@@ -114,7 +110,8 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 												)
 											}
 											{
-											model.generateImage && <Badge className="text-[10px] !min-w-[150px] justify-center">Generate Image</Badge>
+												model.generateImage &&
+						  <Badge className="text-[10px] !min-w-[150px] justify-center">Generate Image</Badge>
 											}
 										</div>
 									))
@@ -125,13 +122,13 @@ export default function AIForm({leadMagnet}: { leadMagnet: LeadMagnet }) {
 				</div>
 				<Button className="flex" onClick={onValidatePrompt}>
 					{
-						processing && (<Spinner />)
+						processing && (<Spinner/>)
 					}
 					{
 						!processing && "Validate Prompt"
 					}
 				</Button>
-				
+			
 			</div>
 		</div>
 	);

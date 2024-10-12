@@ -81,9 +81,9 @@ export default function BuilderOption({activeOption, setActiveOption, leadMagnet
 		<div className="w-2/3 p-4">
 			<main className="bg-gray-100 p-4 drop-area builder-column">
 				<div className="grid grid-cols-1 gap-4">
-					{activeOption === "info" && <SettingsForm leadMagnet={leadMagnet} />}
-					{activeOption === "webhook" && <WebhookForm leadMagnet={leadMagnet} />}
-					{activeOption === "email" && <EmailForm leadMagnet={leadMagnet} />}
+					{activeOption === "info" && <SettingsForm leadMagnet={leadMagnet}/>}
+					{activeOption === "webhook" && <WebhookForm leadMagnet={leadMagnet}/>}
+					{activeOption === "email" && <EmailForm leadMagnet={leadMagnet}/>}
 				</div>
 			</main>
 		</div>

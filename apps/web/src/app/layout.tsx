@@ -1,5 +1,5 @@
 import "@smartleadmagnet/ui/globals.css";
-import { Providers } from "./providers";
+import { Providers } from "@/providers";
 
 
 // const geistSans = localFont({

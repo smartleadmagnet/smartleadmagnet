@@ -5,8 +5,7 @@ import { v4 as uuid } from "uuid";
 import { DropResult } from "react-beautiful-dnd";
 import { ChildItem } from "@/app/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
-import { useLayoutContext } from "@/context/LayoutContext";
-import axios from "axios";
+import { useBuilderContext } from "@/providers/BuilderProvider";
 import { useRouter } from 'next/navigation'
 import { LeadMagnet } from "@smartleadmagnet/database";
 
@@ -26,12 +25,11 @@ const defaultFormStyles = {
 
 const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 	const router = useRouter()
-	const {elementsList, setElementsList} = useLayoutContext();
+	const {elementsList, setElementsList, setName, name} = useBuilderContext();
 	const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const [embedOpen, setEmbedOpen] = useState(false);
 	const [editMode, setEditMode] = useState(false);
-	const [formName, setFormName] = useState(leadMagnet?.name);
 	
 	const [activeOption, setActiveOption] = useState("info");
 	const [selectedView, setSelectedView] = useState("Form");
@@ -72,32 +70,6 @@ const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 		...defaultFormStyles,
 		...leadMagnet?.styles,
 	});
-	
-	const updateData = async () => {
-		try {
-			await axios.post(`/api/lead/${leadMagnet.id}`, {components: elementsList, styles: formStyles, name: formName});
-		} catch (e) {
-			console.log(e);
-		}
-	}
-	
-	useEffect(() => {
-		// make an API call to update the components
-		if (elementsList?.length) {
-			updateData();
-		}
-		
-	}, [elementsList, formStyles]);
-	
-	useEffect(() => {
-		const handler = setTimeout(() => {
-			updateData();
-		}, 500); // Adjust the delay as needed
-		
-		return () => {
-			clearTimeout(handler); // Cleanup the timeout on unmount or when prompt changes
-		};
-	}, [formName]);
 	
 	useEffect(() => {
 		setElementsList(leadMagnet.components)
@@ -285,7 +257,8 @@ const useBuilder = ({leadMagnet}: { leadMagnet: LeadMagnet }) => {
 		embedOpen,
 		setEmbedOpen,
 		router,
-		formName, setFormName
+		name,
+		setName
 	};
 };
 

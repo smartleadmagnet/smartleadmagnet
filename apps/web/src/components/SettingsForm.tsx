@@ -14,39 +14,23 @@ import { useS3Upload } from "next-s3-upload";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
-import axios from "axios";
-import { LeadMagnet } from "@smartleadmagnet/database";
-import { useForm, Controller } from "react-hook-form"; // Import react-hook-form
-import { z } from "zod"; // Import zod
+import { Controller, useForm } from "react-hook-form"; // Import react-hook-form
 import { zodResolver } from "@hookform/resolvers/zod"; // Import zod resolver for react-hook-form
 import ReactQuill from 'react-quill'; // Import ReactQuill
 import 'react-quill/dist/quill.snow.css'; // Import Quill CSS
 import templateCategories from "@/data/categories.json";
+import { BuilderSchemaForm, builderSchemaForm } from "@/types/builder";
+import { useBuilderContext } from "@/providers/BuilderProvider";
 
-// Define Zod schema for validation
-const settingsSchema = z.object({
-	image: z.string().min(1, "Image is required"),
-	name: z.string().min(1, "Title is required"),
-	tagline: z.string().min(1, "Tagline is required"),
-	description: z.string().min(1, "Description is required"),
-	category: z.string().min(1, "Category is required"),
-});
-
-interface Props {
-	leadMagnet: LeadMagnet;
-}
-
-// Define TypeScript types from Zod schema
-type SettingsFormData = z.infer<typeof settingsSchema>;
-
-export default function SettingsForm({leadMagnet}: Props) {
+export default function SettingsForm() {
+	const {updateSettingFormData, leadMagnet} = useBuilderContext();
 	const {uploadToS3, files} = useS3Upload();
 	const [uploading, setUploading] = useState(false);
 	const [imageUrl, setImageUrl] = useState<string>(leadMagnet?.image || "");
 	
 	// Integrating react-hook-form with zod validation
-	const {register, handleSubmit, setValue, control, formState: {errors, defaultValues}} = useForm<SettingsFormData>({
-		resolver: zodResolver(settingsSchema), // Use Zod schema for validation
+	const {register, handleSubmit, setValue, control, formState: {errors, defaultValues}} = useForm<BuilderSchemaForm>({
+		resolver: zodResolver(builderSchemaForm), // Use Zod schema for validation
 		defaultValues: {
 			image: leadMagnet.image || "",
 			name: leadMagnet.name || "",
@@ -55,14 +39,6 @@ export default function SettingsForm({leadMagnet}: Props) {
 			category: leadMagnet.category || "",
 		},
 	});
-	
-	const updateData = async (data: SettingsFormData) => {
-		try {
-			await axios.post(`/api/lead/${leadMagnet.id}`, data);
-		} catch (e) {
-			console.log(e);
-		}
-	};
 	
 	const onDrop = useCallback(async (acceptedFiles: File[]) => {
 		const file = acceptedFiles[0]; // Only take the first file
@@ -90,8 +66,8 @@ export default function SettingsForm({leadMagnet}: Props) {
 		},
 	});
 	
-	const onSubmit = (data: SettingsFormData) => {
-		updateData(data);
+	const onSubmit = async (data: BuilderSchemaForm) => {
+		await updateSettingFormData(data);
 	};
 	
 	return (

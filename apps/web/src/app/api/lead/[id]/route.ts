@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/services/user";
 import { updateLeadMagnet } from "@smartleadmagnet/services";
+
 export const dynamic = 'force-dynamic' // defaults to force-static
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest, {params}: { params: { id: string } }) {
 	// get slug id value from the request
 	const user = await getSessionUser();
 	if (user?.id) {
@@ -13,8 +14,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 			return NextResponse.json({});
 		} catch (error: any) {
 			console.log(error);
-			return NextResponse.json({ error: error.message || error }, { status: 500 });
+			return NextResponse.json({error: error.message || error}, {status: 500});
 		}
 	}
-	return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+	return NextResponse.json({error: "Not authenticated"}, {status: 401});
 }
