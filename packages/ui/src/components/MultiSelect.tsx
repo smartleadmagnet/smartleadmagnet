@@ -1,5 +1,5 @@
 import React from "react";
-import Select, { MultiValue, ActionMeta } from "react-select";
+import Select, { ActionMeta, MultiValue } from "react-select";
 
 interface Option {
   label: string;
@@ -9,19 +9,11 @@ interface Option {
 interface MultiSelectCreatableProps {
   options: Option[]; // Options passed via props
   value: Option[]; // Value passed via props
-  onChange: (
-    selectedOptions: MultiValue<Option>,
-    actionMeta: ActionMeta<Option>
-  ) => void; // Callback for change event
+  onChange: (selectedOptions: MultiValue<Option>, actionMeta: ActionMeta<Option>) => void; // Callback for change event
   placeholder?: string; // Optional placeholder
 }
 
-const MultiSelect: React.FC<MultiSelectCreatableProps> = ({
-  options,
-  onChange,
-  placeholder,
-  value
-}) => {
+const MultiSelect: React.FC<MultiSelectCreatableProps> = ({options, onChange, placeholder, value}) => {
   return (
     <Select
       isMulti
@@ -30,7 +22,6 @@ const MultiSelect: React.FC<MultiSelectCreatableProps> = ({
       onChange={onChange} // Handle change
       placeholder={placeholder || "Select an Option"} // Placeholder if provided
       classNamePrefix="react-select"
-      
     />
   );
 };

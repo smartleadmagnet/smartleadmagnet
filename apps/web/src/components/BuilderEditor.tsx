@@ -19,7 +19,7 @@ interface BuilderEditorProps {
 }
 
 export default function BuilderEditor(props: BuilderEditorProps) {
-  const { data, onClose, updateData } = props;
+  const {data, onClose, updateData} = props;
   if (!data) return null;
 
   return (
@@ -136,14 +136,14 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                       value={data?.value}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a Default Option" />
+                        <SelectValue placeholder="Select a Default Option"/>
                       </SelectTrigger>
                       <SelectContent>
                         {data.options?.map((option: any) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   ) : (

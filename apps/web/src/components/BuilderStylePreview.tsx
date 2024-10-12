@@ -85,19 +85,16 @@ const FormWrapper = styled.div`
 `;
 
 export default function BuilderStylePreview({
-  formStyles,
-  handleStyleUpdate,
-  elementsList,
-  handleEditChange,
-  handleEdit,
-  removeElement,
-  selectedView,
-  setSelectedView,
-  textContent,
-  markdownContent,
-  codeContent,
-  imageUrl,
-}: Props) {
+                                              formStyles,
+                                              handleStyleUpdate,
+                                              elementsList,
+                                              handleEditChange,
+                                              handleEdit,
+                                              removeElement,
+                                              selectedView,
+                                              setSelectedView,
+                                              imageUrl,
+                                            }: Props) {
   return (
     <div className="flex flex-1 builder-wrapper">
       <aside className="w-1/3 p-4 builder-column ">
@@ -274,7 +271,7 @@ export default function BuilderStylePreview({
                       type="code"
                       content={codeContent}
                         /> */}
-                  <ContentViewer type="image" content={imageUrl} />
+                  <ContentViewer type="image" content={imageUrl}/>
                 </>
               )}
             </FormWrapper>

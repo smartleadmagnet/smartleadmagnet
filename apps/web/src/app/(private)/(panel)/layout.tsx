@@ -4,8 +4,8 @@ import { getSessionUser } from "@/services/user";
 import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
-  children,
-}: {
+                                                children,
+                                              }: {
   children: React.ReactNode;
 }) {
   const user = await getSessionUser();

@@ -45,7 +45,7 @@ const ServiceSection: React.FC = () => {
 
         {/* Service cards grid */}
         <div className="flex flex-wrap justify-center gap-8">
-          {data.map(({ iconSrc, title, description }, index) => (
+          {data.map(({iconSrc, title, description}, index) => (
             <div key={index} className="w-full   lg:w-[45%] mb-8">
               <ServiceCard
                 iconSrc={iconSrc}

@@ -36,7 +36,7 @@ const AccordionSection = () => {
             </p>
           </div>
           <div className="md:w-1/2">
-            <Accordion faqs={faqs} />
+            <Accordion faqs={faqs}/>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ const HeroSection: React.FC = () => {
               <div className="mb-6">
                 <h1 className="hero-heading">
                   <span>
-                    Get AI-Powered <br />
+                    Get AI-Powered <br/>
                     <span className="bg-[#BEF8FC] rounded-md px-2">
                       Lead Magnets
                     </span>{" "}

@@ -1,7 +1,6 @@
 import ProcessCard from "@/components/ProcessCard";
 
 
-
 const data = [
   {
     "step": 1,
@@ -36,25 +35,25 @@ const ProcessSection = () => {
       <div className="container mx-auto">
         <div className="flex justify-center text-center mb-12">
           <div className="w-full max-w-2xl">
-            <h2 className="text-5xl line font-bold text-white leading-[1.2]" >
+            <h2 className="text-5xl line font-bold text-white leading-[1.2]">
               How It Works
             </h2>
           </div>
         </div>
         <div className="flex flex-wrap justify-center gap-6">
-          {data.map(({ step, iconSrc, title, text }: ProcessStep, index: number) => (
+          {data.map(({step, iconSrc, title, text}: ProcessStep, index: number) => (
             <div
-            key={index}
-            className="w-full   lg:w-[30%] mb-8"
-          >
-            <ProcessCard
-              step={step}
-              iconSrc={iconSrc}
-              title={title}
-              text={text}
-              className="h-full"
-            />
-          </div>
+              key={index}
+              className="w-full   lg:w-[30%] mb-8"
+            >
+              <ProcessCard
+                step={step}
+                iconSrc={iconSrc}
+                title={title}
+                text={text}
+                className="h-full"
+              />
+            </div>
           ))}
         </div>
       </div>

@@ -13,7 +13,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <PriceCard />
+        <PriceCard/>
       </div>
     </section>
   );

@@ -5,7 +5,7 @@ import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 
-import { Form, FormItem } from "@smartleadmagnet/ui/components/ui/form";
+import { FormItem } from "@smartleadmagnet/ui/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -20,7 +20,7 @@ interface EmbedModalProps {
 }
 
 const AddKeyModal = (props: EmbedModalProps) => {
-  const { open, setIsOpen } = props;
+  const {open, setIsOpen} = props;
   const [selectedKey, setSelectedKey] = useState<string>("Open AI"); // Default selection
   const [isDefault, setIsDefault] = useState<boolean>(false);
 
@@ -54,12 +54,13 @@ const AddKeyModal = (props: EmbedModalProps) => {
               className="absolute top-4 right-4 p-1 text-white"
               onClick={toggleModal}
             >
-              <Icon name="close" />
+              <Icon name="close"/>
             </button>
 
             {/* Modal Title with Gradient Background */}
             <div className="text-center mb-6">
-              <div className="modal-header inline-flex items-center justify-center w-full py-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-t-lg">
+              <div
+                className="modal-header inline-flex items-center justify-center w-full py-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-t-lg">
                 <h2 className="text-2xl font-semibold">Add New Api Key</h2>
               </div>
             </div>
@@ -80,7 +81,7 @@ const AddKeyModal = (props: EmbedModalProps) => {
                 </Label>
                 <Select>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select an option" />
+                    <SelectValue placeholder="Select an option"/>
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="option1">Option 1</SelectItem>
@@ -98,7 +99,7 @@ const AddKeyModal = (props: EmbedModalProps) => {
                 />
               </FormItem>
               <div className="flex items-center space-x-2">
-                <Checkbox id="terms2" disabled />
+                <Checkbox id="terms2" disabled/>
                 <Label
                   htmlFor="terms2"
                   className="text-sm font-medium"

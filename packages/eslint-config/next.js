@@ -1,4 +1,4 @@
-const { resolve } = require("node:path");
+const {resolve} = require("node:path");
 
 const project = resolve(process.cwd(), "tsconfig.json");
 
@@ -31,5 +31,5 @@ module.exports = {
     ".*.js",
     "node_modules/",
   ],
-  overrides: [{ files: ["*.js?(x)", "*.ts?(x)"] }],
+  overrides: [{files: ["*.js?(x)", "*.ts?(x)"]}],
 };

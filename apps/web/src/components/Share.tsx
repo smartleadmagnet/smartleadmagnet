@@ -61,7 +61,7 @@ const FormWrapper = styled.div`
   }
 `;
 
-export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
+export default function Builder({leadMagnet}: { leadMagnet: LeadMagnet }) {
   const {
     elementsList,
     removeElement,
@@ -70,7 +70,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
     formStyles,
     selectedView,
     imageUrl,
-  } = useBuilder({ leadMagnet }); // Use the custom hook
+  } = useBuilder({leadMagnet}); // Use the custom hook
 
 
   return (
@@ -116,10 +116,11 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
                       type="code"
                       content={codeContent}
                         /> */}
-            <ContentViewer type="image" content={imageUrl} />
+            <ContentViewer type="image" content={imageUrl}/>
           </>
         )}
-		<p className="text-center py-[20px]">This form is created by <a href="https://smartleadmagnet.com/">SmartLeadMagnet</a></p>
+        <p className="text-center py-[20px]">This form is created by <a
+          href="https://smartleadmagnet.com/">SmartLeadMagnet</a></p>
       </FormWrapper>
     </div>
   );

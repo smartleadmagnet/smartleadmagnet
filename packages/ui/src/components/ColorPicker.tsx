@@ -9,38 +9,38 @@ interface ColorPickerProps {
   label?: string;
 }
 
-const ColorPicker: React.FC<ColorPickerProps> = ({ color, onChange,label }) => {
+const ColorPicker: React.FC<ColorPickerProps> = ({color, onChange, label}) => {
   const handleColorChange = (newColor: { hex: string }) => {
     onChange(newColor.hex); // Pass the selected color back to the parent component
   };
 
   return (
-    <div >
-    <Label>{label}</Label>
-    <div className="flex items-center   space-x-2">
-      <Input
-        value={color}
-        className="w-[150px]"
-        onChange={(e) => {
-          onChange(e.target.value);
-        }}
-      />
-      <Popover>
-        <PopoverTrigger asChild>
-          <div
-            className="w-12 h-12 rounded-full cursor-pointer border border-gray-300"
-            style={{ backgroundColor: color }}
-          />
-        </PopoverTrigger>
-        <PopoverContent className="color-picker-popup">
-          <SketchPicker
-            color={color}
-            onChangeComplete={handleColorChange} // Handle color change
-          />
-        </PopoverContent>
-      </Popover>
+    <div>
+      <Label>{label}</Label>
+      <div className="flex items-center   space-x-2">
+        <Input
+          value={color}
+          className="w-[150px]"
+          onChange={(e) => {
+            onChange(e.target.value);
+          }}
+        />
+        <Popover>
+          <PopoverTrigger asChild>
+            <div
+              className="h-12 w-12 cursor-pointer rounded-full border border-gray-300"
+              style={{backgroundColor: color}}
+            />
+          </PopoverTrigger>
+          <PopoverContent className="color-picker-popup">
+            <SketchPicker
+              color={color}
+              onChangeComplete={handleColorChange} // Handle color change
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
     </div>
-    </div>  
   );
 };
 

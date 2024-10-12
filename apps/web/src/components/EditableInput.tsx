@@ -1,4 +1,4 @@
-import { useState, useRef, ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useRef, useState } from "react";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import Icon from "@smartleadmagnet/ui/components/icon";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
@@ -9,7 +9,7 @@ interface FormWithIconProps {
   setValue: (newValue: string) => void;
 }
 
-const EditableInput: FC<FormWithIconProps> = ({ value, setValue }) => {
+const EditableInput: FC<FormWithIconProps> = ({value, setValue}) => {
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null); // Type for inputRef
 
@@ -33,19 +33,19 @@ const EditableInput: FC<FormWithIconProps> = ({ value, setValue }) => {
         onChange={handleInputChange}
         ref={inputRef} // Attach ref to the input
         onKeyDownCapture={(e) => {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                inputRef.current?.blur(); // Remove focus
-                setIsTyping(false); // Hide the icon
-            }
-        } } // Hide the icon when the user presses Enter also remove focus
+          if (e.key === "Enter") {
+            e.preventDefault();
+            inputRef.current?.blur(); // Remove focus
+            setIsTyping(false); // Hide the icon
+          }
+        }} // Hide the icon when the user presses Enter also remove focus
         onBlur={() => setIsTyping(false)} // Hide the icon when the user clicks outside
         className="flex-grow min-w-0 m-0" // Adjust width dynamically
-        style={{ width: inputWidth }} // Adjust width dynamically
+        style={{width: inputWidth}} // Adjust width dynamically
       />
       {!isTyping && (
         <Button onClick={handleIconClick} className="py-1 pt-[5px]">
-          <Icon name="edit" />{" "}
+          <Icon name="edit"/>{" "}
         </Button>
       )}
     </div>

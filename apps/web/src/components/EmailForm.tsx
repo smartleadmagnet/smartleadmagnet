@@ -15,13 +15,13 @@ export default function AutomatedEmailForm() {
 
   // Handle input change
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setEmailData({ ...emailData, [name]: value });
+    const {name, value} = e.target;
+    setEmailData({...emailData, [name]: value});
   };
 
   // Handle rich text editor change
   const handleContentChange = (value: any) => {
-    setEmailData({ ...emailData, content: value });
+    setEmailData({...emailData, content: value});
   };
 
   // Handle sending test email
@@ -83,9 +83,9 @@ export default function AutomatedEmailForm() {
           className="w-full"
           modules={{
             toolbar: [
-              [{ header: [1, 2, false] }],
+              [{header: [1, 2, false]}],
               ['bold', 'italic', 'underline', 'strike'],
-              [{ list: 'ordered' }, { list: 'bullet' }],
+              [{list: 'ordered'}, {list: 'bullet'}],
               ['link', 'image'],
               ['clean'], // Remove formatting button
             ],

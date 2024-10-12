@@ -1,19 +1,15 @@
 'use client';
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger
-} from '@smartleadmagnet/ui/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@smartleadmagnet/ui/components/ui/tooltip';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export function NavItem({
-  href,
-  label,
-  children
-}: {
+                          href,
+                          label,
+                          children
+                        }: {
   href: string;
   label: string;
   children: React.ReactNode;

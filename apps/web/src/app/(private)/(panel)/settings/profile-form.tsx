@@ -45,7 +45,7 @@ const profileFormSchema = z.object({
   urls: z
     .array(
       z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
+        value: z.string().url({message: "Please enter a valid URL."}),
       })
     )
     .optional(),
@@ -57,8 +57,8 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 const defaultValues: Partial<ProfileFormValues> = {
   bio: "I own a computer.",
   urls: [
-    { value: "https://shadcn.com" },
-    { value: "http://twitter.com/shadcn" },
+    {value: "https://shadcn.com"},
+    {value: "http://twitter.com/shadcn"},
   ],
 }
 
@@ -69,7 +69,7 @@ export function ProfileForm() {
     mode: "onChange",
   })
 
-  const { fields, append } = useFieldArray({
+  const {fields, append} = useFieldArray({
     name: "urls",
     control: form.control,
   })
@@ -91,7 +91,7 @@ export function ProfileForm() {
         <FormField
           control={form.control}
           name="username"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
@@ -101,20 +101,20 @@ export function ProfileForm() {
                 This is your public display name. It can be your real name or a
                 pseudonym. You can only change this once every 30 days.
               </FormDescription>
-              <FormMessage />
+              <FormMessage/>
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
           name="email"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
+                    <SelectValue placeholder="Select a verified email to display"/>
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -127,14 +127,14 @@ export function ProfileForm() {
                 You can manage verified email addresses in your{" "}
                 <Link href="/examples/forms">email settings</Link>.
               </FormDescription>
-              <FormMessage />
+              <FormMessage/>
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
           name="bio"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Bio</FormLabel>
               <FormControl>
@@ -148,7 +148,7 @@ export function ProfileForm() {
                 You can <span>@mention</span> other users and organizations to
                 link to them.
               </FormDescription>
-              <FormMessage />
+              <FormMessage/>
             </FormItem>
           )}
         />
@@ -158,7 +158,7 @@ export function ProfileForm() {
               control={form.control}
               key={field.id}
               name={`urls.${index}.value`}
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel className={cn(index !== 0 && "sr-only")}>
                     URLs
@@ -169,7 +169,7 @@ export function ProfileForm() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage/>
                 </FormItem>
               )}
             />
@@ -179,7 +179,7 @@ export function ProfileForm() {
             variant="outline"
             size="sm"
             className="mt-2"
-            onClick={() => append({ value: "" })}
+            onClick={() => append({value: ""})}
           >
             Add URL
           </Button>
