@@ -3,15 +3,13 @@ import SettingsForm from "@/components/SettingsForm";
 import WebhookForm from "@/components/WebhookForm";
 import EmailForm from "@/components/EmailForm";
 import React from "react";
-import { LeadMagnet } from "@smartleadmagnet/database";
 
 interface Props {
   activeOption: string;
   setActiveOption: Function;
-  leadMagnet: LeadMagnet;
 }
 
-export default function BuilderOption({ activeOption, setActiveOption, leadMagnet }: Props) {
+export default function BuilderOption({ activeOption, setActiveOption }: Props) {
   return (
     <div className="builder-wrapper flex flex-1">
       <div className="w-1/3 p-4">
@@ -66,9 +64,9 @@ export default function BuilderOption({ activeOption, setActiveOption, leadMagne
       <div className="w-2/3 p-4">
         <main className="drop-area builder-column bg-gray-100 p-4">
           <div className="grid grid-cols-1 gap-4">
-            {activeOption === "info" && <SettingsForm leadMagnet={leadMagnet} />}
-            {activeOption === "webhook" && <WebhookForm leadMagnet={leadMagnet} />}
-            {activeOption === "email" && <EmailForm leadMagnet={leadMagnet} />}
+            {activeOption === "info" && <SettingsForm />}
+            {activeOption === "webhook" && <WebhookForm />}
+            {activeOption === "email" && <EmailForm />}
           </div>
         </main>
       </div>

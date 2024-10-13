@@ -1,10 +1,15 @@
-import { LeadMagnet } from "@smartleadmagnet/database";
 import { useState } from "react";
 import axios from "axios";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 
-const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
+interface Preview {
+  type: string;
+  content: string;
+}
+
+const useAIForm = () => {
   const {
+    leadMagnet,
     elementsList,
     setPrompt,
     prompt,
@@ -18,6 +23,7 @@ const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
     setSelectedModel,
   } = useBuilderContext();
   const [processing, setProcessing] = useState(false);
+  const [preview, setPreview] = useState<Preview | undefined>();
 
   const onValidatePrompt = async () => {
     setProcessing(true);
@@ -31,7 +37,7 @@ const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
     try {
       if (outputType === "image") {
         const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, textPayload);
-        console.log({ result });
+        setPreview({ type: "image", content: result.data?.message });
       } else {
         const imagePayload = elementsList.reduce((acc, element) => {
           if (element.type === "image" || element.type === "file") {
@@ -43,6 +49,7 @@ const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
           { type: "text", text: JSON.stringify(textPayload) },
           ...imagePayload,
         ]);
+        setPreview({ type: "text", content: result.data?.message });
       }
     } catch (e) {
       console.log(e);
@@ -64,6 +71,7 @@ const useAIForm = ({ leadMagnet }: { leadMagnet: LeadMagnet }) => {
     onValidatePrompt,
     processing,
     elementsList,
+    preview,
   };
 };
 

@@ -5,7 +5,6 @@ import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Icon from "@smartleadmagnet/ui/components/icon";
 import { Card } from "@smartleadmagnet/ui/components/ui/card";
 import EditableInput from "@/components/EditableInput";
-import { LeadMagnet } from "@smartleadmagnet/database";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@smartleadmagnet/ui/components/ui/tabs";
 import {
@@ -25,9 +24,11 @@ import BuilderEditor from "@/components/BuilderEditor";
 import EmbedModal from "@/components/EmbedModal";
 import BuilderStylePreview from "@/components/BuilderStylePreview";
 import BuilderOption from "@/components/BuilderOption";
+import { formatDistanceToNow } from "date-fns";
 
-export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
+export default function Builder() {
   const {
+    leadMagnet,
     elementsList,
     onDragEnd,
     removeElement,
@@ -52,7 +53,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
     router,
     name,
     setName,
-  } = useBuilder({ leadMagnet }); // Use the custom hook
+  } = useBuilder(); // Use the custom hook
 
   const filterItems = (searchTerm: string) => {
     if (!searchTerm) return builderItems;
@@ -83,7 +84,9 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
             </div>
 
             <div className="flex items-center">
-              <p className="mr-4 font-bold">Last Saved (2 min ago)</p>
+              <p className="mr-4 font-bold">
+                Last Saved ({formatDistanceToNow(new Date(leadMagnet.updatedAt), { addSuffix: true })})
+              </p>
               <Button className="btn-primary ">Publish</Button>
             </div>
           </div>
@@ -242,7 +245,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
                     </Droppable>
                   </main>
                   <main className="builder-column flex-1 bg-gray-100  p-4">
-                    <AIForm leadMagnet={leadMagnet} />
+                    <AIForm />
                   </main>
                 </div>
               </div>
@@ -265,7 +268,7 @@ export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
             />
           </TabsContent>
           <TabsContent value="options">
-            <BuilderOption activeOption={activeOption} setActiveOption={setActiveOption} leadMagnet={leadMagnet} />
+            <BuilderOption activeOption={activeOption} setActiveOption={setActiveOption} />
           </TabsContent>
         </div>
       </Tabs>
