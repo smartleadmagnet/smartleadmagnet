@@ -1,118 +1,295 @@
 "use client";
 
-import React from "react";
+import { useForm, Controller } from "react-hook-form";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
-import styled from "styled-components";
-import ContentViewer from "@/components/ContentViewer";
-import { LeadMagnet } from "@smartleadmagnet/database";
+import { Input } from "@smartleadmagnet/ui/components/ui/input";
+import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
+import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
+import { Label } from "@smartleadmagnet/ui/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@smartleadmagnet/ui/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/radio-group";
+import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
+import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
+import { useState } from "react";
+import { useDropzone } from "react-dropzone";
 
-import useBuilder from "@/hooks/builder.hook"; // Import the custom hook
-import BuilderElement from "@/components/BuilderElement";
+export type BuilderElementProps = {
+  elementsList: Array<{
+    label: string;
+    type: string;
+    value: any;
+    required?: boolean;
+    name: string;
+    options?: Array<{ label: string; value: string }>;
+  }>;
+};
 
-const FormWrapper = styled.div`
-  background-color: ${(props) => props.theme.backgroundColor};
-  border: 1px solid #ccc;
-  width: 90%;
-  max-width: 600px;
-  color: ${(props) => props.theme.textColor};
-  margin: 0 auto;
+export default function BuilderElementPreview({ elementsList }: BuilderElementProps) {
+  console.log({ elementsList });
 
-  padding: 20px;
-  border-radius: 5px;
-  font-family: ${(props) => props.theme.selectedFont};
-  .form-element {
-    margin: 0 0 20px 0;
-    padding: 0;
-  }
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: elementsList.reduce((acc, el) => {
+      acc[el.name] = el.value;
+      return acc;
+    }, {}),
+  });
 
-  h1 {
-    color: ${(props) => props.theme.titleColor};
-  }
+  const onSubmit = (data: any) => {
+    console.log("Form Data:", data);
+  };
 
-  h2 {
-    color: ${(props) => props.theme.subtitleColor};
-  }
+  const renderElement = (element: any) => {
+    switch (element.type) {
+      case "title":
+        return (
+          <div className="text-center">
+            <h1 className="text-3xl font-semibold">{element.value}</h1>
+          </div>
+        );
+      case "subtitle":
+        return (
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold">{element.value}</h2>
+          </div>
+        );
+      case "paragraph":
+        return (
+          <div>
+            <p>{element.value}</p>
+          </div>
+        );
+      case "separator":
+        return <Separator className="my-4" />;
+      case "text_field":
+        return (
+          <div>
+            <Label className="mb-2 block text-sm font-semibold">
+              {element.label} {element.required && <span className="text-red-500">*</span>}
+            </Label>
+            <Controller
+              name={element.name}
+              control={control}
+              rules={{ required: element.required ? `${element.label} is required` : false }}
+              render={({ field }) => <Input {...field} />}
+            />
+            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+          </div>
+        );
+      case "textarea":
+        return (
+          <div>
+            <Label className="mb-2 block text-sm font-semibold">
+              {element.label} {element.required && <span className="text-red-500">*</span>}
+            </Label>
+            <Controller
+              name={element.name}
+              control={control}
+              rules={{ required: element.required ? `${element.label} is required` : false }}
+              render={({ field }) => <Textarea {...field} />}
+            />
+            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+          </div>
+        );
+      case "checkbox":
+        return (
+          <div className="flex items-center">
+            <Controller
+              name={element.name}
+              control={control}
+              render={({ field }) => (
+                <Checkbox checked={field.value} onCheckedChange={(checked) => field.onChange(checked)} />
+              )}
+            />
+            <Label className="ml-2">{element.label}</Label>
+          </div>
+        );
+      case "checkbox-group":
+        return (
+          <div>
+            <Label className="mb-2 block text-sm font-semibold">
+              {element.label} {element.required && <span className="text-red-500">*</span>}
+            </Label>
+            {element.options.map((option: any) => (
+              <div key={option.value} className="flex items-center">
+                <Controller
+                  name={`${element.name}-${option.value}`}
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox checked={field.value} onCheckedChange={(checked) => field.onChange(checked)} />
+                  )}
+                />
+                <Label className="ml-2">{option.label}</Label>
+              </div>
+            ))}
+          </div>
+        );
+      case "select":
+        return (
+          <div>
+            <Label className="mb-2 block text-sm font-semibold">
+              {element.label} {element.required && <span className="text-red-500">*</span>}
+            </Label>
+            <Controller
+              name={element.name}
+              control={control}
+              rules={{ required: element.required ? `${element.label} is required` : false }}
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {element.options.map((option: any) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+          </div>
+        );
+      case "radio-group":
+        return (
+          <div>
+            <Label className="mb-2 block text-sm font-semibold">
+              {element.label} {element.required && <span className="text-red-500">*</span>}
+            </Label>
+            <Controller
+              name={element.name}
+              control={control}
+              rules={{ required: element.required ? `${element.label} is required` : false }}
+              render={({ field }) => (
+                <RadioGroup value={field.value} onValueChange={field.onChange}>
+                  {element.options.map((option: any) => (
+                    <div key={option.value} className="flex items-center space-x-2">
+                      <RadioGroupItem value={option.value} />
+                      <Label>{option.label}</Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              )}
+            />
+            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+          </div>
+        );
+      case "color":
+        return (
+          <div>
+            <Label className="mb-2 block text-sm font-semibold">{element.label}</Label>
+            <Controller
+              name={element.name}
+              control={control}
+              rules={{ required: element.required ? `${element.label} is required` : false }}
+              render={({ field }) => <ColorPicker color={field.value} onChange={field.onChange} />}
+            />
+            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+          </div>
+        );
+      case "file":
+        return (
+          <div>
+            <Label className="mb-2 block text-sm font-semibold">{element.label}</Label>
+            <Controller
+              name={element.name}
+              control={control}
+              rules={{ required: element.required ? `${element.label} is required` : false }}
+              render={({ field }) => (
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        field.onChange(reader.result);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+              )}
+            />
+            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+          </div>
+        );
+      case "image":
+        const [preview, setPreview] = useState<string | null>(null);
 
-  label {
-    color: ${(props) => props.theme.labelColor};
-    display: block;
-    margin-bottom: 5px;
-  }
+        const onDrop = (acceptedFiles: File[]) => {
+          const file = acceptedFiles[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const result = reader.result as string;
+              setPreview(result);
+            };
+            reader.readAsDataURL(file);
+          }
+        };
 
-  input {
-    color: ${(props) => props.theme.textColor};
-    &:focus {
-      border-color: ${(props) => props.theme.buttonColor};
-      outline: none;
+        const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+        return (
+          <div>
+            <Label className="mb-2 block text-sm font-semibold">
+              {element.label} {element.required && <span className="text-red-500">*</span>}
+            </Label>
+
+            <Controller
+              name={element.name}
+              control={control}
+              rules={{
+                required: element.required ? `${element.label} is required` : false,
+              }}
+              render={({ field }) => (
+                <>
+                  <div
+                    {...getRootProps()}
+                    className={`flex h-40 w-full items-center justify-center rounded-lg border-2 border-dashed ${
+                      errors[element.name] ? "border-red-500" : "border-gray-300"
+                    }`}
+                  >
+                    <input {...getInputProps()} />
+                    <p>Drag & drop an image, or click to select</p>
+                  </div>
+
+                  {preview && <img src={preview} alt="Preview" className="mt-4 h-auto max-w-full rounded-md" />}
+
+                  {/* Handle setting the value of the image */}
+                  <input type="hidden" {...field} value={preview || ""} onChange={() => field.onChange(preview)} />
+                </>
+              )}
+            />
+            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+          </div>
+        );
+
+      default:
+        return null;
     }
-  }
-
-  button[type="submit"] {
-    background-color: ${(props) => props.theme.buttonColor};
-    color: ${(props) => props.theme.buttonTextColor};
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: darken(${(props) => props.theme.buttonColor}, 10%);
-    }
-  }
-`;
-
-export default function Builder({ leadMagnet }: { leadMagnet: LeadMagnet }) {
-  const { elementsList, removeElement, handleEdit, handleEditChange, formStyles, selectedView, imageUrl } = useBuilder({
-    leadMagnet,
-  }); // Use the custom hook
+  };
 
   return (
-    <div className="py-10">
-      <FormWrapper theme={formStyles} className={`form-${formStyles.selectedFormStyle}`}>
-        {selectedView === "Form" ? (
-          <>
-            {elementsList.length &&
-              elementsList.map((item: any) => (
-                <div>
-                  <div className="form-item">
-                    <BuilderElement
-                      type={item.type}
-                      data={item}
-                      editable={false}
-                      updateData={handleEditChange}
-                      onEdit={() => {
-                        handleEdit(item);
-                      }}
-                      onDelete={() => removeElement(item.id)}
-                    />
-                  </div>
-                </div>
-              ))}
-            <div className="form-item text-center">
-              <Button type="submit">{formStyles.buttonText}</Button>
-            </div>
-          </>
-        ) : (
-          <>
-            {/* <ContentViewer
-                    type="text"
-                    content={textContent}
-                      /> */}
-            {/* <ContentViewer
-                      type="markdown"
-                      content={markdownContent}
-                        /> */}
-            {/* <ContentViewer
-                      type="code"
-                      content={codeContent}
-                        /> */}
-            <ContentViewer type="image" content={imageUrl} />
-          </>
-        )}
-        <p className="py-[20px] text-center">
-          This form is created by <a href="https://smartleadmagnet.com/">SmartLeadMagnet</a>
-        </p>
-      </FormWrapper>
+    <div className="p-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {elementsList.map((element, index) => (
+          <div key={index}>{renderElement(element)}</div>
+        ))}
+        <Button type="submit">Submit</Button>
+      </form>
     </div>
   );
 }
