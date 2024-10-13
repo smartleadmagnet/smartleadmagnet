@@ -14,7 +14,7 @@ function replacePlaceholders(template, values) {
 const resultFormat = `
 
 The response should be inside <lead> tag
-<rrr>AI Generated Response</rrr>
+<lead>AI Generated Response</lead>
 `;
 
 function extractLeadContent(htmlString: string): string | null {

@@ -21,17 +21,8 @@ import { useDropzone } from "react-dropzone";
 import useShareForm from "@/hooks/share.hook";
 import Spinner from "@smartleadmagnet/ui/components/Spinner";
 import AIResponse from "@smartleadmagnet/ui/components/AIResponse";
-
-export type BuilderElementProps = {
-  elementsList: Array<{
-    label: string;
-    type: string;
-    value: any;
-    required?: boolean;
-    name: string;
-    options?: Array<{ label: string; value: string }>;
-  }>;
-};
+import EmailInput from "@/components/EmailInput";
+import WebsiteInput from "@/components/WebsiteInput";
 
 export default function BuilderElementPreview() {
   const {
@@ -69,6 +60,26 @@ export default function BuilderElementPreview() {
         );
       case "separator":
         return <Separator className="my-4" />;
+      case "email":
+        return (
+          <EmailInput
+            label={element.label}
+            name={element.name}
+            required={element.required}
+            control={control}
+            errors={errors}
+          />
+        );
+      case "website":
+        return (
+          <WebsiteInput
+            label={element.label}
+            name={element.name}
+            required={element.required}
+            control={control}
+            errors={errors}
+          />
+        );
       case "text_field":
         return (
           <div>
