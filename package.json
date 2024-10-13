@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "email": "turbo email",
     "migrate:prisma:generate": "turbo migrate:prisma:generate",
     "pages:build": "turbo pages:build",
     "lint": "turbo lint",
