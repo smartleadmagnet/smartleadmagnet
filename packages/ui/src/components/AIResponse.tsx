@@ -6,7 +6,15 @@ import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import MarkdownTypingEffect from "@/components/MarkdownTypingEffect";
 import { Button } from "@/components/ui/button";
 
-const AIResponse = ({ response, onRegenerate }: { response: string; onRegenerate: any }) => {
+const AIResponse = ({
+  response,
+  onRegenerate,
+  type = "text",
+}: {
+  response: string;
+  onRegenerate: any;
+  type?: string;
+}) => {
   const [copy, isCopied] = useCopyToClipboard();
 
   const onCopy = async () => {
@@ -18,9 +26,16 @@ const AIResponse = ({ response, onRegenerate }: { response: string; onRegenerate
     <div className="card flex flex-1 justify-start space-y-4 rounded-lg p-2 py-4 align-middle sm:border-2 sm:border-gray-600 sm:p-3 ">
       <div className="card bg-base-200/70 flex h-full w-full flex-1 flex-col justify-between rounded-lg p-2 align-middle sm:p-4">
         <div className="relative flex h-full flex-1 cursor-pointer space-x-2 rounded-md border-gray-500 p-2">
-          <div className=" markdown-body max-h-[450px] overflow-y-auto p-4 pr-16 sm:pr-12  ">
-            <MarkdownTypingEffect text={response} />
-          </div>
+          {type === "text" && (
+            <div className=" markdown-body max-h-[450px] overflow-y-auto p-4 pr-16 sm:pr-12  ">
+              <MarkdownTypingEffect text={response} />
+            </div>
+          )}
+          {type === "image" && (
+            <div className="text-center">
+              <img src={response} alt="Content" className="h-auto max-w-full rounded-lg" />
+            </div>
+          )}
           <div className="absolute right-0 top-0">
             <div className="flex flex-row gap-2">
               <Button variant="outline" onClick={onRegenerate}>

@@ -283,7 +283,7 @@ export default function BuilderElementPreview() {
 
   return (
     <div className="p-4">
-      {response && <AIResponse response={response.content} onRegenerate={onRegenerate} />}
+      {response && <AIResponse response={response.content} type={response.type} onRegenerate={onRegenerate} />}
       {!response && (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {elementsList.map((element, index) => (
