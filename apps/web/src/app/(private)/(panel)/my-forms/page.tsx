@@ -37,7 +37,7 @@ export default async function MyForms() {
               id={lead.id}
               name={lead.name}
               description={lead.description}
-              analytics={{ impressions: 0, used: 0 }}
+              analytics={{ impressions: lead.impressionsCount, used: lead.usedCount }}
             />
           </li>
         ))}

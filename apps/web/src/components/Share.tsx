@@ -25,18 +25,8 @@ import EmailInput from "@/components/EmailInput";
 import WebsiteInput from "@/components/WebsiteInput";
 
 export default function BuilderElementPreview() {
-  const {
-    outputType,
-    onSubmit,
-    isSubmitting,
-    elementsList,
-    response,
-    onRegenerate,
-    formStyles,
-    control,
-    handleSubmit,
-    errors,
-  } = useShareForm();
+  const { onSubmit, isSubmitting, elementsList, response, onRegenerate, formStyles, control, handleSubmit, errors } =
+    useShareForm();
 
   const renderElement = (element: any) => {
     switch (element.type) {

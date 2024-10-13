@@ -35,21 +35,27 @@ export const getLeadMagnetsByUser = async (userId: string) => {
 };
 
 export async function updateLeadMagnetUsage(id: string) {
+  const leadMagnet = await prisma.leadMagnet.findUnique({
+    where: { id },
+  });
   return prisma.leadMagnet.update({
     where: { id },
     data: {
-      usedCount: { increment: 1 }, // Increment the usage count by 1
+      usedCount: leadMagnet.usedCount + 1, // Increment the usage count by 1
       lastUsedAt: new Date(), // Update the last used timestamp to the current time
     },
   });
 }
 
 export async function updateLeadMagnetImpressions(id: string) {
+  const leadMagnet = await prisma.leadMagnet.findUnique({
+    where: { id },
+  });
+
   return prisma.leadMagnet.update({
     where: { id },
     data: {
-      impressionsCount: { increment: 1 },
-      lastUsedAt: new Date(),
+      impressionsCount: leadMagnet.impressionsCount + 1, // manually incrementing
     },
   });
 }
