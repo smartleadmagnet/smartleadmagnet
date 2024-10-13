@@ -12,6 +12,10 @@
       "dependsOn": ["^migrate:prisma:generate"],
       "outputs": ["../../node_modules/.prisma/client"]
     },
+    "email": {
+      "cache": false,
+      "dependsOn": ["^email"]
+    },
     "lint": {
       "dependsOn": ["^lint"]
     },
