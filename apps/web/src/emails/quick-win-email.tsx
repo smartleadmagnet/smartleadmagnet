@@ -9,34 +9,32 @@ import {
   Link,
   Section,
   Tailwind,
-  Text,
-  Column,
   Row,
+  Column,
+  Text,
 } from "@react-email/components";
 import React from "react";
 
-type WelcomeEmailProps = {
+type QuickWinEmailProps = {
   userName: string;
   productName: string;
-  keyBenefits: string;
-  step1: string;
-  step2: string;
-  step3: string;
-  helpCenterLink: string;
+  specificFeature: string;
+  benefit: string;
+  callToActionLink: string;
   headerLogoSrc: string;
   headerImageSrc: string;
+  featureImageSrc: string; // New prop for feature image
 };
 
-const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
+const QuickWinEmail: React.FC<QuickWinEmailProps> = ({
   userName = "User",
   productName = "Product",
-  keyBenefits = "boost your productivity like never before.",
-  step1 = "Login into yout account and start crete your first lead magnet.",
-  step2 = "Customize your lead magnet with your brand colors and logo.",
-  step3 = "Connect with a huge variety of LLM providers and start growing your leads.",
-  helpCenterLink = "https://example.com/help-center",
+  specificFeature = "Try out our new dashboard feature",
+  benefit = "streamline your workflow like never before",
+  callToActionLink = "https://example.com/get-started",
   headerLogoSrc = "https://smartleadmagnet.com/wp-content/uploads/2024/10/3.png",
   headerImageSrc = "https://placehold.co/600x200",
+  featureImageSrc = "https://placehold.co/300x150", // Default feature image
 }) => {
   return (
     <Html>
@@ -44,7 +42,7 @@ const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
         <Head />
         <Body className="bg-white p-4 sm:p-8">
           <Container
-            className="mx-auto overflow-hidden rounded-lg border  shadow-lg"
+            className="mx-auto overflow-hidden rounded-lg border shadow-lg"
             style={{ maxWidth: "100%", width: "600px" }}
           >
             {/* Header Section */}
@@ -53,49 +51,43 @@ const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
             </Section>
             <Img
               src={headerImageSrc}
-              alt="Welcome to the Product Image"
-              className="mx-auto  w-full"
+              alt="Quick Win Image"
+              style={{ width: "100%", maxWidth: "600px", height: "auto" }}
+              className="mx-auto"
             />
-            
+
             {/* Welcome Message */}
             <Section className="p-4 sm:p-8">
               <Heading as="h1" className="mb-4 text-xl font-bold sm:text-2xl">
-                Welcome to {productName}, {userName}! 🎉
+                Here’s a Quick Win to Get Started Fast
               </Heading>
               <Text className="mb-4">
-                We're thrilled you're here! Thanks for joining the {productName} community. With {productName}, you’ll {keyBenefits}.
+                Hi {userName},
               </Text>
-              
-              {/* Steps to Get Started */}
-              <Heading as="h2" className="mb-4 text-lg font-semibold">
-                Here's how to get started:
-              </Heading>
-              <Text className="mb-4">1. {step1}</Text>
-              <Text className="mb-4">2. {step2}</Text>
-              <Text className="mb-4">3. {step3}</Text>
+              <Text className="mb-4">
+                Ready to see {productName} in action? Let’s make it easy. Here’s a quick win you can achieve right now:
+              </Text>
+              <Text className="mb-4 font-semibold">{specificFeature}</Text>
+              <Img
+                src={featureImageSrc}
+                alt="Feature Illustration"
+                style={{ width: "100%", height: "auto", maxWidth: "400px", margin: "0 auto" }}
+                className="mb-4"
+              />
+              <Text className="mb-4">
+                You’ll {benefit}. Plus, it's just the beginning of what you can accomplish with {productName}!
+              </Text>
+              <Text className="mb-4">
+                Click <Link href={callToActionLink} className="text-cyan-500">here</Link> to try it out now, and let us know how it goes—we love to hear from our users!
+              </Text>
 
-              {/* CTA Button */}
-              <Button
-                href={helpCenterLink}
-                className="rounded bg-cyan-500 px-5 py-3 font-bold text-white hover:bg-cyan-700 w-[90%] text-center"
-              >
-                Visit the Help Center
-              </Button>
-
-              {/* Support Text */}
               <Text className="mt-4">
-                Need help? Feel free to check out our <Link href={helpCenterLink} className="text-cyan-500">Help Center</Link> or reply directly to this email—we're here to assist you!
-              </Text>
-              <Text className="mt-4">
-                Let's make great things happen together!
-              </Text>
-              <Text className="mt-4">
-                Cheers,
+                Best,
                 <br />
-                The {productName} Team
+                [Your Name] & The {productName} Team
               </Text>
             </Section>
-            
+
             {/* Footer Section */}
             <Section className="bg-gray-900 p-[20px] text-white text-center">
               <Row>
@@ -152,7 +144,7 @@ const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
   );
 };
 
-export default WelcomeEmail;
+export default QuickWinEmail;
 
 const footerHeading = {
   fontSize: "1.25rem",
