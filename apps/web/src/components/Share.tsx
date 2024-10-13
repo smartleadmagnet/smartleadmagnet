@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm, Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
@@ -16,8 +16,11 @@ import {
 import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/radio-group";
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
 import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import useShareForm from "@/hooks/share.hook";
+import Spinner from "@smartleadmagnet/ui/components/Spinner";
+import AIResponse from "@smartleadmagnet/ui/components/AIResponse";
 
 export type BuilderElementProps = {
   elementsList: Array<{
@@ -30,23 +33,19 @@ export type BuilderElementProps = {
   }>;
 };
 
-export default function BuilderElementPreview({ elementsList }: BuilderElementProps) {
-  console.log({ elementsList });
-
+export default function BuilderElementPreview() {
   const {
+    outputType,
+    onSubmit,
+    isSubmitting,
+    elementsList,
+    response,
+    onRegenerate,
+    formStyles,
     control,
     handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: elementsList.reduce((acc, el) => {
-      acc[el.name] = el.value;
-      return acc;
-    }, {}),
-  });
-
-  const onSubmit = (data: any) => {
-    console.log("Form Data:", data);
-  };
+    errors,
+  } = useShareForm();
 
   const renderElement = (element: any) => {
     switch (element.type) {
@@ -284,12 +283,19 @@ export default function BuilderElementPreview({ elementsList }: BuilderElementPr
 
   return (
     <div className="p-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {elementsList.map((element, index) => (
-          <div key={index}>{renderElement(element)}</div>
-        ))}
-        <Button type="submit">Submit</Button>
-      </form>
+      {response && <AIResponse response={response.content} onRegenerate={onRegenerate} />}
+      {!response && (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {elementsList.map((element, index) => (
+            <div key={index}>{renderElement(element)}</div>
+          ))}
+
+          <Button type="submit">
+            {isSubmitting && <Spinner />}
+            {!isSubmitting && "Submit"}
+          </Button>
+        </form>
+      )}
     </div>
   );
 }

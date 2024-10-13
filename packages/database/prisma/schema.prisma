@@ -108,6 +108,7 @@ model LeadMagnet {
   styles           Json?             @default("{}")
   components       Json?
   usedCount        Int               @default(0)
+  lastUsedAt       DateTime?
   impressionsCount Int               @default(0)
   leadMagnetUsages LeadMagnetUsage[]
   createdAt        DateTime?         @default(now())

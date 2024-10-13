@@ -5,7 +5,7 @@ import BuilderElementPreview from "@/components/Share";
 export default function BuilderContainer({ leadMagnet }: { leadMagnet: LeadMagnet }) {
   return (
     <BuilderProvider leadMagnet={leadMagnet}>
-      <BuilderElementPreview elementsList={leadMagnet.components} />
+      <BuilderElementPreview />
     </BuilderProvider>
   );
 }

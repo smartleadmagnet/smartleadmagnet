@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useBuilderContext } from "@/providers/BuilderProvider";
-import { ChildItem } from "@/app/types/builder";
+import { useForm } from "react-hook-form";
 
 interface Preview {
   type: string;
@@ -10,51 +10,21 @@ interface Preview {
 
 const useShareForm = () => {
   const { leadMagnet, elementsList, outputType, formStyles } = useBuilderContext();
-  const [processing, setProcessing] = useState(false);
-  const [preview, setPreview] = useState<Preview | undefined>();
+  const [response, setResponse] = useState<Preview | undefined>();
+  const [lastInput, setLastInput] = useState<any>();
 
-  const [localElementsList, setLocalElementsList] = React.useState(elementsList);
+  const {
+    control,
+    handleSubmit,
 
-  const handleEditChange = (key: string, value: string | boolean, builderSelected?: ChildItem) => {
-    const selectedItemCopy = builderSelected;
-    if (!selectedItemCopy) return;
+    formState: { errors, isSubmitting },
+  } = useForm({});
 
-    const index = localElementsList.findIndex((element: any) => element.id === selectedItemCopy.id);
-    if (index === -1) return;
-
-    let updatedItem = { ...selectedItemCopy, [key]: value };
-
-    // Website validation
-    if (selectedItemCopy.type === "website" && key === "value") {
-      const websiteRegex = /^(https?:\/\/)?([\w\d-]+\.)+\w{2,}(\/[\w\d-]*)*\/?$/;
-      const isValidWebsite = websiteRegex.test(value as string);
-      if (!isValidWebsite) {
-        updatedItem = {
-          ...updatedItem,
-          error: "Invalid website URL",
-        };
-      } else {
-        updatedItem = {
-          ...updatedItem,
-          error: "", // Clear error if valid
-        };
-      }
-    }
-  };
-
-  const onGenerateLead = async () => {
-    setProcessing(true);
-    const textPayload = elementsList.reduce((acc, element) => {
-      if (!(element.type === "image" || element.type === "file")) {
-        acc[element.name] = element.value;
-      }
-      return acc;
-    }, {});
-
+  async function onGenerateLead(data: any) {
     try {
       if (outputType === "image") {
-        const result = await axios.post(`/api/lead/generate/${leadMagnet.id}`, textPayload);
-        setPreview({ type: "image", content: result.data?.message });
+        const result = await axios.post(`/api/lead/generate/${leadMagnet.id}`, data);
+        setResponse({ type: "image", content: result.data?.message });
       } else {
         const imagePayload = elementsList.reduce((acc, element) => {
           if (element.type === "image" || element.type === "file") {
@@ -62,26 +32,37 @@ const useShareForm = () => {
           }
           return acc;
         }, []);
-        const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, [
-          { type: "text", text: JSON.stringify(textPayload) },
+        const result = await axios.post(`/api/lead/generate/${leadMagnet.id}`, [
+          { type: "text", text: JSON.stringify(data) },
           ...imagePayload,
         ]);
-        setPreview({ type: "text", content: result.data?.message });
+        setResponse({ type: "text", content: result.data?.message });
       }
     } catch (e) {
       console.log(e);
     }
-    setProcessing(false);
+  }
+
+  const onSubmit = async (data: any) => {
+    setLastInput(data);
+    await onGenerateLead(data);
+  };
+
+  const onRegenerate = async () => {
+    await onGenerateLead(lastInput);
   };
 
   return {
     outputType,
-    onGenerateLead,
-    processing,
+    onSubmit,
+    isSubmitting,
     elementsList,
-    preview,
+    response,
     formStyles,
-    localElementsList,
+    control,
+    handleSubmit,
+    errors,
+    onRegenerate,
   };
 };
 

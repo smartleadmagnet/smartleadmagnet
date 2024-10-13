@@ -12,7 +12,7 @@ if (process.env.UPSTASH_REDIS_REST_URL) {
   rateLimit = new Ratelimit({
     redis: Redis.fromEnv(),
     // Allow 100 requests per day (~5-10 prompts)
-    limiter: Ratelimit.fixedWindow(10, "1440 m"),
+    limiter: Ratelimit.fixedWindow(5000, "1440 m"),
     analytics: true,
     prefix: "smartleadmagnet",
   });
@@ -24,7 +24,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
   // get slug id value from the request
   try {
     const identifier = getIPAddress();
-    if (rateLimit && !identifier) {
+    console.log("identifier", identifier, rateLimit, process.env.UPSTASH_REDIS_REST_URL);
+    if (rateLimit && identifier) {
       const { success } = await rateLimit?.limit(identifier);
       if (!success) {
         return NextResponse.json({ error: "No requests left. Please try again in 24h." }, { status: 429 });
@@ -44,9 +45,9 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       // update the DB that it has been used
       return NextResponse.json({ message: result });
     }
+    return NextResponse.json({ error: "Rate Limiting Error" }, { status: 500 });
   } catch (error: any) {
     console.log(error);
     return NextResponse.json({ error: error.message || error }, { status: 500 });
   }
-  return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 }
