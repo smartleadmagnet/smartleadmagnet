@@ -8,6 +8,16 @@ export async function createApiKey(data: {
   provider: string;
   isDefault: boolean;
 }): Promise<ApiKey> {
+  if (data.isDefault) {
+    await prisma.apiKey.updateMany({
+      where: {
+        userId: data.userId,
+      },
+      data: {
+        isDefault: false,
+      },
+    });
+  }
   return prisma.apiKey.create({
     data,
   });

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
@@ -30,13 +30,14 @@ const apiKeySchema = z.object({
 });
 
 const AddKeyModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue, // Used to programmatically set form values
-    watch, // Used to watch form values, including isDefault
+    getValues, // To get current values for rendering
+    reset,
   } = useForm({
     resolver: zodResolver(apiKeySchema), // Use Zod resolver
     defaultValues: {
@@ -48,12 +49,12 @@ const AddKeyModal = () => {
   });
 
   const toggleModal = () => {
-    setIsOpen(!open);
+    setIsOpen(!isOpen);
   };
 
   const onSubmit = async (data: any) => {
     try {
-      await createKey(data);
+      await createKey(data); // Submit all form data
     } catch (error) {
       toast({
         variant: "destructive",
@@ -61,12 +62,9 @@ const AddKeyModal = () => {
         description: "There was an error submitting the form",
       });
     }
+    reset();
     setIsOpen(false);
   };
-
-  // Watch for the isDefault value
-  const isDefault = watch("isDefault");
-  const provider = watch("provider");
 
   return (
     <>
@@ -102,7 +100,8 @@ const AddKeyModal = () => {
               <FormItem>
                 <Label className="mb-2 block text-sm font-semibold">API Key Provider</Label>
                 <Select
-                  onValueChange={(value) => setValue("provider", value)} // Manually set provider value
+                  value={getValues("provider")} // Get the current value from form state
+                  onValueChange={(value) => setValue("provider", value)} // Use setValue to update
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select an option" />
@@ -127,9 +126,7 @@ const AddKeyModal = () => {
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id="isDefault"
-                  {...register("isDefault")}
-                  checked={isDefault}
-                  onChange={(e) => setValue("isDefault", e.target.checked)}
+                  onCheckedChange={(checked) => setValue("isDefault", checked)} // Use setValue to update
                 />
                 <Label htmlFor="isDefault" className="text-sm font-medium">
                   Set as Default
