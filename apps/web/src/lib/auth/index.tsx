@@ -7,6 +7,10 @@ import { randomInt } from "crypto";
 import { createTransport } from "nodemailer";
 import { render } from "@react-email/render";
 import LoginCodeEmail from "@/emails/login-code";
+import WelcomeEmail from "@/emails/welcome-email";
+import { sendEmail } from "@/lib/email";
+const { convert } = require("html-to-text");
+
 const verifyEmailMaxAge = 5 * 60; // 5 minutes
 
 const verificationTokenLength = 5;
@@ -25,7 +29,6 @@ async function sendVerificationRequest(params: any) {
     // NOTE: You are not required to use `nodemailer`, use whatever you want.
     const transport = createTransport(provider.server);
     const emailHtml = await render(<LoginCodeEmail loginCode={token} />);
-    console.log(emailHtml);
     const result = await transport.sendMail({
       to: identifier,
       from: `SmartLeadMagnet <${provider.from}>`,
@@ -97,6 +100,14 @@ const nextAuth = NextAuth({
       // if (user?.picture) session.user.image = user.picture;
 
       return session;
+    },
+  },
+  events: {
+    async createUser(message) {
+      // send a welcome email
+      console.log("User created:", message.user.email);
+      const emailHtml = await render(<WelcomeEmail userName={message.user.name} />);
+      await sendEmail(message.user.email, "Welcome to SmartLeadMagnet", convert(emailHtml), emailHtml);
     },
   },
 });

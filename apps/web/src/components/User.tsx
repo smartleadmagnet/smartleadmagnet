@@ -14,6 +14,7 @@ import { getSessionUser } from "@/services/user";
 import React from "react";
 import { signOut } from "@/lib/auth";
 import { createLead } from "@/actions/lead-magnet";
+import { Avatar, AvatarFallback, AvatarImage } from "@smartleadmagnet/ui/components/ui/avatar";
 
 export async function User() {
   let user = await getSessionUser();
@@ -45,49 +46,44 @@ export async function User() {
 
   return (
     <div className="flex justify-center">
-      <form className=" flex justify-end mr-3" >
-            <Button formAction={onCreate} variant="outline" size="sm" className="btn-primary">
-              Build New Magnet
-            </Button>
-          </form>
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
-          <Image
-            src={user.image ?? "/placeholder-user.jpg"}
-            width={36}
-            height={36}
-            alt="Avatar"
-            className="overflow-hidden rounded-full"
-          />
+      <form className=" mr-3 flex justify-end">
+        <Button formAction={onCreate} variant="outline" size="sm" className="btn-primary">
+          Build New Magnet
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href="/my-magnets">My Magnets</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link href="/settings">Settings</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <form
-            action={async () => {
-              "use server";
-              await signOut({
-                redirectTo: "/login",
-              });
-            }}
-            className="w-full"
-          >
-            <Button className="w-full">Logout</Button>
-          </form>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </form>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Avatar>
+            <AvatarImage src={user.image} alt={user.name} />
+            <AvatarFallback>{(user.name || user.email).substring(0, 2).toUpperCase()}</AvatarFallback>
+          </Avatar>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <Link href="/my-magnets">My Magnets</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href="/settings">Settings</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>Support</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <form
+              action={async () => {
+                "use server";
+                await signOut({
+                  redirectTo: "/login",
+                });
+              }}
+              className="w-full"
+            >
+              <Button className="w-full">Logout</Button>
+            </form>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

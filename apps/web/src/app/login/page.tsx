@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@smartleadmagnet/ui/components/ui/card";
-import { signIn } from "next-auth/react";
+import { signIn } from "@/lib/auth";
 import MagicLinkForm from "@/components/MagicLinkForm";
 
 export const metadata: Metadata = {
