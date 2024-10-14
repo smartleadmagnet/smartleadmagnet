@@ -23,6 +23,61 @@ import Spinner from "@smartleadmagnet/ui/components/Spinner";
 import AIResponse from "@smartleadmagnet/ui/components/AIResponse";
 import EmailInput from "@/components/EmailInput";
 import WebsiteInput from "@/components/WebsiteInput";
+import styled from "styled-components";
+
+
+
+const FormWrapper = styled.div`
+  background-color: ${(props) => props.theme.backgroundColor};
+  border: 1px solid #ccc;
+  width: 90%;
+  max-width: 600px;
+  color: ${(props) => props.theme.textColor};
+  margin: 0 auto;
+
+  padding: 20px;
+  border-radius: 5px;
+  font-family: ${(props) => props.theme.selectedFont};
+  .form-item {
+    margin: 0 0 20px 0;
+    padding: 0;
+  }
+
+  h1 {
+    color: ${(props) => props.theme.titleColor};
+  }
+
+  h2 {
+    color: ${(props) => props.theme.subtitleColor};
+  }
+
+  label {
+    color: ${(props) => props.theme.labelColor};
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input {
+    color: ${(props) => props.theme.textColor};
+    &:focus {
+      border-color: ${(props) => props.theme.buttonColor};
+      outline: none;
+    }
+  }
+
+  button[type="submit"] {
+    background-color: ${(props) => props.theme.buttonColor};
+    color: ${(props) => props.theme.buttonTextColor};
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken(${(props) => props.theme.buttonColor}, 10%);
+    }
+  }
+`;
 
 export default function BuilderElementPreview() {
   const { onSubmit, isSubmitting, elementsList, response, onRegenerate, formStyles, control, handleSubmit, errors } =
@@ -56,6 +111,7 @@ export default function BuilderElementPreview() {
             label={element.label}
             name={element.name}
             required={element.required}
+            placeholder={element.placeholder}
             control={control}
             errors={errors}
           />
@@ -65,6 +121,7 @@ export default function BuilderElementPreview() {
           <WebsiteInput
             label={element.label}
             name={element.name}
+            placeholder={element.placeholder}
             required={element.required}
             control={control}
             errors={errors}
@@ -80,12 +137,12 @@ export default function BuilderElementPreview() {
               name={element.name}
               control={control}
               rules={{ required: element.required ? `${element.label} is required` : false }}
-              render={({ field }) => <Input {...field} />}
+              render={({ field }) => <Input {...field} placeholder={element.placeholder} />}
             />
             {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
           </div>
         );
-      case "textarea":
+        case "number":
         return (
           <div>
             <Label className="mb-2 block text-sm font-semibold">
@@ -95,7 +152,22 @@ export default function BuilderElementPreview() {
               name={element.name}
               control={control}
               rules={{ required: element.required ? `${element.label} is required` : false }}
-              render={({ field }) => <Textarea {...field} />}
+              render={({ field }) => <Input {...field} type="number" placeholder={element.placeholder} />}
+            />
+            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+          </div>
+        );
+        case "textarea":
+        return (
+          <div>
+            <Label className="mb-2 block text-sm font-semibold">
+              {element.label} {element.required && <span className="text-red-500">*</span>}
+            </Label>
+            <Controller
+              name={element.name}
+              control={control}
+              rules={{ required: element.required ? `${element.label} is required` : false }}
+              render={({ field }) => <Textarea {...field} placeholder={element.placeholder} />}
             />
             {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
           </div>
@@ -146,7 +218,7 @@ export default function BuilderElementPreview() {
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select option" />
+                    <SelectValue  placeholder={element.placeholder || "Select Option"} />
                   </SelectTrigger>
                   <SelectContent>
                     {element.options.map((option: any) => (
@@ -207,8 +279,10 @@ export default function BuilderElementPreview() {
               control={control}
               rules={{ required: element.required ? `${element.label} is required` : false }}
               render={({ field }) => (
+                <div className="relative w-full bg-white p-2">
                 <input
                   type="file"
+                   className="block h-auto w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100 focus:outline-none"
                   onChange={(e) => {
                     const file = e.target.files[0];
                     if (file) {
@@ -220,6 +294,7 @@ export default function BuilderElementPreview() {
                     }
                   }}
                 />
+                </div>
               )}
             />
             {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
@@ -240,7 +315,7 @@ export default function BuilderElementPreview() {
           }
         };
 
-        const { getRootProps, getInputProps } = useDropzone({ onDrop });
+        const { getRootProps, getInputProps,isDragActive } = useDropzone({ onDrop });
 
         return (
           <div>
@@ -263,7 +338,9 @@ export default function BuilderElementPreview() {
                     }`}
                   >
                     <input {...getInputProps()} />
-                    <p>Drag & drop an image, or click to select</p>
+                    <span className="mt-2 text-sm">
+                  {isDragActive ? "Drop the image here..." : "Drag and drop an image here, or click to select one"}
+                </span>
                   </div>
 
                   {preview && <img src={preview} alt="Preview" className="mt-4 h-auto max-w-full rounded-md" />}
@@ -273,6 +350,7 @@ export default function BuilderElementPreview() {
                 </>
               )}
             />
+            <p className="mt-2 text-xs text-gray-500">Please upload an image (JPG, PNG, GIF).</p>
             {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
           </div>
         );
@@ -283,12 +361,12 @@ export default function BuilderElementPreview() {
   };
 
   return (
-    <div className="p-4">
+    <FormWrapper theme={formStyles}>
       {response && <AIResponse response={response.content} type={response.type} onRegenerate={onRegenerate} />}
       {!response && (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
           {elementsList.map((element, index) => (
-            <div key={index}>{renderElement(element)}</div>
+            <div className="form-item" key={index}>{renderElement(element)}</div>
           ))}
 
           <Button type="submit">
@@ -297,6 +375,6 @@ export default function BuilderElementPreview() {
           </Button>
         </form>
       )}
-    </div>
+    </FormWrapper>
   );
 }

@@ -111,6 +111,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
             </label>
             <Input
               value={data.value}
+              placeholder={data.placeholder}
               onChange={(e) => {
                 updateData?.("value", e.target.value, data);
               }}
@@ -130,7 +131,8 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
               </div>
               <Input
                 type="text"
-                placeholder="Enter your website URL"
+                
+                placeholder={data.placeholder || "Enter your website URL"}
                 className="w-full rounded-md border border-gray-300 px-4 py-2 pl-14 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={data.value}
                 onChange={(e) => {
@@ -155,6 +157,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
                 type="email"
                 className="w-full rounded-md border border-gray-300 px-4 py-2 pl-14 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={data.value}
+                placeholder={data.placeholder}
                 onChange={(e) => {
                   updateData?.("value", e.target.value, data);
                 }}
@@ -172,6 +175,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
             <Input
               type="number" // Ensure the input type is set to number
               value={data.value}
+              placeholder={data.placeholder}
               className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={(e) => {
                 updateData?.("value", e.target.value, data);
@@ -188,6 +192,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
             </label>
             <Textarea
               value={data.value}
+              placeholder={data.placeholder}
               onChange={(e) => {
                 updateData?.("value", e.target.value, data);
               }}
@@ -264,7 +269,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
               }}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select an option" />
+                <SelectValue placeholder={data.placeholder || "Select an option"} />
               </SelectTrigger>
               <SelectContent>
                 {data.options && (
@@ -347,7 +352,6 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
             >
               <input {...getInputProps()} />
               <label className="flex h-full w-full cursor-pointer flex-col items-center justify-center p-4 text-gray-500">
-                <span className="text-lg">📁</span>
                 <span className="mt-2 text-sm">
                   {isDragActive ? "Drop the image here..." : "Drag and drop an image here, or click to select one"}
                 </span>

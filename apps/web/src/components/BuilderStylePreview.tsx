@@ -163,13 +163,6 @@ export default function BuilderStylePreview({
                 </div>
                 <div>
                   <ColorPicker
-                    label="Label Color"
-                    color={formStyles.labelColor}
-                    onChange={(color) => handleStyleUpdate("labelColor", color)}
-                  />
-                </div>
-                <div>
-                  <ColorPicker
                     label="Text Color"
                     color={formStyles.textColor}
                     onChange={(color) => handleStyleUpdate("textColor", color)}

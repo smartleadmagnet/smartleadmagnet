@@ -1,9 +1,10 @@
 import React from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,DropdownMenuItem } from "./ui/dropdown-menu";
+import { ChevronDown, Edit, Share, Trash2 } from "lucide-react"; // Icons from lucide-react
 import Link from "next/link";
+
 
 interface Props {
   id: string;
@@ -42,10 +43,30 @@ export default function AppCard({ id, name, description, analytics }: Props) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <div className="flex flex-col p-1">
-                  <Link href={`/builder/${id}`} className="hover:cursor p-1 hover:bg-gray-100">
-                    Edit
-                  </Link>
+              <div className="flex flex-col p-1">
+                  {/* Edit Option */}
+                  <DropdownMenuItem asChild>
+                    <Link href={`/builder/${id}`} className="flex items-center p-1 hover:bg-gray-100">
+                      <Edit className="mr-2 h-4 w-4" />
+                      Edit
+                    </Link>
+                  </DropdownMenuItem>
+
+                  {/* Share Option */}
+                  <DropdownMenuItem asChild>
+                    <button className="flex items-center p-1 hover:bg-gray-100">
+                      <Share className="mr-2 h-4 w-4" />
+                      Share
+                    </button>
+                  </DropdownMenuItem>
+
+                  {/* Delete Option */}
+                  <DropdownMenuItem asChild>
+                    <button className="flex items-center p-1 hover:bg-gray-100 text-red-600">
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Delete
+                    </button>
+                  </DropdownMenuItem>
                 </div>
               </DropdownMenuContent>
             </DropdownMenu>

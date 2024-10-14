@@ -12,7 +12,7 @@ interface Props {
 export default function BuilderOption({ activeOption, setActiveOption }: Props) {
   return (
     <div className="builder-wrapper flex flex-1">
-      <div className="w-1/3 p-4">
+      <div className="w-1/3 p-4 builder-column">
         <div className="grid grid-cols-1 gap-4">
           <div
             onClick={() => setActiveOption("info")}

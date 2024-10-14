@@ -73,7 +73,7 @@ export default function Builder() {
               <Button
                 className="bg-gray-300 px-4 py-2 text-black shadow-md hover:bg-gray-400"
                 onClick={() => {
-                  router.push("/my-forms");
+                  router.push("/my-magnets");
                 }}
               >
                 ← Back
@@ -208,10 +208,10 @@ export default function Builder() {
                 </aside>
 
                 <div className="flex flex-1">
-                  <main className="drop-area builder-column mx-2 flex-1 rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 p-2">
+                  <main className="drop-area mx-2 flex-1 rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 p-2">
                     <Droppable droppableId="droppable-main">
                       {(provided: DroppableProvided) => (
-                        <div ref={provided.innerRef} {...provided.droppableProps} className="h-full">
+                        <div ref={provided.innerRef} {...provided.droppableProps} className="h-full drop-area-wrapper">
                           {elementsList.length ? (
                             elementsList.map((item: any, index: number) => (
                               <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -244,7 +244,7 @@ export default function Builder() {
                       )}
                     </Droppable>
                   </main>
-                  <main className="builder-column flex-1 bg-gray-100  p-4">
+                  <main className=" flex-1 bg-gray-100  p-4">
                     <AIForm />
                   </main>
                 </div>
