@@ -7,6 +7,10 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
+import { Button } from "@smartleadmagnet/ui/components/ui/button";
+import { Loader2 } from "lucide-react"
+
+
 
 type MagicLinkFormProps = {
   id: string;
@@ -85,9 +89,9 @@ const EnterEmail: React.FC<EnterEmailProps> = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <input {...register("email")} placeholder={placeholder} className={inputClass} />
         {(errors?.email || error) && <p>{errors?.email?.message || error}</p>}
-        <button className={buttonClass} disabled={loading}>
+        <Button className={buttonClass} disabled={loading}>
           {loading ? (
-            <span className="loading loading-spinner loading-sm" />
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           ) : (
             <>
               <svg
@@ -105,8 +109,8 @@ const EnterEmail: React.FC<EnterEmailProps> = ({
               <span className="ml-3">{buttonTitle}</span>
             </>
           )}
-        </button>
-        <h3 className="mt-5 max-w-[250px] text-base">
+        </Button>
+        <h3 className="mt-5 mb-3 max-w-[250px] text-base">
           SmartLeadMagnet will email you a code to create your account or login to your existing account.
         </h3>
       </form>

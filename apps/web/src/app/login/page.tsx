@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@smartleadmagnet/ui/components/ui/card";
@@ -18,19 +19,9 @@ export default function AuthenticationPage() {
         <div className="bg-muted relative hidden h-full flex-col p-10 text-white lg:flex dark:border-r">
           <div className="absolute inset-0 bg-zinc-900" />
           <div className="relative z-20 flex items-center text-lg font-medium">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2 h-6 w-6"
-            >
-              <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-            </svg>
-            Acme Inc
+          <Link href="/">
+              <Image src="/images/logo/logo.png" alt="Logo" width={200} height={0} />
+            </Link>
           </div>
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
@@ -44,25 +35,27 @@ export default function AuthenticationPage() {
         </div>
         <div className="flex h-[100vh] items-center justify-center lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-            <div className="flex flex-col space-y-2 text-center">
-              <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
-              <p className="text-muted-foreground text-sm">Use your Google account to sign up.</p>
-            </div>
             <Card className="m-auto w-full max-w-sm">
               <CardHeader>
-                <CardTitle className="text-2xl">Login</CardTitle>
+                <CardTitle className="text-2xl">Sign In or Register to  Get Started</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pb-3">
                 <MagicLinkForm
                   id="email"
                   callbackUrl="/"
-                  buttonClass="mt-4 tracking-wide font-semibold btn btn-primary w-full rounded-lg hover:btn-primary transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  buttonClass="mt-4 tracking-wide font-semibold btn btn-primary w-full rounded hover:btn-primary transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                   inputClass="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   buttonTitle="Get Code to Log In"
                   placeholder="Email Address"
                 />
+                 <div className="flex items-center">
+  <div className="flex-grow border-t border-gray-300"></div>
+  <span className="mx-4 text-gray-600">or</span>
+  <div className="flex-grow border-t border-gray-300"></div>
+</div>
               </CardContent>
               <CardFooter>
+             
                 <form
                   action={async () => {
                     "use server";
@@ -72,7 +65,16 @@ export default function AuthenticationPage() {
                   }}
                   className="w-full"
                 >
-                  <Button className="btn-primary w-full">Sign in with Google</Button>
+                  <Button className="flex items-center justify-center w-full text-gray  bg-white border border-gray-300 rounded  hover:bg-gray-100 rounded">
+      <Image
+        src="/images/google-icon.svg"
+        alt="Google Icon"
+        className="mr-2"
+        width={20}
+        height={20}
+      />
+      Sign in with Google
+    </Button>
                 </form>
               </CardFooter>
             </Card>
