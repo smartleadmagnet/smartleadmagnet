@@ -1,8 +1,9 @@
-import { getLeadMagnetById } from "@smartleadmagnet/services";
-import Share from "@/components/Share";
+import { getLeadMagnetById, updateLeadMagnetImpressions } from "@smartleadmagnet/services";
+import BuilderContainer from "@/app/share/[id]/BuilderContainer";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const leadMagnet = await getLeadMagnetById(params.id);
+  await updateLeadMagnetImpressions(params.id);
 
-  return <Share leadMagnet={leadMagnet} />;
+  return <BuilderContainer leadMagnet={leadMagnet} />;
 }

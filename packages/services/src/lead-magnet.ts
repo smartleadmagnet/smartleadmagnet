@@ -33,3 +33,47 @@ export const getLeadMagnetsByUser = async (userId: string) => {
     where: { userId },
   });
 };
+
+export async function updateLeadMagnetUsage(id: string) {
+  const leadMagnet = await prisma.leadMagnet.findUnique({
+    where: { id },
+  });
+  return prisma.leadMagnet.update({
+    where: { id },
+    data: {
+      usedCount: leadMagnet.usedCount + 1, // Increment the usage count by 1
+      lastUsedAt: new Date(), // Update the last used timestamp to the current time
+    },
+  });
+}
+
+export async function updateLeadMagnetImpressions(id: string) {
+  const leadMagnet = await prisma.leadMagnet.findUnique({
+    where: { id },
+  });
+
+  return prisma.leadMagnet.update({
+    where: { id },
+    data: {
+      impressionsCount: leadMagnet.impressionsCount + 1, // manually incrementing
+    },
+  });
+}
+
+export async function createLeadMagnetUsageLog({
+  leadMagnetId,
+  ipAddress,
+  payload,
+}: {
+  leadMagnetId: string;
+  ipAddress: string;
+  payload: any;
+}) {
+  return prisma.leadMagnetUsage.create({
+    data: {
+      leadMagnetId,
+      ipAddress,
+      payload,
+    },
+  });
+}

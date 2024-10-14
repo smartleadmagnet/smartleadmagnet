@@ -42,9 +42,9 @@ export type BuilderElementProps = {
   // Add more types as needed
   data: any;
   editable: boolean;
-  onEdit: () => void;
-  onDelete: () => void;
-  updateData: (key: string, value: string | boolean, selectedItem: any) => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
+  updateData?: (key: string, value: string | boolean, selectedItem: any) => void;
 };
 
 export default function BuilderElement({ type, data, editable, onEdit, onDelete, updateData }: BuilderElementProps) {
@@ -56,7 +56,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
       reader.onloadend = () => {
         const result = reader.result as string;
         setPreview(result); // Show preview
-        updateData("value", result, data); // Update the data with base64 image
+        updateData?.("value", result, data); // Update the data with base64 image
       };
       reader.readAsDataURL(file); // Convert image to base64
     }
@@ -112,7 +112,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
             <Input
               value={data.value}
               onChange={(e) => {
-                updateData("value", e.target.value, data);
+                updateData?.("value", e.target.value, data);
               }}
             />
           </div>
@@ -134,7 +134,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
                 className="w-full rounded-md border border-gray-300 px-4 py-2 pl-14 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={data.value}
                 onChange={(e) => {
-                  updateData("value", e.target.value, data);
+                  updateData?.("value", e.target.value, data);
                 }}
               />
             </div>
@@ -156,7 +156,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
                 className="w-full rounded-md border border-gray-300 px-4 py-2 pl-14 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={data.value}
                 onChange={(e) => {
-                  updateData("value", e.target.value, data);
+                  updateData?.("value", e.target.value, data);
                 }}
               />
             </div>
@@ -174,7 +174,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
               value={data.value}
               className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={(e) => {
-                updateData("value", e.target.value, data);
+                updateData?.("value", e.target.value, data);
               }}
             />
           </div>
@@ -189,7 +189,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
             <Textarea
               value={data.value}
               onChange={(e) => {
-                updateData("value", e.target.value, data);
+                updateData?.("value", e.target.value, data);
               }}
             />
           </div>
@@ -203,7 +203,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
             <ColorPicker
               color={data.value}
               onChange={(color) => {
-                updateData("value", color, data);
+                updateData?.("value", color, data);
               }}
             />
           </div>
@@ -214,7 +214,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
             <Checkbox
               checked={data.value === "true"}
               onCheckedChange={(checked) => {
-                updateData("value", checked ? "true" : "false", data);
+                updateData?.("value", checked ? "true" : "false", data);
               }}
             />
             <label className="ml-[10px] block text-sm font-semibold">
@@ -239,7 +239,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
                         const updatedValue = checked
                           ? [...(data?.value || []), option]
                           : data.value?.filter((item: Option) => item.value !== option.value);
-                        updateData("value", updatedValue, data);
+                        updateData?.("value", updatedValue, data);
                       }}
                     />
                     <Label htmlFor={option.value} className="ml-[10px] block text-sm font-semibold">
@@ -260,7 +260,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
             <Select
               value={data.value}
               onValueChange={(value) => {
-                updateData("value", value, data);
+                updateData?.("value", value, data);
               }}
             >
               <SelectTrigger>
@@ -290,7 +290,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
               defaultValue="comfortable"
               value={data.value}
               onValueChange={(value) => {
-                updateData("value", value, data);
+                updateData?.("value", value, data);
               }}
             >
               {data.options && (
@@ -322,7 +322,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
                   if (file) {
                     const reader = new FileReader();
                     reader.onloadend = () => {
-                      updateData("value", reader.result as string, data); // Base64 data
+                      updateData?.("value", reader.result as string, data); // Base64 data
                     };
                     reader.readAsDataURL(file); // Convert file to base64
                   }
@@ -380,7 +380,7 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
         {editable && (
           <div className="edit_btns flex items-center">
             <div className="inline-flex shadow-sm" role="group">
-              {data.type !== "separator" && (
+              {data.type !== "separator" && onEdit && (
                 <Button
                   onClick={onEdit}
                   variant="outline"
@@ -389,14 +389,16 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
                   <Icon name="edit" />
                 </Button>
               )}
-              <Button
-                onClick={onDelete}
-                variant="outline"
-                color="red"
-                className="rounded-l-none rounded-r-lg bg-orange-700 text-white hover:z-10 hover:bg-orange-800  hover:text-white focus:z-10"
-              >
-                <Icon name="delete" />
-              </Button>
+              {onDelete && (
+                <Button
+                  onClick={onDelete}
+                  variant="outline"
+                  color="red"
+                  className="rounded-l-none rounded-r-lg bg-orange-700 text-white hover:z-10 hover:bg-orange-800  hover:text-white focus:z-10"
+                >
+                  <Icon name="delete" />
+                </Button>
+              )}
             </div>
           </div>
         )}

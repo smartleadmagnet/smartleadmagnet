@@ -1,5 +1,6 @@
 import "@smartleadmagnet/ui/globals.css";
 import { Providers } from "@/providers";
+import { Toaster } from "@smartleadmagnet/ui/components/ui/toaster";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`bg-[#FCFCFC] dark:bg-black`}>
         <Providers>{children}</Providers>
+        <Toaster />
         <script
         type="text/javascript"
         dangerouslySetInnerHTML={{
