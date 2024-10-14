@@ -36,9 +36,9 @@ export default function AIForm() {
   } = useAIForm();
   return (
     <div className="relative flex h-full w-full flex-col justify-between rounded-md bg-white p-4 p-4">
-      <div className="scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 flex h-full flex-col overflow-y-auto p-1">
+      <div className="scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 flex h-full flex-col overflow-y-auto p-1 ai-form">
         {!preview && (
-          <div className="flex h-full flex-col">
+          <div className="flex  flex-col">
             <div className="form-control w-full">
               <div className="mb-[10px] flex w-full items-center justify-between">
                 <Label>Prompt</Label>
@@ -119,7 +119,7 @@ export default function AIForm() {
             </div>
           </div>
         )}
-        <Button className="flex" onClick={onValidatePrompt}>
+        <Button className="flex mt-4" onClick={onValidatePrompt}>
           {processing && <Spinner />}
           {!processing && "Validate Prompt"}
         </Button>

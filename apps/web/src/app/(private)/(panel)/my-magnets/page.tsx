@@ -17,16 +17,12 @@ export default async function MyForms() {
     <div className="flex size-full flex-col px-5">
       <div className="flex justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Apps</h1>
-          <p className="text-muted-foreground">Here&apos;s a list of your apps!</p>
+          <h1 className="text-2xl font-bold tracking-tight">Magnets</h1>
+          <p className="text-muted-foreground">Here&apos;s a list of your magnets!</p>
         </div>
         <div className="my-4 flex items-end justify-between sm:my-0 sm:items-center">
           <div className="flex flex-col gap-4 sm:my-4 sm:flex-row"></div>
-          <form className="mb-4 flex justify-end">
-            <Button formAction={onCreate} variant="outline" size="sm" className="btn-primary">
-              Build New App
-            </Button>
-          </form>
+          
         </div>
       </div>
       <Separator className="mt-3 w-full shadow" />

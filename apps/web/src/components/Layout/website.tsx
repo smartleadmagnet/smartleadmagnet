@@ -21,9 +21,12 @@ const CategoryGrid = () => {
   );
 };
 
+
+
 export default async function WebisteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <main className="bg-muted/40 flex min-h-screen w-full flex-col">
+    <>
+    <main className="bg-muted/40 flex main-content w-full flex-col">
       <div className="flex flex-col sm:gap-4 ">
         <header className="bg-background sticky top-0 z-30  flex h-36 items-center gap-4 border-b bg-gray-900 px-4 sm:static sm:h-auto sm:border-0 sm:px-6 sm:py-4 ">
           <MobileNav />
@@ -38,9 +41,12 @@ export default async function WebisteLayout({ children }: { children: React.Reac
           </div>
         </header>
         <main className="flex flex-col">{children}</main>
-        <Footer />
+        
       </div>
     </main>
+    <Footer />
+    </>
+    
   );
 }
 
@@ -48,11 +54,6 @@ function DesktopNav() {
   return (
     <div className="hidden flex-1 md:block">
       <ul className="flex items-center justify-center space-x-5 text-center text-white">
-        <li>
-          <Link href="/" className="hover:text-gray-500">
-            Home
-          </Link>
-        </li>
         <li className="group">
           <Link href="/templates" className="flex items-center hover:text-gray-500">
             Templates <ChevronDown className="ml-1 h-4 w-4 pt-1" />
@@ -80,16 +81,13 @@ function MobileNav() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button size="icon" variant="outline" className="sm:hidden">
+        <Button size="icon" variant="outline" className="md:hidden">
           <PanelLeft className="h-5 w-5" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="mobile-menu bg-gray-900 sm:max-w-xs">
         <nav className="grid gap-6 text-lg font-medium">
-          <Link href="#" className="mobile-link">
-            Home
-          </Link>
           <div>
             <Link href="#" className="mobile-link">
               Templates
