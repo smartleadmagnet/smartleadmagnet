@@ -2,8 +2,9 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@smartleadmagnet/ui/components/ui/card";
-import { signIn } from "@/lib/auth";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@smartleadmagnet/ui/components/ui/card";
+import { signIn } from "next-auth/react";
+import MagicLinkForm from "@/components/MagicLinkForm";
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -50,8 +51,17 @@ export default function AuthenticationPage() {
             <Card className="m-auto w-full max-w-sm">
               <CardHeader>
                 <CardTitle className="text-2xl">Login</CardTitle>
-                <CardDescription>This is only for few people.</CardDescription>
               </CardHeader>
+              <CardContent>
+                <MagicLinkForm
+                  id="email"
+                  callbackUrl="/"
+                  buttonClass="mt-4 tracking-wide font-semibold btn btn-primary w-full rounded-lg hover:btn-primary transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  inputClass="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                  buttonTitle="Get Code to Log In"
+                  placeholder="Email Address"
+                />
+              </CardContent>
               <CardFooter>
                 <form
                   action={async () => {
