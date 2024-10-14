@@ -1,6 +1,7 @@
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,11 +13,16 @@ import {
 import { getSessionUser } from "@/services/user";
 import React from "react";
 import { signOut } from "@/lib/auth";
+import { createLead } from "@/actions/lead-magnet";
 
 export async function User() {
   let user = await getSessionUser();
 
-  console.log({ user });
+  const onCreate = async () => {
+    "use server";
+    const lead = await createLead();
+    redirect(`/builder/${lead?.id!}`);
+  };
 
   if (!user) {
     return (
@@ -38,6 +44,12 @@ export async function User() {
   }
 
   return (
+    <div className="flex justify-center">
+      <form className=" flex justify-end mr-3" >
+            <Button formAction={onCreate} variant="outline" size="sm" className="btn-primary">
+              Build New Magnet
+            </Button>
+          </form>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
@@ -54,7 +66,7 @@ export async function User() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href="/my-forms">My Forms</Link>
+          <Link href="/my-magnets">My Magnets</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link href="/settings">Settings</Link>
@@ -76,5 +88,6 @@ export async function User() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+    </div>
   );
 }

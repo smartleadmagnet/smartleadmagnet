@@ -34,17 +34,49 @@ export default function BuilderEditor(props: BuilderEditorProps) {
 
       {/* Edit Options Rendered from Data */}
       <div>
-        {!["image", "file", "radio", "select", "checkbox-group", "checkbox", "number", "color", ,].includes(
+            <Label className="mb-2 block text-sm font-semibold">Label</Label>
+
+            <div className="mb-4 flex flex-col">
+              <Input
+                value={data.label}
+                onChange={(e) => {
+                  updateData("label", e.target.value);
+                }}
+                className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            {data.error && <p className="mt-2 text-sm text-red-500">{data.error}</p>}
+          </div>
+      <div>
+        {!["image", "file", "radio", "select", "checkbox-group", "checkbox", "number", "color",].includes(
           data.type
         ) && (
           <div>
-            <Label className="mb-2 block text-sm font-semibold">{data.label}</Label>
+            <Label className="mb-2 block text-sm font-semibold">Value</Label>
 
             <div className="mb-4 flex flex-col">
               <Input
                 value={data.value}
                 onChange={(e) => {
                   updateData("value", e.target.value);
+                }}
+                className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            {data.error && <p className="mt-2 text-sm text-red-500">{data.error}</p>}
+          </div>
+        )}
+        {!["image", "file", "radio",  "checkbox-group", "checkbox", "number", "color",].includes(
+          data.type
+        ) && (
+          <div>
+            <Label className="mb-2 block text-sm font-semibold">Placeholder</Label>
+
+            <div className="mb-4 flex flex-col">
+              <Input
+                value={data.placeholder}
+                onChange={(e) => {
+                  updateData("placeholder", e.target.value);
                 }}
                 className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
