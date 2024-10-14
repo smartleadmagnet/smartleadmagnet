@@ -23,6 +23,7 @@ model User {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   LeadMagnet LeadMagnet[]
+  EmailLog   EmailLog[]
 
   @@map("users")
 }
@@ -122,4 +123,14 @@ model LeadMagnetUsage {
   ipAddress    String
   payload      Json?      @default("{}")
   consumedAt   DateTime   @default(now()) // Stores the time of consumption
+}
+
+model EmailLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  emailType String // To track which day's email was sent (Day 1, Day 2, etc.)
+  sentAt    DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("email_logs")
 }

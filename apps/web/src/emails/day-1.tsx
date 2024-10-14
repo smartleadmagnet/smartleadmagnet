@@ -3,7 +3,6 @@ import {
   Button,
   Container,
   Head,
-  Heading,
   Html,
   Img,
   Link,
@@ -18,20 +17,10 @@ import {
 import React from "react";
 
 type WelcomeEmailProps = {
-  userName: string;
-  productName?: string;
-  step1?: string;
-  step2?: string;
-  step3?: string;
+  name: string;
 };
 
-const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
-  userName = "User",
-  productName = "SmartLeadMagnet",
-  step1 = "Begin your journey by logging in and start building your lead magnet.",
-  step2 = "Customize your lead magnet with content that resonates with your audience.",
-  step3 = "Watch as SmartLeadMagnet captures more leads and boosts your conversions.",
-}) => {
+const Day1: React.FC<WelcomeEmailProps> = ({ name = "User" }) => {
   return (
     <Html>
       <Tailwind>
@@ -47,53 +36,50 @@ const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
             fontStyle="normal"
           />
         </Head>
-        <Preview>Start building personalized lead magnets effortlessly with our drag-and-drop tool.</Preview>
+        <Preview>See how easy it is to build personalized lead magnets with SmartLeadMagnet.</Preview>
         <Body className="bg-white p-4 sm:p-8">
           <Container
             className="mx-auto overflow-hidden rounded-lg border shadow-lg"
             style={{ maxWidth: "100%", width: "600px" }}
           >
-            {/* Header Section */}
-            {/*<Section className="bg-gray-900 p-4 font-sans sm:p-8">*/}
-            {/*  <Img src={headerLogoSrc} alt={`${productName} Logo`} width="220" height="55" className="mx-auto" />*/}
-            {/*</Section>*/}
-
             {/* Welcome Message */}
             <Section className="p-4 sm:p-8">
-              <Heading as="h2" className="mb-4 text-xl font-bold sm:text-2xl">
-                Hi {userName}!
-              </Heading>
-              <Text className="mb-4 text-base">
-                Welcome to {productName}, {userName}! 🎉
+              <Text className="mb-4">Hi {name}!</Text>
+              <Text className="mb-4">
+                Did you know that with SmartLeadMagnet, you can create lead magnets that truly connect with your
+                audience?
               </Text>
               <Text className="mb-4">
-                You’ve taken the first step toward creating powerful, personalized lead magnets for your website. With{" "}
-                {productName}, you’ll be able to build customized lead magnets in minutes – no technical skills
-                required!
+                Our tool leverages AI to help you design and deliver high-converting lead magnets effortlessly. Here’s
+                what makes SmartLeadMagnet stand out:
               </Text>
 
-              {/* Steps to Get Started */}
-              <Heading as="h2" className="mb-4 text-lg font-semibold">
-                To get started:
-              </Heading>
-              <Text className="mb-4">1. {step1}</Text>
-              <Text className="mb-4">2. {step2}</Text>
-              <Text className="mb-4">3. {step3}</Text>
+              {/* Features Section */}
+              <Text className="mb-4">
+                • <strong>Drag-and-drop simplicity:</strong> Build lead magnets without any coding or design experience.
+              </Text>
+              <Text className="mb-4">
+                • <strong>Personalization:</strong> Create content that speaks directly to your website visitors.
+              </Text>
+              <Text className="mb-4">
+                • <strong>Conversion-focused:</strong> Capture more leads by offering the right content at the right
+                time.
+              </Text>
 
               {/* CTA Button */}
               <Button
                 href="https://smartleadmagnet.com"
                 className="w-[90%] rounded bg-cyan-500 px-5 py-3 text-center font-bold text-white hover:bg-cyan-700"
               >
-                Start Creating
+                Start Building
               </Button>
 
               {/* Support Text */}
-              <Text className="mt-4">If you need help or have questions, please contact us.</Text>
+              <Text className="mt-4">We can’t wait to see what you create!</Text>
               <Text className="mt-4">
                 Best regards,
                 <br />
-                The {productName} Team
+                The SmartLeadMagnet Team
               </Text>
             </Section>
 
@@ -118,7 +104,7 @@ const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
 
             {/* Copyright and Terms */}
             <Section className="p-[5px] text-center text-white">
-              <Text className="text-center text-sm text-gray-500">© 2024 {productName}. All rights reserved.</Text>
+              <Text className="text-center text-sm text-gray-500">© 2024 SmartLeadMagnet. All rights reserved.</Text>
               <Text className="text-center text-sm text-gray-500">
                 Explore your potential with our AI-powered solutions.
               </Text>
@@ -139,7 +125,7 @@ const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
   );
 };
 
-export default WelcomeEmail;
+export default Day1;
 
 const footerHeading = {
   fontSize: "1.25rem",

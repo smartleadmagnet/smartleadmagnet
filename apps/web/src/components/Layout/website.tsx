@@ -4,7 +4,6 @@ import templateCategories from "@/data/categories.json";
 import Icon from "@smartleadmagnet/ui/components/icon";
 import { ChevronDown, PanelLeft } from "lucide-react";
 
-
 import { Sheet, SheetContent, SheetTrigger } from "@smartleadmagnet/ui/components/ui/sheet";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { User } from "@/components/User";
@@ -21,32 +20,28 @@ const CategoryGrid = () => {
   );
 };
 
-
-
-export default async function WebisteLayout({ children }: { children: React.ReactNode }) {
+export default async function WebsiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-    <main className="bg-muted/40 flex main-content w-full flex-col">
-      <div className="flex flex-col sm:gap-4 ">
-        <header className="bg-background sticky top-0 z-30  flex h-36 items-center gap-4 border-b bg-gray-900 px-4 sm:static sm:h-auto sm:border-0 sm:px-6 sm:py-4 ">
-          <MobileNav />
-          <div className="flex-1">
-            <Link href="/">
-              <Image src="/images/logo/logo.png" alt="Logo" width={200} height={0} />
-            </Link>
-          </div>
-          <DesktopNav />
-          <div className="flex flex-1 items-end justify-end">
-            <User />
-          </div>
-        </header>
-        <main className="flex flex-col">{children}</main>
-        
-      </div>
-    </main>
-    <Footer />
+      <main className="bg-muted/40 main-content flex w-full flex-col">
+        <div className="flex flex-col sm:gap-4 ">
+          <header className="bg-background sticky top-0 z-30  flex h-36 items-center gap-4 border-b bg-gray-900 px-4 sm:static sm:h-auto sm:border-0 sm:px-6 sm:py-4 ">
+            <MobileNav />
+            <div className="flex-1">
+              <Link href="/">
+                <Image src="/images/logo/logo.png" alt="Logo" width={200} height={0} />
+              </Link>
+            </div>
+            <DesktopNav />
+            <div className="flex flex-1 items-end justify-end">
+              <User />
+            </div>
+          </header>
+          <main className="flex flex-col">{children}</main>
+        </div>
+      </main>
+      <Footer />
     </>
-    
   );
 }
 

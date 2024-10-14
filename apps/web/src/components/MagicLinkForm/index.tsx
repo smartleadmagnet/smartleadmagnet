@@ -152,7 +152,7 @@ const VerifyCode: React.FC<VerifyCodeProps> = ({ email, onError, buttonClass, in
       const redirectUrl = res.url;
       // this is hacky, but the alternative leads to a terrible UX of multiple reloads before we land on the user page
       if (redirectUrl.includes(callbackUrl)) {
-        router.replace(redirectUrl); // this will redirect to the user page
+        location.href = redirectUrl;
       } else {
         onError();
         toast({
