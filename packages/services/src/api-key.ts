@@ -23,6 +23,41 @@ export async function createApiKey(data: {
   });
 }
 
+// update api key
+export async function updateApiKey(
+  keyid:string,
+  userId: string,
+  data: {
+  userId: string;
+  keyName?: string; 
+  apiKey?: string; 
+  provider?: string; 
+  isDefault?: boolean; 
+}): Promise<ApiKey> {
+  // Check if isDefault is true, then unset it for other keys
+  if (data.isDefault) {
+    await prisma.apiKey.updateMany({
+      where: {
+        userId:userId,
+        NOT: { id: keyid }, // Exclude the current API key from the update
+      },
+      data: {
+        isDefault: false,
+      },
+    });
+  }
+
+  // Update the API key with the provided data
+  return prisma.apiKey.update({
+    where: {
+      id: keyid,
+    },
+    data: {
+      ...data,
+    },
+  });
+}
+
 // get api keys by user id
 export async function getApiKeysByUserId(userId: string): Promise<ApiKey[]> {
   return prisma.apiKey.findMany({

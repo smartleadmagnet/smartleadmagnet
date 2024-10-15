@@ -1,8 +1,9 @@
 import React from "react";
-import { Button } from "./ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,DropdownMenuItem } from "./ui/dropdown-menu";
+import { Button } from "@smartleadmagnet/ui/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@smartleadmagnet/ui/components/ui/card";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,DropdownMenuItem } from "@smartleadmagnet/ui/components/ui/dropdown-menu";
 import { ChevronDown, Edit, Share, Trash2 } from "lucide-react"; // Icons from lucide-react
+import DeleteMagnet from "@/components/DeleteMagnet";
 import Link from "next/link";
 
 
@@ -62,10 +63,7 @@ export default function AppCard({ id, name, description, analytics }: Props) {
 
                   {/* Delete Option */}
                   <DropdownMenuItem asChild>
-                    <button className="flex items-center p-1 hover:bg-gray-100 text-red-600">
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Delete
-                    </button>
+                    <DeleteMagnet id={id} />
                   </DropdownMenuItem>
                 </div>
               </DropdownMenuContent>
