@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import DeleteDialog from "@smartleadmagnet/ui/components/DeleteDialog";
-import { Trash } from "lucide-react";
-import { deleteKey } from "@/actions/api-keys";
+import {  Trash2 } from "lucide-react";
+import { deleteLead } from "@/actions/lead-magnet";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 
 export default function DeleteKey({ id }: { id: string }) {
@@ -13,21 +13,21 @@ export default function DeleteKey({ id }: { id: string }) {
   const closeModal = () => setIsModalOpen(false);
 
   const onSubmit = async () => {
-    await deleteKey(id);
+    await deleteLead(id);
     closeModal();
   };
 
   return (
     <>
-      <div className="flex justify-end">
-        <Button onClick={openModal} variant="outline" size="sm" className="flex items-center space-x-1 bg-red-600 text-white hover:bg-red-900 hover:text-white">
-          <Trash className="h-4 w-4" />
-          <span>Delete</span>
-        </Button>
-      </div>
+      
+        <button onClick={openModal} className="flex items-center p-1 hover:bg-gray-100 text-red-600">
+            <Trash2 className="mr-2 h-4 w-4" />
+            Delete
+        </button>
+      
       <DeleteDialog
         isOpen={isModalOpen}
-        title="Are you sure you want to delete this key?"
+        title="Are you sure you want to delete this magnet?"
         message="This action cannot be undone."
         onClose={closeModal}
         onConfirm={onSubmit}

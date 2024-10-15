@@ -1,7 +1,7 @@
 "use server";
 
 import { getSessionUser } from "@/services/user";
-import { createApiKey, deleteApiKey, getApiKeysByUserId, toggleDefaultKey } from "@smartleadmagnet/services";
+import { createApiKey, deleteApiKey, getApiKeysByUserId, toggleDefaultKey,updateApiKey } from "@smartleadmagnet/services";
 import { revalidatePath } from "next/cache";
 
 export async function getApiKeys() {
@@ -15,6 +15,15 @@ export async function createKey(data: { keyName: string; apiKey: string; provide
     ...data,
     userId: user.id,
   });
+
+  revalidatePath("/api/settings/manage-keys");
+}
+
+export async function updateKey(keyid:string,data: {  keyName: string; apiKey: string; provider: string; isDefault: boolean }) {
+  const user = await getSessionUser();
+  await updateApiKey(
+    keyid,
+    user.id,data);
 
   revalidatePath("/api/settings/manage-keys");
 }
