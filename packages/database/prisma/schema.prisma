@@ -115,6 +115,8 @@ model LeadMagnet {
   leadMagnetUsages LeadMagnetUsage[]
   createdAt        DateTime?         @default(now())
   updatedAt        DateTime?         @default(now()) @updatedAt
+  apiKeyId         String?           @db.ObjectId
+  apiKey           ApiKey?           @relation(fields: [apiKeyId], references: [id])
 }
 
 model LeadMagnetUsage {
@@ -137,15 +139,16 @@ model EmailLog {
 }
 
 model ApiKey {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  keyName   String
-  apiKey    String
-  provider  String
-  isDefault Boolean  @default(false)
-  userId    String   @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  keyName    String
+  apiKey     String
+  provider   String
+  isDefault  Boolean      @default(false)
+  userId     String       @db.ObjectId
+  user       User         @relation(fields: [userId], references: [id])
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  LeadMagnet LeadMagnet[]
 
   @@map("api_keys")
 }

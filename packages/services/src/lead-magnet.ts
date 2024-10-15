@@ -77,3 +77,23 @@ export async function createLeadMagnetUsageLog({
     },
   });
 }
+
+export async function copyLeadMagnet(id: string, userId: string) {
+  const leadMagnet = await prisma.leadMagnet.findFirst({
+    where: { id },
+  });
+
+  return prisma.leadMagnet.create({
+    data: {
+      ...leadMagnet,
+      id: undefined,
+      impressionsCount: 0,
+      usedCount: 0,
+      status: "pending",
+      apiKeyId: null,
+      webhook: "",
+      userId,
+      name: `${leadMagnet.name} - Copy`,
+    },
+  });
+}
