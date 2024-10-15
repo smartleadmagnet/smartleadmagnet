@@ -77,6 +77,50 @@
     ]
   },
   {
+    "name": "Google Cloud",
+    "models": [
+      {
+        "displayName": "Gemini 1.5 Flash",
+        "name": "models/gemini-1.5-flash",
+        "generateImage": false,
+        "text": true,
+        "vision": true,
+        "audio": true,
+        "free": true,
+        "cost": {
+          "incomingToken": 3,
+          "completionToken": 15
+        }
+      },
+      {
+        "displayName": "Gemini 1.5 Flash-8B",
+        "name": "models/gemini-1.5-flash-8b",
+        "generateImage": false,
+        "text": true,
+        "vision": true,
+        "audio": true,
+        "free": false,
+        "cost": {
+          "incomingToken": 5,
+          "completionToken": 10
+        }
+      },
+      {
+        "displayName": "Gemini 1.5 Pro",
+        "name": "models/gemini-1.5-pro",
+        "generateImage": false,
+        "text": true,
+        "vision": true,
+        "audio": true,
+        "free": false,
+        "cost": {
+          "incomingToken": 8,
+          "completionToken": 20
+        }
+      }
+    ]
+  },
+  {
     "name": "Together AI",
     "models": [
       {
