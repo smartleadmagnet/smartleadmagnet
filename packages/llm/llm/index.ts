@@ -1,19 +1,59 @@
 import { BedrockChat } from "@langchain/community/chat_models/bedrock";
 import { ChatOpenAI, DallEAPIWrapper } from "@langchain/openai";
 import { ChatTogetherAI } from "@langchain/community/chat_models/togetherai";
+import { LeadMagnet } from "@smartleadmagnet/database";
+import Together from "together-ai";
 
 const timeout = 10 * 10000; // 5 seconds
 const maxRetries = 1;
+const totalRetry = 3;
 
-export const getImageLLMModel = (llmType?: string) => {
-  if (llmType === "Open AI") {
-    return new DallEAPIWrapper({
+export function replacePlaceholders(template, values) {
+  // Regex to match the whole @[{{number_1}}](number_1) pattern
+  return template.replace(/@\[\{\{(.*?)\}\}\]\((.*?)\)/g, (match, key) => {
+    return values[key] || match; // Replace with value from object or keep the pattern if not found
+  });
+}
+
+export const getImageLLMModel = async (leadMagnet: LeadMagnet, promptInput: any) => {
+  const promptText = replacePlaceholders(leadMagnet.prompt, promptInput);
+  if (leadMagnet.provider === "Open AI") {
+    // console.log(promptInput);
+    const llmModel = new DallEAPIWrapper({
       n: 1, // Default
       model: "dall-e-3", // Default
       apiKey: process.env.OPEN_AI_KEY,
     });
+    let retryCount = 0;
+    const llmApiCall: any = async () => {
+      try {
+        const result = await llmModel.invoke(replacePlaceholders(leadMagnet.prompt, promptInput));
+        return result;
+      } catch (error: any) {
+        if (retryCount < totalRetry) {
+          retryCount++;
+          // console.log("Retrying the request");
+          return llmApiCall();
+        }
+        throw new Error("Failed to generate the response from the AI model");
+      }
+    };
+    return llmApiCall();
+  } else if (leadMagnet.provider === "Together AI") {
+    const together = new Together({ apiKey: process.env.TOGETHER_AI_KEY });
+    const response = await together.images.create({
+      model: leadMagnet?.model ?? "black-forest-labs/FLUX.1-schnell",
+      prompt: promptText,
+      width: 1024,
+      height: 768,
+      steps: 4,
+      n: 1,
+      // response_format: "b64_json",
+    });
+    return response.data[0]?.url;
+  } else {
+    throw new Error("LLM not found in configuration");
   }
-  throw new Error("LLM not found in configuration");
 };
 
 export const getTextLLMModel = (llmType?: string, modelName?: string) => {
@@ -46,7 +86,6 @@ export const getTextLLMModel = (llmType?: string, modelName?: string) => {
     });
   } else if (llmType === "Together AI") {
     return new ChatTogetherAI({
-      // TODO get the key from the user
       togetherAIApiKey: process.env.TOGETHER_AI_KEY,
       modelName: modelName ?? "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
       maxRetries: maxRetries,

@@ -4,13 +4,6 @@ import { LeadMagnet } from "@smartleadmagnet/database";
 
 const totalRetry = 1;
 
-function replacePlaceholders(template, values) {
-  // Regex to match the whole @[{{number_1}}](number_1) pattern
-  return template.replace(/@\[\{\{(.*?)\}\}\]\((.*?)\)/g, (match, key) => {
-    return values[key] || match; // Replace with value from object or keep the pattern if not found
-  });
-}
-
 const resultFormat = `
 
 The output should be inside <lead> html tag e.g. <lead>the response out</lead>
@@ -54,21 +47,5 @@ export async function callTextLLM(leadMagnet: LeadMagnet, promptInput: any) {
 
 export async function callImageLLM(leadMagnet: LeadMagnet, promptInput: any) {
   // console.log(promptInput);
-  let llmModel = getImageLLMModel(leadMagnet?.provider);
-  let retryCount = 0;
-  const llmApiCall: any = async () => {
-    try {
-      console.log("Prompt: ", replacePlaceholders(leadMagnet.prompt, promptInput));
-      return await llmModel.invoke(replacePlaceholders(leadMagnet.prompt, promptInput));
-    } catch (error: any) {
-      console.log(error);
-      if (retryCount < totalRetry) {
-        retryCount++;
-        // console.log("Retrying the request");
-        return llmApiCall();
-      }
-      throw new Error("Failed to generate the response from the AI model");
-    }
-  };
-  return llmApiCall();
+  return getImageLLMModel(leadMagnet, promptInput);
 }

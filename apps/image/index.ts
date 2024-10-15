@@ -33,7 +33,7 @@ async function addTextToImage(base64Image, promptText) {
 
     console.log(response);
     // Return the Base64 image from the response
-    // return response.data[0].b64_json;
+    // return response.data[0].url;
   } catch (error) {
     console.error("Error calling Together API:", error);
     throw error;

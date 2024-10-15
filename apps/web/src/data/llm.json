@@ -77,6 +77,79 @@
     ]
   },
   {
+    "name": "Together AI",
+    "models": [
+      {
+        "displayName": "Llama 3.1 405B Instruct Turbo",
+        "name": "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+        "generateImage": false,
+        "text": true,
+        "vision": false,
+        "cost": {
+          "incomingToken": 5,
+          "completionToken": 5
+        }
+      },
+      {
+        "displayName": "Llama 3.1 70B Instruct Turbo",
+        "name": "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
+        "generateImage": false,
+        "text": true,
+        "vision": false,
+        "cost": {
+          "incomingToken": 0.88,
+          "completionToken": 0.88
+        }
+      },
+      {
+        "displayName": "Llama 3.1 8B Instruct Turbo",
+        "name": "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+        "generateImage": false,
+        "text": true,
+        "vision": false,
+        "cost": {
+          "incomingToken": 0.18,
+          "completionToken": 0.18
+        }
+      },
+      {
+        "displayName": "Llama 3 70B Chat HF",
+        "name": "meta-llama/Llama-3-70b-chat-hf",
+        "generateImage": false,
+        "text": true,
+        "vision": true,
+        "cost": {
+          "incomingToken": 0.9,
+          "completionToken": 0.9
+        }
+      },
+      {
+        "displayName": "FLUX.1 [schnell] Free",
+        "name": "black-forest-labs/FLUX.1-schnell-Free",
+        "generateImage": true,
+        "text": false,
+        "vision": false,
+        "cost": 0
+      },
+      {
+        "displayName": "FLUX.1 [schnell]",
+        "name": "black-forest-labs/FLUX.1-schnell",
+        "generateImage": true,
+        "text": false,
+        "vision": false,
+        "cost": 0.003
+      },
+      {
+        "displayName": "FLUX1.1 [pro]",
+        "name": "black-forest-labs/FLUX.1.1-pro",
+        "generateImage": true,
+        "text": false,
+        "vision": false,
+        "cost": 0.040
+      }
+    ]
+  },
+  {
     "name": "Open AI",
     "models": [
       {
@@ -160,55 +233,6 @@
         "cost": {
           "incomingToken": 0.25,
           "completionToken": 1.25
-        }
-      }
-    ]
-  },
-  {
-    "name": "Together AI",
-    "models": [
-      {
-        "displayName": "Llama 3.1 405B Instruct Turbo",
-        "name": "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
-        "generateImage": false,
-        "text": true,
-        "vision": false,
-        "cost": {
-          "incomingToken": 5,
-          "completionToken": 5
-        }
-      },
-      {
-        "displayName": "Llama 3.1 70B Instruct Turbo",
-        "name": "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
-        "generateImage": false,
-        "text": true,
-        "vision": false,
-        "cost": {
-          "incomingToken": 0.88,
-          "completionToken": 0.88
-        }
-      },
-      {
-        "displayName": "Llama 3.1 8B Instruct Turbo",
-        "name": "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
-        "generateImage": false,
-        "text": true,
-        "vision": false,
-        "cost": {
-          "incomingToken": 0.18,
-          "completionToken": 0.18
-        }
-      },
-      {
-        "displayName": "Llama 3 70B Chat HF",
-        "name": "meta-llama/Llama-3-70b-chat-hf",
-        "generateImage": false,
-        "text": true,
-        "vision": true,
-        "cost": {
-          "incomingToken": 0.9,
-          "completionToken": 0.9
         }
       }
     ]
