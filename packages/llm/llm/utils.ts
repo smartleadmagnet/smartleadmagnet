@@ -13,8 +13,7 @@ function replacePlaceholders(template, values) {
 
 const resultFormat = `
 
-The response should be inside <lead> tag
-<lead>AI Generated Response</lead>
+The output should be inside <lead> html tag e.g. <lead>the response out</lead>
 `;
 
 function extractLeadContent(htmlString: string): string | null {
@@ -26,9 +25,6 @@ function extractLeadContent(htmlString: string): string | null {
 }
 
 export async function callTextLLM(leadMagnet: LeadMagnet, promptInput: any) {
-  console.log({
-    promptInput,
-  });
   // console.log(promptInput);
   let llmModel = getTextLLMModel(leadMagnet.provider, leadMagnet.model);
   const messages = [
@@ -41,7 +37,7 @@ export async function callTextLLM(leadMagnet: LeadMagnet, promptInput: any) {
   const llmApiCall: any = async () => {
     try {
       const result = await llmModel.invoke(messages);
-      // console.log(result?.content);
+      console.log(result?.content);
       return extractLeadContent(result.content as string);
     } catch (error: any) {
       console.log(error);
