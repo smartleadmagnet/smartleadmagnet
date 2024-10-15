@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@smartleadmagnet/ui/components/ui/button";
+import { Switch } from "@smartleadmagnet/ui/components/ui/switch";
 import { toggleKey } from "@/actions/api-keys";
 
 async function handleToggle(id: string) {
@@ -8,20 +8,17 @@ async function handleToggle(id: string) {
 
 export default function SetAsDefaultButton({ id, isDefault }: { id: string; isDefault?: boolean }) {
   const changeDefault = async () => {
-    "use server";
-    await handleToggle(id); // Call the server action
+    await handleToggle(id); // Call the server action to toggle default status
   };
 
   return (
-    <form className="mb-4 flex justify-end">
-      <Button
-        formAction={changeDefault}
-        variant="ghost"
-        disabled={isDefault}
-        className="text-teal-500 hover:text-teal-900 hover:underline"
-      >
-        <span>{!isDefault ? "Set As Default" : ""}</span> {/* Change button text after approval */}
-      </Button>
+    <form className="flex  items-center">
+      <Switch
+        checked={isDefault} // Set the initial state based on `isDefault`
+        onCheckedChange={changeDefault} // Trigger the action when toggled
+        className="text-teal-500"
+        disabled={isDefault} // Optionally disable the switch if it's already the default
+      />
     </form>
   );
 }

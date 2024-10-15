@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React,{useEffect} from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
@@ -8,7 +8,8 @@ import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import llm from "@/data/llm.json";
-import { FormItem } from "@smartleadmagnet/ui/components/ui/form";
+import { ApiKey } from "@smartleadmagnet/database";
+import { FormItem,FormField } from "@smartleadmagnet/ui/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -17,9 +18,10 @@ import {
   SelectValue,
 } from "@smartleadmagnet/ui/components/ui/select";
 import Icon from "@smartleadmagnet/ui/components/icon";
-import { createKey } from "@/actions/api-keys";
+import { createKey,updateKey } from "@/actions/api-keys";
 import * as z from "zod";
 import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
+import { set } from "date-fns";
 
 // Zod schema
 const apiKeySchema = z.object({
@@ -29,7 +31,15 @@ const apiKeySchema = z.object({
   isDefault: z.boolean(),
 });
 
-const AddKeyModal = () => {
+interface AddUpdateKeyModalProps {
+  isEditing?: boolean;
+  keyData?:ApiKey;
+  setKeyData:Function
+
+}
+
+const AddUpdateKeyModal = (props:AddUpdateKeyModalProps) => {
+  const { isEditing = false ,keyData,setKeyData} = props;
   const [isOpen, setIsOpen] = React.useState(false);
   const {
     register,
@@ -38,23 +48,60 @@ const AddKeyModal = () => {
     setValue, // Used to programmatically set form values
     getValues, // To get current values for rendering
     reset,
+    control,
+    
   } = useForm({
     resolver: zodResolver(apiKeySchema), // Use Zod resolver
     defaultValues: {
-      keyName: "",
-      apiKey: "",
-      provider: "",
-      isDefault: false, // Default value for isDefault
+      keyName:  "",
+      apiKey:  "",
+      provider:   "",
+      isDefault:  false, // Default value for isDefault
     },
   });
 
+
+  
+
+  useEffect(() => {
+    if(keyData){
+      reset({
+        keyName: keyData.keyName,
+        apiKey: keyData.apiKey,
+        provider: keyData.provider,
+        isDefault: keyData.isDefault
+      })
+    }
+    else{
+      reset({
+        keyName:  "",
+        apiKey:  "",
+        provider:   "",
+        isDefault:  false, // Default value for isDefault
+      })
+    }
+  }, [keyData,reset]);
+
   const toggleModal = () => {
+    if(isEditing){
+      setKeyData(null)
+      return
+    }
     setIsOpen(!isOpen);
   };
 
   const onSubmit = async (data: any) => {
     try {
+      if(isEditing){
+        
+        
+        await updateKey(keyData?.id,data); // Submit all form data
+      } 
+      else{  
       await createKey(data); // Submit all form data
+      }
+      
+    
     } catch (error) {
       toast({
         variant: "destructive",
@@ -64,16 +111,18 @@ const AddKeyModal = () => {
     }
     reset();
     setIsOpen(false);
+    setKeyData(null)
   };
 
   return (
     <>
-      <Button className="btn-primary" onClick={() => setIsOpen(true)}>
+      
+      <Button className="btn-primary" onClick={() => {setIsOpen(true)}}>
         + Add Key
       </Button>
-      {isOpen && (
+      
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ${isOpen || isEditing ? "block" : "hidden"}`}
           onClick={toggleModal}
         >
           <div
@@ -86,7 +135,7 @@ const AddKeyModal = () => {
 
             <div className="mb-6 text-center">
               <div className="modal-header inline-flex w-full items-center justify-center rounded-t-lg bg-gradient-to-r from-orange-500 to-pink-500 py-4 text-white">
-                <h2 className="text-2xl font-semibold">Add New API Key</h2>
+                <h2 className="text-2xl font-semibold">{isEditing?"Edit API KEY":"Add New API Key"}</h2>
               </div>
             </div>
 
@@ -97,12 +146,15 @@ const AddKeyModal = () => {
                 {errors.keyName && <p className="text-red-500">{errors.keyName.message}</p>}
               </FormItem>
 
-              <FormItem>
+              
+
+              <FormField
+          control={control}
+          name="provider"
+          render={({ field }) => (
+            <FormItem>
                 <Label className="mb-2 block text-sm font-semibold">API Key Provider</Label>
-                <Select
-                  value={getValues("provider")} // Get the current value from form state
-                  onValueChange={(value) => setValue("provider", value)} // Use setValue to update
-                >
+                <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select an option" />
                   </SelectTrigger>
@@ -116,6 +168,8 @@ const AddKeyModal = () => {
                 </Select>
                 {errors.provider && <p className="text-red-500">{errors.provider.message}</p>}
               </FormItem>
+          )}
+        />
 
               <FormItem>
                 <Label className="mb-2 block text-sm font-semibold">API Key</Label>
@@ -126,6 +180,7 @@ const AddKeyModal = () => {
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id="isDefault"
+                  checked={getValues("isDefault")} // Get the current value from form state
                   onCheckedChange={(checked) => setValue("isDefault", checked)} // Use setValue to update
                 />
                 <Label htmlFor="isDefault" className="text-sm font-medium">
@@ -134,19 +189,19 @@ const AddKeyModal = () => {
               </div>
 
               <div className="mt-4 flex justify-end">
-                <Button type="button" variant="secondary" onClick={toggleModal}>
+                <Button type="button" variant="secondary" className="mr-2 border" onClick={toggleModal}>
                   Cancel
                 </Button>
                 <Button type="submit" className="btn-primary">
-                  Submit
+                  {isEditing?"Update Key":"Add Key"}
                 </Button>
               </div>
             </form>
           </div>
         </div>
-      )}
+      
     </>
   );
 };
 
-export default AddKeyModal;
+export default AddUpdateKeyModal;

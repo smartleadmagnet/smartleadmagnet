@@ -125,67 +125,74 @@ function MobileNav() {
 
 function Footer() {
   return (
-    <footer className="bg-gray-900 py-6 text-white">
+    <footer className="bg-gray-900 py-10 text-white">
       <div className="container mx-auto px-4">
-        <div className="mb-6 flex flex-col items-center">
-          {/* Logo Section */}
-          <Image
-            src="/images/logo/logo.png" // Adjust the logo path as needed
-            alt="Logo"
-            width={300} // Adjust width as necessary
-            height={75} // Adjust height as necessary
-            className="mb-4"
-          />
-          <p className="mb-2 text-center text-xl">Skyrocket Your Conversions</p>
-        </div>
-
-        {/* Categories Section */}
-        <div className="mb-6">
-          <h3 className="mb-2 text-xl font-bold">Categories</h3>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {templateCategories.map((category) => (
-              <Link key={category.id} href={`/templates/${category.id}`} className="hover:text-gray-500">
-                {category.name}
+        {/* First Row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          {/* Column 1: Logo, Tagline, Social Media */}
+          <div className="flex flex-col items-center md:items-start">
+            {/* Logo Section */}
+            <Image
+              src="/images/logo/logo.png" // Adjust the logo path as needed
+              alt="Logo"
+              width={300} // Adjust width as necessary
+              height={75} // Adjust height as necessary
+              className="mb-4 ml-[-20px]"
+            />
+            <p className="mb-4 text-center md:text-left text-xl">Skyrocket Your Conversions</p>
+            
+            {/* Social Media Links */}
+            <div className="flex space-x-4">
+              <Link href="https://facebook.com" target="_blank" className="hover:text-gray-500">
+                <Icon name="facebook" />
               </Link>
-            ))}
+              <Link href="https://twitter.com" target="_blank" className="hover:text-gray-500">
+                <Icon name="twitter" />
+              </Link>
+              <Link href="https://linkedin.com" target="_blank" className="hover:text-gray-500">
+                <Icon name="linkedin" />
+              </Link>
+            </div>
           </div>
-        </div>
 
-        {/* Important Links Section */}
-        <div className="mb-6">
-          <h3 className="mb-2 text-xl font-semibold">Important Links</h3>
-          <div className="flex space-x-4">
-            <Link href="/privacy" className="hover:text-gray-500">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-gray-500">
-              Terms of Service
-            </Link>
-            <Link href="/contact" className="hover:text-gray-500">
-              Contact Us
-            </Link>
+          {/* Column 2: Categories (in 2 rows, 2 columns per row) */}
+          <div>
+            <h3 className="mb-2 text-xl font-bold">Categories</h3>
+            <div className="grid grid-cols-2 gap-4">
+              {templateCategories.map((category) => (
+                <Link key={category.id} href={`/templates/${category.id}`} className="hover:text-gray-500">
+                  {category.name}
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Social Media Links */}
-        <div className="mb-6">
-          <h3 className="mb-2 text-xl font-semibold">Follow Us</h3>
-          <div className="flex space-x-4">
-            <Link href="https://facebook.com" target="_blank" className="hover:text-gray-500">
-              <Icon name="facebook" />
-            </Link>
-            <Link href="https://twitter.com" target="_blank" className="hover:text-gray-500">
-              <Icon name="twitter" />
-            </Link>
-            <Link href="https://linkedin.com" target="_blank" className="hover:text-gray-500">
-              <Icon name="linkedin" />
-            </Link>
+          {/* Column 3: Important Links */}
+          <div>
+            <h3 className="mb-2 text-xl font-semibold">Useful Links</h3>
+            <div className="flex flex-col space-y-2">
+              <Link href="/privacy-policy" className="hover:text-gray-500">
+                Privacy Policy
+              </Link>
+              <Link href="/terms-and-conditions" className="hover:text-gray-500">
+                Terms of Service
+              </Link>
+              <Link href="/gdpr-commitment" className="hover:text-gray-500">
+                GDPR Commitment
+              </Link>
+              <Link href="/user-data-deletion" className="hover:text-gray-500">
+                User Data Deletion
+              </Link>
+            </div>
           </div>
-        </div>
+         </div>
 
-        {/* Copyright Section */}
-        <div className="text-center">&copy; {new Date().getFullYear()} Smart Lead Magnet. All rights reserved.</div>
+        {/* Second Row */}
+        <div className="text-center pt-10 border-t border-gray-800">
+          &copy; {new Date().getFullYear()} Smart Lead Magnet. All rights reserved.
+        </div>
       </div>
     </footer>
   );
 }
+
