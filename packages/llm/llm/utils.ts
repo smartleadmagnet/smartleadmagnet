@@ -33,7 +33,6 @@ export async function callTextLLM(leadMagnet: LeadMagnet, promptInput: any) {
       console.log(result?.content);
       return extractLeadContent(result.content as string);
     } catch (error: any) {
-      console.log(error);
       if (retryCount < totalRetry) {
         retryCount++;
         // console.log("Retrying the request");

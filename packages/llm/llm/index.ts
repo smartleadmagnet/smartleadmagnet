@@ -3,6 +3,7 @@ import { ChatOpenAI, DallEAPIWrapper } from "@langchain/openai";
 import { ChatTogetherAI } from "@langchain/community/chat_models/togetherai";
 import { LeadMagnet } from "@smartleadmagnet/database";
 import Together from "together-ai";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 
 const timeout = 10 * 10000; // 5 seconds
 const maxRetries = 1;
@@ -91,6 +92,15 @@ export const getTextLLMModel = (llmType?: string, modelName?: string) => {
       maxRetries: maxRetries,
       // verbose: true,
       // streaming: true,
+    }).bind({
+      timeout: timeout,
+    });
+  } else if (llmType === "Google Cloud") {
+    return new ChatGoogleGenerativeAI({
+      apiKey: process.env.GOOGLE_GEMINI_API_KEY,
+      model: modelName ?? "gemini-pro",
+      maxOutputTokens: 2048,
+      streamUsage: false,
     }).bind({
       timeout: timeout,
     });

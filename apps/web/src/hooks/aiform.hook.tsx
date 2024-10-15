@@ -44,9 +44,9 @@ const useAIForm = () => {
             acc.push({
               type: "image_url",
               image_url: {
-                url: "https://media.licdn.com/dms/image/v2/D4D03AQETI4caJZuyIA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1672301826538?e=1734566400&v=beta&t=PVkVB2OlgO_bLtbjDuSCynATSUVRvTvCx7NY0ubp15M",
+                url: element.value,
               },
-            }); // element.value
+            });
           }
           return acc;
         }, []);
