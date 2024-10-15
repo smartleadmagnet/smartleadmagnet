@@ -2,7 +2,7 @@ import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
 import { createLead, getByUser } from "@/actions/lead-magnet";
 import { redirect } from "next/navigation";
-import AppCard from "@smartleadmagnet/ui/components/AppCard";
+import AppCard from "@/components/AppCard";
 
 export default async function MyForms() {
   const leads = await getByUser();
