@@ -36,7 +36,7 @@ export default function AIForm() {
   } = useAIForm();
   return (
     <div className="relative flex h-full w-full flex-col justify-between rounded-md bg-white p-4 p-4">
-      <div className="scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 flex h-full flex-col overflow-y-auto p-1 ai-form">
+      <div className="scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 ai-form flex h-full flex-col overflow-y-auto p-1">
         {!preview && (
           <div className="flex  flex-col">
             <div className="form-control w-full">
@@ -89,8 +89,11 @@ export default function AIForm() {
             </div>
             <div className="flex w-full flex-col gap-2">
               <div className="border-primary w-full rounded-lg border bg-white p-3">
-                <div className="mb-1 flex items-center justify-between">
+                <div className="mb-3 flex items-center justify-between">
                   <h3>Models</h3>
+                  <Button variant="ghost" className="border border-cyan-600">
+                    Manage Your Keys
+                  </Button>
                 </div>
                 <RadioGroup value={selectedModel} className="flex  flex-wrap gap-3" onValueChange={setSelectedModel}>
                   {filteredModels.map((model) => (
@@ -119,7 +122,7 @@ export default function AIForm() {
             </div>
           </div>
         )}
-        <Button className="flex mt-4" onClick={onValidatePrompt}>
+        <Button className="mt-4 flex" onClick={onValidatePrompt}>
           {processing && <Spinner />}
           {!processing && "Validate Prompt"}
         </Button>

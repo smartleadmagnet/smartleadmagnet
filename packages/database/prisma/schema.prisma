@@ -24,6 +24,7 @@ model User {
   updatedAt  DateTime     @updatedAt
   LeadMagnet LeadMagnet[]
   EmailLog   EmailLog[]
+  ApiKey     ApiKey[]
 
   @@map("users")
 }
@@ -133,4 +134,18 @@ model EmailLog {
   user      User     @relation(fields: [userId], references: [id])
 
   @@map("email_logs")
+}
+
+model ApiKey {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  keyName   String
+  apiKey    String
+  provider  String
+  isDefault Boolean  @default(false)
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("api_keys")
 }
