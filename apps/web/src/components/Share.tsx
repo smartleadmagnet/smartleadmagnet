@@ -6,6 +6,8 @@ import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
+import Image from "next/image";
+import Link from "next/link";
 import {
   Select,
   SelectContent,
@@ -373,8 +375,15 @@ export default function BuilderElementPreview() {
             {isSubmitting && <Spinner />}
             {!isSubmitting && "Submit"}
           </Button>
+          
         </form>
       )}
+      <div className="bg-gray-900 flex justify-center p-5 items-center text-white mt-10 ml-[-20px] mr-[-20px] mb-[-20px] rounded-b" >
+            Carafted  by 
+          <Link href="/">
+                <Image src="/images/logo/logo.png" alt="Logo" width={150} height={0} />
+              </Link>
+              </div>
     </FormWrapper>
   );
 }
