@@ -25,6 +25,8 @@ model User {
   LeadMagnet LeadMagnet[]
   EmailLog   EmailLog[]
   ApiKey     ApiKey[]
+  Payment    Payment[]
+  Credit     Credit?
 
   @@map("users")
 }
@@ -151,4 +153,31 @@ model ApiKey {
   LeadMagnet LeadMagnet[]
 
   @@map("api_keys")
+}
+
+model Credit {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @unique @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  total     Int      @default(0) // Total AI credits
+  used      Int      @default(0) // Used AI credits
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("credits")
+}
+
+model Payment {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  stripeSessionId  String // Stripe session ID for tracking payment
+  stripeCustomerId String // Stripe customer ID
+  userId           String   @db.ObjectId
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planType         String // "one-time", "lifetime", or "subscription"
+  credits          Int // Number of credits associated with the plan
+  price            Float // Price of the plan
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("payments")
 }
