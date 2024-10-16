@@ -1,4 +1,6 @@
 // Define the PricingPlan type
+import { PlanTier } from "@/lib/types";
+
 export type PricingPlan = {
   name: string;
   originalPrice: number;
@@ -7,7 +9,7 @@ export type PricingPlan = {
   currency: string;
   isSubscription: boolean;
   description?: string;
-  duration?: string; // For one-time or lifetime, this could be "one-time" or "lifetime"
+  planTier: PlanTier; // For one-time or lifetime, this could be "one-time" or "lifetime"
   features: string[];
   priceId: string;
 };
@@ -34,7 +36,7 @@ const pricingConfig: IPricing = {
       currency: "USD",
       isSubscription: false,
       description: "One-time payment with 100 AI credits, valid for 1 year.",
-      duration: "one-time",
+      planTier: PlanTier.ONE_TIME,
       features: ["100 AI Credits", "Valid for 1 Year", "Access to Lead Magnet Builder", "AI-Powered Personalization"],
       priceId: process.env.STRIPE_SMARTLEADMAGNET_ONE_TIME!,
     },
@@ -46,7 +48,7 @@ const pricingConfig: IPricing = {
       currency: "USD",
       isSubscription: false,
       description: "Lifetime access with 250 AI credits.",
-      duration: "lifetime",
+      planTier: PlanTier.LIFE_TIME,
       features: ["250 AI Credits", "Lifetime Access", "Unlimited Lead Magnets", "AI-Powered Personalization"],
       priceId: process.env.STRIPE_SMARTLEADMAGNET_LIFE_TIME!,
     },
@@ -57,6 +59,7 @@ const pricingConfig: IPricing = {
       credits: 250,
       currency: "USD",
       isSubscription: true,
+      planTier: PlanTier.SUBSCRIPTION,
       description: "Monthly subscription with 250 AI credits.",
       features: [
         "250 AI Credits per month",

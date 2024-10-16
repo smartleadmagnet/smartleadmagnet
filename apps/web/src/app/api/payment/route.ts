@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCheckoutSession, getUserById } from "@/actions/stripe";
+import { getCheckoutSession } from "@/actions/stripe";
 import pricingConfig from "@/lib/config/pricingConfig";
 import { getSessionUser } from "@/services/user";
-import { createPayment, getCredit } from "@smartleadmagnet/services";
+import { createPayment, getCredit, getUserById, upsetCredits } from "@smartleadmagnet/services";
 
 export async function GET(req: NextRequest) {
   // get query params from the URL
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
       const priceId = session.line_items.data[0].price.id;
       if (!session) return NextResponse.json({ error: "Invalid session" }, { status: 400 });
 
-      const user = await getUserById(session.customer);
+      const user = await getUserById(sessionUser.id);
 
       if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
@@ -28,19 +28,24 @@ export async function GET(req: NextRequest) {
 
       // Update sessionUser's credits
       const existingCredit = await getCredit(user.id);
-      const updatedCredits = existingCredit ? existingCredit.total + plan.credits : plan.credits;
+      const totalCredit = existingCredit ? existingCredit.total + plan.credits : plan.credits;
 
-      await updatedCredits(user.id, updatedCredits);
+      await upsetCredits({
+        userId,
+        totalCredit,
+      });
 
       await createPayment({
         stripeSessionId: session.id,
         stripeCustomerId: user.stripeCustomerId,
         userId,
-        planType: plan.duration || (plan.isSubscription ? "subscription" : "one-time"),
+        planType: plan.planTier || (plan.isSubscription ? "subscription" : "one-time"),
         credits: plan.credits,
         price: plan.discountPrice,
       });
     }
+
+    return NextResponse.redirect(`${process.env.HOST_URL}/payment/success`); // TODO redirect to success page
   } catch (error) {
     console.error("Error handling payment:", error);
     return NextResponse.json({ error: "Payment processing failed" }, { status: 500 });

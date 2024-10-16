@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { createPaymentLink, createStripeCustomer } from "@/actions/stripe";
-import { Env } from "@/lib/Env.mjs";
-import { getSessionUser, getUserById, updateStripeCustomerId } from "@/service/user";
+import { getSessionUser } from "@/services/user";
+import { getUserById, updateStripeCustomerId } from "@smartleadmagnet/services";
 
 export async function GET(req: NextRequest) {
   // get query params from the URL
@@ -12,10 +12,6 @@ export async function GET(req: NextRequest) {
   if (userId) {
     const user = await getUserById(userId);
     if (user) {
-      if (user.stripePaymentDate) {
-        // redirect to the landing page
-        return Response.redirect(`${Env.HOST_URL}/payment/success`);
-      }
       let stripeCustomerId = user?.stripeCustomerId;
       if (!stripeCustomerId) {
         const email = sessionUser.email;
@@ -28,5 +24,5 @@ export async function GET(req: NextRequest) {
       return Response.redirect(paymentLink!);
     }
   }
-  return Response.redirect(`${Env.HOST_URL}`);
+  return Response.redirect(`${process.env.HOST_URL}`);
 }

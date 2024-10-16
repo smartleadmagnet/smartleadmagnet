@@ -167,13 +167,20 @@ model Credit {
   @@map("credits")
 }
 
+enum PlanTier {
+  ONE_TIME
+  LIFE_TIME
+  SUBSCRIPTION
+}
+
+
 model Payment {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
   stripeSessionId  String // Stripe session ID for tracking payment
   stripeCustomerId String // Stripe customer ID
   userId           String   @db.ObjectId
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  planType         String // "one-time", "lifetime", or "subscription"
+  planType         PlanTier? // "one-time", "lifetime", or "subscription"
   credits          Int // Number of credits associated with the plan
   price            Float // Price of the plan
   createdAt        DateTime @default(now())

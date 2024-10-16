@@ -2,10 +2,9 @@
 
 import Stripe from "stripe";
 import pricingConfig from "@/lib/config/pricingConfig";
-import { Env } from "@/lib/Env.mjs";
 import stripe from "@/lib/stripe";
 import { getSessionUser } from "@/services/user";
-export { getUserById, updateStripeCustomerId, getUserByEmail } from "@smartleadmagnet/services";
+import { getUserById, updateStripeCustomerId } from "@smartleadmagnet/services";
 
 export async function createPaymentLink(customerId: string, priceId: string) {
   const plan = pricingConfig.plans.find((plan) => plan.priceId === priceId);
@@ -18,8 +17,8 @@ export async function createPaymentLink(customerId: string, priceId: string) {
         quantity: 1, // The quantity of the product
       },
     ],
-    success_url: `${Env.NEXT_PUBLIC_SITE_URL}/api/payment?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${Env.NEXT_PUBLIC_SITE_URL}/pricing`, // TODO check with the user what happen, put it in the API
+    success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/payment?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/pricing`,
     customer: customerId,
   };
 
@@ -45,7 +44,7 @@ export async function getCheckoutSession(sessionId: string) {
 export async function getSubscription(subscriptionId: string) {
   return stripe.subscriptions.retrieve(subscriptionId);
 }
-//
+
 // export async function getUserPurchaseInfo() {
 //   const user = await getSessionUser();
 //   if (!user?.id) {
@@ -115,31 +114,28 @@ export async function getSubscription(subscriptionId: string) {
 //   }
 // }
 //
-// export const getSingInLink = async (priceId: string) => {
-//   if (!priceId) {
-//     return "/dashboard";
-//   }
-//   const user = await getSessionUser();
-//   const userId = user?.id ?? "";
-//   if (userId) {
-//     const user = await getUserById(userId);
-//
-//     console.log({ user });
-//     if (user) {
-//       // console.log("user?.stripeCustomerId", user?.stripeCustomerId);
-//       let customerId = user?.stripeCustomerId;
-//
-//       console.log({ customerId });
-//
-//       if (!customerId) {
-//         const customer = await createStripeCustomer({ email: user?.email!, name: user.name! });
-//         await updateStripeCustomerId({ id: user.id, stripeCustomerId: customer });
-//         customerId = customer;
-//       }
-//       if (customerId && userId) {
-//         return await createPaymentLink(customerId, priceId);
-//       }
-//     }
-//   }
-//   return `/api/auth/signin?callbackUrl=${encodeURIComponent(`/api/payment/checkout?priceId=${priceId}`)}`;
-// };
+export const getSingInLink = async (priceId: string) => {
+  console.log("priceId", priceId);
+  if (!priceId) {
+    return "/";
+  }
+  const user = await getSessionUser();
+  const userId = user?.id ?? "";
+  if (userId) {
+    const user = await getUserById(userId);
+    if (user) {
+      // console.log("user?.stripeCustomerId", user?.stripeCustomerId);
+      let customerId = user?.stripeCustomerId;
+
+      if (!customerId) {
+        const customer = await createStripeCustomer({ email: user?.email!, name: user.name! });
+        await updateStripeCustomerId({ id: user.id, stripeCustomerId: customer });
+        customerId = customer;
+      }
+      if (customerId && userId) {
+        return await createPaymentLink(customerId, priceId);
+      }
+    }
+  }
+  return `/api/auth/signin?callbackUrl=${encodeURIComponent(`/api/payment/checkout?priceId=${priceId}`)}`;
+};
