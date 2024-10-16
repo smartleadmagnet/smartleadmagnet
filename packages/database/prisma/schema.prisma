@@ -176,7 +176,7 @@ enum PlanTier {
 
 model Payment {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  stripeSessionId  String // Stripe session ID for tracking payment
+  stripeSessionId  String   @unique // Stripe session ID
   stripeCustomerId String // Stripe customer ID
   userId           String   @db.ObjectId
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)

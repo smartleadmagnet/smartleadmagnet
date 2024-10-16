@@ -32,3 +32,20 @@ export const createPayment = async (data: {
     data,
   });
 };
+
+export async function getPaymentBySessionId(sessionId: string) {
+  try {
+    // Query the Payment table for a record with the given stripeSessionId
+    const payment = await prisma.payment.findUnique({
+      where: {
+        stripeSessionId: sessionId,
+      },
+    });
+
+    // Return the payment record or null if not found
+    return payment;
+  } catch (error) {
+    console.error("Error fetching payment by session ID:", error);
+    throw new Error("Could not fetch payment by session ID");
+  }
+}

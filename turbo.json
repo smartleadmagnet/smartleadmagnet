@@ -16,6 +16,10 @@
       "cache": false,
       "dependsOn": ["^email"]
     },
+    "webhook": {
+      "cache": false,
+      "dependsOn": ["^webhook"]
+    },
     "lint": {
       "dependsOn": ["^lint"]
     },

@@ -20,7 +20,7 @@ export const getUserByEmail = async (email: string) =>
     where: { email },
   });
 
-export const getUserByStripeCustomerId = async (stripeCustomerId: string) => {
+export const getUserByStripeCustomerId = async (stripeCustomerId: string): Promise<User> => {
   return prisma.user.findFirst({
     where: { stripeCustomerId },
   });
