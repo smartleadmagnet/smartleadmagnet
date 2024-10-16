@@ -233,6 +233,57 @@
   width: 30px;
   height: 30px;
 }
+.prompt-image-box {
+  position: relative;
+}
+
+.prompt-image-box .downlaod-btn {
+  position: absolute;
+  right: 10px;
+  background: rgba(0,0,0,0.5);
+  z-index: 1;
+  top: 10px;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+.ai-form {
+  height: calc(100vh - 180px);
+}
+.prompt-loader {
+  text-align: center;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.prompt-loader .loader svg {
+  height: 80px;
+  width: 80px;
+}
+.prompt-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color:#fff;
+}
+.prompt-content-box {
+  position: relative;
+  padding-top: 50px;
+}
+
+.prompt-content-box button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+
+
+
 
 /* homepage */
 .hero-section {
@@ -370,14 +421,6 @@
   transform: rotate(3deg) translate(0px, -4px);
 }
 
-/* Remove these to get rid of the spinner */
-#nprogress .spinner {
-  display: block;
-  position: fixed;
-  z-index: 1031;
-  top: 15px;
-  right: 15px;
-}
 
 #nprogress .spinner-icon {
   width: 18px;

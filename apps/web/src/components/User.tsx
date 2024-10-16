@@ -1,5 +1,4 @@
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import {

@@ -33,11 +33,12 @@ export default function AIForm() {
     processing,
     elementsList,
     preview,
+    setPreview,
   } = useAIForm();
   return (
-    <div className="relative flex h-full w-full flex-col justify-between rounded-md bg-white p-4 p-4">
-      <div className="scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 ai-form flex h-full flex-col overflow-y-auto p-1">
-        {!preview && (
+    <div className="relative flex  w-full flex-col justify-between rounded-md bg-white p-4 p-4">
+      <div className="scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 ai-form flex flex-col overflow-y-auto p-1">
+        {(!preview && !processing)  ? (
           <div className="flex  flex-col">
             <div className="form-control w-full">
               <div className="mb-[10px] flex w-full items-center justify-between">
@@ -114,18 +115,25 @@ export default function AIForm() {
               </div>
             </div>
           </div>
-        )}
-        {preview && (
-          <div className="flex h-full items-center justify-center">
-            <div className="flex flex-col items-center justify-center">
-              <ContentViewer type={preview?.type!} content={preview?.content!} />
+        ):(
+          <div className="flex  items-center justify-center">
+
+            <div className="w-full">
+              <div className="mb-4">
+              <Button className="mt-4" onClick={() => setPreview(undefined)}>
+                Back to Form
+              </Button>
+              </div>
+              <ContentViewer type={outputType} content={preview?.content!} isLoading={processing} />
             </div>
           </div>
         )}
+        
+        {(!preview && !processing)  && (
         <Button className="mt-4 flex" onClick={onValidatePrompt}>
-          {processing && <Spinner />}
-          {!processing && "Validate Prompt"}
+         Validate Prompt
         </Button>
+        )}
       </div>
     </div>
   );
