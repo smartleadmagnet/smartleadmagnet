@@ -10,17 +10,19 @@ export type PricingProps = {
   showDivider?: boolean;
 };
 
-const PricingPlan: React.FC<PricingProps> = ({ title = pricingConfig.title }) => {
+const PricingPlan: React.FC<PricingProps> = ({ title = pricingConfig.title,description=pricingConfig.description }) => {
   const userPlans = pricingConfig.plans!;
   return (
-    <div className="z-0 mt-5 flex h-full min-h-[75vh] w-full flex-col items-center justify-start">
-      <h1 className="text-center text-4xl text-[36px] font-bold leading-[40px] lg:text-[52px] lg:leading-[60px]">
-        {title}
-      </h1>
-      <div className="flex max-w-5xl flex-col items-start justify-center">
+    <div className="container my-10">
+      <h1 className="text-2xl text-[36px] font-bold leading-[40px] lg:text-[52px] lg:leading-[60px] max-w-[1000px] mb-5">
+  {title}
+</h1>
+<div>
+  {description}
+</div>
         <PricingTable plans={userPlans} />
       </div>
-    </div>
+    
   );
 };
 

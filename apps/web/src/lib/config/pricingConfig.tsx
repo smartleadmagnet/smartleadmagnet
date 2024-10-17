@@ -24,22 +24,10 @@ export interface IPricing {
 
 // Example pricing configuration object with discounted prices
 const pricingConfig: IPricing = {
-  title: "SmartLeadMagnet Pricing",
+  title: "Start Creating High-Converting Lead Magnets with AI",
   description: "Choose the best plan to start creating high-converting lead magnets with AI.",
   defaultCurrency: "USD",
   plans: [
-    {
-      name: "One-Time Plan",
-      originalPrice: 199,
-      discountPrice: 99, // Discounted price
-      credits: 100,
-      currency: "USD",
-      isSubscription: false,
-      description: "One-time payment with 100 AI credits, valid for 1 year.",
-      planTier: PlanTier.ONE_TIME,
-      features: ["100 AI Credits", "Valid for 1 Year", "Access to Lead Magnet Builder", "AI-Powered Personalization"],
-      priceId: process.env.STRIPE_SMARTLEADMAGNET_ONE_TIME!,
-    },
     {
       name: "Lifetime Plan",
       originalPrice: 299,
@@ -52,6 +40,19 @@ const pricingConfig: IPricing = {
       features: ["250 AI Credits", "Lifetime Access", "Unlimited Lead Magnets", "AI-Powered Personalization"],
       priceId: process.env.STRIPE_SMARTLEADMAGNET_LIFE_TIME!,
     },
+    {
+      name: "One-Time Plan",
+      originalPrice: 199,
+      discountPrice: 99, // Discounted price
+      credits: 100,
+      currency: "USD",
+      isSubscription: false,
+      description: "One-time payment with 100 AI credits, valid for 1 year.",
+      planTier: PlanTier.ONE_TIME,
+      features: ["100 AI Credits", "Valid for 1 Year", "Access to Lead Magnet Builder", "AI-Powered Personalization"],
+      priceId: process.env.STRIPE_SMARTLEADMAGNET_ONE_TIME!,
+    },
+    
     {
       name: "Monthly Subscription",
       originalPrice: 79,
