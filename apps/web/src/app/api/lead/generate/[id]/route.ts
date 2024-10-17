@@ -6,6 +6,8 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { getIPAddress } from "@/utils/ip";
 import { triggerWebhook } from "@/utils/webhook";
+import { convert } from "html-to-text";
+import { sendEmail } from "@/lib/email";
 
 let rateLimit: Ratelimit | undefined;
 
@@ -41,11 +43,31 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
       // Log the usage with payload and IP address
       let webhookStatus = "pending";
+      let emailSent = false;
 
       // Trigger the webhook if set
       if (lead.webhook) {
         const webhookResult = await triggerWebhook(lead.webhook, { leadId: lead.id, payload, ip: identifier });
         webhookStatus = webhookResult.success ? "success" : "failed";
+      }
+
+      const emailComponent = lead.components?.find((item) => item.type === "email");
+      if (lead.emailSubject && lead.emailContent && emailComponent) {
+        try {
+          // Convert email HTML to plain text if necessary
+          const emailHtml = lead.emailContent;
+          const emailText = convert(emailHtml);
+
+          // Send the email
+          await sendEmail(payload[emailComponent.name], lead.emailSubject, emailText, emailHtml);
+
+          // Log email success
+          console.log("Email sent successfully");
+          emailSent = true;
+        } catch (e) {
+          console.log("Email sending failed", e.message);
+          // Optionally, you can update the webhook status or log email failure
+        }
       }
 
       // Update the usage log with the webhook status
@@ -54,6 +76,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
         ipAddress: identifier,
         payload: payload,
         webhookStatus,
+        emailSent,
       });
 
       return NextResponse.json({ message: result });

@@ -55,15 +55,15 @@ const nextAuth = NextAuth({
     Nodemailer({
       id: "email-code",
       server: {
-        host: process.env.MAGIC_LINK_EMAIL_SERVER_HOST,
-        port: process.env.MAGIC_LINK_EMAIL_SERVER_PORT,
+        host: process.env.EMAIL_SERVER_HOST,
+        port: process.env.EMAIL_SERVER_PORT,
         auth: {
-          user: process.env.MAGIC_LINK_EMAIL_SERVER_USER,
-          pass: process.env.MAGIC_LINK_EMAIL_SERVER_PASSWORD,
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD,
         },
       },
       maxAge: verifyEmailMaxAge,
-      from: process.env.MAGIC_LINK_EMAIL_FROM,
+      from: process.env.EMAIL_FROM,
       generateVerificationToken: () => {
         return newToken();
       },

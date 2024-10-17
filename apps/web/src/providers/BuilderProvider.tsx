@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { ChildItem } from "@/app/types/builder";
 import { LeadMagnet } from "@smartleadmagnet/database";
 import axios from "axios";
