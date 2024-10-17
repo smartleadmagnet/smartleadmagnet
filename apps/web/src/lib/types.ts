@@ -9,35 +9,9 @@ export type MDXFrontMatter = {
   tags?: Array<string>;
 };
 
-export enum EmailProvider {
-  SES = "ses",
-  Mailgun = "mailgun",
-  SendGrid = "sendgrid",
-  ReSend = "resend",
-  Brevo = "brevo",
-}
-
 export enum LayoutType {
   Full = "full",
   Box = "box",
-}
-
-export type OGTemplate = {
-  id: string;
-  title: string;
-  date: string;
-  image?: string;
-};
-
-export enum NavigationPositionType {
-  CENTER = "center",
-  LEFT = "left",
-  RIGHT = "right",
-}
-
-export enum HeroDirectionType {
-  LEFT = "left",
-  RIGHT = "right",
 }
 
 export type FooterLink = {
@@ -56,25 +30,8 @@ export type Question = {
   answer: any;
 };
 
-export type PricingPlan = {
-  title?: string;
-  description?: string;
-  price: number;
-  monthlyPrice?: number;
-  features?: string[];
-  cta: string;
-  priceId: string;
-  popular?: boolean;
-  totalDiscount?: string;
-  tier: "FREE" | "PREMIUM" | "ULTIMATE";
-  duration: "MONTHLY" | "ANNUAL" | "DAILY";
-};
-
-export type NavigationItem = {
-  name: string;
-  link?: string;
-  items?: NavigationItem[];
-  className?: string;
-  active?: boolean;
-  action?: () => void;
-};
+export enum PlanTier {
+  ONE_TIME = "ONE_TIME",
+  LIFE_TIME = "LIFE_TIME",
+  SUBSCRIPTION = "SUBSCRIPTION",
+}

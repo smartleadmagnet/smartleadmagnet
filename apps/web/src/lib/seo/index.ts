@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Env } from "@/lib/Env.mjs";
 import { getPage } from "@/lib/mdx";
 
 const title = "SmartEReply: Boost Productivity with Human-Like AI Replies";
@@ -146,7 +145,7 @@ export const getLocalMdxSeoTags = (slug: string, folderName?: string) => {
 };
 
 export const getBlogMdxSeoTags = (slug: string, folderName?: string) => {
-  const url = Env.NEXT_PUBLIC_SITE_URL!;
+  const url = process.env.NEXT_PUBLIC_SITE_URL!;
   const post = getPage<any>(folderName ? `${folderName}/${slug}` : slug);
   const { date, modifiedTime, title, summary, tags } = post?.metadata;
   return getSeoTags(

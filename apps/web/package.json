@@ -10,7 +10,8 @@
     "email": "cd src && email dev",
     "pages:build": "bunx @cloudflare/next-on-pages",
     "preview": "bun run pages:build && wrangler pages dev",
-    "deploy": "bun run pages:build && wrangler pages deploy"
+    "deploy": "bun run pages:build && wrangler pages deploy",
+    "webhook": "stripe listen --forward-to http://localhost:3000/api/webhook/stripe"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.5.3",
