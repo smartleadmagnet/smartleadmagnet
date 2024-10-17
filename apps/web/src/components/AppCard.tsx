@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@smartleadmagnet/ui/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,DropdownMenuItem } from "@smartleadmagnet/ui/components/ui/dropdown-menu";
-import { ChevronDown, Edit, Share, Trash2 } from "lucide-react"; // Icons from lucide-react
+import { ChevronDown, Edit, Share,List } from "lucide-react"; // Icons from lucide-react
 import DeleteMagnet from "@/components/DeleteMagnet";
 import Link from "next/link";
 
@@ -20,6 +20,16 @@ interface Props {
 export default function AppCard({ id, name, description, analytics }: Props) {
   return (
     <Card className="p-0 ">
+      <div className="flex items-center gap-2 mr-3 bg-gray-900 p-2 w-full text-white rounded px-4">
+          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+          <span className="text-sm font-normal flex items-center">
+            Published
+          </span>
+          {/* <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+          <span className="text-sm font-normal flex items-center">
+            Draft
+          </span> */}
+        </div>
       <CardHeader className="flex">
         <div className="flex items-start justify-between">
           <div className="flex">
@@ -36,6 +46,7 @@ export default function AppCard({ id, name, description, analytics }: Props) {
             </div>
           </div>
           <div className="inline-flex items-center">
+          {/* <span className="me-2 text-sm bg-gray-300 px-3 py-2 rounded-lg   font-normal">Draft</span> */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="flex flex-row items-center justify-between">
@@ -55,10 +66,17 @@ export default function AppCard({ id, name, description, analytics }: Props) {
 
                   {/* Share Option */}
                   <DropdownMenuItem asChild>
-                    <button className="flex items-center p-1 hover:bg-gray-100">
+                  <Link href={`/share/${id}`} className="flex items-center p-1 hover:bg-gray-100">
                       <Share className="mr-2 h-4 w-4" />
                       Share
-                    </button>
+                    </Link>
+                  </DropdownMenuItem>
+                  {/* view Submission  Option */}
+                  <DropdownMenuItem asChild>
+                    <Link href={`/submission/${id}`} className="flex items-center p-1 hover:bg-gray-100">
+                      <List className="mr-2 h-4 w-4" />
+                      View Submission
+                    </Link>
                   </DropdownMenuItem>
 
                   {/* Delete Option */}

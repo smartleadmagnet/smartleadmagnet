@@ -15,8 +15,8 @@ const sidebarNavItems = [
     href: "/settings",
   },
   {
-    title: "Notifications",
-    href: "/settings/notifications",
+    title: "Billing",
+    href: "/settings/billing",
   },
   {
     title: "Manage Keys",

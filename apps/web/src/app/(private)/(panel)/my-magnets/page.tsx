@@ -3,6 +3,14 @@ import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
 import { createLead, getByUser } from "@/actions/lead-magnet";
 import { redirect } from "next/navigation";
 import AppCard from "@/components/AppCard";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@smartleadmagnet/ui/components/ui/select";
 
 export default async function MyForms() {
   const leads = await getByUser();
@@ -22,6 +30,18 @@ export default async function MyForms() {
         </div>
         <div className="my-4 flex items-end justify-between sm:my-0 sm:items-center">
           <div className="flex flex-col gap-4 sm:my-4 sm:flex-row"></div>
+          <Select>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="Select Status" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectItem value="apple">Published</SelectItem>
+          <SelectItem value="banana">Draft</SelectItem>
+          
+        </SelectGroup>
+      </SelectContent>
+    </Select>
           
         </div>
       </div>
