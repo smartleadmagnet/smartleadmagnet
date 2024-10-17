@@ -4,6 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
+import { useBuilderContext } from "@/providers/BuilderProvider";
+import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
+import axios from "axios";
 
 // Zod schema for form validation
 const webhookSchema = z.object({
@@ -11,6 +14,7 @@ const webhookSchema = z.object({
 });
 
 export default function WebhookForm() {
+  const { updateSettingFormData, leadMagnet } = useBuilderContext();
   const {
     register,
     handleSubmit,
@@ -21,16 +25,47 @@ export default function WebhookForm() {
 
   // Handle form submission
   const onSubmit = async (data: any) => {
-    console.log("Webhook URL saved:", data.webhookUrl);
-    // Make an API call to save the webhook URL
-    // await fetch('/api/save-webhook', { method: 'POST', body: JSON.stringify(data) });
+    await updateSettingFormData({ webhook: data.webhookUrl });
+    toast({
+      title: "Webhook URL saved successfully",
+    });
   };
 
   // Handle sending a test request
   const handleSendTest = async (data: any) => {
-    console.log("Sending test request to:", data.webhookUrl);
-    // You can use fetch or axios to send a request
-    // const response = await fetch(data.webhookUrl, { method: 'POST', body: JSON.stringify({ test: true }) });
+    const webhookUrl = data.webhookUrl;
+    try {
+      const resut = await axios.post(`/api/lead/${leadMagnet.id}/webhook/test`, {
+        url: webhookUrl,
+      });
+      if (resut.data.success) {
+        toast({
+          title: "Test request sent successfully",
+        });
+      } else {
+        toast({
+          title: "Test request failed",
+          variant: "destructive",
+        });
+      }
+    } catch (e) {
+      toast({
+        title: "Test request failed",
+        description: e.message,
+        variant: "destructive",
+      });
+    }
+    // const webhookResult = await triggerWebhook(webhookUrl, { test: true });
+    // if (webhookResult.success) {
+    //   toast({
+    //     title: "Test request sent successfully",
+    //   });
+    // } else {
+    //   toast({
+    //     title: "Test request failed",
+    //     variant: "destructive",
+    //   });
+    // }
   };
 
   return (
