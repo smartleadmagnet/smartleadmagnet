@@ -303,60 +303,6 @@ export default function BuilderElementPreview() {
           </div>
         );
       case "image":
-        // const [preview, setPreview] = useState<string | null>(null);
-        //
-        // const onDrop = (acceptedFiles: File[]) => {
-        //   const file = acceptedFiles[0];
-        //   if (file) {
-        //     const reader = new FileReader();
-        //     reader.onloadend = () => {
-        //       const result = reader.result as string;
-        //       setPreview(result);
-        //     };
-        //     reader.readAsDataURL(file);
-        //   }
-        // };
-        //
-        // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-        //
-        // return (
-        //   <div>
-        //     <Label className="mb-2 block text-sm font-semibold">
-        //       {element.label} {element.required && <span className="text-red-500">*</span>}
-        //     </Label>
-        //
-        //     <Controller
-        //       name={element.name}
-        //       control={control}
-        //       rules={{
-        //         required: element.required ? `${element.label} is required` : false,
-        //       }}
-        //       render={({ field }) => (
-        //         <>
-        //           <div
-        //             {...getRootProps()}
-        //             className={`flex h-40 w-full items-center justify-center rounded-lg border-2 border-dashed ${
-        //               errors[element.name] ? "border-red-500" : "border-gray-300"
-        //             }`}
-        //           >
-        //             <input {...getInputProps()} />
-        //             <span className="mt-2 text-sm">
-        //               {isDragActive ? "Drop the image here..." : "Drag and drop an image here, or click to select one"}
-        //             </span>
-        //           </div>
-        //
-        //           {preview && <img src={preview} alt="Preview" className="mt-4 h-auto max-w-full rounded-md" />}
-        //
-        //           {/* Handle setting the value of the image */}
-        //           <input type="hidden" {...field} value={preview || ""} onChange={() => field.onChange(preview)} />
-        //         </>
-        //       )}
-        //     />
-        //     <p className="mt-2 text-xs text-gray-500">Please upload an image (JPG, PNG, GIF).</p>
-        //     {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
-        //   </div>
-        // );
-
         return <ImageUploader control={control} element={element} errors={errors} />;
       default:
         return null;
