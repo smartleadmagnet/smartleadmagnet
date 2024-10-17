@@ -27,34 +27,23 @@ const useAIForm = () => {
 
   const onValidatePrompt = async () => {
     setProcessing(true);
-    const textPayload = elementsList.reduce((acc, element) => {
-      if (!(element.type === "image" || element.type === "file")) {
-        acc[element.name] = element.value;
-      }
-      return acc;
-    }, {});
-
     try {
       if (outputType === "image") {
+        const textPayload = elementsList.reduce((acc, element) => {
+          if (!(element.type === "image" || element.type === "file")) {
+            acc[element.name] = element.value;
+          }
+          return acc;
+        }, {});
         const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, textPayload);
         console.log({ type: "image", content: result.data?.message });
         setPreview({ type: "image", content: result.data?.message });
       } else {
-        const imagePayload = elementsList.reduce((acc, element) => {
-          if (element.type === "image" || element.type === "file") {
-            acc.push({
-              type: "image_url",
-              image_url: {
-                url: element.value,
-              },
-            });
-          }
+        const payload = elementsList.reduce((acc, element) => {
+          acc[element.name] = element.value;
           return acc;
-        }, []);
-        const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, [
-          { type: "text", text: JSON.stringify(textPayload) },
-          ...imagePayload,
-        ]);
+        }, {});
+        const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, payload);
         console.log({ type: "text", content: result.data?.message });
         setPreview({ type: "text", content: result.data?.message });
       }

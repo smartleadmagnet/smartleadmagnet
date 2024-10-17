@@ -1,17 +1,36 @@
 import { createTransport } from "nodemailer";
 
-const transporter = createTransport({
-  host: process.env.MAGIC_LINK_EMAIL_SERVER_HOST,
-  port: process.env.MAGIC_LINK_EMAIL_SERVER_PORT,
-  auth: {
-    user: process.env.MAGIC_LINK_EMAIL_SERVER_USER,
-    pass: process.env.MAGIC_LINK_EMAIL_SERVER_PASSWORD,
-  },
-});
-
 export const sendEmail = async (email: string, subject: string, text: string, html: string) => {
+  const transporter = createTransport({
+    host: process.env.EMAIL_SERVER_HOST,
+    port: process.env.EMAIL_SERVER_PORT,
+    auth: {
+      user: process.env.EMAIL_SERVER_USER,
+      pass: process.env.EMAIL_SERVER_PASSWORD,
+    },
+  });
+
   return transporter.sendMail({
-    from: `SmartLeadMagnet <${process.env.MAGIC_LINK_EMAIL_FROM}>`,
+    from: `SmartLeadMagnet <${process.env.EMAIL_FROM}>`,
+    to: email,
+    subject,
+    text,
+    html,
+  });
+};
+
+export const sendEmailToUnRegisterUser = async (email: string, subject: string, text: string, html: string) => {
+  const transporter = createTransport({
+    host: process.env.EMAIL_SERVER_HOST_TO_UNREGISTER_USER,
+    port: process.env.EMAIL_SERVER_PORT_TO_UNREGISTER_USER,
+    auth: {
+      user: process.env.EMAIL_SERVER_USER_TO_UNREGISTER_USER,
+      pass: process.env.EMAIL_SERVER_PASSWORD_TO_UNREGISTER_USER,
+    },
+  });
+
+  return transporter.sendMail({
+    from: `SmartLeadMagnet <${process.env.EMAIL_FROM_TO_UNREGISTER_USER}>`,
     to: email,
     subject,
     text,

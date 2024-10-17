@@ -65,11 +65,13 @@ export async function createLeadMagnetUsageLog({
   ipAddress,
   payload,
   webhookStatus,
+  emailSent,
 }: {
   leadMagnetId: string;
   ipAddress: string;
   payload: any;
   webhookStatus: string;
+  emailSent: boolean;
 }) {
   return prisma.leadMagnetUsage.create({
     data: {
@@ -77,6 +79,7 @@ export async function createLeadMagnetUsageLog({
       ipAddress,
       payload,
       webhookStatus,
+      emailSent,
     },
   });
 }

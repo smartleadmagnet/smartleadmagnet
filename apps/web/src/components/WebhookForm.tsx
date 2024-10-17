@@ -21,6 +21,9 @@ export default function WebhookForm() {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(webhookSchema),
+    defaultValues: {
+      webhookUrl: leadMagnet.webhook,
+    },
   });
 
   // Handle form submission

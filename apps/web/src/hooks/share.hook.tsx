@@ -26,17 +26,8 @@ const useShareForm = () => {
         const result = await axios.post(`/api/lead/generate/${leadMagnet.id}`, data);
         setResponse({ type: "image", content: result.data?.message });
       } else {
-        const imagePayload = elementsList.reduce((acc, element) => {
-          if (element.type === "image" || element.type === "file") {
-            acc.push({ type: "image_url", image_url: { url: element.value } });
-          }
-          return acc;
-        }, []);
-        const result = await axios.post(`/api/lead/generate/${leadMagnet.id}`, [
-          { type: "text", text: JSON.stringify(data) },
-          ...imagePayload,
-        ]);
-        setResponse({ type: "text", content: result.data?.message });
+        const result = await axios.post(`/api/lead/generate/${leadMagnet.id}`, data);
+        setResponse({ type: "text", content: result?.data?.message });
       }
     } catch (e) {
       console.log(e);
@@ -44,6 +35,7 @@ const useShareForm = () => {
   }
 
   const onSubmit = async (data: any) => {
+    console.log(data);
     setLastInput(data);
     await onGenerateLead(data);
   };
