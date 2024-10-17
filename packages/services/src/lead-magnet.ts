@@ -64,16 +64,19 @@ export async function createLeadMagnetUsageLog({
   leadMagnetId,
   ipAddress,
   payload,
+  webhookStatus,
 }: {
   leadMagnetId: string;
   ipAddress: string;
   payload: any;
+  webhookStatus: string;
 }) {
   return prisma.leadMagnetUsage.create({
     data: {
       leadMagnetId,
       ipAddress,
       payload,
+      webhookStatus,
     },
   });
 }
