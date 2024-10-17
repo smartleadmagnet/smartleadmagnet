@@ -36,7 +36,6 @@ const useAIForm = () => {
           return acc;
         }, {});
         const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, textPayload);
-        console.log({ type: "image", content: result.data?.message });
         setPreview({ type: "image", content: result.data?.message });
       } else {
         const payload = elementsList.reduce((acc, element) => {
@@ -44,7 +43,6 @@ const useAIForm = () => {
           return acc;
         }, {});
         const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, payload);
-        console.log({ type: "text", content: result.data?.message });
         setPreview({ type: "text", content: result.data?.message });
       }
     } catch (e) {
