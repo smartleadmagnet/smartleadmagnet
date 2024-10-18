@@ -1,14 +1,13 @@
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
-import {  getByUser } from "@/actions/lead-magnet";
+import { getByUser } from "@/actions/lead-magnet";
 import AppCard from "@/components/AppCard";
 import MagnetSearch from "@/components/MagnetSearch";
 
-
 export default async function MyForms({ searchParams }: { searchParams: { status?: string } }) {
-  const selectedStatus = searchParams.status === 'all' ?'':searchParams.status || ''; 
+  const selectedStatus = searchParams.status === "all" ? "" : searchParams.status || "";
   let leads = await getByUser(selectedStatus);
 
-return (
+  return (
     <div className="flex size-full flex-col px-5">
       <div className="flex justify-between">
         <div>
@@ -17,10 +16,7 @@ return (
         </div>
         <div className="my-4 flex items-end justify-between sm:my-0 sm:items-center">
           <div className="flex flex-col gap-4 sm:my-4 sm:flex-row"></div>
-          
-          <MagnetSearch/>
-
-          
+          <MagnetSearch />
         </div>
       </div>
       <Separator className="mt-3 w-full shadow" />
