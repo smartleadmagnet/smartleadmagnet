@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateLeadWithInput } from "@smartleadmagnet/llm";
-import { createLeadMagnetUsageLog, getLeadMagnetById, updateLeadMagnetUsage } from "@smartleadmagnet/services";
+import {
+  createLeadMagnetUsageLog,
+  getCredit,
+  getLeadMagnetById,
+  updateLeadMagnetUsage,
+} from "@smartleadmagnet/services";
 
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
@@ -26,7 +31,6 @@ export const dynamic = "force-dynamic"; // defaults to force-static
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const identifier = getIPAddress();
-    console.log("identifier", identifier, rateLimit, process.env.UPSTASH_REDIS_REST_URL);
 
     if (rateLimit && identifier) {
       const { success } = await rateLimit?.limit(identifier);
@@ -35,8 +39,21 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       }
 
       const lead = await getLeadMagnetById(params.id);
+      const credit = await getCredit(lead.userId);
+      let apiKey = lead.apiKey;
+      if (credit?.total > credit?.used) {
+        apiKey = null;
+      }
+
+      // this will not be the case in local development
+      if (process.env.NODE_ENV !== "development" && !apiKey && (!credit || credit?.total <= credit?.used)) {
+        return NextResponse.json(
+          { error: "No credits left. Buy extra credit or add your own API key " },
+          { status: 402 }
+        );
+      }
       const payload = await req.json();
-      const result = await validateLeadWithInput({ leadMagnet: lead, promptInput: payload });
+      const result = await validateLeadWithInput({ leadMagnet: lead, promptInput: payload, apiKey });
 
       // Update the lead magnet usage (increment usedCount and update lastUsedAt)
       await updateLeadMagnetUsage(lead.id);
@@ -57,10 +74,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
           // Convert email HTML to plain text if necessary
           const emailHtml = lead.emailContent;
           const emailText = convert(emailHtml);
-
           // Send the email
           await sendEmail(payload[emailComponent.name], lead.emailSubject, emailText, emailHtml);
-
           // Log email success
           console.log("Email sent successfully");
           emailSent = true;

@@ -9,6 +9,9 @@ export const createLeadMagnet = async (data: LeadMagnet) => {
 export const getLeadMagnetById = async (id: string): Promise<LeadMagnet> => {
   return prisma.leadMagnet.findUnique({
     where: { id },
+    include: {
+      apiKey: true,
+    },
   });
 };
 

@@ -4,12 +4,14 @@ import { LeadMagnet } from "@smartleadmagnet/database";
 export const validateLeadWithInput = async ({
   leadMagnet,
   promptInput,
+  apiKey,
 }: {
   leadMagnet: LeadMagnet;
   promptInput: any;
+  apiKey?: string | null;
 }) => {
   if (leadMagnet?.output === "image") {
-    return await callImageLLM(leadMagnet, promptInput);
+    return await callImageLLM(leadMagnet, promptInput, apiKey);
   }
 
   const promptData = {};
@@ -24,7 +26,6 @@ export const validateLeadWithInput = async ({
     }
     return acc;
   }, []);
-  console.log([...finalPayload, { type: "text", text: JSON.stringify(promptData) }]);
   // if lead components has any image then
   return await callTextLLM(leadMagnet, [...finalPayload, { type: "text", text: JSON.stringify(promptData) }]);
 };

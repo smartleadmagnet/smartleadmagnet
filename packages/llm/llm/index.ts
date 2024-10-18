@@ -16,14 +16,14 @@ export function replacePlaceholders(template, values) {
   });
 }
 
-export const getImageLLMModel = async (leadMagnet: LeadMagnet, promptInput: any) => {
+export const getImageLLMModel = async (leadMagnet: LeadMagnet, promptInput: any, apiKey?: string | null) => {
   const promptText = replacePlaceholders(leadMagnet.prompt, promptInput);
   if (leadMagnet.provider === "Open AI") {
     // console.log(promptInput);
     const llmModel = new DallEAPIWrapper({
       n: 1, // Default
       model: "dall-e-3", // Default
-      apiKey: process.env.OPEN_AI_KEY,
+      apiKey: apiKey || process.env.OPEN_AI_KEY,
     });
     let retryCount = 0;
     const llmApiCall: any = async () => {
@@ -57,7 +57,7 @@ export const getImageLLMModel = async (leadMagnet: LeadMagnet, promptInput: any)
   }
 };
 
-export const getTextLLMModel = (llmType?: string, modelName?: string) => {
+export const getTextLLMModel = (llmType?: string, modelName?: string, apiKey?: string | null) => {
   if (llmType === "AWS BedRock") {
     return new BedrockChat({
       model: modelName ?? "anthropic.claude-3-5-sonnet-20240620-v1:0", // model: "anthropic.claude-3-5-sonnet-20240620-v1:0",
@@ -79,7 +79,7 @@ export const getTextLLMModel = (llmType?: string, modelName?: string) => {
       temperature: 0.5,
       maxRetries: maxRetries,
       // TODO get the key from the user
-      openAIApiKey: process.env.OPEN_AI_KEY,
+      openAIApiKey: apiKey || process.env.OPEN_AI_KEY,
       // verbose: true,
       // streaming: true,
     }).bind({
@@ -87,7 +87,7 @@ export const getTextLLMModel = (llmType?: string, modelName?: string) => {
     });
   } else if (llmType === "Together AI") {
     return new ChatTogetherAI({
-      togetherAIApiKey: process.env.TOGETHER_AI_KEY,
+      togetherAIApiKey: apiKey || process.env.TOGETHER_AI_KEY,
       modelName: modelName ?? "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
       maxRetries: maxRetries,
       // verbose: true,
@@ -97,7 +97,7 @@ export const getTextLLMModel = (llmType?: string, modelName?: string) => {
     });
   } else if (llmType === "Google Cloud") {
     return new ChatGoogleGenerativeAI({
-      apiKey: process.env.GOOGLE_GEMINI_API_KEY,
+      apiKey: apiKey || process.env.GOOGLE_GEMINI_API_KEY,
       model: modelName ?? "gemini-pro",
       maxOutputTokens: 2048,
       streamUsage: false,
