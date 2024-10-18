@@ -177,6 +177,7 @@ enum PlanTier {
   ONE_TIME
   LIFE_TIME
   SUBSCRIPTION
+  CREDIT
 }
 
 
