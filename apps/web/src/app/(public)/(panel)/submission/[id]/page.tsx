@@ -11,12 +11,22 @@ import {
   TableRow,
 } from "@smartleadmagnet/ui/components/ui/table";
 import { ChevronLeft } from "lucide-react"; // Icons from lucide-react
+import { getUsageById } from "@/actions/lead-magnet";
+import { LeadMagnetUsage } from "@smartleadmagnet/database";
+import { format } from "date-fns";
+import ExportSubmissionsButton from "@/components/ExportSubmissionsButton";
+import ViewPayload from "@/components/ViewPayload";
 
 
 
-
-const SubmissionPage = () => {
+export default async function Page({ params }: { params: { id: string } }) {
   //const router = useRouter(); // Create a router instance
+  let submissionData = await getUsageById(params.id);
+  let useageData = submissionData.usage;
+  let leadMagnet = submissionData.leadMagnet;
+
+  
+  
 
   
 
@@ -34,42 +44,55 @@ const SubmissionPage = () => {
         <Button
           className="btn-primary"
         >
-          Export Submissions
+          <ExportSubmissionsButton usageData={useageData} leadMagnetName={leadMagnet.name} />
         </Button>
       </div>
       <div>
-      <h1 className="text-3xl font-bold text-gray-800 mb-5">Name of Your Form
+      <h1 className="text-3xl font-bold text-gray-800 mb-5">{leadMagnet.name}
         {/* //status */}
-        <span className="ml-3 text-sm bg-green-500 px-3 py-2 rounded-lg  text-white font-normal">Published</span>
-        {/* <span className="ml-3 text-sm bg-gray-300 px-3 py-2 rounded-lg   font-normal">Draft</span> */}
+        {leadMagnet?.status === 'pending' ? (
+            <span className="ml-3 text-sm bg-gray-300 px-3 py-2 rounded-lg   font-normal">Draft</span> 
+        ):(
+          <span className="ml-3 text-sm bg-green-500 px-3 py-2 rounded-lg  text-white font-normal">Published</span>
+        ) }
+        
+        
 
       </h1>
       <div className="flex items-center gap-10 mb-10">
-  <p className="text-gray-900 text-xl text-sm mb-1">Created on: <span className="font-medium">2024-10-17</span></p>
-  <p className="text-gray-900  text-xl mb-1">Total Impressions: <span className="font-medium">100</span></p>
-  <p className="text-gray-900  text-xl mb-1">Total Submissions: <span className="font-medium">100</span></p>
+  <p className="text-gray-900 text-xl text-sm mb-1">Created on: <span className="font-medium">{format(new Date(leadMagnet?.createdAt),"yyyy-MM-dd")}</span></p>
+  <p className="text-gray-900  text-xl mb-1">Total Impressions: <span className="font-medium">{leadMagnet?.impressionsCount}</span></p>
+  <p className="text-gray-900  text-xl mb-1">Total Submissions: <span className="font-medium">{leadMagnet?.usedCount}</span></p>
   </div>
         </div>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            <TableHead >Ip Address</TableHead>
+            <TableHead >Webhook Status</TableHead>
+            <TableHead >Email Sent</TableHead>
+            <TableHead>Submmited At</TableHead>
+            <TableHead>Payload</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className="text-right">$250.00</TableCell>
-          </TableRow>
+          {useageData?.map((data: LeadMagnetUsage) => (
+            <TableRow key={data.id}>
+              <TableCell>{data.ipAddress}</TableCell>
+              <TableCell>{data.webhookStatus}</TableCell>
+              <TableCell>{data.emailSent?"Sent":"Not Sent"}</TableCell>
+              <TableCell>{format(new Date(data.consumedAt),"yyyy-MM-dd")}
+              </TableCell>
+              <TableCell>
+                <ViewPayload payload={data.payload} />
+              </TableCell>
+            </TableRow>
+          ))}
+          
         </TableBody>
       </Table>
     </div>
   );
 };
 
-export default SubmissionPage;
+

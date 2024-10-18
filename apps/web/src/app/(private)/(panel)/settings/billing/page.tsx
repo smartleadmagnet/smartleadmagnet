@@ -1,7 +1,10 @@
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
 import {Button } from "@smartleadmagnet/ui/components/ui/button";
+import { getUserInfo } from "@/actions/user";
 
 export default function SettingsNotificationsPage() {
+  const user = getUserInfo();
+  console.log({user});
   return (
     <div className="space-y-6">
       <div>

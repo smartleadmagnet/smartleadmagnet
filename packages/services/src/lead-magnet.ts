@@ -1,4 +1,4 @@
-import prisma, { LeadMagnet } from "@smartleadmagnet/database";
+import prisma, { LeadMagnet, LeadMagnetUsage } from "@smartleadmagnet/database";
 
 export const createLeadMagnet = async (data: LeadMagnet) => {
   return prisma.leadMagnet.create({
@@ -31,9 +31,12 @@ export const deleteLeadMagnet = async (id: string) => {
   });
 };
 
-export const getLeadMagnetsByUser = async (userId: string) => {
+export const getLeadMagnetsByUser = async (userId: string, status?: string) => {
   return prisma.leadMagnet.findMany({
-    where: { userId },
+    where: {
+      userId,
+      ...(status && { status }), // Only include status if it's provided
+    },
   });
 };
 
@@ -106,3 +109,36 @@ export async function copyLeadMagnet(id: string, userId: string) {
     },
   });
 }
+
+
+export const getLeadMagnetUsageById = async (leadMagnetId: string): Promise<{ usage: LeadMagnetUsage[]; leadMagnet: {
+  name: string;
+  impressionsCount: number;
+  usedCount: number;
+  createdAt: Date;
+  status: string; 
+} | null }> => {
+  // Fetch LeadMagnetUsage records for the given leadMagnetId
+  const usageRecords = await prisma.leadMagnetUsage.findMany({
+    where: { leadMagnetId }
+    
+  });
+
+  // Fetch the associated LeadMagnet information
+  const leadMagnet = await prisma.leadMagnet.findUnique({
+    where: { id: leadMagnetId },
+    select: {
+      name: true,
+      impressionsCount: true,
+      usedCount: true,
+      createdAt: true,
+      status: true,
+      
+    }, // Assuming id is the unique identifier for LeadMagnet
+  });
+
+  return {
+    usage: usageRecords, // All usage records
+    leadMagnet, // The LeadMagnet information
+  };
+};

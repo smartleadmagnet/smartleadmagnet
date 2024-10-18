@@ -421,6 +421,14 @@
   transform: rotate(3deg) translate(0px, -4px);
 }
 
+.app_icon {
+  width: 60px;
+  height: 60px;
+  background: #06b6d4;
+  border-radius: 50%;
+  color: #fff;
+  padding: 10px;
+}
 
 #nprogress .spinner-icon {
   width: 18px;
