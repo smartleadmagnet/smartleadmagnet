@@ -111,6 +111,8 @@ model LeadMagnet {
   output           String            @default("text")
   styles           Json?             @default("{}")
   components       Json?
+  emailSubject     String?           @default("") // New field for storing email subject
+  emailContent     String?           @default("") // New field for storing email content
   usedCount        Int               @default(0)
   lastUsedAt       DateTime?
   impressionsCount Int               @default(0)
@@ -122,14 +124,16 @@ model LeadMagnet {
 }
 
 model LeadMagnetUsage {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
-  leadMagnet   LeadMagnet @relation(fields: [leadMagnetId], references: [id])
-  leadMagnetId String     @db.ObjectId
-  ipAddress    String
-  payload      Json?      @default("{}")
-  consumedAt   DateTime   @default(now()) // Stores the time of consumption
-  webhookStatus String    @default("pending") // Logs webhook status: pending, success, failed
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  leadMagnet     LeadMagnet @relation(fields: [leadMagnetId], references: [id])
+  leadMagnetId   String     @db.ObjectId
+  ipAddress      String
+  payload        Json?      @default("{}")
+  consumedAt     DateTime   @default(now()) // Stores the time of consumption
+  webhookStatus  String     @default("pending") // Logs webhook status: pending, success, failed
+  emailSent      Boolean    @default(false) // Track if the test email has been sent
 }
+
 
 
 model EmailLog {
