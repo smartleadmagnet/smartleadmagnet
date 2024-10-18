@@ -28,9 +28,12 @@ export const deleteLeadMagnet = async (id: string) => {
   });
 };
 
-export const getLeadMagnetsByUser = async (userId: string) => {
+export const getLeadMagnetsByUser = async (userId: string, status?: string) => {
   return prisma.leadMagnet.findMany({
-    where: { userId },
+    where: {
+      userId,
+      ...(status && { status }), // Only include status if it's provided
+    },
   });
 };
 

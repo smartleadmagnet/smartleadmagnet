@@ -1,27 +1,14 @@
-import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
-import { createLead, getByUser } from "@/actions/lead-magnet";
-import { redirect } from "next/navigation";
+import {  getByUser } from "@/actions/lead-magnet";
 import AppCard from "@/components/AppCard";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@smartleadmagnet/ui/components/ui/select";
+import MagnetSearch from "@/components/MagnetSearch";
 
-export default async function MyForms() {
-  const leads = await getByUser();
 
-  const onCreate = async () => {
-    "use server";
-    const lead = await createLead();
-    redirect(`/builder/${lead?.id!}`);
-  };
+export default async function MyForms({ searchParams }: { searchParams: { status?: string } }) {
+  const selectedStatus = searchParams.status === 'all' ?'':searchParams.status || ''; 
+  let leads = await getByUser(selectedStatus);
 
-  return (
+return (
     <div className="flex size-full flex-col px-5">
       <div className="flex justify-between">
         <div>
@@ -30,18 +17,9 @@ export default async function MyForms() {
         </div>
         <div className="my-4 flex items-end justify-between sm:my-0 sm:items-center">
           <div className="flex flex-col gap-4 sm:my-4 sm:flex-row"></div>
-          <Select>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select Status" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectItem value="apple">Published</SelectItem>
-          <SelectItem value="banana">Draft</SelectItem>
           
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+          <MagnetSearch/>
+
           
         </div>
       </div>
@@ -54,6 +32,8 @@ export default async function MyForms() {
               name={lead.name}
               description={lead.description}
               analytics={{ impressions: lead.impressionsCount, used: lead.usedCount }}
+              status={lead.status}
+              image={lead.image}
             />
           </li>
         ))}
