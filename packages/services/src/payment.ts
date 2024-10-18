@@ -1,4 +1,5 @@
 import prisma, { Credit, Payment } from "@smartleadmagnet/database";
+import { PlanTier } from "@smartleadmagnet/web/src/lib/types";
 
 export const upsetCredits = async ({
   userId,
@@ -30,15 +31,26 @@ export const getCredit = async (userId: string): Promise<Credit> => {
 };
 
 export const createPayment = async (data: {
-  planType: string;
+  planType: PlanTier;
   credits: number;
   price: number;
   stripeCustomerId: string;
   userId: string;
   stripeSessionId: string;
+  subscriptionId?: string; // Optional field for subscription ID
+  subscriptionStartDate?: Date; // Optional field for subscription start date
+  subscriptionEndDate?: Date; // Optional field for subscription end date
+  subscriptionStatus?: string; // Optional field for subscription status
 }): Promise<Payment> => {
   return prisma.payment.create({
-    data,
+    data: {
+      ...data,
+      planType: data.planType as PlanTier, // Ensure the planType matches the enum
+      subscriptionId: data.subscriptionId ?? null,
+      subscriptionStartDate: data.subscriptionStartDate ?? null,
+      subscriptionEndDate: data.subscriptionEndDate ?? null,
+      subscriptionStatus: data.subscriptionStatus ?? null,
+    },
   });
 };
 
@@ -60,3 +72,28 @@ export async function getPaymentBySessionId(sessionId: string) {
 export async function getUserPayments(userId: string): Promise<Array<Payment>> {
   return getPayments(userId);
 }
+
+export const updateSubscriptionDetailsForCancel = async ({
+  stripeCustomerId,
+  subscriptionId,
+  currentPeriodStart,
+  currentPeriodEnd,
+}: {
+  subscriptionId: string;
+  stripeCustomerId: string;
+  currentPeriodStart: number;
+  currentPeriodEnd: number;
+}) => {
+  await prisma.payment.updateMany({
+    where: {
+      stripeCustomerId: stripeCustomerId,
+      subscriptionId: subscriptionId,
+    },
+    data: {
+      subscriptionStatus: "canceled",
+      subscriptionStartDate: new Date(currentPeriodStart * 1000),
+      subscriptionEndDate: new Date(currentPeriodEnd * 1000),
+      planType: PlanTier.SUBSCRIPTION,
+    },
+  });
+};

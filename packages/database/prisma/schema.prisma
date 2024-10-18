@@ -124,17 +124,15 @@ model LeadMagnet {
 }
 
 model LeadMagnetUsage {
-  id             String     @id @default(auto()) @map("_id") @db.ObjectId
-  leadMagnet     LeadMagnet @relation(fields: [leadMagnetId], references: [id])
-  leadMagnetId   String     @db.ObjectId
-  ipAddress      String
-  payload        Json?      @default("{}")
-  consumedAt     DateTime   @default(now()) // Stores the time of consumption
-  webhookStatus  String     @default("pending") // Logs webhook status: pending, success, failed
-  emailSent      Boolean    @default(false) // Track if the test email has been sent
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  leadMagnet    LeadMagnet @relation(fields: [leadMagnetId], references: [id])
+  leadMagnetId  String     @db.ObjectId
+  ipAddress     String
+  payload       Json?      @default("{}")
+  consumedAt    DateTime   @default(now()) // Stores the time of consumption
+  webhookStatus String     @default("pending") // Logs webhook status: pending, success, failed
+  emailSent     Boolean    @default(false) // Track if the test email has been sent
 }
-
-
 
 model EmailLog {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -180,18 +178,21 @@ enum PlanTier {
   CREDIT
 }
 
-
 model Payment {
-  id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  stripeSessionId  String   @unique // Stripe session ID
-  stripeCustomerId String // Stripe customer ID
-  userId           String   @db.ObjectId
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  planType         PlanTier? // "one-time", "lifetime", or "subscription"
-  credits          Int // Number of credits associated with the plan
-  price            Float // Price of the plan
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id                    String    @id @default(auto()) @map("_id") @db.ObjectId
+  stripeSessionId       String    @unique // Stripe session ID
+  stripeCustomerId      String // Stripe customer ID
+  userId                String    @db.ObjectId
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planType              PlanTier? // "one-time", "lifetime", or "subscription"
+  credits               Int // Number of credits associated with the plan
+  price                 Float // Price of the plan
+  subscriptionId        String? // Subscription ID for subscriptions
+  subscriptionStartDate DateTime? // Start date of the subscription
+  subscriptionEndDate   DateTime? // End date of the subscription
+  subscriptionStatus    String? // Status of the subscription (e.g., "active", "canceled", "expired")
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
   @@map("payments")
 }
