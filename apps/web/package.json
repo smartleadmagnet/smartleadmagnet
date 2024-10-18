@@ -17,6 +17,7 @@
     "@auth/prisma-adapter": "^2.5.3",
     "@react-email/components": "^0.0.25",
     "@react-email/font": "^0.0.8",
+    "@sentry/nextjs": "^8",
     "@smartleadmagnet/llm": "*",
     "@smartleadmagnet/services": "*",
     "@smartleadmagnet/ui": "*",
