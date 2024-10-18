@@ -32,3 +32,4 @@ export const updateStripeCustomerId = async ({ id, stripeCustomerId }: { id: str
     data: { stripeCustomerId: stripeCustomerId! },
   });
 };
+

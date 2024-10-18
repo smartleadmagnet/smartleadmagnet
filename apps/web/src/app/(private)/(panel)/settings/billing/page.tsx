@@ -1,7 +1,10 @@
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
+import { getUserInfo } from "@/actions/user";
 
 export default function SettingsNotificationsPage() {
+  const user = getUserInfo();
+  console.log({ user });
   return (
     <div className="space-y-6">
       <div>
@@ -16,7 +19,6 @@ export default function SettingsNotificationsPage() {
             <p className="text-base font-bold">100</p>
             <p>Credits are in subscription plan will reset every billing cycle.</p>
           </div>
-
           <div>
             <Button className="btn-primary mr-5">Buy More Credits</Button>
           </div>
