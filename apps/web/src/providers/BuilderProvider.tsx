@@ -1,11 +1,12 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
 import { ChildItem } from "@/app/types/builder";
-import { LeadMagnet } from "@smartleadmagnet/database";
+import { LeadMagnet, ApiKey } from "@smartleadmagnet/database";
 import axios from "axios";
 import llm from "@/data/llm.json";
 import { LLMModel, LLMProvider } from "@/types/llm";
 import { BuilderSchemaForm } from "@/types/builder";
+import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
 
 interface BuilderContextType {
   elementsList: any;
@@ -28,6 +29,7 @@ interface BuilderContextType {
   filteredProviders: LLMProvider[];
   onOutputTypeChange: (type: string) => void;
   filteredModels: LLMModel[];
+  fetchApiKeys: () => Promise<Array<ApiKey>>;
 }
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
@@ -92,6 +94,19 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
       await axios.post(`/api/lead/${leadMagnet.id}`, form);
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  const fetchApiKeys = async () => {
+    try {
+      const { data } = await axios.get(`/api/keys`);
+      return data || [];
+    } catch (e) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Could not fetch API keys",
+      });
     }
   };
 
@@ -199,6 +214,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         filteredModels,
         updateSettingFormData,
         leadMagnet: selectedLeadMagnet,
+        fetchApiKeys,
       }}
     >
       {children}
