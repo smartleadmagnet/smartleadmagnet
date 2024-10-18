@@ -13,6 +13,9 @@ export async function getUsers() {
 export const getUserById = async (id: string): Promise<User> =>
   prisma.user.findUnique({
     where: { id },
+    include: {
+      Credit: true,
+    },
   });
 
 export const getUserByEmail = async (email: string) =>
@@ -32,4 +35,3 @@ export const updateStripeCustomerId = async ({ id, stripeCustomerId }: { id: str
     data: { stripeCustomerId: stripeCustomerId! },
   });
 };
-

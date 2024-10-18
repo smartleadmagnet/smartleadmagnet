@@ -34,4 +34,20 @@ export enum PlanTier {
   ONE_TIME = "ONE_TIME",
   LIFE_TIME = "LIFE_TIME",
   SUBSCRIPTION = "SUBSCRIPTION",
+  CREDIT = "CREDIT",
 }
+
+export const getPlanName = (plan: string): string => {
+  switch (plan) {
+    case "ONE_TIME":
+      return "One Time";
+    case "LIFE_TIME":
+      return "Life Time";
+    case "SUBSCRIPTION":
+      return "Subscription (Monthly)";
+    case "CREDIT":
+      return "Credit";
+    default:
+      return "No Plan";
+  }
+};

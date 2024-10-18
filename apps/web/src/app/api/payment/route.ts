@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCheckoutSession } from "@/actions/stripe";
+import { getCheckoutSession, getSubscription } from "@/actions/stripe";
 import pricingConfig from "@/lib/config/pricingConfig";
 import { getSessionUser } from "@/services/user";
 import { createPayment, getCredit, getUserById, upsetCredits, getPaymentBySessionId } from "@smartleadmagnet/services";
@@ -37,6 +37,32 @@ export async function GET(req: NextRequest) {
         totalCredit,
       });
 
+      // Capture subscription details if available
+      const subscriptionId = session.subscription as string;
+      let subscriptionStartDate = null;
+      let subscriptionEndDate = null;
+      let subscriptionStatus = null;
+
+      if (subscriptionId) {
+        const subscription = await getSubscription(subscriptionId);
+        subscriptionStartDate = new Date(subscription.current_period_start * 1000);
+        subscriptionEndDate = new Date(subscription.current_period_end * 1000);
+        subscriptionStatus = subscription.status;
+      }
+
+      console.log({
+        stripeSessionId: session.id,
+        stripeCustomerId: user.stripeCustomerId,
+        userId,
+        planType: plan.planTier,
+        credits: plan.credits,
+        price: plan.discountPrice,
+        subscriptionId,
+        subscriptionStartDate,
+        subscriptionEndDate,
+        subscriptionStatus,
+      });
+
       // Create payment record
       await createPayment({
         stripeSessionId: session.id,
@@ -45,12 +71,16 @@ export async function GET(req: NextRequest) {
         planType: plan.planTier,
         credits: plan.credits,
         price: plan.discountPrice,
+        subscriptionId, // Store subscription ID
+        subscriptionStartDate, // Store subscription start date
+        subscriptionEndDate, // Store subscription end date
+        subscriptionStatus, // Store subscription status
       });
 
       return NextResponse.redirect(`${process.env.HOST_URL}/payment/success`); // Redirect to success page
     }
 
-    return NextResponse.redirect(`${process.env.HOST_URL}/payment/error`); // Redirect to success page
+    return NextResponse.redirect(`${process.env.HOST_URL}/payment/error`); // Redirect to error page
   } catch (error) {
     console.error("Error handling payment:", error);
     return NextResponse.json({ error: "Payment processing failed" }, { status: 500 });
