@@ -40,7 +40,6 @@ export default async function SettingsNotificationsPage() {
       </div>
       <div className="space-y-2">
         <h3 className="text-lg font-medium">Lead Magnet Credits:</h3>
-
         <div className="flex flex-row items-center justify-between rounded-lg border p-4">
           <div className="space-y-0.5">
             {user.Credit && (
