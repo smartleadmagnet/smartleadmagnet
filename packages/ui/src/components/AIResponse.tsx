@@ -3,8 +3,8 @@ import { CheckIcon, CopyIcon, ReloadIcon } from "@radix-ui/react-icons";
 import React from "react";
 
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
-import MarkdownTypingEffect from "@/components/MarkdownTypingEffect";
-import { Button } from "@/components/ui/button";
+import MarkdownTypingEffect from "./MarkdownTypingEffect";
+import { Button } from "./ui/button";
 
 const AIResponse = ({
   response,
