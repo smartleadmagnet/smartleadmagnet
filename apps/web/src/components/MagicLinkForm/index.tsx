@@ -8,9 +8,8 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
-import { Loader2 } from "lucide-react"
-
-
+import { Loader2 } from "lucide-react";
+import Spinner from "@smartleadmagnet/ui/components/Spinner";
 
 type MagicLinkFormProps = {
   id: string;
@@ -110,7 +109,7 @@ const EnterEmail: React.FC<EnterEmailProps> = ({
             </>
           )}
         </Button>
-        <h3 className="mt-5 mb-3 max-w-[250px] text-base">
+        <h3 className="mb-3 mt-5 max-w-[250px] text-base">
           SmartLeadMagnet will email you a code to create your account or login to your existing account.
         </h3>
       </form>
@@ -133,40 +132,37 @@ const loginCodeFormSchema = z.object({
 export type LoginCodeFormValues = z.infer<typeof loginCodeFormSchema>;
 
 const VerifyCode: React.FC<VerifyCodeProps> = ({ email, onError, buttonClass, inputClass, callbackUrl }) => {
-  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
-  const router = useRouter();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginCodeFormValues>({
     resolver: zodResolver(loginCodeFormSchema),
   });
 
   const onSubmit = async (data: LoginCodeFormValues) => {
-    setLoading(true);
     try {
       const res = await fetch(
-        `/api/auth/callback/email-code?email=${encodeURIComponent(email)}&token=${encodeURIComponent(
-          data.code
-        )}&callbackUrl=${encodeURIComponent(callbackUrl)}`
+        `/api/auth/callback/email-code?email=${encodeURIComponent(email)}&token=${encodeURIComponent(data.code)}`
       );
+
+      // redirectUrl = http://localhost:3000/api/auth/error?error=Verification
       const redirectUrl = res.url;
-      // this is hacky, but the alternative leads to a terrible UX of multiple reloads before we land on the user page
-      if (redirectUrl.includes(callbackUrl)) {
-        location.href = redirectUrl;
-      } else {
+      // if there is an error, redirect to the error page
+      if (redirectUrl.includes("error")) {
         onError();
         toast({
           variant: "destructive",
           title: "Error",
           description: "This verification token has expired.",
         });
+      } else {
+        // this is hacky, but the alternative leads to a terrible UX of multiple reloads before we land on the user page
+        location.href = callbackUrl;
       }
     } catch (e) {
-      setLoading(false);
       // @ts-ignore
       setError(e?.message || "An error occurred");
     }
@@ -182,9 +178,9 @@ const VerifyCode: React.FC<VerifyCodeProps> = ({ email, onError, buttonClass, in
           className={inputClass}
         />
         {(errors?.code || error) && <p>Enter the valid code</p>}
-        <button className={buttonClass} disabled={loading}>
-          {loading ? (
-            <span className="loading loading-spinner loading-sm" />
+        <button className={buttonClass} disabled={isSubmitting}>
+          {isSubmitting ? (
+            <Spinner className="mr-2 h-4 w-4 animate-spin" />
           ) : (
             <>
               <svg
