@@ -15,7 +15,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
         return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
       }
       const payload = await req.json();
-      const result = await validateLeadWithInput({ leadMagnet: lead, promptInput: payload });
+      const result = await validateLeadWithInput({ leadMagnet: lead, promptInput: payload, published: false });
       return NextResponse.json({ message: result });
     } catch (error: any) {
       console.log(error);

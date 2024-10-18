@@ -1,7 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 import { useForm } from "react-hook-form";
+import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
 
 interface Preview {
   type: string;
@@ -30,7 +31,21 @@ const useShareForm = () => {
         setResponse({ type: "text", content: result?.data?.message });
       }
     } catch (e) {
-      console.log(e);
+      // if axios error the display the error message
+      if (axios.isAxiosError(e)) {
+        const error = e as AxiosError;
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: error.response?.data?.error || error.message,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: e.message,
+        });
+      }
     }
   }
 

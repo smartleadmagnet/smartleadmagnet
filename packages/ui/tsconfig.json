@@ -7,7 +7,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [
@@ -17,7 +19,9 @@
     "**/*.tsx",
     "**/*.json",
     ".next/types/**/*.ts",
-    "postcss.config.mjs"
-, "../../apps/web/src/components/AppCard.tsx", "../../apps/web/src/components/Progress.tsx"  ],
-  "exclude": ["node_modules"]
+    "postcss.config.mjs",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

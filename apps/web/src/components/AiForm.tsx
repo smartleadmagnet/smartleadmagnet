@@ -13,9 +13,9 @@ import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/ra
 import useAIForm from "@/hooks/aiform.hook";
 import { Badge } from "@smartleadmagnet/ui/components/ui/badge";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
-import Spinner from "@smartleadmagnet/ui/components/Spinner";
 import ContentViewer from "@/components/ContentViewer";
 import React from "react";
+import ApiKeySelector from "@/components/ApiKeySelector";
 
 export default function AIForm() {
   const {
@@ -38,7 +38,7 @@ export default function AIForm() {
   return (
     <div className="relative flex  w-full flex-col justify-between rounded-md bg-white p-4 p-4">
       <div className="scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 ai-form flex flex-col overflow-y-auto p-1">
-        {(!preview && !processing)  ? (
+        {!preview && !processing ? (
           <div className="flex  flex-col">
             <div className="form-control w-full">
               <div className="mb-[10px] flex w-full items-center justify-between">
@@ -92,9 +92,7 @@ export default function AIForm() {
               <div className="border-primary w-full rounded-lg border bg-white p-3">
                 <div className="mb-3 flex items-center justify-between">
                   <h3>Models</h3>
-                  <Button variant="ghost" className="border border-cyan-600">
-                    Manage Your Keys
-                  </Button>
+                  <ApiKeySelector />
                 </div>
                 <RadioGroup value={selectedModel} className="flex  flex-wrap gap-3" onValueChange={setSelectedModel}>
                   {filteredModels.map((model) => (
@@ -115,24 +113,23 @@ export default function AIForm() {
               </div>
             </div>
           </div>
-        ):(
+        ) : (
           <div className="flex  items-center justify-center">
-
             <div className="w-full">
               <div className="mb-4">
-              <Button className="mt-4" onClick={() => setPreview(undefined)}>
-                Back to Form
-              </Button>
+                <Button className="mt-4" onClick={() => setPreview(undefined)}>
+                  Back to Form
+                </Button>
               </div>
               <ContentViewer type={outputType} content={preview?.content!} isLoading={processing} />
             </div>
           </div>
         )}
-        
-        {(!preview && !processing)  && (
-        <Button className="mt-4 flex" onClick={onValidatePrompt}>
-         Validate Prompt
-        </Button>
+
+        {!preview && !processing && (
+          <Button className="mt-4 flex" onClick={onValidatePrompt}>
+            Validate Prompt
+          </Button>
         )}
       </div>
     </div>
