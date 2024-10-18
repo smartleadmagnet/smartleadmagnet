@@ -1,6 +1,6 @@
 "use server";
 
-import { createLeadMagnet, getLeadMagnetById, getLeadMagnetsByUser,deleteLeadMagnet,copyLeadMagnet } from "@smartleadmagnet/services";
+import { createLeadMagnet, getLeadMagnetById, getLeadMagnetsByUser,deleteLeadMagnet,copyLeadMagnet,getLeadMagnetUsageById } from "@smartleadmagnet/services";
 import { adjectives, Config, names, starWars, uniqueNamesGenerator } from "unique-names-generator";
 import { getSessionUser } from "@/services/user";
 import { LeadMagnet } from "@smartleadmagnet/database";
@@ -53,4 +53,8 @@ export async function deleteLead(keyId: string) {
   await deleteLeadMagnet(keyId);
   revalidatePath("/api/my-magnets");
   
+}
+
+export async function getUsageById(id: string) {
+  return getLeadMagnetUsageById(id);
 }
