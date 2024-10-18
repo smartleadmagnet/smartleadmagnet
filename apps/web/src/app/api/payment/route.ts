@@ -7,7 +7,6 @@ import { createPayment, getCredit, getUserById, upsetCredits, getPaymentBySessio
 export async function GET(req: NextRequest) {
   const session_id = req.nextUrl.searchParams.get("session_id");
   const sessionUser = await getSessionUser();
-
   try {
     const session = await getCheckoutSession(session_id as string);
     if (!session) return NextResponse.json({ error: "Invalid session" }, { status: 400 });

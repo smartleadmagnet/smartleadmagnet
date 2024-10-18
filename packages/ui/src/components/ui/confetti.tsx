@@ -1,13 +1,5 @@
 import type { ReactNode } from "react";
-import React, {
-  createContext,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-} from "react";
+import React, { createContext, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from "react";
 import type {
   GlobalOptions as ConfettiGlobalOptions,
   CreateTypes as ConfettiInstance,
@@ -15,7 +7,7 @@ import type {
 } from "canvas-confetti";
 import confetti from "canvas-confetti";
 
-import { Button, ButtonProps } from "@/components/ui/button";
+import { Button, ButtonProps } from "./button";
 
 type Api = {
   fire: (options?: ConfettiOptions) => void;
@@ -33,13 +25,7 @@ export type ConfettiRef = Api | null;
 const ConfettiContext = createContext<Api>({} as Api);
 
 const Confetti = forwardRef<ConfettiRef, Props>((props, ref) => {
-  const {
-    options,
-    globalOptions = { resize: true, useWorker: true },
-    manualstart = false,
-    children,
-    ...rest
-  } = props;
+  const { options, globalOptions = { resize: true, useWorker: true }, manualstart = false, children, ...rest } = props;
   const instanceRef = useRef<ConfettiInstance | null>(null); // confetti instance
 
   const canvasRef = useCallback(
@@ -61,20 +47,17 @@ const Confetti = forwardRef<ConfettiRef, Props>((props, ref) => {
         }
       }
     },
-    [globalOptions],
+    [globalOptions]
   );
 
   // `fire` is a function that calls the instance() with `opts` merged with `options`
-  const fire = useCallback(
-    (opts = {}) => instanceRef.current?.({ ...options, ...opts }),
-    [options],
-  );
+  const fire = useCallback((opts = {}) => instanceRef.current?.({ ...options, ...opts }), [options]);
 
   const api = useMemo(
     () => ({
       fire,
     }),
-    [fire],
+    [fire]
   );
 
   useImperativeHandle(ref, () => api, [api]);
@@ -94,8 +77,7 @@ const Confetti = forwardRef<ConfettiRef, Props>((props, ref) => {
 });
 
 interface ConfettiButtonProps extends ButtonProps {
-  options?: ConfettiOptions &
-    ConfettiGlobalOptions & { canvas?: HTMLCanvasElement };
+  options?: ConfettiOptions & ConfettiGlobalOptions & { canvas?: HTMLCanvasElement };
   children?: React.ReactNode;
 }
 

@@ -115,7 +115,6 @@ export async function getSubscription(subscriptionId: string) {
 // }
 //
 export const getSingInLink = async (priceId: string) => {
-  console.log("priceId", priceId);
   if (!priceId) {
     return "/";
   }
@@ -137,5 +136,5 @@ export const getSingInLink = async (priceId: string) => {
       }
     }
   }
-  return `/api/auth/signin?callbackUrl=${encodeURIComponent(`/api/payment/checkout?priceId=${priceId}`)}`;
+  return `${process.env.HOST_URL}/api/auth/signin?callbackUrl=${encodeURIComponent(`${process.env.HOST_URL}/api/payment/checkout?priceId=${priceId}`)}`;
 };
