@@ -73,10 +73,10 @@ export default function AppCard({ id, name, description, analytics, status, imag
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <div className="flex flex-col p-1">
+                <div className="flex flex-col p-0 app-card-dropdown">
                   {/* Edit Option */}
                   <DropdownMenuItem asChild>
-                    <Link href={`/builder/${id}`} className="flex items-center p-1 hover:bg-gray-100">
+                    <Link href={`/builder/${id}`} className="flex items-center  hover:bg-gray-100">
                       <Edit className="mr-2 h-4 w-4" />
                       Edit
                     </Link>
@@ -88,14 +88,14 @@ export default function AppCard({ id, name, description, analytics, status, imag
 
                   {/* Share Option */}
                   <DropdownMenuItem asChild>
-                    <Link href={`/share/${id}`} className="flex items-center p-1 hover:bg-gray-100">
+                    <Link href={`/share/${id}`} className="flex items-center  hover:bg-gray-100">
                       <Share className="mr-2 h-4 w-4" />
                       Share
                     </Link>
                   </DropdownMenuItem>
                   {/* view Submission  Option */}
                   <DropdownMenuItem asChild>
-                    <Link href={`/submission/${id}`} className="flex items-center p-1 hover:bg-gray-100">
+                    <Link href={`/submission/${id}`} className="flex items-center  hover:bg-gray-100">
                       <List className="mr-2 h-4 w-4" />
                       View Submission
                     </Link>
