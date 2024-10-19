@@ -25,6 +25,7 @@ import EmbedModal from "@/components/EmbedModal";
 import BuilderStylePreview from "@/components/BuilderStylePreview";
 import BuilderOption from "@/components/BuilderOption";
 import { formatDistanceToNow } from "date-fns";
+import PurchasePlanDialog from "@smartleadmagnet/ui/components/PurchasePlanDialog";
 
 export default function Builder() {
   const {
@@ -53,6 +54,10 @@ export default function Builder() {
     router,
     name,
     setName,
+    creditRequired,
+    paymentRequired,
+    onPublishLead,
+    onClosePaymentModal,
   } = useBuilder(); // Use the custom hook
 
   const filterItems = (searchTerm: string) => {
@@ -87,7 +92,9 @@ export default function Builder() {
               <p className="mr-4 font-bold">
                 Last Saved ({formatDistanceToNow(new Date(leadMagnet.updatedAt), { addSuffix: true })})
               </p>
-              <Button className="btn-primary ">Publish</Button>
+              <Button className="btn-primary" onClick={leadMagnet?.status === "published" ? () => {} : onPublishLead}>
+                {leadMagnet?.status === "published" ? "Save" : "Publish"}
+              </Button>
             </div>
           </div>
           {/* end Header  */}
@@ -211,7 +218,7 @@ export default function Builder() {
                   <main className="drop-area mx-2 flex-1 rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 p-2">
                     <Droppable droppableId="droppable-main">
                       {(provided: DroppableProvided) => (
-                        <div ref={provided.innerRef} {...provided.droppableProps} className="h-full drop-area-wrapper">
+                        <div ref={provided.innerRef} {...provided.droppableProps} className="drop-area-wrapper h-full">
                           {elementsList.length ? (
                             elementsList.map((item: any, index: number) => (
                               <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -273,6 +280,12 @@ export default function Builder() {
         </div>
       </Tabs>
       <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen} />
+      <PurchasePlanDialog
+        isOpen={creditRequired || paymentRequired}
+        onClose={onClosePaymentModal}
+        creditRequired={creditRequired}
+        paymentRequired={paymentRequired}
+      />
     </>
   );
 }

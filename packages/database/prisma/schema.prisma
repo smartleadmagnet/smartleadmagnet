@@ -26,7 +26,7 @@ model User {
   LeadMagnet LeadMagnet[]
   EmailLog   EmailLog[]
   ApiKey     ApiKey[]
-  Payment    Payment[]
+  Payments    Payment[]
   Credit     Credit?
 
   @@map("users")

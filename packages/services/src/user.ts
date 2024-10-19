@@ -15,6 +15,7 @@ export const getUserById = async (id: string): Promise<User> =>
     where: { id },
     include: {
       Credit: true,
+      Payments: true,
     },
   });
 
@@ -29,8 +30,6 @@ export const getUserByStripeCustomerId = async (stripeCustomerId: string): Promi
   });
 };
 
-
-
 export const updateStripeCustomerId = async ({ id, stripeCustomerId }: { id: string; stripeCustomerId: string }) => {
   return prisma.user.update({
     where: { id },
@@ -38,9 +37,9 @@ export const updateStripeCustomerId = async ({ id, stripeCustomerId }: { id: str
   });
 };
 
-export const updateUser = async ({ id, bio,name }: { id: string; bio: string,name:string }) => {
+export const updateUser = async ({ id, bio, name }: { id: string; bio: string; name: string }) => {
   return prisma.user.update({
     where: { id },
-    data: { bio,name },
+    data: { bio, name },
   });
 };
