@@ -63,10 +63,10 @@ const useBuilder = () => {
   const imageUrl = "https://smartleadmagnet.com/wp-content/uploads/2024/09/ai-help.jpg"; // Replace with your image URL
 
   const handleStyleUpdate = (key: string, newColor: string) => {
-    setFormStyles((prev) => ({
-      ...prev,
+    setFormStyles({
+      ...formStyles,
       [key]: newColor,
-    }));
+    });
   };
 
   const removeElement = (id: string) => {

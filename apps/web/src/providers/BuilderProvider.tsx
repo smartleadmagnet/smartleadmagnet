@@ -64,7 +64,7 @@ const defaultFormStyles = {
   .form-item {
     /* Styles for form input fields wrapper */
     /* Add your input styling here */
-  }  
+  }
 
   label {
     /* Styles for form label fields */
@@ -73,11 +73,11 @@ const defaultFormStyles = {
   input {
     /* Styles for form input fields */
     /* Add your label styling here */
-  } 
+  }
   textarea {
     /* Styles for form textarea fields */
     /* Add your label styling here */
-  }    
+  }
 
   button[type="submit"] {
     /* Styles for submit buttons */
@@ -221,6 +221,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
   };
 
   const updateFormStyles = async (styles: any) => {
+    console.log(styles);
     setFormStyles(styles);
     await updateData({ styles });
   };

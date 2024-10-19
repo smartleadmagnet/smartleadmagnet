@@ -215,10 +215,10 @@ export default function BuilderStylePreview({
                 <Label>Enable Custom Css</Label>
               </div>
               {formStyles.enableCustomCss && (
-                <Textarea
-                  value={formStyles.customCss}
-                  onChange={(e) => {
-                    handleStyleUpdate("customCss", e.target.value);
+                <CustomCssEditor
+                  customCss={formStyles.customCss}
+                  onCssChange={(value) => {
+                    handleStyleUpdate("customCss", value);
                   }}
                   placeholder="Add your custom css here"
                   rows={10}
