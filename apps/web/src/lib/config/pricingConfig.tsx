@@ -52,7 +52,6 @@ const pricingConfig: IPricing = {
       features: ["100 AI Credits", "Valid for 1 Year", "Access to Lead Magnet Builder", "AI-Powered Personalization"],
       priceId: process.env.STRIPE_SMARTLEADMAGNET_ONE_TIME!,
     },
-    
     {
       name: "Monthly Subscription",
       originalPrice: 79,
@@ -69,6 +68,55 @@ const pricingConfig: IPricing = {
         "AI-Powered Personalization",
       ],
       priceId: process.env.STRIPE_SMARTLEADMAGNET_MONTHLY_SUBSCRIPTION!,
+    },
+
+    {
+      name: "Credit 250",
+      originalPrice: 39,
+      discountPrice: 20, // Discounted price
+      credits: 250,
+      currency: "USD",
+      isSubscription: false,
+      planTier: PlanTier.CREDIT,
+      description: "250 AI credits.",
+      features: [],
+      priceId: process.env.STRIPE_SMARTLEADMAGNET_250_CREDIT!,
+    },
+    {
+      name: "Credit 500",
+      originalPrice: 59,
+      discountPrice: 35, // Discounted price
+      credits: 500,
+      currency: "USD",
+      isSubscription: false,
+      planTier: PlanTier.CREDIT,
+      description: "500 AI credits.",
+      features: [],
+      priceId: process.env.STRIPE_SMARTLEADMAGNET_500_CREDIT!,
+    },
+    {
+      name: "Credit 750",
+      originalPrice: 79,
+      discountPrice: 45, // Discounted price
+      credits: 750,
+      currency: "USD",
+      isSubscription: false,
+      planTier: PlanTier.CREDIT,
+      description: "750 AI credits.",
+      features: [],
+      priceId: process.env.STRIPE_SMARTLEADMAGNET_750_CREDIT!,
+    },
+    {
+      name: "Credit 1000",
+      originalPrice: 99,
+      discountPrice: 52, // Discounted price
+      credits: 1000,
+      currency: "USD",
+      isSubscription: false,
+      planTier: PlanTier.CREDIT,
+      description: "1000 AI credits.",
+      features: [],
+      priceId: process.env.STRIPE_SMARTLEADMAGNET_1000_CREDIT!,
     },
   ],
 };
