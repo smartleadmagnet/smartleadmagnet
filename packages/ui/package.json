@@ -66,6 +66,7 @@
     "react-mentions": "^4.4.10",
     "react-quill": "^2.0.0",
     "react-select": "^5.8.1",
+    "react-style-editor": "^0.4.0",
     "react-syntax-highlighter": "^15.5.0",
     "remark-gfm": "^4.0.0",
     "styled-components": "^6.1.13",
