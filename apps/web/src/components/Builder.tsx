@@ -87,7 +87,7 @@ export default function Builder() {
               <p className="mr-4 font-bold">
                 Last Saved ({formatDistanceToNow(new Date(leadMagnet.updatedAt), { addSuffix: true })})
               </p>
-              <Button className="btn-primary ">Publish</Button>
+              <Button className="btn-primary">Publish</Button>
             </div>
           </div>
           {/* end Header  */}
@@ -211,7 +211,7 @@ export default function Builder() {
                   <main className="drop-area mx-2 flex-1 rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 p-2">
                     <Droppable droppableId="droppable-main">
                       {(provided: DroppableProvided) => (
-                        <div ref={provided.innerRef} {...provided.droppableProps} className="h-full drop-area-wrapper">
+                        <div ref={provided.innerRef} {...provided.droppableProps} className="drop-area-wrapper h-full">
                           {elementsList.length ? (
                             elementsList.map((item: any, index: number) => (
                               <Draggable key={item.id} draggableId={item.id} index={index}>
