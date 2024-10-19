@@ -21,6 +21,7 @@ import { Switch } from "@smartleadmagnet/ui/components/ui/switch";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 import Image from "next/image";
 import { marked } from "marked";
+import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
 
 interface Props {
   formStyles: any;
@@ -214,12 +215,14 @@ export default function BuilderStylePreview({
                 <Label>Enable Custom Css</Label>
               </div>
               {formStyles.enableCustomCss && (
-                <CustomCssEditor
-                  customCss={formStyles.customCss}
-                  onCssChange={(newCss: string) => {
-                    console.log(newCss);
-                    handleStyleUpdate("customCss", newCss);
+                <Textarea
+                  value={formStyles.customCss}
+                  onChange={(e) => {
+                    handleStyleUpdate("customCss", e.target.value);
                   }}
+                  placeholder="Add your custom css here"
+                  rows={10}
+                  className="w-full"
                 />
               )}
             </AccordionContent>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@smartleadmagnet/ui/components/ui/card";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,6 +11,7 @@ import {
 import { ChevronDown, Edit, ImageIcon, List, Share } from "lucide-react"; // Icons from lucide-react
 import DeleteMagnet from "@/components/DeleteMagnet";
 import CopyMagnet from "@/components/CopyMagnet";
+import ViewSchema from "@/components/ViewSchema";
 import Image from "next/image";
 import Link from "next/link";
 import { marked } from "marked";
@@ -20,13 +22,14 @@ interface Props {
   description: string;
   status: string;
   image: string;
+  compoenents: string;
   analytics?: {
     impressions: number;
     used: number;
   };
 }
 
-export default function AppCard({ id, name, description, analytics, status, image }: Props) {
+export default function AppCard({ id, name, description, analytics, status, image,compoenents }: Props) {
   return (
     <Card className="p-0 ">
       <div className="mr-3 flex w-full items-center gap-2 rounded bg-gray-900 p-2 px-4 text-white">
@@ -99,6 +102,10 @@ export default function AppCard({ id, name, description, analytics, status, imag
                       <List className="mr-2 h-4 w-4" />
                       View Submission
                     </Link>
+                  </DropdownMenuItem>
+                  {/* view Schema  Option */}
+                  <DropdownMenuItem asChild>
+                    <ViewSchema id={id} compoenents={compoenents} />
                   </DropdownMenuItem>
 
                   {/* Delete Option */}
