@@ -97,3 +97,10 @@ export const updateSubscriptionDetailsForCancel = async ({
     },
   });
 };
+
+export async function incrementCreditUsage(userId: string) {
+  return prisma.credit.update({
+    where: { userId },
+    data: { used: { increment: 1 }, updatedAt: new Date() },
+  });
+}

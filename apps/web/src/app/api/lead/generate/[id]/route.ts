@@ -5,6 +5,7 @@ import {
   createLeadMagnetUsageLog,
   getCredit,
   getLeadMagnetById,
+  incrementCreditUsage,
   updateLeadMagnetUsage,
 } from "@smartleadmagnet/services";
 
@@ -20,14 +21,13 @@ let rateLimit: Ratelimit | undefined;
 if (process.env.UPSTASH_REDIS_REST_URL) {
   rateLimit = new Ratelimit({
     redis: Redis.fromEnv(),
-    // Allow 100 requests per day (~5-10 prompts)
     limiter: Ratelimit.fixedWindow(5000, "1440 m"),
     analytics: true,
     prefix: "smartleadmagnet",
   });
 }
 
-export const dynamic = "force-dynamic"; // defaults to force-static
+export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -46,7 +46,6 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
         apiKey = null;
       }
 
-      // this will not be the case in local development
       if (process.env.NODE_ENV !== "development" && !apiKey && (!credit || credit?.total <= credit?.used)) {
         return NextResponse.json(
           { error: "No credits left. Buy extra credit or add your own API key " },
@@ -59,11 +58,14 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       // Update the lead magnet usage (increment usedCount and update lastUsedAt)
       await updateLeadMagnetUsage(lead.id);
 
-      // Log the usage with payload and IP address
+      // Increment the used credits count for the user
+      if (credit) {
+        await incrementCreditUsage(lead.userId);
+      }
+
       let webhookStatus = "pending";
       let emailSent = false;
 
-      // Trigger the webhook if set
       if (lead.webhook) {
         const webhookResult = await triggerWebhook(lead.webhook, { leadId: lead.id, payload, ip: identifier });
         webhookStatus = webhookResult.success ? "success" : "failed";
@@ -72,21 +74,17 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       const emailComponent = lead.components?.find((item) => item.type === "email");
       if (lead.emailSubject && lead.emailContent && emailComponent) {
         try {
-          // Convert email HTML to plain text if necessary
           const emailHtml = lead.emailContent;
           const emailText = convert(emailHtml);
-          // Send the email
           await sendEmail(payload[emailComponent.name], lead.emailSubject, emailText, emailHtml);
-          // Log email success
           console.log("Email sent successfully");
           emailSent = true;
         } catch (e) {
+          // TODO sentry error
           console.log("Email sending failed", e.message);
-          // Optionally, you can update the webhook status or log email failure
         }
       }
 
-      // Update the usage log with the webhook status
       await createLeadMagnetUsageLog({
         leadMagnetId: lead.id,
         ipAddress: identifier,
