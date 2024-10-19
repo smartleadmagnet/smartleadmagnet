@@ -6,6 +6,8 @@ import { ApiKey } from "@smartleadmagnet/database";
 import SetAsDefaultButton from "@/components/SetDefaultKey";
 import DeleteKey from "@/components/DeleteKey";
 import EditKey from "@/components/EditKey";
+import {Input} from "@smartleadmagnet/ui/components/ui/input";
+import SecretKeyManager from "@/components/SecretKeyManager";
 
 export default function ManageKeys({ apiKeys }: { apiKeys: ApiKey[] }) {
   const [selectedKey, setSelectedKey] = useState<ApiKey | null>(null);
@@ -13,12 +15,15 @@ export default function ManageKeys({ apiKeys }: { apiKeys: ApiKey[] }) {
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-medium">Manage Keys</h3>
-        <p className="text-muted-foreground text-sm">Configure your LLM API keys.</p>
       </div>
+      <SecretKeyManager secretKey={"dadadaasdsadadksksksks"} generateNewSecretKey={()=>{
+        console.log("Generating new secret key");
+      }} />
       <Separator />
       <AddUpdateKeyModal isEditing={selectedKey !==null}  keyData={selectedKey} setKeyData={setSelectedKey} />
       <div>
-        <h3 className="mb-4 text-lg font-medium">Your Keys</h3>
+        <h3 className="mb-1 text-lg font-medium">Your Keys</h3>
+        <p className="text-muted-foreground text-sm mb-3">Configure your LLM API keys.</p>
         <div className="w-full overflow-x-auto">
           <table className="min-w-full rounded-lg border border-gray-200 bg-white">
             <thead>
