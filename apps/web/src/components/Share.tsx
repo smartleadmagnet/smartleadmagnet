@@ -8,6 +8,7 @@ import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
+import { marked } from "marked";
 import {
   Select,
   SelectContent,
@@ -82,8 +83,12 @@ const FormWrapper = styled.div`
 `;
 
 export default function BuilderElementPreview() {
-  const { onSubmit, isSubmitting, elementsList, response, onRegenerate, formStyles, control, handleSubmit, errors } =
+  const { onSubmit, isSubmitting, elementsList, response, onRegenerate, formStyles, control, handleSubmit, errors,leadMagnet } =
     useShareForm();
+
+    
+
+    
 
   const renderElement = (element: any) => {
     switch (element.type) {
@@ -310,7 +315,19 @@ export default function BuilderElementPreview() {
   };
 
   return (
-    <FormWrapper theme={formStyles}>
+    <FormWrapper theme={formStyles} className="magent-wrapper">
+      <div className="icon text-center mx-auto w-[100px] mb-5">
+        <Link href="/">
+          <Image src={leadMagnet.image} alt="Logo" width={100} height={100} />
+        </Link>
+      </div>
+      <h1 className="text-center text-xl font-bold mb-2">{leadMagnet.name}</h1>
+      <div
+      className="text-center mb-5"
+              dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }}
+            />
+      
+
       {response && <AIResponse response={response.content} type={response.type} onRegenerate={onRegenerate} />}
       {!response && (
         <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
@@ -326,12 +343,12 @@ export default function BuilderElementPreview() {
           </Button>
         </form>
       )}
-      <div className="mb-[-20px] ml-[-20px] mr-[-20px] mt-10 flex items-center justify-center rounded-b bg-gray-900 p-5 text-white">
+      {/* <div className="mb-[-20px] ml-[-20px] mr-[-20px] mt-10 flex items-center justify-center rounded-b bg-gray-900 p-5 text-white">
         Carafted by
         <Link href="/">
           <Image src="/images/logo/logo.png" alt="Logo" width={150} height={0} />
         </Link>
-      </div>
+      </div> */}
     </FormWrapper>
   );
 }

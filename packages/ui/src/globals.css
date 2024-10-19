@@ -430,6 +430,16 @@
   padding: 10px;
 }
 
+.app-card-dropdown a,.app-card-dropdown button {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.app-card-dropdown form {
+  padding: 0;
+}
+
 #nprogress .spinner-icon {
   width: 18px;
   height: 18px;

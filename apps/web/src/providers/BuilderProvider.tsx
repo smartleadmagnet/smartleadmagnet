@@ -45,6 +45,55 @@ const defaultFormStyles = {
   buttonText: "Submit", // Button text
   selectedFont: "Open Sans", // Default font
   selectedFormStyle: "default", // Default form style
+  enableCustomCss: false, // Enable custom CSS
+  customCss: `
+  .magent-wrapper {
+    /* Main wrapper of your app */
+    /* Add your styling here */
+  }
+  .icon {
+    /* Icon styles */
+    /* Add your icon styling here */
+  }
+
+  .form-item {
+    /* Styles for form input fields wrapper */
+    /* Add your input styling here */
+  }  
+
+  label {
+    /* Styles for form label fields */
+    /* Add your label styling here */
+  }
+  input {
+    /* Styles for form input fields */
+    /* Add your label styling here */
+  } 
+  textarea {
+    /* Styles for form textarea fields */
+    /* Add your label styling here */
+  }    
+
+  button[type="submit"] {
+    /* Styles for submit buttons */
+    /* Add your button styling here */
+  }
+
+  .form-header {
+    /* Styles for the header */
+    /* Add your header styling here */
+  }
+
+  .form-container {
+    /* Main form container */
+    /* Add your container styling here */
+  }
+
+  .form-footer {
+    /* Footer styles */
+    /* Add your footer styling here */
+  }
+`,
 };
 
 export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: LeadMagnet }> = ({

@@ -15,8 +15,8 @@ export default function CopyMagnet({ id }: { id: string }) {
   return (
     <>
       <form>
-        <button formAction={onClone} className="flex items-center p-1 hover:bg-gray-100">
-          <CopyIcon className="mr-2 h-4 w-4 pl-1" />
+        <button formAction={onClone} className="flex items-center    hover:bg-gray-100">
+          <CopyIcon className="mr-2 h-4 w-4" />
           Clone Magnet
         </button>
       </form>

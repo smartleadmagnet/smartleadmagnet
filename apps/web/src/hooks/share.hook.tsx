@@ -70,6 +70,7 @@ const useShareForm = () => {
     handleSubmit,
     errors,
     onRegenerate,
+    leadMagnet,
   };
 };
 

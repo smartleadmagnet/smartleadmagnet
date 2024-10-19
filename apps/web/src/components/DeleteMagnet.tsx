@@ -20,7 +20,7 @@ export default function DeleteKey({ id }: { id: string }) {
   return (
     <>
       
-        <button onClick={openModal} className="flex items-center p-1 hover:bg-gray-100 text-red-600">
+        <button onClick={openModal} className="flex items-center  hover:bg-red-100 rounded text-red-600">
             <Trash2 className="mr-2 h-4 w-4" />
             Delete
         </button>
