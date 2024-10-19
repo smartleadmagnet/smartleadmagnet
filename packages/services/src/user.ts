@@ -29,9 +29,18 @@ export const getUserByStripeCustomerId = async (stripeCustomerId: string): Promi
   });
 };
 
+
+
 export const updateStripeCustomerId = async ({ id, stripeCustomerId }: { id: string; stripeCustomerId: string }) => {
   return prisma.user.update({
     where: { id },
     data: { stripeCustomerId: stripeCustomerId! },
+  });
+};
+
+export const updateUser = async ({ id, bio,name }: { id: string; bio: string,name:string }) => {
+  return prisma.user.update({
+    where: { id },
+    data: { bio,name },
   });
 };

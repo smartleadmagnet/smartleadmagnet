@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateLeadWithInput } from "@smartleadmagnet/llm";
+
 import {
   createLeadMagnetUsageLog,
   getCredit,

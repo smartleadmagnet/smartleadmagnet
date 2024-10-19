@@ -1,7 +1,10 @@
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
 import { ProfileForm } from "./profile-form";
+import { getUserInfo } from "@/actions/user";
 
-export default function SettingsProfilePage() {
+export default async function SettingsProfilePage() {
+  const user = await getUserInfo();
+  console.log(user);
   return (
     <div className="space-y-6">
       <div>
@@ -9,7 +12,7 @@ export default function SettingsProfilePage() {
         <p className="text-muted-foreground text-sm">This is how others will see you on the site.</p>
       </div>
       <Separator />
-      <ProfileForm />
+      <ProfileForm user={user} />
     </div>
   );
 }
