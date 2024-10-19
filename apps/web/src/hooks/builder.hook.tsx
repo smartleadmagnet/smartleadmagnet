@@ -9,8 +9,19 @@ import { useBuilderContext } from "@/providers/BuilderProvider";
 import { useRouter } from "next/navigation";
 
 const useBuilder = () => {
-  const { elementsList, setElementsList, setName, name, formStyles, setFormStyles, leadMagnet, creditRequired } =
-    useBuilderContext();
+  const {
+    elementsList,
+    setElementsList,
+    setName,
+    name,
+    formStyles,
+    setFormStyles,
+    leadMagnet,
+    creditRequired,
+    paymentRequired,
+    onPublishLead,
+    onClosePaymentModal,
+  } = useBuilderContext();
   const router = useRouter();
   const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -228,6 +239,9 @@ const useBuilder = () => {
     name,
     setName,
     creditRequired,
+    paymentRequired,
+    onPublishLead,
+    onClosePaymentModal,
   };
 };
 

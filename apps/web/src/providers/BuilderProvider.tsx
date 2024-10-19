@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
 import { ChildItem } from "@/app/types/builder";
-import { ApiKey, LeadMagnet, User } from "@smartleadmagnet/database";
+import { ApiKey, LeadMagnet } from "@smartleadmagnet/database";
 import axios, { AxiosError } from "axios";
 import llm from "@/data/llm.json";
 import { LLMModel, LLMProvider } from "@/types/llm";
@@ -36,6 +36,7 @@ const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
 
 interface ErrorResponse {
   creditsRequired?: boolean;
+  paymentRequired?: boolean;
 }
 
 const defaultFormStyles = {
@@ -56,6 +57,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
   leadMagnet,
 }) => {
   const [selectedLeadMagnet, setSelectedLeadMagnet] = useState<LeadMagnet>(leadMagnet);
+  const [paymentRequired, setPaymentRequired] = useState<boolean>(false);
   const [creditRequired, setCreditRequired] = useState<boolean>(false);
   const [elementsList, setElementsList] = useState<ChildItem[]>(leadMagnet.components || []);
   const [name, setName] = useState<string>(leadMagnet?.name || "");
@@ -79,13 +81,27 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
     try {
       const leadResponse = await axios.post(`/api/lead/${leadMagnet.id}/publish`);
       setSelectedLeadMagnet(leadResponse?.data);
+      setCreditRequired(false);
+      setPaymentRequired(false);
     } catch (e: unknown) {
       const error = e as AxiosError<ErrorResponse>;
 
       // Check if the error response indicates credits are required
-      if (error.response?.data?.creditsRequired) {
-        // Open payment modal if credits are needed
-        setCreditRequired(true);
+      const errorResponse = error.response?.data;
+      if (errorResponse) {
+        if (errorResponse.paymentRequired || errorResponse.creditsRequired) {
+          if (errorResponse.paymentRequired) {
+            setPaymentRequired(true);
+          } else {
+            setCreditRequired(true);
+          }
+          return;
+        }
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Could not update lead magnet",
+        });
       } else {
         // Show the toast error message for other types of errors
         toast({
@@ -95,6 +111,11 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         });
       }
     }
+  };
+
+  const onClosePaymentModal = async () => {
+    setCreditRequired(false);
+    setPaymentRequired(false);
   };
 
   const updateData = async (data?: any) => {
@@ -246,6 +267,9 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         leadMagnet: selectedLeadMagnet,
         fetchApiKeys,
         creditRequired,
+        paymentRequired,
+        onPublishLead,
+        onClosePaymentModal,
       }}
     >
       {children}

@@ -15,7 +15,7 @@ export const getUserById = async (id: string): Promise<User> =>
     where: { id },
     include: {
       Credit: true,
-      Payment: true,
+      Payments: true,
     },
   });
 

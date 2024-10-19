@@ -5,33 +5,54 @@ import { Button } from "./ui/button";
 interface PurchasePlanDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => Promise<void>;
+  creditRequired: boolean;
+  paymentRequired: boolean;
 }
 
-const PurchasePlanDialog: React.FC<PurchasePlanDialogProps> = ({ isOpen, onClose }) => {
+const PurchasePlanDialog: React.FC<PurchasePlanDialogProps> = ({
+  isOpen,
+  onClose,
+  creditRequired,
+  paymentRequired,
+}) => {
+  console.log({
+    isOpen,
+    onClose,
+    creditRequired,
+    paymentRequired,
+  });
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="mx-auto max-w-lg">
         <DialogHeader>
           <DialogTitle>Upgrade Required</DialogTitle>
-          <div>You need more credits to publish this lead magnet. Please purchase a plan to proceed.</div>
+          <div>
+            {creditRequired
+              ? "You need more credits to publish this lead magnet."
+              : "You need to upgrade your plan to access this feature."}
+          </div>
           <DialogClose onClick={onClose} />
         </DialogHeader>
 
         <DialogFooter>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              onConfirm();
-            }}
-          >
-            <Button type="submit" className="mr-2 bg-green-600 hover:bg-green-700">
-              Buy Plan
-            </Button>
-            <Button type="button" onClick={onClose} className="bg-gray-600 hover:bg-gray-700">
-              Cancel
-            </Button>
-          </form>
+          {creditRequired && (
+            <a href="/buy-credits">
+              <Button type="button" className="btn-primary mr-2">
+                Buy Credits
+              </Button>
+            </a>
+          )}
+          {paymentRequired && (
+            <a href="/pricing">
+              <Button type="button" className="btn-primary mr-2">
+                Upgrade Plan
+              </Button>
+            </a>
+          )}
+          <Button type="button" onClick={onClose} className="bg-gray-600 hover:bg-gray-700">
+            Cancel
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

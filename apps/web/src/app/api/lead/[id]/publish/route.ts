@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       if (!user.Payments?.length) {
         return NextResponse.json({ paymentRequired: true }, { status: 409 });
       }
-      if (!user.Credit || (user?.Credit?.total || 0) > (user?.Credit?.used || 0)) {
+      if (!user.Credit || !(user?.Credit?.total || 0) > (user?.Credit?.used || 0)) {
         return NextResponse.json({ creditsRequired: true }, { status: 409 });
       }
       const updatedLead = await updateLeadMagnet(params.id, user?.id, { status: "published" });
