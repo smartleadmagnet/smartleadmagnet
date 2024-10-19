@@ -23,8 +23,8 @@ export default async function SettingsNotificationsPage() {
       <div className="space-y-2">
         <h3 className="flex flex-row items-center justify-start text-lg font-medium">
           Plan Type: {getPlanName(planInfo?.planType)}
-          {planInfo.subscriptionStatus === "active" && "(Active)"}
-          {planInfo.subscriptionStatus === "canceled" && <div className="ml-2 text-red-500">(Canceled)</div>}
+          {planInfo?.subscriptionStatus === "active" && "(Active)"}
+          {planInfo?.subscriptionStatus === "canceled" && <div className="ml-2 text-red-500">(Canceled)</div>}
         </h3>
         {planInfo && (
           <div className="flex flex-row items-center justify-between rounded-lg border p-4">
@@ -32,17 +32,17 @@ export default async function SettingsNotificationsPage() {
               <p className="mb-3 text-base font-bold">
                 Purchased On: {format(new Date(planInfo?.createdAt), "dd MMM yyyy")}{" "}
               </p>
-              {planInfo?.planType === PlanTier.SUBSCRIPTION && planInfo.subscriptionStatus === "active" && (
+              {planInfo?.planType === PlanTier.SUBSCRIPTION && planInfo?.subscriptionStatus === "active" && (
                 <p>Credits are in subscription plan will reset every billing cycle.</p>
               )}
               {planInfo?.planType === PlanTier.SUBSCRIPTION &&
-                planInfo.subscriptionStatus === "canceled" &&
+                planInfo?.subscriptionStatus === "canceled" &&
                 availableCredit > 0 && (
                   <p>Credits will be expired on {format(new Date(planInfo?.subscriptionEndDate), "dd MMM yyyy")}</p>
                 )}
             </div>
             <div>
-              {planInfo?.planType === PlanTier.SUBSCRIPTION && planInfo.subscriptionStatus === "active" && (
+              {planInfo?.planType === PlanTier.SUBSCRIPTION && planInfo?.subscriptionStatus === "active" && (
                 <CancelSubscription id={planInfo?.subscriptionId} />
               )}
             </div>
@@ -57,7 +57,7 @@ export default async function SettingsNotificationsPage() {
             {!user.Credit && <p className="text-base font-bold">No Credit</p>}
           </div>
           <div>
-            {planInfo.subscriptionStatus !== "canceled" && (
+            {planInfo?.subscriptionStatus !== "canceled" && (
               <>
                 {!user.Credit && (
                   <Link href="/pricing">
