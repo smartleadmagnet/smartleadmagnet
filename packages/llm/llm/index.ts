@@ -16,8 +16,15 @@ export function replacePlaceholders(template, values) {
   });
 }
 
+export function replaceMustachePlaceholders(template, values) {
+  // Regex to match the whole {{number_1}} pattern
+  return template.replace(/\{\{(.*?)\}\}/g, (match, key) => {
+    return values[key] || match; // Replace with value from object or keep the pattern if not found
+  });
+}
+
 export const getImageLLMModel = async (leadMagnet: LeadMagnet, promptInput: any, apiKey?: string | null) => {
-  const promptText = replacePlaceholders(leadMagnet.prompt, promptInput);
+  const promptText = replaceMustachePlaceholders(replacePlaceholders(leadMagnet.prompt, promptInput), promptInput);
   if (leadMagnet.provider === "Open AI") {
     // console.log(promptInput);
     const llmModel = new DallEAPIWrapper({
@@ -28,8 +35,7 @@ export const getImageLLMModel = async (leadMagnet: LeadMagnet, promptInput: any,
     let retryCount = 0;
     const llmApiCall: any = async () => {
       try {
-        const result = await llmModel.invoke(replacePlaceholders(leadMagnet.prompt, promptInput));
-        return result;
+        return await llmModel.invoke(promptText);
       } catch (error: any) {
         if (retryCount < totalRetry) {
           retryCount++;
