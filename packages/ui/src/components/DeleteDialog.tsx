@@ -9,9 +9,19 @@ interface DeleteDialogProps {
   message: string;
   onClose: () => void;
   onConfirm: () => Promise<void>;
+  deleteTitle?: string;
+  cancelTitle?: string;
 }
 
-const DeleteDialog: React.FC<DeleteDialogProps> = ({ isOpen, title, message, onClose, onConfirm }) => {
+const DeleteDialog: React.FC<DeleteDialogProps> = ({
+  isOpen,
+  title,
+  message,
+  onClose,
+  onConfirm,
+  deleteTitle = "Delete",
+  cancelTitle = "Cancel",
+}) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="mx-auto max-w-lg">
@@ -29,10 +39,10 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ isOpen, title, message, onC
             }}
           >
             <Button type="submit" className="mr-2 bg-red-600 hover:bg-red-900">
-              Delete
+              {deleteTitle}
             </Button>
             <Button type="button" onClick={onClose} className="bg-cyan-600 hover:bg-cyan-900">
-              Cancel
+              {cancelTitle}
             </Button>
           </form>
         </DialogFooter>
