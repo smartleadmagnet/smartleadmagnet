@@ -43,3 +43,10 @@ export const updateUser = async ({ id, bio, name }: { id: string; bio: string; n
     data: { bio, name },
   });
 };
+
+export const updateUserKey = async ({ id, key }: { id: string; key: string }) => {
+  return prisma.user.update({
+    where: { id },
+    data: { key },
+  });
+};

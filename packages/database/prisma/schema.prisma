@@ -15,6 +15,7 @@ model User {
   emailVerified    DateTime?       @map("email_verified")
   image            String?
   bio              String?
+  key              String?         @default(uuid())
   accounts         Account[]
   sessions         Session[]
   stripeCustomerId String?
@@ -26,7 +27,7 @@ model User {
   LeadMagnet LeadMagnet[]
   EmailLog   EmailLog[]
   ApiKey     ApiKey[]
-  Payments    Payment[]
+  Payments   Payment[]
   Credit     Credit?
 
   @@map("users")
