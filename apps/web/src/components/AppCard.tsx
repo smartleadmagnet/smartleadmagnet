@@ -12,6 +12,7 @@ import { ChevronDown, Edit, ImageIcon, List, Share } from "lucide-react"; // Ico
 import DeleteMagnet from "@/components/DeleteMagnet";
 import CopyMagnet from "@/components/CopyMagnet";
 import ViewSchema from "@/components/ViewSchema";
+import ShareApp from "@/components/ShareApp";
 import Image from "next/image";
 import Link from "next/link";
 import { marked } from "marked";
@@ -91,10 +92,7 @@ export default function AppCard({ id, name, description, analytics, status, imag
 
                   {/* Share Option */}
                   <DropdownMenuItem asChild>
-                    <Link href={`/share/${id}`} className="flex items-center  hover:bg-gray-100">
-                      <Share className="mr-2 h-4 w-4" />
-                      Share
-                    </Link>
+                    <ShareApp id={id} />
                   </DropdownMenuItem>
                   {/* view Submission  Option */}
                   <DropdownMenuItem asChild>

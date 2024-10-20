@@ -461,6 +461,16 @@
 .nprogress-custom-parent #nprogress .bar {
   position: absolute;
 }
+.custom-dialog {
+  padding: 0;
+  width:100%;
+  max-width:750px;
+  button[type="button"] {
+    display: none;
+  }
+}
+
+
 @keyframes nprogress-spinner {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

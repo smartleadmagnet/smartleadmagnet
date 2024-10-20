@@ -58,6 +58,8 @@ export default function Builder() {
     paymentRequired,
     onPublishLead,
     onClosePaymentModal,
+    pathname,
+    defaultTab,
   } = useBuilder(); // Use the custom hook
 
   const filterItems = (searchTerm: string) => {
@@ -70,7 +72,12 @@ export default function Builder() {
 
   return (
     <>
-      <Tabs defaultValue="form">
+      <Tabs
+        defaultValue={defaultTab}
+        onValueChange={(value) => {
+          router.push(pathname+"?tab=" + value);
+        }}
+      >
         <div className="flex min-h-screen flex-col">
           {/* Header  */}
           <div className="flex items-center justify-between bg-gray-900 p-4 text-white">
@@ -279,7 +286,7 @@ export default function Builder() {
           </TabsContent>
         </div>
       </Tabs>
-      <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen} />
+      <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen} magnetId={leadMagnet.id} />
       <PurchasePlanDialog
         isOpen={creditRequired || paymentRequired}
         onClose={onClosePaymentModal}

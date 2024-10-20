@@ -52,7 +52,7 @@ const defaultFormStyles = {
   selectedFormStyle: "default", // Default form style
   enableCustomCss: false, // Enable custom CSS
   customCss: `
-  .magent-wrapper {
+  .magnet-wrapper {
     /* Main wrapper of your app */
     /* Add your styling here */
   }

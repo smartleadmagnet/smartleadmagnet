@@ -6,6 +6,7 @@ import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
+import DynamicStyles from "@/components/DynamicStyles";
 import Image from "next/image";
 import Link from "next/link";
 import { marked } from "marked";
@@ -65,6 +66,7 @@ const FormWrapper = styled.div`
     &:focus {
       border-color: ${(props) => props.theme.buttonColor};
       outline: none;
+      box-shadow: none;
     }
   }
 
@@ -315,12 +317,13 @@ export default function BuilderElementPreview() {
   };
 
   return (
-    <FormWrapper theme={formStyles} className="magent-wrapper">
+    <FormWrapper theme={formStyles} className="magnet-wrapper">
+      <DynamicStyles cssContent={formStyles.customCss} enableCustomCss={formStyles.enableCustomCss} />
+      {leadMagnet.image && (
       <div className="icon text-center mx-auto w-[100px] mb-5">
-        <Link href="/">
           <Image src={leadMagnet.image} alt="Logo" width={100} height={100} />
-        </Link>
       </div>
+      )}
       <h1 className="text-center text-xl font-bold mb-2">{leadMagnet.name}</h1>
       <div
       className="text-center mb-5"
