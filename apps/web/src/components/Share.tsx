@@ -83,12 +83,18 @@ const FormWrapper = styled.div`
 `;
 
 export default function BuilderElementPreview() {
-  const { onSubmit, isSubmitting, elementsList, response, onRegenerate, formStyles, control, handleSubmit, errors,leadMagnet } =
-    useShareForm();
-
-    
-
-    
+  const {
+    onSubmit,
+    isSubmitting,
+    elementsList,
+    response,
+    onRegenerate,
+    formStyles,
+    control,
+    handleSubmit,
+    errors,
+    leadMagnet,
+  } = useShareForm();
 
   const renderElement = (element: any) => {
     switch (element.type) {
@@ -316,17 +322,13 @@ export default function BuilderElementPreview() {
 
   return (
     <FormWrapper theme={formStyles} className="magent-wrapper">
-      <div className="icon text-center mx-auto w-[100px] mb-5">
+      <div className="icon mx-auto mb-5 w-[100px] text-center">
         <Link href="/">
           <Image src={leadMagnet.image} alt="Logo" width={100} height={100} />
         </Link>
       </div>
-      <h1 className="text-center text-xl font-bold mb-2">{leadMagnet.name}</h1>
-      <div
-      className="text-center mb-5"
-              dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }}
-            />
-      
+      <h1 className="mb-2 text-center text-xl font-bold">{leadMagnet.name}</h1>
+      <div className="mb-5 text-center" dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }} />
 
       {response && <AIResponse response={response.content} type={response.type} onRegenerate={onRegenerate} />}
       {!response && (
