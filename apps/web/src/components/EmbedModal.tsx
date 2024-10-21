@@ -28,12 +28,15 @@ const EmbedModal = (props: EmbedModalProps) => {
   };
 
   const embedCode = `<iframe src="${process.env.NEXT_PUBLIC_SITE_URL}/share/${magnetId}"
-  width="400" height="992"
-  style="border-radius:0.5rem;border:none;" 
-  loading="lazy"
-  referrerpolicy="unsafe-url" 
-  allow="clipboard-read; 
-  clipboard-write"
+   width="100%" 
+    height="600" 
+    style="border-radius:0.5rem; border:none; 
+    max-width: 100%; 
+    height: 70vh; /* Responsive height based on viewport height */
+    min-height: 500px;" 
+    loading="lazy"
+    referrerpolicy="unsafe-url" 
+    allow="clipboard-read;clipboard-write"
   ></iframe>`;
 
   const shareLink = `${process.env.NEXT_PUBLIC_SITE_URL}/share/${magnetId}`;
@@ -131,7 +134,7 @@ const EmbedModal = (props: EmbedModalProps) => {
                 </p>
                 <div className="mt-4 flex space-x-4">
                   <Link
-                    href="#"
+                    href="/integrations/wordpress"
                     target="_blank"
                     className="flex items-center space-x-2 rounded-md border p-4 shadow-md transition hover:shadow-lg"
                   >

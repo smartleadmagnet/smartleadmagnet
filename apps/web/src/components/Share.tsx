@@ -1,5 +1,6 @@
 "use client";
-
+import React, { useState, useEffect } from "react";
+import { Skeleton } from "@smartleadmagnet/ui/components/ui/skeleton";
 import { Controller } from "react-hook-form";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
@@ -8,7 +9,6 @@ import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import DynamicStyles from "@/components/DynamicStyles";
 import Image from "next/image";
-import Link from "next/link";
 import { marked } from "marked";
 import {
   Select,
@@ -20,7 +20,6 @@ import {
 import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/radio-group";
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
 import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
-import React from "react";
 import useShareForm from "@/hooks/share.hook";
 import Spinner from "@smartleadmagnet/ui/components/Spinner";
 import AIResponse from "@smartleadmagnet/ui/components/AIResponse";
@@ -28,6 +27,24 @@ import EmailInput from "@/components/EmailInput";
 import WebsiteInput from "@/components/WebsiteInput";
 import styled from "styled-components";
 import ImageUploader from "@/components/ImageUploader";
+
+function Loading() {
+  return (
+    <div className="mx-auto mt-10 max-w-[600px] border px-5">
+      <Skeleton className="mx-auto mb-2 mt-2 h-20 max-w-20 rounded-full" />
+      <div className="mb-4 space-y-5">
+        <Skeleton className="mx-auto h-4 max-w-[300px]" />
+        <Skeleton className="mx-auto  h-20 max-w-[400px]" />
+        <Skeleton className="h-10" />
+        <Skeleton className="h-10" />
+        <Skeleton className="h-10" />
+        <Skeleton className="h-10" />
+        <Skeleton className="h-10" />
+        <Skeleton className="h-10 max-w-[100px]" />
+      </div>
+    </div>
+  );
+}
 
 const FormWrapper = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
@@ -85,12 +102,29 @@ const FormWrapper = styled.div`
 `;
 
 export default function BuilderElementPreview() {
-  const { onSubmit, isSubmitting, elementsList, response, onRegenerate, formStyles, control, handleSubmit, errors,leadMagnet } =
-    useShareForm();
+  const {
+    onSubmit,
+    isSubmitting,
+    elementsList,
+    response,
+    onRegenerate,
+    formStyles,
+    control,
+    handleSubmit,
+    errors,
+    leadMagnet,
+  } = useShareForm();
+  const [isLoading, setLoading] = useState(true);
 
-    
+  useEffect(() => {
+    if (leadMagnet) {
+      setLoading(false);
+    }
+  }, [leadMagnet]);
 
-    
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const renderElement = (element: any) => {
     switch (element.type) {
@@ -288,10 +322,10 @@ export default function BuilderElementPreview() {
               control={control}
               rules={{ required: element.required ? `${element.label} is required` : false }}
               render={({ field }) => (
-                <div className="relative w-full bg-white p-2">
+                <div className="relative max-w-full bg-white p-2">
                   <input
                     type="file"
-                    className="block h-auto w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100 focus:outline-none"
+                    className="block h-auto max-w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100 focus:outline-none"
                     onChange={(e) => {
                       const file = e.target.files[0];
                       if (file) {
@@ -320,16 +354,12 @@ export default function BuilderElementPreview() {
     <FormWrapper theme={formStyles} className="magnet-wrapper">
       <DynamicStyles cssContent={formStyles.customCss} enableCustomCss={formStyles.enableCustomCss} />
       {leadMagnet.image && (
-      <div className="icon text-center mx-auto w-[100px] mb-5">
+        <div className="icon mx-auto mb-5 max-w-[100px] text-center">
           <Image src={leadMagnet.image} alt="Logo" width={100} height={100} />
-      </div>
+        </div>
       )}
-      <h1 className="text-center text-xl font-bold mb-2">{leadMagnet.name}</h1>
-      <div
-      className="text-center mb-5"
-              dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }}
-            />
-      
+      <h1 className="mb-2 text-center text-xl font-bold">{leadMagnet.name}</h1>
+      <div className="mb-5 text-center" dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }} />
 
       {response && <AIResponse response={response.content} type={response.type} onRegenerate={onRegenerate} />}
       {!response && (

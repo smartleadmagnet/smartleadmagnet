@@ -22,7 +22,7 @@ export default function MDXPage({ slug, folderName }: MDXContentProps) {
   } = post;
 
   return (
-    <div className="flex max-w-7xl flex-col items-center justify-center">
+    <div className="flex max-w-7xl flex-col items-center justify-center mx-auto">
       <Header date={date} title={summary} slug={slug} image={image} />
       <Content content={content} />
     </div>

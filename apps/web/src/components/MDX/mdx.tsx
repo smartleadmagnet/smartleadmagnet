@@ -47,12 +47,12 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({ url }) => {
 };
 
 export const components: MDXComponents = {
-  h2: (props: React.ComponentPropsWithoutRef<"h2">) => <Heading as="h2" {...props} />,
-  h3: (props: React.ComponentPropsWithoutRef<"h3">) => <Heading as="h3" {...props} />,
-  h4: (props: React.ComponentPropsWithoutRef<"h4">) => <Heading as="h4" {...props} />,
-  h5: (props: React.ComponentPropsWithoutRef<"h5">) => <Heading as="h5" {...props} />,
-  h6: (props: React.ComponentPropsWithoutRef<"h6">) => <Heading as="h6" {...props} />,
-  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+  h2: (props) => <Heading as="h2" {...props} />,
+  h3: (props) => <Heading as="h3" {...props} />,
+  h4: (props) => <Heading as="h4" {...props} />,
+  h5: (props) => <Heading as="h5" {...props} />,
+  h6: (props) => <Heading as="h6" {...props} />,
+  a: (props) => {
     const { children, ...rest } = props;
 
     return (
@@ -61,7 +61,7 @@ export const components: MDXComponents = {
       </Link>
     );
   },
-  Image: (props: React.ComponentPropsWithoutRef<typeof BlurImage>) => {
+  Image: (props) => {
     const { alt, ...rest } = props;
 
     return (
@@ -74,7 +74,6 @@ export const components: MDXComponents = {
     );
   },
   img: ({ src, alt }) => {
-    // Check if the alt text is 'AI-Powered Outlook' and src contains YouTube URL
     if (alt && src && src.includes("youtube.com/watch")) {
       return <VideoEmbed url={src} />;
     }
@@ -82,11 +81,11 @@ export const components: MDXComponents = {
   },
   pre: Pre,
   input: Checkbox,
-
+  
   // Custom components
-  Alert: (props: React.ComponentPropsWithoutRef<typeof Alert>) => <Alert {...props} />,
-  AlertTitle: (props: React.ComponentPropsWithoutRef<typeof AlertTitle>) => <AlertTitle {...props} />,
-  AlertDescription: (props: React.ComponentPropsWithoutRef<typeof AlertDescription>) => <AlertDescription {...props} />,
+  Alert: (props) => <Alert {...props} />,
+  AlertTitle: (props) => <AlertTitle {...props} />,
+  AlertDescription: (props) => <AlertDescription {...props} />,
   Table,
   ItemGrid,
   Video,
@@ -102,7 +101,7 @@ const Mdx = (props: MdxProps) => {
   const { content } = props;
   const mdxOptions = {
     remarkPlugins: [remarkHeading, remarkGfm],
-    rehypePlugins: [[rehypeShiki, { theme: "nord" }]],
+    rehypePlugins: [[rehypeShiki, { theme: "nord" }]], // Apply shiki here
     format: "mdx",
   };
 

@@ -1,4 +1,5 @@
 import WebsiteLayout from "@/components/Layout/website";
+import MessageWidget from "@/components/MessageWidget";
 
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -6,5 +7,6 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   
   return <WebsiteLayout>{children}
+   <MessageWidget/>
   </WebsiteLayout>;
 }

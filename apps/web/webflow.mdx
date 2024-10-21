@@ -1,0 +1,42 @@
+---
+title: "Embed SmartLead Magnet with Webflow"
+summary: "Learn how to seamlessly integrate SmartLead Magnet into your Webflow site with step-by-step instructions."
+tags: SmartLead Magnet, Webflow, Webflow Embed, Webflow Install
+---
+
+# How to Embed SmartLead Magnet into Your Webflow Website
+
+**Note:** To follow this guide, you should have administrative access to your Webflow site.
+
+## 1. Log in to Your Webflow Dashboard
+
+Go to your Webflow login page. Usually, it looks like this: `https://webflow.com/dashboard`.  
+Enter your email and password.
+
+## 2. Create or Edit a Page
+
+Navigate to **Pages** in the left-hand side menu.  
+Click **+ Create New Page** to create a new page. Alternatively, click on an existing page where you want to embed the iFrame and then click **Edit**.
+
+## 3. Access the Embed Element
+
+In the page editor, click on the **+ Add Elements** button on the left side of the screen.  
+Scroll down to the **Components** section and drag the **Embed** element into the desired location on your page.
+
+## 4. Paste the iFrame Code
+
+Copy the iFrame code from the SmartLead Magnet platform.  
+Paste the iFrame code in the Embed Code dialog box that appears after you drop the Embed element into your page.  
+Your iFrame code should look something like this:
+
+```html
+<iframe src="https://smartleadmagnet.com/share/magentid" width="100%" 
+    height="600" 
+    style="border-radius:0.5rem; border:none; 
+    max-width: 100%; 
+    height: 70vh; /* Responsive height based on viewport height */
+    min-height: 500px;" 
+    loading="lazy"
+    referrerpolicy="unsafe-url" 
+    allow="clipboard-read;clipboard-write"
+></iframe>
