@@ -21,6 +21,7 @@ const useBuilder = () => {
     paymentRequired,
     onPublishLead,
     onClosePaymentModal,
+    generateLeadMagnetWithAI,
   } = useBuilderContext();
   const router = useRouter();
   const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
@@ -242,6 +243,7 @@ const useBuilder = () => {
     paymentRequired,
     onPublishLead,
     onClosePaymentModal,
+    generateLeadMagnetWithAI,
   };
 };
 

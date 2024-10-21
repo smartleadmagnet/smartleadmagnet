@@ -7,6 +7,7 @@ import llm from "@/data/llm.json";
 import { LLMModel, LLMProvider } from "@/types/llm";
 import { BuilderSchemaForm } from "@/types/builder";
 import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 interface BuilderContextType {
   elementsList: any;
@@ -105,6 +106,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
   children,
   leadMagnet,
 }) => {
+  const router = useRouter();
   const [selectedLeadMagnet, setSelectedLeadMagnet] = useState<LeadMagnet>(leadMagnet);
   const [paymentRequired, setPaymentRequired] = useState<boolean>(false);
   const [creditRequired, setCreditRequired] = useState<boolean>(false);
@@ -193,7 +195,24 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
     try {
       await axios.post(`/api/lead/${leadMagnet.id}`, form);
     } catch (e) {
-      console.log(e);
+      toast({
+        variant: "destructive",
+        description: "Could not update lead magnet",
+      });
+    }
+  };
+
+  const generateLeadMagnetWithAI = async (description: string) => {
+    try {
+      await axios.post(`/api/lead/${selectedLeadMagnet.id}/create`, {
+        description,
+      });
+      window.location.href = `/builder/${leadMagnet.id}`;
+    } catch (e) {
+      toast({
+        variant: "destructive",
+        description: "Could not create lead magnet with AI",
+      });
     }
   };
 
@@ -320,6 +339,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         paymentRequired,
         onPublishLead,
         onClosePaymentModal,
+        generateLeadMagnetWithAI,
       }}
     >
       {children}

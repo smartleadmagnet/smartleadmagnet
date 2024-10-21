@@ -149,7 +149,8 @@
   height: calc(100vh - 150px);
   overflow-y: auto;
 }
-.drop-area-wrapper{
+
+.drop-area-wrapper {
   overflow-y: auto;
 }
 
@@ -233,6 +234,7 @@
   width: 30px;
   height: 30px;
 }
+
 .prompt-image-box {
   position: relative;
 }
@@ -240,16 +242,18 @@
 .prompt-image-box .downlaod-btn {
   position: absolute;
   right: 10px;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1;
   top: 10px;
   color: #fff;
   padding: 10px;
   border-radius: 5px;
 }
+
 .ai-form {
   height: calc(100vh - 180px);
 }
+
 .prompt-loader {
   text-align: center;
   height: 500px;
@@ -263,13 +267,15 @@
   height: 80px;
   width: 80px;
 }
+
 .prompt-icon {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
-  color:#fff;
+  transform: translate(-50%, -50%);
+  color: #fff;
 }
+
 .prompt-content-box {
   position: relative;
   padding-top: 50px;
@@ -280,10 +286,6 @@
   right: 0;
   top: 0;
 }
-
-
-
-
 
 /* homepage */
 .hero-section {
@@ -379,9 +381,11 @@
     display: none;
   }
 }
+
 .main-content {
   min-height: calc(100vh - 500px);
 }
+
 .ngprogress-container {
   position: fixed;
   top: 0;
@@ -430,7 +434,7 @@
   padding: 10px;
 }
 
-.app-card-dropdown a,.app-card-dropdown button {
+.app-card-dropdown a, .app-card-dropdown button {
   padding: 10px 15px;
   cursor: pointer;
   font-size: 14px;
@@ -461,11 +465,15 @@
 .nprogress-custom-parent #nprogress .bar {
   position: absolute;
 }
-@keyframes nprogress-spinner {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
 
+@keyframes nprogress-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 
 @layer utilities {
@@ -483,7 +491,7 @@
   .faded-bottom {
     @apply relative after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:block after:h-32 after:w-full after:bg-gradient-to-b after:from-transparent after:to-[hsl(var(--background))] after:hidden md:after:block;
   }
-  
+
 
   .btn-primary {
     @apply bg-cyan-500 px-5 py-2 text-white shadow-md;
