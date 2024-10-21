@@ -114,6 +114,7 @@ export default function BuilderElementPreview() {
     errors,
     leadMagnet,
   } = useShareForm();
+<<<<<<< HEAD
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -125,6 +126,8 @@ export default function BuilderElementPreview() {
   if (isLoading) {
     return <Loading />;
   }
+=======
+>>>>>>> main
 
   const renderElement = (element: any) => {
     switch (element.type) {
@@ -351,6 +354,7 @@ export default function BuilderElementPreview() {
   };
 
   return (
+<<<<<<< HEAD
     <FormWrapper theme={formStyles} className="magnet-wrapper">
       <DynamicStyles cssContent={formStyles.customCss} enableCustomCss={formStyles.enableCustomCss} />
       {leadMagnet.image && (
@@ -358,6 +362,14 @@ export default function BuilderElementPreview() {
           <Image src={leadMagnet.image} alt="Logo" width={100} height={100} />
         </div>
       )}
+=======
+    <FormWrapper theme={formStyles} className="magent-wrapper">
+      <div className="icon mx-auto mb-5 w-[100px] text-center">
+        <Link href="/">
+          <Image src={leadMagnet.image} alt="Logo" width={100} height={100} />
+        </Link>
+      </div>
+>>>>>>> main
       <h1 className="mb-2 text-center text-xl font-bold">{leadMagnet.name}</h1>
       <div className="mb-5 text-center" dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }} />
 

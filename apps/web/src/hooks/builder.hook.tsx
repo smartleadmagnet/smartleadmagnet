@@ -21,6 +21,7 @@ const useBuilder = () => {
     paymentRequired,
     onPublishLead,
     onClosePaymentModal,
+    generateLeadMagnetWithAI,
   } = useBuilderContext();
   const router = useRouter();
   const pathname = usePathname();
@@ -249,6 +250,7 @@ const useBuilder = () => {
     onClosePaymentModal,
     pathname,
     defaultTab,
+    generateLeadMagnetWithAI,
   };
 };
 
