@@ -183,6 +183,12 @@ function Footer() {
               <Link href="/user-data-deletion" className="hover:text-gray-500">
                 User Data Deletion
               </Link>
+              <Link href="https://smartleadmagnet.featurebase.app/" target="_blank" className="hover:text-gray-500">
+                Request a Feature
+              </Link>
+              <Link href="https://smartleadmagnet.featurebase.app/roadmap" target="_blank" className="hover:text-gray-500">
+                Public Roadmap
+              </Link>
             </div>
           </div>
          </div>

@@ -21,9 +21,13 @@ const ViewPayloadModal: React.FC<ViewPayloadModalProps> = ({ payload,isOpen,setI
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent>
+        <DialogContent className="magent-dialog">
           <DialogHeader>
-            <DialogTitle>Your API schema</DialogTitle>
+            <div className="mb-6 text-center">
+              <div className="modal-header cm-modal-header">
+                <h2 className="text-2xl font-semibold">Your API schema</h2>
+              </div>
+            </div>
             <p>Pass this in your api request body you need an api key from leadMagnet{" "}
               <Link href="/settings/manage-keys" target="_blank" className="text-blue-500">Get API key</Link>{" "}
               check the <Link href="/documentation" target="_blank" className="text-blue-500">documentation</Link> for more details 

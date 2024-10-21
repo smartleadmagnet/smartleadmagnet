@@ -90,7 +90,7 @@ const EmbedModal = (props: EmbedModalProps) => {
             </button>
 
             <div className="mb-6 text-center">
-              <div className="modal-header inline-flex w-full items-center justify-center rounded-t-lg bg-gradient-to-r from-orange-500 to-pink-500 py-4 text-white">
+              <div className="modal-header cm-modal-header">
                 <h2 className="text-2xl font-semibold">Embed/Share</h2>
               </div>
             </div>
