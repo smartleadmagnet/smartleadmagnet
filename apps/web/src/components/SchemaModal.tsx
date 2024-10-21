@@ -30,7 +30,7 @@ const ViewPayloadModal: React.FC<ViewPayloadModalProps> = ({ payload,isOpen,setI
             </div>
             <p>Pass this in your api request body you need an api key from leadMagnet{" "}
               <Link href="/settings/manage-keys" target="_blank" className="text-blue-500">Get API key</Link>{" "}
-              check the <Link href="/documentation" target="_blank" className="text-blue-500">documentation</Link> for more details 
+              check the <Link href="/integrations/smartlead-magnet-api" target="_blank" className="text-blue-500">documentation</Link> for more details 
             </p>
           </DialogHeader>
 
