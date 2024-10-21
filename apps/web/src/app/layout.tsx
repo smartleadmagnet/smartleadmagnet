@@ -1,17 +1,6 @@
 import "@smartleadmagnet/ui/globals.css";
 import { Providers } from "@/providers";
 import { Toaster } from "@smartleadmagnet/ui/components/ui/toaster";
-import dynamic from "next/dynamic";
-
-
-
-const TopProgressBar = dynamic(
-  () => {
-    return import("@/components/ProgressBar");
-  },
-  { ssr: false },
-);
-
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -30,7 +19,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`bg-[#FCFCFC] dark:bg-black`}>
-        <TopProgressBar />
         <Providers>{children}</Providers>
         <Toaster />
       </body>

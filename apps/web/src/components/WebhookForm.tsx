@@ -51,7 +51,7 @@ export default function WebhookForm() {
           variant: "destructive",
         });
       }
-    } catch (e) {
+    } catch (e: any) {
       toast({
         title: "Test request failed",
         description: e.message,

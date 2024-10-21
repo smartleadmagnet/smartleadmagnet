@@ -70,23 +70,20 @@ const SimpleMentionEditor = (props: RichTextEditorProps): ReactElement => {
   );
 
   const addMentionToEditor = (mention: MentionData) => {
-    const stateWithEntity = editorState.getCurrentContent().createEntity(
-        'mention',
-        'IMMUTABLE',
-        {
-            mention
-        },
-      )
-      const entityKey = stateWithEntity.getLastCreatedEntityKey()
-      const stateWithText = Modifier.insertText(stateWithEntity, editorState.getSelection(), 'foobar', null, entityKey)
-      const newEditorState = EditorState.push(editorState, stateWithText, 'insert-characters')
-      console.log(newEditorState)
-      setEditorState(newEditorState);
+    const stateWithEntity = editorState.getCurrentContent().createEntity("mention", "IMMUTABLE", {
+      mention,
+    });
+    const entityKey = stateWithEntity.getLastCreatedEntityKey();
+    // @ts-ignore
+    const stateWithText = Modifier.insertText(stateWithEntity, editorState.getSelection(), "foobar", null, entityKey);
+    const newEditorState = EditorState.push(editorState, stateWithText, "insert-characters");
+    console.log(newEditorState);
+    setEditorState(newEditorState);
   };
 
   return (
     <div
-      className='editor-container'
+      className="editor-container"
       onClick={() => {
         ref.current!.focus();
       }}
@@ -111,12 +108,7 @@ const SimpleMentionEditor = (props: RichTextEditorProps): ReactElement => {
         )}
       </Toolbar>
 
-      <Editor
-        editorState={editorState}
-        onChange={onChange}
-        plugins={plugins}
-        ref={ref}
-      />
+      <Editor editorState={editorState} onChange={onChange} plugins={plugins} ref={ref} />
 
       <MentionSuggestions
         open={open}
@@ -131,8 +123,8 @@ const SimpleMentionEditor = (props: RichTextEditorProps): ReactElement => {
           <Badge
             key={mention.id}
             onClick={() => addMentionToEditor(mention)}
-            className="mr-2 mb-2 inline-block cursor-pointer rounded px-2 py-1"
-            style={{ margin: '5px' }}
+            className="mb-2 mr-2 inline-block cursor-pointer rounded px-2 py-1"
+            style={{ margin: "5px" }}
           >
             {mention.name}
           </Badge>

@@ -6,7 +6,6 @@ import MagnetSearch from "@/components/MagnetSearch";
 export default async function MyForms({ searchParams }: { searchParams: { status?: string } }) {
   const selectedStatus = searchParams.status === "all" ? "" : searchParams.status || "";
   let leads = await getByUser(selectedStatus);
-  
 
   return (
     <div className="flex size-full flex-col px-5">
@@ -31,8 +30,7 @@ export default async function MyForms({ searchParams }: { searchParams: { status
               analytics={{ impressions: lead.impressionsCount, used: lead.usedCount }}
               status={lead.status}
               image={lead.image}
-              compoenents={lead.components}
-
+              components={lead.components}
             />
           </li>
         ))}

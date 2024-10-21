@@ -1,10 +1,10 @@
 import React from "react";
 import Editor from "@monaco-editor/react";
+import { editor } from "monaco-editor";
 
-const CssEditor = ({ customCss, onCssChange }) => {
-  const handleEditorChange = (value) => {
-    console.log(value);
-    onCssChange(value);
+const CssEditor = ({ customCss, onCssChange }: { customCss: string; onCssChange: (value: string) => void }) => {
+  const handleEditorChange = (value: string | undefined, ev: editor.IModelContentChangedEvent) => {
+    onCssChange(value!);
   };
 
   return (

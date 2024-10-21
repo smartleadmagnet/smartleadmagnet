@@ -1,4 +1,4 @@
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
@@ -15,10 +15,8 @@ const emailSchema = z.object({
   content: z.string().min(1, "Email content is required"),
 });
 
-
 export default function AutomatedEmailForm() {
-  const { updateSettingFormData, leadMagnet,elementsList } = useBuilderContext();
-  
+  const { updateSettingFormData, leadMagnet, elementsList } = useBuilderContext();
 
   const {
     register,
@@ -63,7 +61,7 @@ export default function AutomatedEmailForm() {
           variant: "destructive",
         });
       }
-    } catch (e) {
+    } catch (e: any) {
       toast({
         title: "Test email failed",
         description: e.message,

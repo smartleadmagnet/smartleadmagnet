@@ -23,12 +23,11 @@ import Image from "next/image";
 import { marked } from "marked";
 import DynamicStyles from "@/components/DynamicStyles";
 
-
 interface Props {
   formStyles: any;
   handleStyleUpdate: Function;
   elementsList: any;
-  handleEditChange: Function;
+  handleEditChange: (key: string, value: string | boolean, selectedItem: any) => void;
   handleEdit: Function;
   removeElement: Function;
   selectedView: string;
@@ -50,6 +49,7 @@ const FormWrapper = styled.div`
   padding: 20px;
   border-radius: 5px;
   font-family: ${(props) => props.theme.selectedFont};
+
   .form-element {
     margin: 0 0 20px 0;
     padding: 0;
@@ -71,6 +71,7 @@ const FormWrapper = styled.div`
 
   input {
     color: ${(props) => props.theme.textColor};
+
     &:focus {
       border-color: ${(props) => props.theme.buttonColor};
       outline: none;
@@ -105,7 +106,6 @@ export default function BuilderStylePreview({
 }: Props) {
   const { leadMagnet } = useBuilderContext();
 
-  
   return (
     <div className="builder-wrapper flex flex-1">
       <aside className="builder-column w-1/3 p-4 ">
@@ -207,7 +207,7 @@ export default function BuilderStylePreview({
           </AccordionItem>
           <AccordionItem value="item-3">
             <AccordionTrigger>Custom Css</AccordionTrigger>
-            
+
             <AccordionContent>
               {/* add a toggle button to enable disable custom css */}
               <div className="mb-5 flex items-center space-x-2">
@@ -222,12 +222,9 @@ export default function BuilderStylePreview({
               {formStyles.enableCustomCss && (
                 <CustomCssEditor
                   customCss={formStyles.customCss}
-                  onCssChange={(value) => {
+                  onCssChange={(value: string) => {
                     handleStyleUpdate("customCss", value);
                   }}
-                  placeholder="Add your custom css here"
-                  rows={10}
-                  className="w-full"
                 />
               )}
             </AccordionContent>
@@ -241,7 +238,6 @@ export default function BuilderStylePreview({
 
           <DynamicStyles cssContent={formStyles.customCss} enableCustomCss={formStyles.enableCustomCss} />
           <ResponsiveScreen activeView={selectedView} setActiveView={setSelectedView}>
-
             <FormWrapper theme={formStyles} className={`form-${formStyles.selectedFormStyle} magnet-wrapper`}>
               {leadMagnet.image && (
                 <div className="icon mx-auto mb-5 w-[100px] text-center">

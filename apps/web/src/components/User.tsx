@@ -53,7 +53,7 @@ export async function User() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar>
-            <AvatarImage src={user.image} alt={user?.name!} />
+            <AvatarImage src={user?.image!} alt={user?.name!} />
             <AvatarFallback>{(user?.name! || user?.email!).substring(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>

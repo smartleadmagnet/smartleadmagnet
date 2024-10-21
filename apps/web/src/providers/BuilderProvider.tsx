@@ -31,8 +31,13 @@ interface BuilderContextType {
   onOutputTypeChange: (type: string) => void;
   filteredModels: LLMModel[];
   fetchApiKeys: () => Promise<Array<ApiKey>>;
-  updateSettingFormData: (form: BuilderSchemaForm) => void;
+  updateSettingFormData: (form: any) => void;
   leadMagnet: LeadMagnet;
+  onPublishLead: () => void;
+  creditRequired: boolean;
+  paymentRequired: boolean;
+  onClosePaymentModal: () => void;
+  generateLeadMagnetWithAI: (description: string) => void;
 }
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);

@@ -29,7 +29,7 @@ const useAIForm = () => {
     setProcessing(true);
     try {
       if (outputType === "image") {
-        const textPayload = elementsList.reduce((acc, element) => {
+        const textPayload = elementsList.reduce((acc: any, element: any) => {
           if (!(element.type === "image" || element.type === "file")) {
             acc[element.name] = element.value;
           }
@@ -38,7 +38,7 @@ const useAIForm = () => {
         const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, textPayload);
         setPreview({ type: "image", content: result.data?.message });
       } else {
-        const payload = elementsList.reduce((acc, element) => {
+        const payload = elementsList.reduce((acc: any, element: any) => {
           acc[element.name] = element.value;
           return acc;
         }, {});

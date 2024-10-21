@@ -182,7 +182,7 @@ export default function BuilderElementPreview() {
               rules={{ required: element.required ? `${element.label} is required` : false }}
               render={({ field }) => <Input {...field} placeholder={element.placeholder} />}
             />
-            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
           </div>
         );
       case "number":
@@ -197,7 +197,7 @@ export default function BuilderElementPreview() {
               rules={{ required: element.required ? `${element.label} is required` : false }}
               render={({ field }) => <Input {...field} type="number" placeholder={element.placeholder} />}
             />
-            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
           </div>
         );
       case "textarea":
@@ -212,7 +212,7 @@ export default function BuilderElementPreview() {
               rules={{ required: element.required ? `${element.label} is required` : false }}
               render={({ field }) => <Textarea {...field} placeholder={element.placeholder} />}
             />
-            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
           </div>
         );
       case "checkbox":
@@ -273,7 +273,7 @@ export default function BuilderElementPreview() {
                 </Select>
               )}
             />
-            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
           </div>
         );
       case "radio-group":
@@ -297,7 +297,7 @@ export default function BuilderElementPreview() {
                 </RadioGroup>
               )}
             />
-            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
           </div>
         );
       case "color":
@@ -310,7 +310,7 @@ export default function BuilderElementPreview() {
               rules={{ required: element.required ? `${element.label} is required` : false }}
               render={({ field }) => <ColorPicker color={field.value} onChange={field.onChange} />}
             />
-            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
           </div>
         );
       case "file":
@@ -326,8 +326,8 @@ export default function BuilderElementPreview() {
                   <input
                     type="file"
                     className="block h-auto max-w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100 focus:outline-none"
-                    onChange={(e) => {
-                      const file = e.target.files[0];
+                    onChange={(e: any) => {
+                      const file = e?.target?.files?.[0];
                       if (file) {
                         const reader = new FileReader();
                         reader.onloadend = () => {
@@ -340,7 +340,7 @@ export default function BuilderElementPreview() {
                 </div>
               )}
             />
-            {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
           </div>
         );
       case "image":
@@ -364,7 +364,7 @@ export default function BuilderElementPreview() {
       {response && <AIResponse response={response.content} type={response.type} onRegenerate={onRegenerate} />}
       {!response && (
         <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
-          {elementsList.map((element, index) => (
+          {elementsList.map((element: any, index: number) => (
             <div className="form-item" key={index}>
               {renderElement(element)}
             </div>
