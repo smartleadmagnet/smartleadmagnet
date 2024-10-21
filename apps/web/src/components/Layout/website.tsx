@@ -128,7 +128,7 @@ function Footer() {
     <footer className="bg-gray-900 py-10 text-white">
       <div className="container mx-auto px-4">
         {/* First Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3">
           {/* Column 1: Logo, Tagline, Social Media */}
           <div className="flex flex-col items-center md:items-start">
             {/* Logo Section */}
@@ -139,8 +139,8 @@ function Footer() {
               height={75} // Adjust height as necessary
               className="mb-4 ml-[-20px]"
             />
-            <p className="mb-4 text-center md:text-left text-xl">Skyrocket Your Conversions</p>
-            
+            <p className="mb-4 text-center text-xl md:text-left">Skyrocket Your Conversions</p>
+
             {/* Social Media Links */}
             <div className="flex space-x-4">
               <Link href="https://facebook.com" target="_blank" className="hover:text-gray-500">
@@ -186,19 +186,25 @@ function Footer() {
               <Link href="https://smartleadmagnet.featurebase.app/" target="_blank" className="hover:text-gray-500">
                 Request a Feature
               </Link>
-              <Link href="https://smartleadmagnet.featurebase.app/roadmap" target="_blank" className="hover:text-gray-500">
+              <Link
+                href="https://smartleadmagnet.featurebase.app/roadmap"
+                target="_blank"
+                className="hover:text-gray-500"
+              >
                 Public Roadmap
+              </Link>
+              <Link href="/integrations" className="hover:text-gray-500">
+                Integrations
               </Link>
             </div>
           </div>
-         </div>
+        </div>
 
         {/* Second Row */}
-        <div className="text-center pt-10 border-t border-gray-800">
+        <div className="border-t border-gray-800 pt-10 text-center">
           &copy; {new Date().getFullYear()} Smart Lead Magnet. All rights reserved.
         </div>
       </div>
     </footer>
   );
 }
-

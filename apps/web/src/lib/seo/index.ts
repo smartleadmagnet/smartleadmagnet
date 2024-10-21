@@ -103,7 +103,7 @@ const metadata: Metadata = {
   abstract: description,
 };
 
-const getSeoTags = (data?: Metadata, urlPath?: string) => {
+const getSeo = (data?: Metadata, urlPath?: string) => {
   const canonicalUrl = !urlPath ? "https://smartereply.com" : `https://smartereply.com/${urlPath}`;
   return {
     ...metadata,
@@ -134,7 +134,7 @@ export const getLocalMdxSeoTags = (slug: string, folderName?: string) => {
   console.log(`${folderName}/${slug}`);
   const post = getPage<any>(folderName ? `${folderName}/${slug}` : slug);
   const { title, summary } = post?.metadata;
-  return getSeoTags(
+  return getSeo(
     {
       title: title,
       description: summary,
@@ -147,7 +147,7 @@ export const getBlogMdxSeoTags = (slug: string, folderName?: string) => {
   const url = process.env.NEXT_PUBLIC_SITE_URL!;
   const post = getPage<any>(folderName ? `${folderName}/${slug}` : slug);
   const { date, modifiedTime, title, summary, tags } = post?.metadata;
-  return getSeoTags(
+  return getSeo(
     {
       title: title,
       description: summary,
@@ -173,4 +173,4 @@ export const getBlogMdxSeoTags = (slug: string, folderName?: string) => {
   );
 };
 
-export default getSeoTags;
+export default getSeo;
