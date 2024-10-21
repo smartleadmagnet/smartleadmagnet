@@ -76,6 +76,7 @@ export const getAllPages = <T>(directoryPath: string, options: GetAllPostsOption
 
 export const getPage = <T>(filePath: string) => {
   const fullPath = path.join(root, `${filePath}.mdx`);
+  console.log(fullPath);
 
   if (!fs.existsSync(fullPath)) {
     return null;

@@ -5,10 +5,9 @@ import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
-import ReactQuill from "react-quill"; // Import React Quill
-import "react-quill/dist/quill.snow.css"; // Import the Quill styles
 import axios from "axios";
 import { useBuilderContext } from "@/providers/BuilderProvider";
+import RichTextEditor from "./RichTextEditor"; // Import the new component
 
 // Zod schema for form validation
 const emailSchema = z.object({
@@ -16,10 +15,10 @@ const emailSchema = z.object({
   content: z.string().min(1, "Email content is required"),
 });
 
-export default function AutomatedEmailForm() {
-  const { updateSettingFormData, leadMagnet } = useBuilderContext();
 
-  console.log({ leadMagnet });
+export default function AutomatedEmailForm() {
+  const { updateSettingFormData, leadMagnet,elementsList } = useBuilderContext();
+  
 
   const {
     register,
@@ -34,7 +33,6 @@ export default function AutomatedEmailForm() {
     },
   });
 
-  // Handle form submission to save email data
   const onSubmit = async (data: any) => {
     await updateSettingFormData({
       emailSubject: data.subject,
@@ -45,7 +43,6 @@ export default function AutomatedEmailForm() {
     });
   };
 
-  // Handle sending a test email
   const handleSendTest = async (data: any) => {
     try {
       const result = await axios.post(`/api/lead/${leadMagnet.id}/email/test`, {
@@ -58,7 +55,7 @@ export default function AutomatedEmailForm() {
           title: "Test email sent successfully",
         });
         await updateSettingFormData({
-          emailSent: true, // Mark email as sent in usage
+          emailSent: true,
         });
       } else {
         toast({
@@ -86,31 +83,18 @@ export default function AutomatedEmailForm() {
         </div>
 
         {/* Email Content Rich Text Editor */}
-        <div className="form-control mb-4 w-full">
-          <Label className="mb-[10px] block text-sm font-semibold">Email Content</Label>
-          <Controller
-            name="content"
-            control={control}
-            render={({ field }) => (
-              <ReactQuill
-                {...field}
-                theme="snow"
-                className="w-full"
-                placeholder="Enter email content"
-                modules={{
-                  toolbar: [
-                    [{ header: [1, 2, false] }],
-                    ["bold", "italic", "underline", "strike"],
-                    [{ list: "ordered" }, { list: "bullet" }],
-                    ["link", "image"],
-                    ["clean"],
-                  ],
-                }}
-              />
-            )}
-          />
-          {errors.content && <span className="text-sm text-red-500">{errors.content.message}</span>}
-        </div>
+        <RichTextEditor
+          control={control}
+          name="content"
+          placeholder="Enter email content"
+          errorMessage={errors.content?.message}
+          mentions={elementsList
+            .filter((item: any) => item.formElement)
+            .map((element: any) => ({
+              id: element.name,
+              name: `{{${element.name}}}`,
+            }))}
+        />
 
         {/* Save Button */}
         <Button className="mt-4" type="submit">

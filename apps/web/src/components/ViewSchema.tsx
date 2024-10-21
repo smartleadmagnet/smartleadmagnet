@@ -3,9 +3,10 @@
 import React, { useState } from "react";
 
 import {  SquareDashedBottomCode } from "lucide-react";
-import { deleteLead } from "@/actions/lead-magnet";
-import { Button } from "@smartleadmagnet/ui/components/ui/button";
+
 import SchemaModal from "@/components/SchemaModal";
+
+
 
 export default function ViewSchema({ id,compoenents }: { id: string,compoenents:any[] }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

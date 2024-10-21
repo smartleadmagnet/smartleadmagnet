@@ -131,14 +131,13 @@ const getSeoTags = (data?: Metadata, urlPath?: string) => {
 };
 
 export const getLocalMdxSeoTags = (slug: string, folderName?: string) => {
+  console.log(`${folderName}/${slug}`);
   const post = getPage<any>(folderName ? `${folderName}/${slug}` : slug);
-  const { title, summary, tags } = post?.metadata;
-  const keywords = tags.split(",");
+  const { title, summary } = post?.metadata;
   return getSeoTags(
     {
       title: title,
       description: summary,
-      keywords: keywords,
     },
     slug
   );

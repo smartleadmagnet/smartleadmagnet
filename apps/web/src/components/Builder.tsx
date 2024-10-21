@@ -60,6 +60,8 @@ export default function Builder() {
     onPublishLead,
     onClosePaymentModal,
     generateLeadMagnetWithAI,
+    defaultTab,
+    pathname
   } = useBuilder(); // Use the custom hook
 
   const filterItems = (searchTerm: string) => {
@@ -72,7 +74,11 @@ export default function Builder() {
 
   return (
     <>
-      <Tabs defaultValue="form">
+      <Tabs defaultValue={defaultTab}
+      onValueChange={(value) => {
+        router.push(`${pathname}?tab=${value}`);
+      }}
+      >
         <div className="flex min-h-screen flex-col">
           {/* Header  */}
           <div className="flex items-center justify-between bg-gray-900 p-4 text-white">

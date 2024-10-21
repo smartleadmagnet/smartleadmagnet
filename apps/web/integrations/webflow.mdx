@@ -1,0 +1,84 @@
+---
+title: "Embed Smart Lead Magnet into Your Webflow Website"
+summary: "Learn how to seamlessly integrate Smart Lead Magnet into your Webflow website with this step-by-step guide."
+---
+
+# How to Add Smart Lead Magnet to Your Webflow Website
+
+**Note:** You'll need administrative access to your Webflow account to complete these steps.
+
+## 1. Log in to Your Webflow Account
+
+- Go to [Webflow](https://webflow.com/) and click on **Log In**.
+- Enter your email and password to access your Webflow dashboard.
+
+## 2. Open Your Project
+
+- From your dashboard, select the project where you want to embed the Smart Lead Magnet.
+
+## 3. Access the Designer
+
+- Click on **Designer** to open the Webflow Designer for your project.
+
+## 4. Navigate to the Desired Page
+
+- In the **Pages** panel on the left, select the page where you want to add the Smart Lead Magnet.
+
+## 5. Add an Embed Element to Your Page
+
+- In the left toolbar, click on the **Add Elements** button (the **+** icon).
+- Scroll down to the **Components** section.
+- Drag the **Embed** component onto your page and place it where you want the Smart Lead Magnet to appear.
+
+## 6. Insert the Smart Lead Magnet iFrame Code
+
+- Click on the **Embed** element you just added.
+- In the **Embed Code Editor** that appears, paste the following iFrame code:
+
+  ```html
+  <iframe src="https://smartleadmagnet.com/share/{{magentid}}" width="100%"
+      height="600"
+      style="border-radius:0.5rem; border:none;
+      max-width: 100%;
+      height: 70vh; /* Responsive height based on viewport height */
+      min-height: 500px;"
+      loading="lazy"
+      referrerpolicy="unsafe-url"
+      allow="clipboard-read;clipboard-write"
+  ></iframe>
+  ```
+
+**Important:** Replace `{{magentid}}` with your unique Smart Lead Magnet ID. For example:
+
+  ```html
+  <iframe src="https://smartleadmagnet.com/share/your-unique-id" width="100%"
+      height="600"
+      style="border-radius:0.5rem; border:none;
+      max-width: 100%;
+      height: 70vh; /* Responsive height based on viewport height */
+      min-height: 500px;"
+      loading="lazy"
+      referrerpolicy="unsafe-url"
+      allow="clipboard-read;clipboard-write"
+  ></iframe>
+  ```
+
+- Click **Save & Close** to apply the code.
+
+## 7. Adjust the Embed Element Size (If Necessary)
+
+- Ensure the Embed element is sized appropriately to display the Smart Lead Magnet without scrollbars.
+- You can adjust the size by selecting the Embed element and modifying its width and height in the **Style** panel on the right.
+
+## 8. Publish Your Website
+
+- Click on the **Publish** button in the top right corner.
+- Choose **Publish to Selected Domains** to make your changes live.
+
+## 9. Test the Embedded Smart Lead Magnet
+
+- Visit your live website to ensure the Smart Lead Magnet is displaying and functioning correctly.
+- Interact with the embedded content to verify that it's capturing leads as expected.
+
+**Note:** If the iframe doesn't display properly, ensure that your Webflow project settings allow for embedded code and that there are no security settings blocking external iframes.
+

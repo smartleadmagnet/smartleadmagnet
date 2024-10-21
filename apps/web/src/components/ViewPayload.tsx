@@ -21,11 +21,15 @@ const ViewPayloadModal: React.FC<ViewPayloadModalProps> = ({ payload }) => {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)}>View Payload</Button>
+      <Button className="btn-primary" onClick={() => setIsOpen(true)}>View Payload</Button>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent>
+        <DialogContent className="magent-dialog">
           <DialogHeader>
-            <DialogTitle>Payload</DialogTitle>
+          <div className="mb-6 text-center">
+              <div className="modal-header cm-modal-header">
+                <h2 className="text-2xl font-semibold">Payload</h2>
+              </div>
+            </div>
           </DialogHeader>
 
           {/* JSON Payload view */}

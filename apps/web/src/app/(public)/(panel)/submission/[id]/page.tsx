@@ -24,9 +24,8 @@ export default async function Page({ params }: { params: { id: string } }) {
           Back
         </Link>
 
-        <Button className="btn-primary">
           <ExportSubmissionsButton usageData={usageData} leadMagnetName={leadMagnet.name} />
-        </Button>
+        
       </div>
       <div>
         <h1 className="mb-5 text-3xl font-bold text-gray-800">

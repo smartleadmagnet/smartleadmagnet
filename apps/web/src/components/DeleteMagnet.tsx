@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import DeleteDialog from "@smartleadmagnet/ui/components/DeleteDialog";
 import {  Trash2 } from "lucide-react";
 import { deleteLead } from "@/actions/lead-magnet";
-import { Button } from "@smartleadmagnet/ui/components/ui/button";
+
 
 export default function DeleteKey({ id }: { id: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

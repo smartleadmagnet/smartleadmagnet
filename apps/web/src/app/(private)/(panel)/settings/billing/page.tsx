@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 import CancelSubscription from "@/components/CancelSubscription";
 
-export default async function SettingsNotificationsPage() {
+export default async function BillingPage() {
   const user = await getUserInfo();
   const payments = (await getUserPayments(user?.id!)) || [];
   const planInfo = payments?.find((payment: Payment) => payment.planType !== PlanTier.CREDIT);
@@ -29,7 +29,7 @@ export default async function SettingsNotificationsPage() {
         {planInfo && (
           <div className="flex flex-row items-center justify-between rounded-lg border p-4">
             <div className="space-y-0.5">
-              <p className="mb-3 text-base font-bold">
+              <p className="text-base font-bold">
                 Purchased On: {format(new Date(planInfo?.createdAt), "dd MMM yyyy")}{" "}
               </p>
               {planInfo?.planType === PlanTier.SUBSCRIPTION && planInfo?.subscriptionStatus === "active" && (
@@ -74,6 +74,31 @@ export default async function SettingsNotificationsPage() {
           </div>
         </div>
       </div>
+      {/* Billing history */}
+      <div className="space-y-2">
+        <h3 className="text-lg font-medium">Billing History:</h3>
+          <table className="min-w-full rounded-lg border border-gray-200 bg-white">
+            <thead>
+              <tr>
+                <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Date</th>
+                <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Amount</th>
+                <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Plan</th>
+                <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {payments.map((payment: Payment, index: number) => (
+                <tr key={index} className={`hover:bg-gray-100 ${index % 2 === 0 ? "odd:bg-gray-50" : ""}`}>
+                  <td className="whitespace-nowrap border-b px-4 py-2">{format(new Date(payment.createdAt), "dd MMM yyyy")}</td>
+                  <td className="whitespace-nowrap border-b px-4 py-2">{payment.price}</td>
+                  <td className="whitespace-nowrap border-b px-4 py-2">{getPlanName(payment.planType)}</td>
+                  <td className="whitespace-nowrap border-b px-4 py-2">{payment.subscriptionStatus}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        
+        </div>
     </div>
   );
 }

@@ -21,7 +21,8 @@ import { Switch } from "@smartleadmagnet/ui/components/ui/switch";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 import Image from "next/image";
 import { marked } from "marked";
-import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
+import DynamicStyles from "@/components/DynamicStyles";
+
 
 interface Props {
   formStyles: any;
@@ -73,6 +74,7 @@ const FormWrapper = styled.div`
     &:focus {
       border-color: ${(props) => props.theme.buttonColor};
       outline: none;
+      box-shadow: none;
     }
   }
 
@@ -102,6 +104,8 @@ export default function BuilderStylePreview({
   imageUrl,
 }: Props) {
   const { leadMagnet } = useBuilderContext();
+
+  
   return (
     <div className="builder-wrapper flex flex-1">
       <aside className="builder-column w-1/3 p-4 ">
@@ -203,6 +207,7 @@ export default function BuilderStylePreview({
           </AccordionItem>
           <AccordionItem value="item-3">
             <AccordionTrigger>Custom Css</AccordionTrigger>
+            
             <AccordionContent>
               {/* add a toggle button to enable disable custom css */}
               <div className="mb-5 flex items-center space-x-2">
@@ -233,7 +238,10 @@ export default function BuilderStylePreview({
       <div className="flex flex-1">
         <main className="drop-area builder-column flex-1 bg-gray-100 p-4">
           <h3 className="mb-2 text-lg font-semibold">Style & Preview</h3>
+
+          <DynamicStyles cssContent={formStyles.customCss} enableCustomCss={formStyles.enableCustomCss} />
           <ResponsiveScreen activeView={selectedView} setActiveView={setSelectedView}>
+
             <FormWrapper theme={formStyles} className={`form-${formStyles.selectedFormStyle} magnet-wrapper`}>
               {leadMagnet.image && (
                 <div className="icon mx-auto mb-5 w-[100px] text-center">
