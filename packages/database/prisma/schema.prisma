@@ -16,6 +16,7 @@ model User {
   image            String?
   bio              String?
   key              String?         @default(uuid())
+  role             String?         @default("user")
   accounts         Account[]
   sessions         Session[]
   stripeCustomerId String?
@@ -112,6 +113,7 @@ model LeadMagnet {
   model            String            @default("gpt-4o-mini")
   output           String            @default("text")
   styles           Json?             @default("{}")
+  public           Boolean           @default(false)
   components       Json?
   emailSubject     String?           @default("") // New field for storing email subject
   emailContent     String?           @default("") // New field for storing email content
@@ -123,6 +125,9 @@ model LeadMagnet {
   updatedAt        DateTime?         @default(now()) @updatedAt
   apiKeyId         String?           @db.ObjectId
   apiKey           ApiKey?           @relation(fields: [apiKeyId], references: [id])
+
+  @@index([public])
+  @@index([category])
 }
 
 model LeadMagnetUsage {

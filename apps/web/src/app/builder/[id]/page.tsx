@@ -1,7 +1,9 @@
 import { getLeadMagnetById } from "@smartleadmagnet/services";
 import BuilderContainer from "@/app/builder/[id]/BuilderContainer";
+import { getSessionUser } from "@/services/user";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const leadMagnet = await getLeadMagnetById(params.id);
-  return <BuilderContainer leadMagnet={leadMagnet} />;
+  const user = await getSessionUser();
+  return <BuilderContainer leadMagnet={leadMagnet} user={user} />;
 }
