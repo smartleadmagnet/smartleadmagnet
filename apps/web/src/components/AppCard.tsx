@@ -30,7 +30,7 @@ interface Props {
   };
 }
 
-export default function AppCard({ id, name, description, analytics, status, image,compoenents }: Props) {
+export default function AppCard({ id, name, description, analytics, status, image, compoenents }: Props) {
   return (
     <Card className="p-0 ">
       <div className="mr-3 flex w-full items-center gap-2 rounded bg-gray-900 p-2 px-4 text-white">
@@ -54,7 +54,7 @@ export default function AppCard({ id, name, description, analytics, status, imag
                 <Image
                   className="h-[60px] w-[60px] rounded-full object-cover object-center"
                   src={image}
-                  alt="Neil image"
+                  alt={name}
                   width={60}
                   height={60}
                 />
@@ -77,7 +77,7 @@ export default function AppCard({ id, name, description, analytics, status, imag
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <div className="flex flex-col p-0 app-card-dropdown">
+                <div className="app-card-dropdown flex flex-col p-0">
                   {/* Edit Option */}
                   <DropdownMenuItem asChild>
                     <Link href={`/builder/${id}`} className="flex items-center  hover:bg-gray-100">

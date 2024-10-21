@@ -15,6 +15,38 @@ export const getLeadMagnetById = async (id: string): Promise<LeadMagnet> => {
   });
 };
 
+export const getPublicLeadMagnets = async () => {
+  return prisma.leadMagnet.findMany({
+    where: {
+      status: "published",
+      public: true,
+    },
+  });
+};
+
+function convertSlugToName(slug: string): string {
+  return slug
+    .replace(/-/g, " ") // Replace hyphens with spaces
+    .toLowerCase(); // Convert to lowercase (assuming names in the DB are lowercase)
+}
+
+export async function getLeadBySlug(slug: string): Promise<LeadMagnet> {
+  const name = convertSlugToName(slug);
+  try {
+    return await prisma.leadMagnet.findFirst({
+      where: {
+        name: {
+          equals: name,
+          mode: "insensitive",
+        },
+      },
+    });
+  } catch (error) {
+    // TODO sentry error
+    console.error("Error finding user by slug:", error);
+  }
+}
+
 export const updateLeadMagnet = async (id: string, userId: string, data: Partial<LeadMagnet>) => {
   return prisma.leadMagnet.update({
     where: { id, userId },
@@ -110,18 +142,21 @@ export async function copyLeadMagnet(id: string, userId: string) {
   });
 }
 
-
-export const getLeadMagnetUsageById = async (leadMagnetId: string): Promise<{ usage: LeadMagnetUsage[]; leadMagnet: {
-  name: string;
-  impressionsCount: number;
-  usedCount: number;
-  createdAt: Date;
-  status: string; 
-} | null }> => {
+export const getLeadMagnetUsageById = async (
+  leadMagnetId: string
+): Promise<{
+  usage: LeadMagnetUsage[];
+  leadMagnet: {
+    name: string;
+    impressionsCount: number;
+    usedCount: number;
+    createdAt: Date;
+    status: string;
+  } | null;
+}> => {
   // Fetch LeadMagnetUsage records for the given leadMagnetId
   const usageRecords = await prisma.leadMagnetUsage.findMany({
-    where: { leadMagnetId }
-    
+    where: { leadMagnetId },
   });
 
   // Fetch the associated LeadMagnet information
@@ -133,7 +168,6 @@ export const getLeadMagnetUsageById = async (leadMagnetId: string): Promise<{ us
       usedCount: true,
       createdAt: true,
       status: true,
-      
     }, // Assuming id is the unique identifier for LeadMagnet
   });
 
