@@ -2,14 +2,14 @@ import MDXDocPage from "@/components/Posts/MDXDocPage";
 import { getLocalMdxSeoTags } from "@/lib/seo";
 import { WebPageJsonLd } from "next-seo";
 
-const slug = "shopify";
+const slug = "integrations/shopify";
 
 export function generateMetadata() {
-  return getLocalMdxSeoTags("shopify");
+  return getLocalMdxSeoTags("shopify", "integrations");
 }
 
 export default async function Posts() {
-  const seo = getLocalMdxSeoTags("shopify");
+  const seo = getLocalMdxSeoTags("shopify", "integrations");
   return (
     <>
       <WebPageJsonLd useAppDir description={seo.description!} id="shopify" />

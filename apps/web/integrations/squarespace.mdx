@@ -1,0 +1,74 @@
+---
+title: "Embed Smart Lead Magnet into Your Squarespace Website"
+summary: "Learn how to seamlessly integrate Smart Lead Magnet into your Squarespace website with this step-by-step guide."
+---
+
+# How to Add Smart Lead Magnet to Your Squarespace Website
+
+**Note:** You'll need administrative access to your Squarespace account to complete these steps.
+
+## 1. Log in to Your Squarespace Account
+
+- Go to [Squarespace.com](https://www.squarespace.com/) and click on **Login**.
+- Enter your email and password to access your Squarespace dashboard.
+
+## 2. Navigate to the Page Where You Want to Embed Smart Lead Magnet
+
+- In the **Home Menu**, click on **Pages**.
+- Select the page where you want to add the Smart Lead Magnet or create a new page by clicking the **+** icon.
+
+## 3. Edit the Page Content
+
+- Hover over the page content area and click on **Edit**.
+- Click on an insertion point (the **+** icon) where you want to add the Smart Lead Magnet.
+
+## 4. Add a Code Block
+
+- From the list of content blocks, select **Code**.
+
+## 5. Enter the Smart Lead Magnet iFrame Code
+
+- In the **Code Block** editor:
+- Make sure the **Display Source** option is unchecked.
+- Set the **Type** to **HTML**.
+- Paste the following iFrame code into the editor:
+
+```html
+<iframe src="https://smartleadmagnet.com/share/{{magentid}}" width="100%"
+    height="600"
+    style="border-radius:0.5rem; border:none;
+    max-width: 100%;
+    height: 70vh; /* Responsive height based on viewport height */
+    min-height: 500px;"
+    loading="lazy"
+    referrerpolicy="unsafe-url"
+    allow="clipboard-read;clipboard-write"
+></iframe>
+```
+
+**Important:** Replace `{{magentid}}` with your unique Smart Lead Magnet ID. For example:
+
+  ```html
+  <iframe src="https://smartleadmagnet.com/share/your-unique-id" width="100%"
+      height="600"
+      style="border-radius:0.5rem; border:none;
+      max-width: 100%;
+      height: 70vh; /* Responsive height based on viewport height */
+      min-height: 500px;"
+      loading="lazy"
+      referrerpolicy="unsafe-url"
+      allow="clipboard-read;clipboard-write"
+  ></iframe>
+```
+
+## 6. Save Your Changes
+
+- Click **Apply** to save the Code Block.
+- Click **Save** or **Done** in the upper left corner to save the page changes.
+
+## 7. Preview and Test the Embedded Smart Lead Magnet
+
+- Navigate to the live page on your website to ensure the Smart Lead Magnet is displaying correctly.
+- Interact with the embedded content to verify that it's functioning as expected.
+
+**Note:** If the iframe doesn't display properly, ensure that your Squarespace settings allow embedded code and there are no security settings blocking external iframes.
