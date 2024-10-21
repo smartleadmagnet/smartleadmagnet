@@ -86,12 +86,12 @@ const nextAuth = NextAuth({
   callbacks: {
     // @ts-ignore
     async session({ session, token, user }: any) {
-      if (user?.id) session.user.id = user.id;
+      if (user?.id) session.user.id = user?.id!;
       if (token?.sub) session.user.id = token.sub;
       if (user?.role) session.user.role = user.role;
 
       // // add stripe payment information to the session
-      // const userData = await getUserByEmail(session.user.email);
+      // const userData = await getUserByEmail(session.user?.email!);
       // if (userData) {
       // 	session.user.stripeCustomerId = userData.stripeCustomerId;
       // 	session.user.stripePaymentDate = userData.stripePaymentDate;
@@ -105,9 +105,9 @@ const nextAuth = NextAuth({
   events: {
     async createUser(message) {
       // send a welcome email
-      console.log("User created:", message.user.email);
-      const emailHtml = await render(<WelcomeEmail userName={message.user.name} />);
-      await sendEmail(message.user.email, "Welcome to SmartLeadMagnet", convert(emailHtml), emailHtml);
+      console.log("User created:", message.user?.email!);
+      const emailHtml = await render(<WelcomeEmail userName={message.user?.name!} />);
+      await sendEmail(message.user?.email!, "Welcome to SmartLeadMagnet", convert(emailHtml), emailHtml);
     },
   },
 });

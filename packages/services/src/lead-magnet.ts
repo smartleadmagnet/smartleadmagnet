@@ -110,18 +110,21 @@ export async function copyLeadMagnet(id: string, userId: string) {
   });
 }
 
-
-export const getLeadMagnetUsageById = async (leadMagnetId: string): Promise<{ usage: LeadMagnetUsage[]; leadMagnet: {
-  name: string;
-  impressionsCount: number;
-  usedCount: number;
-  createdAt: Date;
-  status: string; 
-} | null }> => {
+export const getLeadMagnetUsageById = async (
+  leadMagnetId: string
+): Promise<{
+  usage: LeadMagnetUsage[];
+  leadMagnet: {
+    name: string;
+    impressionsCount: number;
+    usedCount: number;
+    createdAt: Date;
+    status: string;
+  };
+}> => {
   // Fetch LeadMagnetUsage records for the given leadMagnetId
   const usageRecords = await prisma.leadMagnetUsage.findMany({
-    where: { leadMagnetId }
-    
+    where: { leadMagnetId },
   });
 
   // Fetch the associated LeadMagnet information
@@ -133,7 +136,6 @@ export const getLeadMagnetUsageById = async (leadMagnetId: string): Promise<{ us
       usedCount: true,
       createdAt: true,
       status: true,
-      
     }, // Assuming id is the unique identifier for LeadMagnet
   });
 

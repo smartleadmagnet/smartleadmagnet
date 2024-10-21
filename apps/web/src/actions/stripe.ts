@@ -63,7 +63,7 @@ export async function cancelSubscription(subscriptionId: string) {
     const { current_period_end, current_period_start } = canceledSubscription;
     const planDetails = pricingConfig?.plans.find((plan) => {
       // Match the plan ID (assuming it's within the items data)
-      return plan.priceId === canceledSubscription.items.data[0].price.id;
+      return plan.priceId === canceledSubscription?.items?.data?.[0]?.price?.id;
     });
 
     if (!planDetails) {
@@ -71,7 +71,7 @@ export async function cancelSubscription(subscriptionId: string) {
     }
 
     await updateSubscriptionDetailsForCancel({
-      stripeCustomerId: user.stripeCustomerId,
+      stripeCustomerId: user?.stripeCustomerId!,
       subscriptionId: subscriptionId,
       currentPeriodStart: current_period_start,
       currentPeriodEnd: current_period_end,
@@ -129,8 +129,8 @@ export const getSingInLink = async (priceId: string) => {
       let customerId = user?.stripeCustomerId;
 
       if (!customerId) {
-        const customer = await createStripeCustomer({ email: user?.email!, name: user.name! });
-        await updateStripeCustomerId({ id: user.id, stripeCustomerId: customer });
+        const customer = await createStripeCustomer({ email: user?.email!, name: user?.name!! });
+        await updateStripeCustomerId({ id: user?.id!, stripeCustomerId: customer });
         customerId = customer;
       }
       if (customerId && userId) {

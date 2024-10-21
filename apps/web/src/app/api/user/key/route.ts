@@ -8,7 +8,7 @@ export async function POST() {
     const user = await getSessionUser();
     if (user?.id) {
       const key = uuid();
-      await updateUserKey({ id: user.id, key });
+      await updateUserKey({ id: user?.id!, key });
       return NextResponse.json({ key });
     }
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });

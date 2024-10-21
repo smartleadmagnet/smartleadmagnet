@@ -6,6 +6,7 @@ export const builderSchemaForm = z.object({
   tagline: z.string().min(1, "Tagline is required"),
   description: z.string().min(1, "Description is required"),
   category: z.string().min(1, "Category is required"),
+  apiKeyId: z.any().optional(),
 });
 
 export type BuilderSchemaForm = z.infer<typeof builderSchemaForm>;

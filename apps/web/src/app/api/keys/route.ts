@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
         apiKey,
         provider,
         isDefault,
-        userId: user.id,
+        userId: user?.id!,
       });
 
       return NextResponse.json(newKey);
@@ -27,7 +27,7 @@ export async function GET() {
   try {
     const user = await getSessionUser();
     if (user?.id) {
-      const keys = await getApiKeysByUserIdWithoutKey(user.id);
+      const keys = await getApiKeysByUserIdWithoutKey(user?.id!);
       return NextResponse.json(keys);
     }
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });

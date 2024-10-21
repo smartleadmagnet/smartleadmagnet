@@ -121,7 +121,8 @@ export default function AIForm() {
                   Back to Form
                 </Button>
               </div>
-              <ContentViewer type={outputType} content={preview?.content!} isLoading={processing} />
+              {/* @ts-ignore */}
+              <ContentViewer type={outputType!} content={preview?.content!} isLoading={processing} />
             </div>
           </div>
         )}

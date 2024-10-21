@@ -86,7 +86,7 @@ const AddUpdateKeyModal = (props: AddUpdateKeyModalProps) => {
   const onSubmit = async (data: any) => {
     try {
       if (isEditing) {
-        await updateKey(keyData?.id, data); // Submit all form data
+        await updateKey(keyData?.id!, data); // Submit all form data
       } else {
         await createKey(data); // Submit all form data
       }
@@ -171,7 +171,7 @@ const AddUpdateKeyModal = (props: AddUpdateKeyModalProps) => {
               <Checkbox
                 id="isDefault"
                 checked={getValues("isDefault")} // Get the current value from form state
-                onCheckedChange={(checked) => setValue("isDefault", checked)} // Use setValue to update
+                onCheckedChange={(checked) => setValue("isDefault", Boolean(checked))} // Use setValue to update
               />
               <Label htmlFor="isDefault" className="text-sm font-medium">
                 Set as Default

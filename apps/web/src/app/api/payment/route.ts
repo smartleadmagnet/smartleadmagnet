@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     if (session.payment_status === "paid") {
       const userId = sessionUser?.id ?? "";
 
-      const priceId = session.line_items.data[0].price.id;
+      const priceId = session?.line_items?.data?.[0]?.price?.id!;
       const user = await getUserById(userId);
       if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
       if (!plan) return NextResponse.json({ error: "Invalid plan" }, { status: 400 });
 
       // Update user's credits
-      const existingCredit = await getCredit(user.id);
+      const existingCredit = await getCredit(user?.id!);
       const totalCredit = existingCredit ? existingCredit.total + plan.credits : plan.credits;
 
       await upsetCredits({
@@ -66,15 +66,15 @@ export async function GET(req: NextRequest) {
       // Create payment record
       await createPayment({
         stripeSessionId: session.id,
-        stripeCustomerId: user.stripeCustomerId,
+        stripeCustomerId: user?.stripeCustomerId!,
         userId,
         planType: plan.planTier,
         credits: plan.credits,
         price: plan.discountPrice,
         subscriptionId, // Store subscription ID
-        subscriptionStartDate, // Store subscription start date
-        subscriptionEndDate, // Store subscription end date
-        subscriptionStatus, // Store subscription status
+        subscriptionStartDate: subscriptionStartDate!, // Store subscription start date
+        subscriptionEndDate: subscriptionEndDate!, // Store subscription end date
+        subscriptionStatus: subscriptionStatus!, // Store subscription status
       });
 
       return NextResponse.redirect(`${process.env.HOST_URL}/payment/success`); // Redirect to success page

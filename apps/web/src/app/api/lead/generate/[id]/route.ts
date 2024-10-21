@@ -41,7 +41,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
       const lead = await getLeadMagnetById(params.id);
       const credit = await getCredit(lead.userId);
-      let apiKey = lead.apiKey;
+      // @ts-ignore
+      let apiKey = lead?.apiKey?.apiKey;
       if (credit?.total > credit?.used) {
         apiKey = null;
       }
@@ -71,7 +72,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
         webhookStatus = webhookResult.success ? "success" : "failed";
       }
 
-      const emailComponent = lead.components?.find((item) => item.type === "email");
+      // ts-ignore
+      const emailComponent = (lead?.components as Array<any>)?.find((item) => item.type === "email");
       if (lead.emailSubject && lead.emailContent && emailComponent) {
         try {
           const emailHtml = lead.emailContent;
@@ -79,7 +81,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
           await sendEmail(payload[emailComponent.name], lead.emailSubject, emailText, emailHtml);
           console.log("Email sent successfully");
           emailSent = true;
-        } catch (e) {
+        } catch (e: any) {
           // TODO sentry error
           console.log("Email sending failed", e.message);
         }

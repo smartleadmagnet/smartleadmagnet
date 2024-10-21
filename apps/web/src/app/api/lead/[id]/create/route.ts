@@ -13,7 +13,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       const payload = await req.json();
       const data = await createAILead(payload);
       if (data?.components?.length && data?.outputType && data?.prompt) {
-        const updatedLead = await updateLeadMagnet(params.id, user.id, {
+        const updatedLead = await updateLeadMagnet(params.id, user?.id!, {
           output: data?.outputType,
           prompt: data?.prompt,
           components: data?.components,

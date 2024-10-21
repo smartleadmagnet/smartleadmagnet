@@ -11,11 +11,11 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
   if (user?.id) {
     try {
       const lead = await getLeadMagnetById(params.id);
-      if (lead.userId !== user.id) {
+      if (lead.userId !== user?.id!) {
         return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
       }
       const payload = await req.json();
-      const result = await validateLeadWithInput({ leadMagnet: lead, promptInput: payload, published: false });
+      const result = await validateLeadWithInput({ leadMagnet: lead, promptInput: payload });
       return NextResponse.json({ message: result });
     } catch (error: any) {
       console.log(error);

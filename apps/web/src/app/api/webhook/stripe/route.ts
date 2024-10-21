@@ -13,7 +13,7 @@ import { getCheckoutSession, getSubscription } from "@/actions/stripe";
 import { PlanTier } from "@/lib/types";
 import prisma from "@smartleadmagnet/database";
 
-const stripeWebhookSecret = process.env.STRIPE_ENDPOINT_SECRET;
+const stripeWebhookSecret = process.env.STRIPE_ENDPOINT_SECRET!;
 
 export async function POST(req: Request) {
   const payload = await req.text();
@@ -90,10 +90,10 @@ async function handleCheckoutSessionCompleted(checkoutSession: Stripe.Checkout.S
     }
 
     // Update user's credits
-    const existingCredit = await getCredit(user.id);
+    const existingCredit = await getCredit(user?.id!);
     const totalCredit = existingCredit ? existingCredit.total + plan.credits : plan.credits;
 
-    const userId = user.id;
+    const userId = user?.id!;
     await upsetCredits({
       userId,
       totalCredit,
@@ -120,9 +120,9 @@ async function handleCheckoutSessionCompleted(checkoutSession: Stripe.Checkout.S
       credits: plan.credits,
       price: plan.discountPrice,
       subscriptionId,
-      subscriptionStartDate,
-      subscriptionEndDate,
-      subscriptionStatus,
+      subscriptionStartDate: subscriptionStartDate!,
+      subscriptionEndDate: subscriptionEndDate!,
+      subscriptionStatus: subscriptionStatus!,
     });
 
     console.log("Payment processed successfully");
@@ -144,7 +144,7 @@ async function handleSubscriptionRenewal(invoice: Stripe.Invoice) {
       return;
     }
 
-    const priceId = invoice.lines.data[0].price.id;
+    const priceId = invoice?.lines?.data?.[0]?.price?.id!;
     const subscriptionId = invoice.subscription as string;
 
     // Get plan details from price ID
@@ -170,7 +170,7 @@ async function handleSubscriptionRenewal(invoice: Stripe.Invoice) {
     const totalCredit = plan.credits;
 
     await upsetCredits({
-      userId: user.id,
+      userId: user?.id!,
       totalCredit,
     });
 
@@ -178,7 +178,7 @@ async function handleSubscriptionRenewal(invoice: Stripe.Invoice) {
     await createPayment({
       stripeSessionId: invoice.id,
       stripeCustomerId: customerId,
-      userId: user.id,
+      userId: user?.id!,
       planType: PlanTier.SUBSCRIPTION,
       credits: plan.credits,
       price: invoice.total / 100,
@@ -233,9 +233,3 @@ async function handleSubscriptionCancellation(subscription: Stripe.Subscription)
     console.error("Error processing subscription cancellation:", error);
   }
 }
-
-export const config = {
-  api: {
-    bodyParser: false, // Stripe requires raw body for webhooks
-  },
-};
