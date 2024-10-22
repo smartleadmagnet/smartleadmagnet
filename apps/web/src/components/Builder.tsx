@@ -5,6 +5,7 @@ import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Icon from "@smartleadmagnet/ui/components/icon";
 import { Card } from "@smartleadmagnet/ui/components/ui/card";
 import EditableInput from "@/components/EditableInput";
+import { Loader2 } from "lucide-react"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@smartleadmagnet/ui/components/ui/tabs";
 import {
@@ -62,6 +63,7 @@ export default function Builder({ user }: { user?: any }) {
     generateLeadMagnetWithAI,
     defaultTab,
     pathname,
+    isPublsiing,
   } = useBuilder(); // Use the custom hook
 
   const filterItems = (searchTerm: string) => {
@@ -101,7 +103,8 @@ export default function Builder({ user }: { user?: any }) {
               <p className="mr-4 font-bold">
                 Last Saved ({formatDistanceToNow(new Date(leadMagnet?.updatedAt!), { addSuffix: true })})
               </p>
-              <Button className="btn-primary" onClick={leadMagnet?.status === "published" ? () => {} : onPublishLead}>
+              <Button disabled={isPublsiing} className="btn-primary" onClick={leadMagnet?.status === "published" ? () => {} : onPublishLead}>
+                {isPublsiing &&  <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {leadMagnet?.status === "published" ? "Save" : "Publish"}
               </Button>
             </div>

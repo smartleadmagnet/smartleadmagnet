@@ -4,22 +4,29 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import React, { useState } from "react";
-import Spinner from "./Spinner";
+import { Loader2 } from "lucide-react"
+import { ImMagicWand } from "react-icons/im";
+import  ConfirmDialog  from "./ConfirmDialog";
+
 
 export function GenerateModal({ onGenerate }: { onGenerate: Function }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isConfirm, setIsConfirm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [description, setDescription] = useState("");
 
   const handleCancel = () => {
     setIsOpen(false);
+    setIsConfirm(false);
   };
+  const handleConfirm = () => {
+    setIsConfirm(true);
+  }
 
   const handleGenerate = async () => {
     if (description) {
@@ -27,32 +34,30 @@ export function GenerateModal({ onGenerate }: { onGenerate: Function }) {
       await onGenerate(description);
       setSubmitting(false);
       setIsOpen(false);
+      setIsConfirm(false);
     }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <>
+    <ConfirmDialog isOpen={!isConfirm && isOpen} onClose={() => setIsOpen(false)} onConfirm={handleConfirm}
+      title="Are you absolutely sure?"
+      message="This action cannot be undone. This will ovewrite all your last saved changes."
+    />
+    <Dialog open={isOpen && isConfirm} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button onClick={() => setIsOpen(true)} className="btn btn-primary relative flex items-center px-4 py-2">
-          <svg
-            stroke="currentColor"
-            fill="currentColor"
-            strokeWidth="0"
-            viewBox="0 0 24 24"
-            className="text-lg"
-            height="1em"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* Icon */}
-            <path d="m11 4-.5-1-.5 1-1 .125.834.708L9.5 6l1-.666 1 .666-.334-1.167.834-.708zm8.334 10.666L18.5 13l-.834 1.666-1.666.209 1.389 1.181L16.834 18l1.666-1.111L20.166 18l-.555-1.944L21 14.875zM6.667 6.333 6 5l-.667 1.333L4 6.5l1.111.944L4.667 9 6 8.111 7.333 9l-.444-1.556L8 6.5zM3.414 17c0 .534.208 1.036.586 1.414L5.586 20c.378.378.88.586 1.414.586s1.036-.208 1.414-.586L20 8.414c.378-.378.586-.88.586-1.414S20.378 5.964 20 5.586L18.414 4c-.756-.756-2.072-.756-2.828 0L4 15.586c-.378.378-.586.88-.586 1.414zM17 5.414 18.586 7 15 10.586 13.414 9 17 5.414z"></path>
-          </svg>
+        <Button onClick={() => setIsOpen(true)} className="btn btn-primary relative flex items-center px-4 py-2 hover:bg-cyan-600">
+          <ImMagicWand className="h-6 w-6" />
           <span className="mx-2">Generate tool with AI</span>
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="magent-dialog">
         <DialogHeader>
-          <DialogTitle>Generate Lead</DialogTitle>
+        <div className="mb-6 text-center">
+              <div className="modal-header cm-modal-header">
+                <h2 className="text-2xl font-semibold">Generate Lead</h2>
+              </div>
+            </div>
           <DialogDescription>Enter your text below and click generate to proceed.</DialogDescription>
         </DialogHeader>
         <Textarea
@@ -60,15 +65,17 @@ export function GenerateModal({ onGenerate }: { onGenerate: Function }) {
           onChange={(e) => setDescription(e.target.value)}
         />
         <DialogFooter>
-          <Button variant="outline" onClick={handleCancel}>
-            Cancel
+         
+          <Button onClick={handleGenerate} disabled={submitting} className="bg-cyan-500 ">
+            {submitting &&  <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            <span>Generate</span>
           </Button>
-          <Button onClick={handleGenerate}>
-            {submitting && <Spinner />}
-            <span className="ml-4">Generate</span>
+          <Button  className="border border-cyan-500 bg-white text-cyan-500 hover:bg-cyan-600 hover:text-white" onClick={handleCancel}>
+            Cancel
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
+    </>
   );
 }

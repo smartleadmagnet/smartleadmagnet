@@ -28,6 +28,9 @@ import WebsiteInput from "@/components/WebsiteInput";
 import styled from "styled-components";
 import ImageUploader from "@/components/ImageUploader";
 
+
+
+
 function Loading() {
   return (
     <div className="mx-auto mt-10 max-w-[600px] border px-5">
@@ -101,7 +104,11 @@ const FormWrapper = styled.div`
   }
 `;
 
-export default function BuilderElementPreview() {
+
+interface BuilderElementPreviewProps {
+  hideInfo?: boolean;
+}
+export default function BuilderElementPreview({hideInfo}: BuilderElementPreviewProps) {
   const {
     onSubmit,
     isSubmitting,
@@ -358,8 +365,11 @@ export default function BuilderElementPreview() {
           <Image src={leadMagnet.image} alt="Logo" width={100} height={100} />
         </div>
       )}
-      <h1 className="mb-2 text-center text-xl font-bold">{leadMagnet.name}</h1>
-      <div className="mb-5 text-center" dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }} />
+      {!hideInfo && (<>
+        <h1 className="mb-2 text-center text-xl font-bold">{leadMagnet.name}</h1>
+        <div className="mb-5 text-center" dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }} />
+      </>)}
+      
 
       {response && <AIResponse response={response.content} type={response.type} onRegenerate={onRegenerate} />}
       {!response && (

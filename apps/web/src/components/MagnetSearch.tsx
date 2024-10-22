@@ -9,10 +9,10 @@ import {
     SelectValue,
   } from "@smartleadmagnet/ui/components/ui/select";
 
-export default function MagnetSearch() {
+export default function MagnetSearch({value}: {value: string | undefined}) {
   return (
     <form method="GET">
-    <Select onValueChange={(value) => window.location.search = `?status=${value}`}>
+    <Select onValueChange={(value) => window.location.search = `?status=${value}`} value={value}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select Status" />
       </SelectTrigger>
