@@ -69,26 +69,27 @@
   }
 }
 
-
 /* Tailwind base styles for Markdown content, adjust as needed */
 .markdown-body {
   @apply prose prose-sm text-left text-base;
 }
 
 .markdown-body h1 {
-  @apply text-2xl font-bold my-4;
+  @apply my-4 text-2xl font-bold;
 }
 
 .markdown-body h2 {
-  @apply text-xl font-semibold my-4;
+  @apply my-4 text-xl font-semibold;
 }
 
 .markdown-body h3 {
-  @apply text-lg font-semibold my-3;
+  @apply my-3 text-lg font-semibold;
 }
 
-.markdown-body h4, .markdown-body h5, .markdown-body h6 {
-  @apply text-base font-semibold my-2;
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  @apply my-2 text-base font-semibold;
 }
 
 .markdown-body p {
@@ -102,8 +103,9 @@
   @apply my-2;
 }
 
-.markdown-body ul, .markdown-body ol {
-  @apply list-inside list-decimal pl-5 my-2 text-base;
+.markdown-body ul,
+.markdown-body ol {
+  @apply my-2 list-inside list-decimal pl-5 text-base;
   list-style-type: decimal; /* Explicitly setting list style */
 }
 
@@ -117,35 +119,32 @@
 }
 
 .markdown-body blockquote {
-  @apply border-l-4 border-gray-200 pl-4 italic my-4;
+  @apply my-4 border-l-4 border-gray-200 pl-4 italic;
 }
 
 .markdown-body code {
-  @apply  rounded px-1 font-mono text-sm;
+  @apply rounded px-1 font-mono text-sm;
 }
 
 .markdown-body pre {
-  @apply  p-3 overflow-x-auto rounded my-2;
+  @apply my-2 overflow-x-auto rounded p-3;
 }
 
-
 .markdown-body table {
-  @apply min-w-full divide-y divide-gray-300 my-4;
+  @apply my-4 min-w-full divide-y divide-gray-300;
 }
 
 .markdown-body th {
-  @apply  p-2 text-left font-semibold;
+  @apply p-2 text-left font-semibold;
 }
 
 .markdown-body td {
-  @apply p-2 border-t border-gray-300;
+  @apply border-t border-gray-300 p-2;
 }
 
 .markdown-body img {
-  @apply max-w-full h-auto my-4;
+  @apply my-4 h-auto max-w-full;
 }
-
-
 
 /* builder page css */
 .builder-item {
@@ -473,7 +472,6 @@
   z-index: 1031; /* Ensure it's above everything */
 }
 
-
 /* Make clicks pass-through */
 #nprogress {
   pointer-events: none;
@@ -498,8 +496,10 @@
   right: 0px;
   width: 100px;
   height: 100%;
-  box-shadow: 0 0 10px #29d, 0 0 5px #29d;
-  opacity: 1.0;
+  box-shadow:
+    0 0 10px #29d,
+    0 0 5px #29d;
+  opacity: 1;
   transform: rotate(3deg) translate(0px, -4px);
 }
 .shiki {
@@ -524,8 +524,6 @@
   right: 0;
 } */
 
-
-
 .bg-neutral {
   background: #eee;
   border: 1px solid #ccc;
@@ -549,23 +547,22 @@
   padding: 0;
 
   button.ring-offset-background {
-  display: none;
+    display: none;
+  }
 }
-}
-.magent-dialog > button.ring-offset-background{
-    color:#fff;
+.magent-dialog > button.ring-offset-background {
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  margin-top: 7px;
+  box-shadow: none;
+  outline: none;
+
+  svg {
     width: 20px;
     height: 20px;
-    margin-top: 7px;
-    box-shadow: none;
-    outline: none;
-
-    svg{
-      width: 20px;
-      height: 20px;
-    }
+  }
 }
-
 
 .app_icon {
   width: 60px;
@@ -576,7 +573,8 @@
   padding: 10px;
 }
 
-.app-card-dropdown a, .app-card-dropdown button {
+.app-card-dropdown a,
+.app-card-dropdown button {
   padding: 10px 15px;
   cursor: pointer;
   font-size: 14px;
@@ -617,7 +615,6 @@
   }
 }
 
-
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
@@ -631,9 +628,8 @@
   }
 
   .faded-bottom {
-    @apply relative after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:block after:h-32 after:w-full after:bg-gradient-to-b after:from-transparent after:to-[hsl(var(--background))] after:hidden md:after:block;
+    @apply relative after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:block after:hidden after:h-32 after:w-full after:bg-gradient-to-b after:from-transparent after:to-[hsl(var(--background))] md:after:block;
   }
-
 
   .btn-primary {
     @apply bg-cyan-500 px-5 py-2 text-white shadow-md;
@@ -673,7 +669,7 @@
   .mobile-link {
     @apply flex items-center gap-4 px-2.5 text-gray-200 hover:text-white;
   }
-  .cm-modal-header{
+  .cm-modal-header {
     @apply inline-flex w-full items-center justify-center rounded-t-lg bg-gradient-to-r from-cyan-500 to-blue-500 py-4 text-white;
   }
 }

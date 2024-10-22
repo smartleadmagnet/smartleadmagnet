@@ -10,7 +10,7 @@ export async function getUsers() {
   });
 }
 
-export const getUserById = async (id: string): Promise<User> =>
+export const getUserById = async (id: string): Promise<any> =>
   prisma.user.findUnique({
     where: { id },
     include: {
@@ -24,9 +24,11 @@ export const getUserByEmail = async (email: string) =>
     where: { email },
   });
 
+// @ts-ignore
 export const getUserByStripeCustomerId = async (stripeCustomerId: string): Promise<User> => {
+  // @ts-ignore
   return prisma.user.findFirst({
-    where: { stripeCustomerId },
+    where: { stripeCustomerId: stripeCustomerId! },
   });
 };
 

@@ -68,7 +68,7 @@ export async function getApiKeysByUserId(userId: string): Promise<ApiKey[]> {
   });
 }
 
-export async function getApiKeysByUserIdWithoutKey(userId: string): Promise<ApiKey[]> {
+export async function getApiKeysByUserIdWithoutKey(userId: string): Promise<any[]> {
   return prisma.apiKey.findMany({
     where: {
       userId,

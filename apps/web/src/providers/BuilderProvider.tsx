@@ -8,7 +8,6 @@ import { LLMModel, LLMProvider } from "@/types/llm";
 import { BuilderSchemaForm } from "@/types/builder";
 import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
 
-
 interface BuilderContextType {
   elementsList: any;
   formStyles: any;
@@ -38,8 +37,9 @@ interface BuilderContextType {
   paymentRequired: boolean;
   onClosePaymentModal: () => void;
   generateLeadMagnetWithAI: (description: string) => void;
-  onPublicAccessChange: (isPublic: string) => Promise<void>;
   isPublsiing: boolean;
+  onPublicAccessChange: (isPublic: boolean) => Promise<void>;
+  isSavingSetting: boolean;
 }
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
@@ -212,12 +212,8 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
     toast({
       variant: "destructive",
       description: "Could not update lead magnet",
-      position: 'top right'
-
-    },
-
-  );
-  return;
+    });
+    return;
     setIsSavingSetting(true);
     try {
       await axios.post(`/api/lead/${leadMagnet.id}`, form);
@@ -227,11 +223,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
       toast({
         variant: "destructive",
         description: "Could not update lead magnet",
-        position: 'top'
-
-      },
-
-    );
+      });
     }
   };
 
@@ -381,7 +373,6 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         onPublicAccessChange,
         isPublsiing,
         isSavingSetting,
-
       }}
     >
       {children}
