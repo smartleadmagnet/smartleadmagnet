@@ -51,6 +51,7 @@
     "@smartleadmagnet/eslint-config": "*",
     "@smartleadmagnet/typescript-config": "*",
     "@types/draft-js": "^0.11.18",
+    "@types/html-to-text": "^9.0.4",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.16",
     "@types/nprogress": "^0.2.3",
