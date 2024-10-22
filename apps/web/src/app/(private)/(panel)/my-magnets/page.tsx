@@ -16,7 +16,7 @@ export default async function MyForms({ searchParams }: { searchParams: { status
         </div>
         <div className="my-4 flex items-end justify-between sm:my-0 sm:items-center">
           <div className="flex flex-col gap-4 sm:my-4 sm:flex-row"></div>
-          <MagnetSearch />
+          <MagnetSearch value={searchParams.status}  />
         </div>
       </div>
       <Separator className="mt-3 w-full shadow" />

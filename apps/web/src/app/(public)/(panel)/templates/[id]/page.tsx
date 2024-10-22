@@ -2,73 +2,57 @@ import Image from "next/image";
 import templateCategories from "@/data/categories.json";
 import Link from "next/link";
 import { getPublicLeadMagnets } from "@smartleadmagnet/services";
+import { Input } from "@smartleadmagnet/ui/components/ui/input";
+import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { ImageIcon } from "lucide-react";
+import { Search } from "lucide-react";
 import React from "react";
 import { marked } from "marked";
 import { createSlug } from "@/utils/slug";
 
-const templateData = [
-  {
-    id: "1",
-    category: "marketing",
-    title: "Email Campaign",
-    description: "Create an effective email marketing campaign.",
-    icon: "https://via.placeholder.com/100", // Dummy icon image URL
-  },
-  {
-    id: "2",
-    category: "marketing",
-    title: "Social Media Ad",
-    description: "Design social media ads for your business.",
-    icon: "https://via.placeholder.com/100", // Dummy icon image URL
-  },
-  {
-    id: "3",
-    category: "seo",
-    title: "SEO Audit",
-    description: "Audit your website's SEO performance.",
-    icon: "https://via.placeholder.com/100", // Dummy icon image URL
-  },
-  {
-    id: "4",
-    category: "design",
-    title: "Landing Page Design",
-    description: "Design a creative and engaging landing page.",
-    icon: "https://via.placeholder.com/100", // Dummy icon image URL
-  },
-  {
-    id: "5",
-    category: "development",
-    title: "Web Development",
-    description: "Develop a responsive website.",
-    icon: "https://via.placeholder.com/100", // Dummy icon image URL
-  },
-  // Add more templates for other categories as needed...
-];
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
   const leads = await getPublicLeadMagnets();
-  const filteredTemplates = id === "all" ? templateData : templateData.filter((template) => template.category === id);
+  
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-8 text-center text-4xl font-bold">Templates</h1>
+      <h1 className="mb-8 text-center text-5xl font-bold leading-[1.5]">
+        Transform your website in <span className="text-cyan-500">Lead Generation Machine</span><br/>
+        with our <span className="text-cyan-900">Lead Magnets</span> Templates.
+      </h1>
+
 
       {/* Top Menu - Categories */}
-      <div className="mb-8 flex justify-center">
+      <div className="mb-2 flex space-between items-start">
         <nav className="flex flex-wrap overflow-auto">
           {templateCategories.map((category) => (
             <Link
               key={category.id}
               href={`/templates/${category.id}`}
-              className={`no-wrap mb-3 ml-5 rounded-lg px-4 py-2 font-semibold hover:bg-gray-900 hover:text-white
-              ${id === category.id ? "bg-gray-900 text-white" : "bg-gray-200"}`}
+              className={`no-wrap text-sm bg-cyan-500 mb-3 mr-5 rounded-lg px-4 py-2 font-semibold hover:bg-cyan-500 hover:text-white
+              ${id === category.id ? "bg-cyan-500 text-white" : "bg-gray-200"}`}
             >
               {category.name}
             </Link>
           ))}
         </nav>
+        {/* Search Input */}
+        <div className="flex w-full max-w-sm items-center space-x-2">
+      <Input type="text" className="py-5" placeholder="Search..." />
+      <Button type="submit" className="bg-cyan-500 hover:bg-cyan-600"><Search className="w-5 h-5"/></Button>
+    </div>
+    
       </div>
+      <div className="flex justify-end mb-10">
+      <Link
+        href="/suggest-a-magnet"
+        className="btn btn-primary relative flex items-center px-4 py-2 hover:bg-cyan-600 rounded"
+      >
+        Suggest me a Magnet
+      </Link>
+      </div>
+      
 
       {/* Template Items Section */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

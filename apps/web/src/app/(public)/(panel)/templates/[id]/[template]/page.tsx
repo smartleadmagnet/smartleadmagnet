@@ -140,7 +140,7 @@ export default async function Page({ params }: { params: { id: string; template:
         href="/suggest-a-magnet"
         className="w-full md:w-auto rounded border bg-cyan-500 border-cyan-500 px-6 py-4 text-lg font-bold text-white hover:border-cyan-600 hover:bg-cyan-600 hover:text-white text-center"
       >
-        Find a Magnet with your Website URL
+        Suggest me a Magnet
       </Link>
       <Link
         href="/templates/all"
