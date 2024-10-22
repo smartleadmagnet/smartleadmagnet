@@ -11,10 +11,6 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/blog",
-        destination: "https://silver-caribou-278976.hostingersite.com",
-      },
-      {
         source: "/blog/:path*",
         destination: "https://silver-caribou-278976.hostingersite.com/blog/:path*",
       },
