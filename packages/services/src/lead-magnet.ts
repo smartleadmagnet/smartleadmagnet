@@ -15,6 +15,38 @@ export const getLeadMagnetById = async (id: string): Promise<LeadMagnet> => {
   });
 };
 
+export const getPublicLeadMagnets = async () => {
+  return prisma.leadMagnet.findMany({
+    where: {
+      status: "published",
+      public: true,
+    },
+  });
+};
+
+function convertSlugToName(slug: string): string {
+  return slug
+    .replace(/-/g, " ") // Replace hyphens with spaces
+    .toLowerCase(); // Convert to lowercase (assuming names in the DB are lowercase)
+}
+
+export async function getLeadBySlug(slug: string): Promise<LeadMagnet> {
+  const name = convertSlugToName(slug);
+  try {
+    return await prisma.leadMagnet.findFirst({
+      where: {
+        name: {
+          equals: name,
+          mode: "insensitive",
+        },
+      },
+    });
+  } catch (error) {
+    // TODO sentry error
+    console.error("Error finding user by slug:", error);
+  }
+}
+
 export const updateLeadMagnet = async (id: string, userId: string, data: Partial<LeadMagnet>) => {
   return prisma.leadMagnet.update({
     where: { id, userId },

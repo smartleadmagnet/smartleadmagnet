@@ -28,7 +28,7 @@ import { formatDistanceToNow } from "date-fns";
 import PurchasePlanDialog from "@smartleadmagnet/ui/components/PurchasePlanDialog";
 import { GenerateModal } from "@smartleadmagnet/ui/components/GenerateModal";
 
-export default function Builder() {
+export default function Builder({ user }: { user?: any }) {
   const {
     leadMagnet,
     elementsList,
@@ -246,7 +246,7 @@ export default function Builder() {
                     </Droppable>
                   </main>
                   <main className=" flex-1 bg-gray-100  p-4">
-                    <AIForm />
+                    <AIForm user={user} />
                   </main>
                 </div>
               </div>

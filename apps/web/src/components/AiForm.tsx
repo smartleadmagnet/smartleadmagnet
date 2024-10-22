@@ -16,9 +16,11 @@ import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import ContentViewer from "@/components/ContentViewer";
 import React from "react";
 import ApiKeySelector from "@/components/ApiKeySelector";
+import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 
-export default function AIForm() {
+export default function AIForm({ user }: { user: any }) {
   const {
+    leadMagnet,
     prompt,
     setPrompt,
     providers,
@@ -34,9 +36,10 @@ export default function AIForm() {
     elementsList,
     preview,
     setPreview,
+    onPublicAccessChange,
   } = useAIForm();
   return (
-    <div className="relative flex  w-full flex-col justify-between rounded-md bg-white p-4 p-4">
+    <div className="relative flex  w-full flex-col justify-between rounded-md bg-white p-4">
       <div className="scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-100 ai-form flex flex-col overflow-y-auto p-1">
         {!preview && !processing ? (
           <div className="flex  flex-col">
@@ -88,6 +91,22 @@ export default function AIForm() {
                 </Select>
               </div>
             </div>
+            {user.role === "admin" && (
+              <div className="flex w-full gap-2">
+                <div className="form-control mb-4 w-full flex-row items-center justify-center">
+                  <Checkbox
+                    id="publicAccess"
+                    className="mr-2"
+                    label="Is Publically Assisble"
+                    checked={leadMagnet.public}
+                    onCheckedChange={(e) => {
+                      onPublicAccessChange(Boolean(e));
+                    }}
+                  />
+                  <Label htmlFor="publicAccess">Publicly Accessible</Label>
+                </div>
+              </div>
+            )}
             <div className="flex w-full flex-col gap-2">
               <div className="border-primary w-full rounded-lg border bg-white p-3">
                 <div className="mb-3 flex items-center justify-between">

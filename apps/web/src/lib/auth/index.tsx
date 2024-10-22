@@ -11,6 +11,13 @@ import WelcomeEmail from "@/emails/welcome-email";
 import { sendEmail } from "@/lib/email";
 const { convert } = require("html-to-text");
 
+const whitelistedBlogUsers = [
+  "durga@dcoder.ai",
+  "karanjalendere@gmail.com",
+  "durgaprasad.budhwani@gmail.com",
+  "joharekhushi@gmail.com",
+];
+
 const verifyEmailMaxAge = 5 * 60; // 5 minutes
 
 const verificationTokenLength = 5;
@@ -91,12 +98,14 @@ const nextAuth = NextAuth({
       if (token?.sub) session.user.id = token.sub;
       if (user?.role) session.user.role = user.role;
 
-      // // add stripe payment information to the session
-      // const userData = await getUserByEmail(session.user?.email!);
-      // if (userData) {
-      // 	session.user.stripeCustomerId = userData.stripeCustomerId;
-      // 	session.user.stripePaymentDate = userData.stripePaymentDate;
-      // }
+      if (session?.user) {
+        // check for the following email addresses to set the user role to admin
+        if (whitelistedBlogUsers.includes(session.user.email)) {
+          session.user.role = "admin";
+          session.user.enabled = true;
+          session.user.verified = true;
+        }
+      }
 
       // if (user?.picture) session.user.image = user.picture;
 

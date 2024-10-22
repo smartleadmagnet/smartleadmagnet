@@ -54,7 +54,7 @@ export default function AppCard({ id, name, description, analytics, status, imag
                 <Image
                   className="h-[60px] w-[60px] rounded-full object-cover object-center"
                   src={image}
-                  alt="Neil image"
+                  alt={name}
                   width={60}
                   height={60}
                 />

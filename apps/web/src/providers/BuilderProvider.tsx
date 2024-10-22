@@ -6,8 +6,7 @@ import axios, { AxiosError } from "axios";
 import llm from "@/data/llm.json";
 import { LLMModel, LLMProvider } from "@/types/llm";
 import { BuilderSchemaForm } from "@/types/builder";
-import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
-import { useRouter } from "next/navigation";
+import { toast } from "@smartleadmagnet/ui/hooks/use-toast";import { useRouter } from "next/navigation";
 
 interface BuilderContextType {
   elementsList: any;
@@ -38,6 +37,7 @@ interface BuilderContextType {
   paymentRequired: boolean;
   onClosePaymentModal: () => void;
   generateLeadMagnetWithAI: (description: string) => void;
+  onPublicAccessChange: (isPublic: string) => Promise<void>;
 }
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
@@ -249,7 +249,6 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
   };
 
   const updateFormStyles = async (styles: any) => {
-    console.log(styles);
     setFormStyles(styles);
     await updateData({ styles });
   };
@@ -320,6 +319,10 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
     await updateData({ provider, model });
   };
 
+  const onPublicAccessChange = async (isPublic: boolean) => {
+    await updateData({ public: isPublic });
+  };
+
   const filteredProviders = filterProviders(llm as LLMProvider[]);
   const filteredModels = filterModels(selectedProvider?.models || []);
 
@@ -351,6 +354,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         onPublishLead,
         onClosePaymentModal,
         generateLeadMagnetWithAI,
+        onPublicAccessChange,
       }}
     >
       {children}

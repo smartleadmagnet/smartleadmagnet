@@ -1,6 +1,11 @@
 import Image from "next/image";
 import templateCategories from "@/data/categories.json";
 import Link from "next/link";
+import { getPublicLeadMagnets } from "@smartleadmagnet/services";
+import { ImageIcon } from "lucide-react";
+import React from "react";
+import { marked } from "marked";
+import { createSlug } from "@/utils/slug";
 
 const templateData = [
   {
@@ -40,10 +45,9 @@ const templateData = [
   },
   // Add more templates for other categories as needed...
 ];
-const TemplatesPage = ({ params }: { params: { id: string } }) => {
+export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
-
-  // Filter templates based on selected category, or show all if 'all' is selected
+  const leads = await getPublicLeadMagnets();
   const filteredTemplates = id === "all" ? templateData : templateData.filter((template) => template.category === id);
 
   return (
@@ -68,46 +72,58 @@ const TemplatesPage = ({ params }: { params: { id: string } }) => {
 
       {/* Template Items Section */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {filteredTemplates.length ? (
-          filteredTemplates.map((template) => (
-            <div key={template.id} className="rounded-lg border border-gray-200 bg-white p-6 shadow-md">
-              <div className="mb-4 flex items-center space-x-4">
-                {/* Use Next.js Image component */}
-                <div className="relative h-16 w-16">
-                  <Image
-                    src={template.icon}
-                    alt={`${template.title} Icon`}
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-full"
-                    priority={true} // Use priority for important images to load faster
-                  />
+        {leads.length ? (
+          leads.map((leadMagnet) => {
+            const slug = createSlug(leadMagnet.name);
+            return (
+              <div key={leadMagnet.id} className="rounded-lg border border-gray-200 bg-white p-6 shadow-md">
+                <div className="mb-4 flex items-center space-x-4">
+                  {/* Use Next.js Image component */}
+                  {leadMagnet.image ? (
+                    <Image
+                      className="h-[60px] w-[60px] rounded-full object-cover object-center"
+                      src={leadMagnet.image}
+                      alt={leadMagnet.name}
+                      width={60}
+                      height={60}
+                    />
+                  ) : (
+                    <div className="app_icon">
+                      <ImageIcon className="h-[40px] w-[40px] rounded-full" />
+                    </div>
+                  )}
+
+                  <h2 className="text-2xl font-semibold">{leadMagnet.name}</h2>
                 </div>
-                <h2 className="text-2xl font-semibold">{template.title}</h2>
+                {leadMagnet.description && (
+                  <>
+                    <p
+                      className="mb-4 text-gray-600"
+                      dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description.slice(0, 200)) }}
+                    />
+                  </>
+                )}
+                <div className="flex space-x-2">
+                  <Link
+                    href={`/templates/view/${slug}`}
+                    className="rounded bg-cyan-500 px-4 py-2 text-white hover:bg-cyan-600"
+                  >
+                    Use This
+                  </Link>
+                  <Link
+                    href={`/templates/use/${slug}`}
+                    className="rounded border border-cyan-500  px-4 py-2  text-cyan-500 hover:bg-cyan-600 hover:text-white"
+                  >
+                    Make it yours
+                  </Link>
+                </div>
               </div>
-              <p className="mb-4 text-gray-600">{template.description}</p>
-              <div className="flex space-x-2">
-                <Link
-                  href={`/templates/view/${template.id}`}
-                  className="rounded bg-cyan-500 px-4 py-2 text-white hover:bg-cyan-600"
-                >
-                  Use This
-                </Link>
-                <Link
-                  href={`/templates/use/${template.id}`}
-                  className="rounded border border-cyan-500  px-4 py-2  text-cyan-500 hover:bg-cyan-600 hover:text-white"
-                >
-                  Make it yours
-                </Link>
-              </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <p>No templates available for this category.</p>
         )}
       </div>
     </div>
   );
-};
-
-export default TemplatesPage;
+}

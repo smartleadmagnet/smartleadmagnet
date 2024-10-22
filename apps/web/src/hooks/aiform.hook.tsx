@@ -21,6 +21,7 @@ const useAIForm = () => {
     onOutputTypeChange,
     filteredModels,
     setSelectedModel,
+    onPublicAccessChange,
   } = useBuilderContext();
   const [processing, setProcessing] = useState(false);
   const [preview, setPreview] = useState<Preview | undefined>();
@@ -52,6 +53,7 @@ const useAIForm = () => {
   };
 
   return {
+    leadMagnet,
     prompt,
     setPrompt,
     providers: filteredProviders,
@@ -66,6 +68,7 @@ const useAIForm = () => {
     processing,
     elementsList,
     preview,
+    onPublicAccessChange,
     setPreview,
   };
 };

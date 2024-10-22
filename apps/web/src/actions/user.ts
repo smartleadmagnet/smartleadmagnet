@@ -6,7 +6,11 @@ import { getSessionUser } from "@/services/user";
 
 export async function getUserInfo(): Promise<any> {
   const user = await getSessionUser();
-  return getUserById(user?.id!);
+  const userInfo = await getUserById(user?.id!);
+  return {
+    ...user,
+    ...userInfo,
+  };
 }
 
 export async function updateUserInfo(bio: string, name: string): Promise<User> {
