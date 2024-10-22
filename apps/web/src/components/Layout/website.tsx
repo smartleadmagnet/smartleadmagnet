@@ -11,10 +11,8 @@ import { User } from "@/components/User";
 const CategoryGrid = () => {
   return (
     <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {templateCategories.map((category, index) => (
-        <div key={category.id} className="cat-item">
-          <Link href={`/templates/${category.id}`}>{category.name}</Link>
-        </div>
+      {templateCategories.map((category) => (
+          <Link key={category.id} className="cat-item" href={`/templates/${category.id}`}>{category.name}</Link>
       ))}
     </div>
   );
