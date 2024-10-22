@@ -97,13 +97,13 @@ export default function AIForm({ user }: { user: any }) {
                   <Checkbox
                     id="publicAccess"
                     className="mr-2"
-                    label="Is Publically Assisble"
                     checked={leadMagnet.public}
-                    onCheckedChange={(e) => {
+                    onCheckedChange={(e: any) => {
+                      // @ts-ignore
                       onPublicAccessChange(Boolean(e));
                     }}
                   />
-                  <Label htmlFor="publicAccess">Publicly Accessible</Label>
+                  <Label htmlFor="publicAccess">Is Publically Assisble</Label>
                 </div>
               </div>
             )}

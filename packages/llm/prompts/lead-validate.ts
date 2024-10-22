@@ -21,6 +21,7 @@ export const validateLeadWithInput = async ({
       if (element.type === "image" || element.type === "file") {
         acc.push({ type: "image_url", image_url: { url: promptInputElement } });
       } else {
+        // @ts-ignore
         promptData[element.name] = promptInputElement;
       }
     }

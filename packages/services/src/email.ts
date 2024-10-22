@@ -1,6 +1,6 @@
 import prisma, { EmailLog } from "@smartleadmagnet/database";
 
-export async function wasEmailSent(userId, emailType) {
+export async function wasEmailSent(userId: string, emailType: string) {
   const emailLog = await prisma.emailLog.findFirst({
     where: {
       userId,

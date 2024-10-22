@@ -9,12 +9,12 @@ export default async function Page({ params }: { params: { id: string; template:
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-8 text-center text-4xl font-bold">{leadMagnet.name}</h1>
-      {leadMagnet.description && (
+      <h1 className="mb-8 text-center text-4xl font-bold">{leadMagnet?.name}</h1>
+      {leadMagnet?.description && (
         <>
           <p
             className="mx-auto mb-8 max-w-4xl text-center text-gray-600"
-            dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description.slice(0, 200)) }}
+            dangerouslySetInnerHTML={{ __html: marked(leadMagnet?.description?.slice(0, 200)) }}
           />
         </>
       )}

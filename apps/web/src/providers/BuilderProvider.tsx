@@ -6,7 +6,8 @@ import axios, { AxiosError } from "axios";
 import llm from "@/data/llm.json";
 import { LLMModel, LLMProvider } from "@/types/llm";
 import { BuilderSchemaForm } from "@/types/builder";
-import { toast } from "@smartleadmagnet/ui/hooks/use-toast";import { useRouter } from "next/navigation";
+import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 interface BuilderContextType {
   elementsList: any;
@@ -37,7 +38,7 @@ interface BuilderContextType {
   paymentRequired: boolean;
   onClosePaymentModal: () => void;
   generateLeadMagnetWithAI: (description: string) => void;
-  onPublicAccessChange: (isPublic: string) => Promise<void>;
+  onPublicAccessChange: (isPublic: boolean) => Promise<void>;
 }
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);

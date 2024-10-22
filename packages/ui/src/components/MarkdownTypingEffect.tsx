@@ -16,7 +16,7 @@ const TypingMarkdown: React.FC<Props> = ({ text }) => {
   }, [text]); // Dependency on `text` ensures reset on text change
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: any;
     if (index < text.length) {
       timeoutId = setTimeout(() => {
         setDisplayedText((prev) => prev + text.charAt(index));

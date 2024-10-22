@@ -6,7 +6,7 @@ export const createLeadMagnet = async (data: LeadMagnet) => {
   });
 };
 
-export const getLeadMagnetById = async (id: string): Promise<LeadMagnet> => {
+export const getLeadMagnetById = async (id: string): Promise<any> => {
   return prisma.leadMagnet.findUnique({
     where: { id },
     include: {
@@ -30,21 +30,16 @@ function convertSlugToName(slug: string): string {
     .toLowerCase(); // Convert to lowercase (assuming names in the DB are lowercase)
 }
 
-export async function getLeadBySlug(slug: string): Promise<LeadMagnet> {
+export async function getLeadBySlug(slug: string): Promise<any> {
   const name = convertSlugToName(slug);
-  try {
-    return await prisma.leadMagnet.findFirst({
-      where: {
-        name: {
-          equals: name,
-          mode: "insensitive",
-        },
+  return prisma.leadMagnet.findFirst({
+    where: {
+      name: {
+        equals: name,
+        mode: "insensitive",
       },
-    });
-  } catch (error) {
-    // TODO sentry error
-    console.error("Error finding user by slug:", error);
-  }
+    },
+  });
 }
 
 export const updateLeadMagnet = async (id: string, userId: string, data: Partial<LeadMagnet>) => {
@@ -79,7 +74,7 @@ export async function updateLeadMagnetUsage(id: string) {
   return prisma.leadMagnet.update({
     where: { id },
     data: {
-      usedCount: leadMagnet.usedCount + 1, // Increment the usage count by 1
+      usedCount: leadMagnet?.usedCount! + 1, // Increment the usage count by 1
       lastUsedAt: new Date(), // Update the last used timestamp to the current time
     },
   });
@@ -93,7 +88,7 @@ export async function updateLeadMagnetImpressions(id: string) {
   return prisma.leadMagnet.update({
     where: { id },
     data: {
-      impressionsCount: leadMagnet.impressionsCount + 1, // manually incrementing
+      impressionsCount: leadMagnet?.impressionsCount! + 1, // manually incrementing
     },
   });
 }
@@ -137,23 +132,12 @@ export async function copyLeadMagnet(id: string, userId: string) {
       apiKeyId: null,
       webhook: "",
       userId,
-      name: `${leadMagnet.name} - Copy`,
+      name: `${leadMagnet?.name!} - Copy`,
     },
   });
 }
 
-export const getLeadMagnetUsageById = async (
-  leadMagnetId: string
-): Promise<{
-  usage: LeadMagnetUsage[];
-  leadMagnet: {
-    name: string;
-    impressionsCount: number;
-    usedCount: number;
-    createdAt: Date;
-    status: string;
-  };
-}> => {
+export const getLeadMagnetUsageById = async (leadMagnetId: string): Promise<any> => {
   // Fetch LeadMagnetUsage records for the given leadMagnetId
   const usageRecords = await prisma.leadMagnetUsage.findMany({
     where: { leadMagnetId },

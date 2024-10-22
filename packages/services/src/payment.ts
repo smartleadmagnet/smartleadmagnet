@@ -24,12 +24,9 @@ export const getPayments = async (userId: string): Promise<Payment[]> => {
   });
 };
 
-export const getCredit = async (userId: string): Promise<Credit> => {
+export const getCredit = async (userId: string): Promise<any> => {
   return prisma.credit.findUnique({
     where: { userId },
-    include: {
-      apiKey: true,
-    },
   });
 };
 
