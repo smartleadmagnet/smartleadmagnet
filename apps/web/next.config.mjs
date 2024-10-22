@@ -8,6 +8,14 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: "/blog/:path*",
+        destination: "https://silver-caribou-278976.hostingersite.com/:path*",
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
