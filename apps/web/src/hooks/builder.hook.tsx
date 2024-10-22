@@ -6,15 +6,33 @@ import { DropResult } from "react-beautiful-dnd";
 import { ChildItem } from "@/app/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 import { useBuilderContext } from "@/providers/BuilderProvider";
-import { useRouter } from "next/navigation";
+import { useRouter,usePathname,useSearchParams } from "next/navigation";
 
 const useBuilder = () => {
-  const { elementsList, setElementsList, setName, name, formStyles, setFormStyles, leadMagnet } = useBuilderContext();
+  const {
+    elementsList,
+    setElementsList,
+    setName,
+    name,
+    formStyles,
+    setFormStyles,
+    leadMagnet,
+    creditRequired,
+    paymentRequired,
+    onPublishLead,
+    onClosePaymentModal,
+    generateLeadMagnetWithAI,
+  } = useBuilderContext();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  
   const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [embedOpen, setEmbedOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  
+  const defaultTab =  searchParams.get('tab') || "form";
 
   const [activeOption, setActiveOption] = useState("info");
   const [selectedView, setSelectedView] = useState("Form");
@@ -51,10 +69,10 @@ const useBuilder = () => {
   const imageUrl = "https://smartleadmagnet.com/wp-content/uploads/2024/09/ai-help.jpg"; // Replace with your image URL
 
   const handleStyleUpdate = (key: string, newColor: string) => {
-    setFormStyles((prev) => ({
-      ...prev,
+    setFormStyles({
+      ...formStyles,
       [key]: newColor,
-    }));
+    });
   };
 
   const removeElement = (id: string) => {
@@ -226,6 +244,13 @@ const useBuilder = () => {
     router,
     name,
     setName,
+    creditRequired,
+    paymentRequired,
+    onPublishLead,
+    onClosePaymentModal,
+    pathname,
+    defaultTab,
+    generateLeadMagnetWithAI,
   };
 };
 

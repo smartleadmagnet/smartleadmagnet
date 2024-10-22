@@ -69,6 +69,84 @@
   }
 }
 
+
+/* Tailwind base styles for Markdown content, adjust as needed */
+.markdown-body {
+  @apply prose prose-sm text-left text-base;
+}
+
+.markdown-body h1 {
+  @apply text-2xl font-bold my-4;
+}
+
+.markdown-body h2 {
+  @apply text-xl font-semibold my-4;
+}
+
+.markdown-body h3 {
+  @apply text-lg font-semibold my-3;
+}
+
+.markdown-body h4, .markdown-body h5, .markdown-body h6 {
+  @apply text-base font-semibold my-2;
+}
+
+.markdown-body p {
+  @apply my-2 text-base;
+}
+
+.markdown-body a {
+  @apply text-blue-600 underline;
+}
+.markdown-body br {
+  @apply my-2;
+}
+
+.markdown-body ul, .markdown-body ol {
+  @apply list-inside list-decimal pl-5 my-2 text-base;
+  list-style-type: decimal; /* Explicitly setting list style */
+}
+
+.markdown-body ol li {
+  @apply inline-block; /* Keeps elements inline but maintains list styling */
+  @apply my-1; /* Maintain vertical spacing between items */
+}
+
+.markdown-body ul {
+  @apply list-disc;
+}
+
+.markdown-body blockquote {
+  @apply border-l-4 border-gray-200 pl-4 italic my-4;
+}
+
+.markdown-body code {
+  @apply  rounded px-1 font-mono text-sm;
+}
+
+.markdown-body pre {
+  @apply  p-3 overflow-x-auto rounded my-2;
+}
+
+
+.markdown-body table {
+  @apply min-w-full divide-y divide-gray-300 my-4;
+}
+
+.markdown-body th {
+  @apply  p-2 text-left font-semibold;
+}
+
+.markdown-body td {
+  @apply p-2 border-t border-gray-300;
+}
+
+.markdown-body img {
+  @apply max-w-full h-auto my-4;
+}
+
+
+
 /* builder page css */
 .builder-item {
   padding: 20px;
@@ -149,7 +227,8 @@
   height: calc(100vh - 150px);
   overflow-y: auto;
 }
-.drop-area-wrapper{
+
+.drop-area-wrapper {
   overflow-y: auto;
 }
 
@@ -233,6 +312,7 @@
   width: 30px;
   height: 30px;
 }
+
 .prompt-image-box {
   position: relative;
 }
@@ -240,16 +320,18 @@
 .prompt-image-box .downlaod-btn {
   position: absolute;
   right: 10px;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1;
   top: 10px;
   color: #fff;
   padding: 10px;
   border-radius: 5px;
 }
+
 .ai-form {
   height: calc(100vh - 180px);
 }
+
 .prompt-loader {
   text-align: center;
   height: 500px;
@@ -263,13 +345,15 @@
   height: 80px;
   width: 80px;
 }
+
 .prompt-icon {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
-  color:#fff;
+  transform: translate(-50%, -50%);
+  color: #fff;
 }
+
 .prompt-content-box {
   position: relative;
   padding-top: 50px;
@@ -280,10 +364,6 @@
   right: 0;
   top: 0;
 }
-
-
-
-
 
 /* homepage */
 .hero-section {
@@ -379,9 +459,11 @@
     display: none;
   }
 }
+
 .main-content {
   min-height: calc(100vh - 500px);
 }
+
 .ngprogress-container {
   position: fixed;
   top: 0;
@@ -420,7 +502,90 @@
   opacity: 1.0;
   transform: rotate(3deg) translate(0px, -4px);
 }
+.shiki {
+  display: block;
+}
 
+/* .not-prose  > button {
+  direction: ltr;
+  position: absolute;
+  top: 54px;
+  z-index: 3;
+  border: 1px solid var(--vp-code-copy-code-border-color);
+  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  background-color: var(--vp-code-copy-code-bg);
+  cursor: pointer;
+  background-image: var(--vp-icon-copy);
+  background-position: 50%;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  right: 0;
+} */
+
+
+
+.bg-neutral {
+  background: #eee;
+  border: 1px solid #ccc;
+}
+
+.bg-neutral button {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  color: #000;
+  width: 20px;
+  height: 20px;
+}
+
+.bg-neutral button .size-4 {
+  width: 20px;
+  height: 20px;
+}
+.custom-dialog {
+  max-width: 750px;
+  padding: 0;
+
+  button.ring-offset-background {
+  display: none;
+}
+}
+.magent-dialog
+  > button.ring-offset-background{
+    color:#fff;
+    width: 20px;
+    height: 20px;
+    margin-top: 7px;
+    box-shadow: none;
+    outline: none;
+
+    svg{
+      width: 20px;
+      height: 20px;
+    }
+}
+
+
+.app_icon {
+  width: 60px;
+  height: 60px;
+  background: #06b6d4;
+  border-radius: 50%;
+  color: #fff;
+  padding: 10px;
+}
+
+.app-card-dropdown a, .app-card-dropdown button {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.app-card-dropdown form {
+  padding: 0;
+}
 
 #nprogress .spinner-icon {
   width: 18px;
@@ -443,11 +608,15 @@
 .nprogress-custom-parent #nprogress .bar {
   position: absolute;
 }
-@keyframes nprogress-spinner {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
 
+@keyframes nprogress-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 
 @layer utilities {
@@ -465,15 +634,13 @@
   .faded-bottom {
     @apply relative after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:block after:h-32 after:w-full after:bg-gradient-to-b after:from-transparent after:to-[hsl(var(--background))] after:hidden md:after:block;
   }
-  
+
 
   .btn-primary {
-    @apply bg-cyan-500 px-5 py-2 text-white shadow-md;
+    @apply bg-cyan-500 px-5 py-2 text-white shadow-md ;
   }
 
-  .btn-primary:hover {
-    @apply bg-cyan-600;
-  }
+  
 
   .mega-menu {
     @apply absolute left-0 right-0 top-[65px] rounded-lg bg-gray-700 shadow-md;
@@ -504,6 +671,9 @@
 
   .mobile-link {
     @apply flex items-center gap-4 px-2.5 text-gray-200 hover:text-white;
+  }
+  .cm-modal-header{
+    @apply inline-flex w-full items-center justify-center rounded-t-lg bg-gradient-to-r from-cyan-500 to-blue-500 py-4 text-white;
   }
 }
 

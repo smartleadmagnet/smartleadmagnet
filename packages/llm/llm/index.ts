@@ -9,27 +9,33 @@ const timeout = 10 * 10000; // 5 seconds
 const maxRetries = 1;
 const totalRetry = 3;
 
-export function replacePlaceholders(template, values) {
+export function replacePlaceholders(template: string, values: any) {
   // Regex to match the whole @[{{number_1}}](number_1) pattern
   return template.replace(/@\[\{\{(.*?)\}\}\]\((.*?)\)/g, (match, key) => {
     return values[key] || match; // Replace with value from object or keep the pattern if not found
   });
 }
 
-export const getImageLLMModel = async (leadMagnet: LeadMagnet, promptInput: any) => {
-  const promptText = replacePlaceholders(leadMagnet.prompt, promptInput);
+export function replaceMustachePlaceholders(template: string, values: any) {
+  // Regex to match the whole {{number_1}} pattern
+  return template.replace(/\{\{(.*?)\}\}/g, (match, key) => {
+    return values[key] || match; // Replace with value from object or keep the pattern if not found
+  });
+}
+
+export const getImageLLMModel = async (leadMagnet: LeadMagnet, promptInput: any, apiKey?: string | null) => {
+  const promptText = replaceMustachePlaceholders(replacePlaceholders(leadMagnet.prompt, promptInput), promptInput);
   if (leadMagnet.provider === "Open AI") {
     // console.log(promptInput);
     const llmModel = new DallEAPIWrapper({
       n: 1, // Default
       model: "dall-e-3", // Default
-      apiKey: process.env.OPEN_AI_KEY,
+      apiKey: apiKey || process.env.OPEN_AI_KEY,
     });
     let retryCount = 0;
     const llmApiCall: any = async () => {
       try {
-        const result = await llmModel.invoke(replacePlaceholders(leadMagnet.prompt, promptInput));
-        return result;
+        return await llmModel.invoke(promptText);
       } catch (error: any) {
         if (retryCount < totalRetry) {
           retryCount++;
@@ -51,13 +57,14 @@ export const getImageLLMModel = async (leadMagnet: LeadMagnet, promptInput: any)
       n: 1,
       // response_format: "b64_json",
     });
-    return response.data[0]?.url;
+    // @ts-ignore
+    return response?.data?.[0]?.url!;
   } else {
     throw new Error("LLM not found in configuration");
   }
 };
 
-export const getTextLLMModel = (llmType?: string, modelName?: string) => {
+export const getTextLLMModel = (llmType?: string, modelName?: string, apiKey?: string | null) => {
   if (llmType === "AWS BedRock") {
     return new BedrockChat({
       model: modelName ?? "anthropic.claude-3-5-sonnet-20240620-v1:0", // model: "anthropic.claude-3-5-sonnet-20240620-v1:0",
@@ -79,7 +86,7 @@ export const getTextLLMModel = (llmType?: string, modelName?: string) => {
       temperature: 0.5,
       maxRetries: maxRetries,
       // TODO get the key from the user
-      openAIApiKey: process.env.OPEN_AI_KEY,
+      openAIApiKey: apiKey || process.env.OPEN_AI_KEY,
       // verbose: true,
       // streaming: true,
     }).bind({
@@ -87,7 +94,7 @@ export const getTextLLMModel = (llmType?: string, modelName?: string) => {
     });
   } else if (llmType === "Together AI") {
     return new ChatTogetherAI({
-      togetherAIApiKey: process.env.TOGETHER_AI_KEY,
+      togetherAIApiKey: apiKey || process.env.TOGETHER_AI_KEY,
       modelName: modelName ?? "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
       maxRetries: maxRetries,
       // verbose: true,
@@ -97,7 +104,7 @@ export const getTextLLMModel = (llmType?: string, modelName?: string) => {
     });
   } else if (llmType === "Google Cloud") {
     return new ChatGoogleGenerativeAI({
-      apiKey: process.env.GOOGLE_GEMINI_API_KEY,
+      apiKey: apiKey || process.env.GOOGLE_GEMINI_API_KEY,
       model: modelName ?? "gemini-pro",
       maxOutputTokens: 2048,
       streamUsage: false,

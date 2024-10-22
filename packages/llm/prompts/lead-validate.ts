@@ -4,16 +4,18 @@ import { LeadMagnet } from "@smartleadmagnet/database";
 export const validateLeadWithInput = async ({
   leadMagnet,
   promptInput,
+  apiKey,
 }: {
   leadMagnet: LeadMagnet;
   promptInput: any;
+  apiKey?: string | null;
 }) => {
   if (leadMagnet?.output === "image") {
-    return await callImageLLM(leadMagnet, promptInput);
+    return await callImageLLM(leadMagnet, promptInput, apiKey);
   }
 
   const promptData = {};
-  const finalPayload = leadMagnet?.components?.reduce((acc, element) => {
+  const finalPayload = (leadMagnet?.components as Array<any>)?.reduce((acc: any, element: any) => {
     const promptInputElement = promptInput[element.name];
     if (promptInputElement) {
       if (element.type === "image" || element.type === "file") {
@@ -24,7 +26,6 @@ export const validateLeadWithInput = async ({
     }
     return acc;
   }, []);
-  console.log([...finalPayload, { type: "text", text: JSON.stringify(promptData) }]);
   // if lead components has any image then
   return await callTextLLM(leadMagnet, [...finalPayload, { type: "text", text: JSON.stringify(promptData) }]);
 };

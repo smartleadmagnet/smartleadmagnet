@@ -1,15 +1,7 @@
-// DeleteDialog.tsx
-
 import React from "react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import { Button } from "./ui/button";
 
 interface DeleteDialogProps {
   isOpen: boolean;
@@ -17,6 +9,8 @@ interface DeleteDialogProps {
   message: string;
   onClose: () => void;
   onConfirm: () => Promise<void>;
+  deleteTitle?: string;
+  cancelTitle?: string;
 }
 
 const DeleteDialog: React.FC<DeleteDialogProps> = ({
@@ -25,6 +19,8 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
   message,
   onClose,
   onConfirm,
+  deleteTitle = "Delete",
+  cancelTitle = "Cancel",
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -34,14 +30,19 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
           <div>{message}</div>
           <DialogClose onClick={onClose} />
         </DialogHeader>
-        
+
         <DialogFooter>
-          <form onSubmit={(e) => { e.preventDefault(); onConfirm(); }}>
-            <Button type="submit" className="mr-2 bg-red-600 hover:bg-red-900" >
-              Delete
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              onConfirm();
+            }}
+          >
+            <Button type="submit" className="mr-2 bg-red-600 hover:bg-red-900">
+              {deleteTitle}
             </Button>
             <Button type="button" onClick={onClose} className="bg-cyan-600 hover:bg-cyan-900">
-              Cancel
+              {cancelTitle}
             </Button>
           </form>
         </DialogFooter>

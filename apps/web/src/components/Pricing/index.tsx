@@ -1,6 +1,7 @@
 import React from "react";
 import pricingConfig, { PricingPlan } from "@/lib/config/pricingConfig";
 import PricingTable from "@/components/Pricing/PricingTable";
+import { PlanTier } from "@/lib/types";
 
 export type PricingProps = {
   title?: string;
@@ -10,20 +11,17 @@ export type PricingProps = {
   showDivider?: boolean;
 };
 
-const PricingPlan: React.FC<PricingProps> = ({ title = pricingConfig.title,description=pricingConfig.description }) => {
-  const userPlans = pricingConfig.plans!;
+const Pricing: React.FC<PricingProps> = ({ title = pricingConfig.title, description = pricingConfig.description }) => {
+  const userPlans = pricingConfig.plans?.filter((plan) => plan.planTier !== PlanTier.CREDIT);
   return (
     <div className="container my-10">
-      <h1 className="text-2xl text-[36px] font-bold leading-[40px] lg:text-[52px] lg:leading-[60px] max-w-[1000px] mb-5">
-  {title}
-</h1>
-<div>
-  {description}
-</div>
-        <PricingTable plans={userPlans} />
-      </div>
-    
+      <h1 className="mb-5 max-w-[1000px] text-2xl text-[36px] font-bold leading-[40px] lg:text-[52px] lg:leading-[60px]">
+        {title}
+      </h1>
+      <div>{description}</div>
+      <PricingTable plans={userPlans} />
+    </div>
   );
 };
 
-export default PricingPlan;
+export default Pricing;

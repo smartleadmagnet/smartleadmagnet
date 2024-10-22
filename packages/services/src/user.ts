@@ -13,6 +13,10 @@ export async function getUsers() {
 export const getUserById = async (id: string): Promise<User> =>
   prisma.user.findUnique({
     where: { id },
+    include: {
+      Credit: true,
+      Payments: true,
+    },
   });
 
 export const getUserByEmail = async (email: string) =>
@@ -30,5 +34,19 @@ export const updateStripeCustomerId = async ({ id, stripeCustomerId }: { id: str
   return prisma.user.update({
     where: { id },
     data: { stripeCustomerId: stripeCustomerId! },
+  });
+};
+
+export const updateUser = async ({ id, bio, name }: { id: string; bio: string; name: string }) => {
+  return prisma.user.update({
+    where: { id },
+    data: { bio, name },
+  });
+};
+
+export const updateUserKey = async ({ id, key }: { id: string; key: string }) => {
+  return prisma.user.update({
+    where: { id },
+    data: { key },
   });
 };

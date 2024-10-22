@@ -1,12 +1,14 @@
 "use client";
-
-import Link from "next/link";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { User } from "@smartleadmagnet/database";
 import { z } from "zod";
+import { updateUserInfo } from "@/actions/user";
+import Alert, { AlertType } from "@/components/Alerts";
+import { Loader2 } from "lucide-react";
 
-import { cn } from "@smartleadmagnet/ui/lib/utils";
-import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
+import toast from "react-hot-toast";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import {
   Form,
@@ -18,13 +20,6 @@ import {
   FormMessage,
 } from "@smartleadmagnet/ui/components/ui/form";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@smartleadmagnet/ui/components/ui/select";
 import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
 
 const profileFormSchema = z.object({
@@ -42,44 +37,42 @@ const profileFormSchema = z.object({
     })
     .email(),
   bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      })
-    )
-    .optional(),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  bio: "I own a computer.",
-  urls: [{ value: "https://shadcn.com" }, { value: "http://twitter.com/shadcn" }],
-};
+interface ProfileFormProps {
+  user: User;
+}
 
-export function ProfileForm() {
+export function ProfileForm(props: ProfileFormProps) {
+  const { user } = props;
+  const [loading, setLoading] = useState(false);
+
+  // This can come from your database or API.
+  const defaultValues: Partial<ProfileFormValues> = {
+    bio: user?.bio!,
+    email: user?.email!,
+    username: user?.name!,
+  };
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues,
     mode: "onChange",
   });
 
-  const { fields, append } = useFieldArray({
-    name: "urls",
-    control: form.control,
-  });
-
   function onSubmit(data: ProfileFormValues) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    setLoading(true);
+    updateUserInfo(data.bio, data.username)
+      .then(() => {
+        toast.custom(<Alert type={AlertType.Success} content="Profile updated sucesfully!" />);
+        setLoading(false);
+      })
+      .catch((error) => {
+        toast.custom(<Alert type={AlertType.Error} content="Unable to upadte profile. Please try again" />);
+        setLoading(false);
+      });
   }
 
   return (
@@ -92,7 +85,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="Your username" {...field} />
               </FormControl>
               <FormDescription>
                 This is your public display name. It can be your real name or a pseudonym. You can only change this once
@@ -108,20 +101,12 @@ export function ProfileForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormControl>
+                <Input disabled {...field} />
+              </FormControl>
               <FormDescription>
-                You can manage verified email addresses in your <Link href="/examples/forms">email settings</Link>.
+                This is your public display name. It can be your real name or a pseudonym. You can only change this once
+                every 30 days.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -136,38 +121,13 @@ export function ProfileForm() {
               <FormControl>
                 <Textarea placeholder="Tell us a little bit about yourself" className="resize-none" {...field} />
               </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to link to them.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div>
-          {fields.map((field, index) => (
-            <FormField
-              control={form.control}
-              key={field.id}
-              name={`urls.${index}.value`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={cn(index !== 0 && "sr-only")}>URLs</FormLabel>
-                  <FormDescription className={cn(index !== 0 && "sr-only")}>
-                    Add links to your website, blog, or social media profiles.
-                  </FormDescription>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          <Button type="button" variant="outline" size="sm" className="mt-2" onClick={() => append({ value: "" })}>
-            Add URL
-          </Button>
-        </div>
-        <Button type="submit" className="btn-primary">
+
+        <Button type="submit" className="btn-primary" disabled={loading}>
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Update profile
         </Button>
       </form>

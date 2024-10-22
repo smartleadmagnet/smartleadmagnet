@@ -4,7 +4,9 @@ import Stripe from "stripe";
 import pricingConfig from "@/lib/config/pricingConfig";
 import stripe from "@/lib/stripe";
 import { getSessionUser } from "@/services/user";
-import { getUserById, updateStripeCustomerId } from "@smartleadmagnet/services";
+import { getUserById, updateStripeCustomerId, updateSubscriptionDetailsForCancel } from "@smartleadmagnet/services";
+import { getUserInfo } from "@/actions/user";
+import { revalidatePath } from "next/cache";
 
 export async function createPaymentLink(customerId: string, priceId: string) {
   const plan = pricingConfig.plans.find((plan) => plan.priceId === priceId);
@@ -45,45 +47,45 @@ export async function getSubscription(subscriptionId: string) {
   return stripe.subscriptions.retrieve(subscriptionId);
 }
 
-// export async function getUserPurchaseInfo() {
-//   const user = await getSessionUser();
-//   if (!user?.id) {
-//     return null;
-//   }
-//   return ensureUserSubscription(user?.id);
-// }
-//
-// export async function cancelSubscription(subscriptionId: string) {
-//   try {
-//     // Cancel the subscription
-//     const canceledSubscription = await stripe.subscriptions.update(subscriptionId, {
-//       cancel_at_period_end: true,
-//     });
-//     const user = await getSessionUser();
-//     const { id, current_period_end, current_period_start, status } = canceledSubscription;
-//     const planDetails = pricingConfig?.plans.find((plan) => {
-//       // @ts-ignore
-//       return plan.priceId === canceledSubscription.plan.id;
-//     });
-//     await addOrUpdateSubscription({
-//       userId: user.id,
-//       stripeSubscriptionId: subscriptionId,
-//       // @ts-ignore
-//       duration: planDetails?.duration!,
-//       startDate: new Date(current_period_start * 1000),
-//       endDate: new Date(current_period_end * 1000),
-//       tier: planDetails?.tier,
-//       planId: planDetails?.priceId!,
-//       status: "canceled",
-//     });
-//
-//     return { success: true, error: null };
-//   } catch (error) {
-//     // TODO Sentry Error
-//     console.error("Error canceling subscription:", error);
-//     return { success: true, error: "Failed to cancel subscription, please try later or reach out to Support Team!!!" };
-//   }
-// }
+export async function cancelSubscription(subscriptionId: string) {
+  try {
+    // Cancel the subscription on Stripe
+    const canceledSubscription = await stripe.subscriptions.update(subscriptionId, {
+      cancel_at_period_end: true, // Set to cancel at the end of the current period
+    });
+
+    // Get the current user
+    const user = await getUserInfo();
+    if (!user) {
+      return { success: false, error: "User not authenticated." };
+    }
+
+    const { current_period_end, current_period_start } = canceledSubscription;
+    const planDetails = pricingConfig?.plans.find((plan) => {
+      // Match the plan ID (assuming it's within the items data)
+      return plan.priceId === canceledSubscription?.items?.data?.[0]?.price?.id;
+    });
+
+    if (!planDetails) {
+      return { success: false, error: "Plan details not found." };
+    }
+
+    await updateSubscriptionDetailsForCancel({
+      stripeCustomerId: user?.stripeCustomerId!,
+      subscriptionId: subscriptionId,
+      currentPeriodStart: current_period_start,
+      currentPeriodEnd: current_period_end,
+    });
+    // Update the subscription details in the Payment schema
+
+    revalidatePath("/settings/billing");
+    return { success: true, error: null };
+  } catch (error) {
+    console.error("Error canceling subscription:", error);
+    return { success: false, error: "Failed to cancel subscription, please try later or reach out to Support Team." };
+  }
+}
+
 //
 // export async function updateSubscription(subscription: Subscription, priceId: string) {
 //   try {
@@ -115,7 +117,6 @@ export async function getSubscription(subscriptionId: string) {
 // }
 //
 export const getSingInLink = async (priceId: string) => {
-  console.log("priceId", priceId);
   if (!priceId) {
     return "/";
   }
@@ -128,8 +129,8 @@ export const getSingInLink = async (priceId: string) => {
       let customerId = user?.stripeCustomerId;
 
       if (!customerId) {
-        const customer = await createStripeCustomer({ email: user?.email!, name: user.name! });
-        await updateStripeCustomerId({ id: user.id, stripeCustomerId: customer });
+        const customer = await createStripeCustomer({ email: user?.email!, name: user?.name!! });
+        await updateStripeCustomerId({ id: user?.id!, stripeCustomerId: customer });
         customerId = customer;
       }
       if (customerId && userId) {
@@ -137,5 +138,5 @@ export const getSingInLink = async (priceId: string) => {
       }
     }
   }
-  return `/api/auth/signin?callbackUrl=${encodeURIComponent(`/api/payment/checkout?priceId=${priceId}`)}`;
+  return `${process.env.HOST_URL}/api/auth/signin?callbackUrl=${encodeURIComponent(`${process.env.HOST_URL}/api/payment/checkout?priceId=${priceId}`)}`;
 };

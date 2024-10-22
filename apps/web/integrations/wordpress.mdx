@@ -1,0 +1,75 @@
+---
+name: WordPress
+title: "Embed SmartLead Magnet with WordPress"
+summary: "Easily add SmartLead Magnet to your WordPress site with this simple guide."
+---
+
+# How to Add SmartLead Magnet to Your WordPress Website
+
+**Note:** Make sure you have admin access to your WordPress site before starting.
+
+## 1. Log in to Your WordPress Dashboard
+
+Head over to your WordPress login page. It usually looks like this: `http://yourwebsite.com/wp-login.php`.
+Enter your username and password to access the dashboard.
+
+## 2. Create or Edit a Page/Post
+
+Once you're in, follow these steps:
+
+- Click on **Pages** or **Posts** from the menu on the left.
+- Choose **Add New** to create a new page or post.
+- Or, if you already have a page/post where you want to embed SmartLead Magnet, click **Edit** next to it.
+
+## 3. Switch to the Text (HTML) Editor
+
+In the editor, switch to the **Text** (or **HTML**) tab.
+This allows you to directly add code, ensuring the embed works correctly.
+
+## 4. Paste the SmartLead Magnet iFrame Code
+
+Now, grab the iFrame code from SmartLead Magnet and paste it in the spot where you want it to appear on your page or post. The code will look something like this:
+
+```html
+<iframe
+    src="https://smartleadmagnet.com/share/magentid"
+    width="100%"
+    height="600"
+    style="border-radius:0.5rem; border:none;
+    max-width: 100%;
+    height: 70vh; /* Responsive height based on viewport height */
+    min-height: 500px;"
+    loading="lazy"
+    referrerpolicy="unsafe-url"
+    allow="clipboard-read;clipboard-write"
+></iframe>
+```
+
+## 4. Replace **magentid**
+
+Be sure to replace **magentid** in the src URL with your unique SmartLeadMagnet ID.
+This ID is specific to the lead magnet you want to display on your WordPress site. Your URL should look something like:
+
+```html
+<iframe
+  src="https://smartleadmagnet.com/share/abc123xyz"
+  width="100%"
+  height="600"
+  style="border-radius:0.5rem; border:none;
+    max-width: 100%;
+    height: 70vh; /* Responsive height based on viewport height */
+    min-height: 500px;"
+  loading="lazy"
+  referrerpolicy="unsafe-url"
+  allow="clipboard-read;clipboard-write"
+></iframe>
+```
+
+5. **Publish Your Post or Page**
+
+Once you’ve added the code, preview the page to ensure the SmartLeadMagnet is displayed correctly.
+Click `Publish` to make your post or page live.
+
+
+By following these steps, you will successfully embed the SmartLeadMagnet on your WordPress site. The iframe will automatically adjust its size to fit different devices, providing a smooth and engaging user experience.
+

@@ -11,6 +11,13 @@ import WelcomeEmail from "@/emails/welcome-email";
 import { sendEmail } from "@/lib/email";
 const { convert } = require("html-to-text");
 
+const whitelistedBlogUsers = [
+  "durga@dcoder.ai",
+  "karanjalendere@gmail.com",
+  "durgaprasad.budhwani@gmail.com",
+  "joharekhushi@gmail.com",
+];
+
 const verifyEmailMaxAge = 5 * 60; // 5 minutes
 
 const verificationTokenLength = 5;
@@ -36,7 +43,8 @@ async function sendVerificationRequest(params: any) {
       text: `${token}\n\nThis code will expire in 5 minutes.\n\n`,
       html: emailHtml,
     });
-    const failed = result.rejected.concat(result.pending).filter(Boolean);
+    // @ts-ignore
+    const failed = result.rejected.concat(result?.pending).filter(Boolean);
     if (failed.length) {
       throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`);
     }
@@ -55,15 +63,15 @@ const nextAuth = NextAuth({
     Nodemailer({
       id: "email-code",
       server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
+        host: process.env.EMAIL_SERVER_HOST!,
+        port: Number(process.env.EMAIL_SERVER_PORT!),
         auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
+          user: process.env.EMAIL_SERVER_USER!,
+          pass: process.env.EMAIL_SERVER_PASSWORD!,
         },
       },
       maxAge: verifyEmailMaxAge,
-      from: process.env.EMAIL_FROM,
+      from: process.env.EMAIL_FROM!,
       generateVerificationToken: () => {
         return newToken();
       },
@@ -86,16 +94,18 @@ const nextAuth = NextAuth({
   callbacks: {
     // @ts-ignore
     async session({ session, token, user }: any) {
-      if (user?.id) session.user.id = user.id;
+      if (user?.id) session.user.id = user?.id!;
       if (token?.sub) session.user.id = token.sub;
       if (user?.role) session.user.role = user.role;
 
-      // // add stripe payment information to the session
-      // const userData = await getUserByEmail(session.user.email);
-      // if (userData) {
-      // 	session.user.stripeCustomerId = userData.stripeCustomerId;
-      // 	session.user.stripePaymentDate = userData.stripePaymentDate;
-      // }
+      if (session?.user) {
+        // check for the following email addresses to set the user role to admin
+        if (whitelistedBlogUsers.includes(session.user.email)) {
+          session.user.role = "admin";
+          session.user.enabled = true;
+          session.user.verified = true;
+        }
+      }
 
       // if (user?.picture) session.user.image = user.picture;
 
@@ -105,9 +115,9 @@ const nextAuth = NextAuth({
   events: {
     async createUser(message) {
       // send a welcome email
-      console.log("User created:", message.user.email);
-      const emailHtml = await render(<WelcomeEmail userName={message.user.name} />);
-      await sendEmail(message.user.email, "Welcome to SmartLeadMagnet", convert(emailHtml), emailHtml);
+      console.log("User created:", message.user?.email!);
+      const emailHtml = await render(<WelcomeEmail userName={message.user?.name!} />);
+      await sendEmail(message.user?.email!, "Welcome to SmartLeadMagnet", convert(emailHtml), emailHtml);
     },
   },
 });

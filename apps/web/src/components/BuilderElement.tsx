@@ -16,6 +16,10 @@ import { Option } from "@/app/types/builder";
 import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 
 import Icon from "@smartleadmagnet/ui/components/icon";
+import { FaEdit } from "react-icons/fa";
+import { MdOutlineDelete } from "react-icons/md";
+import { RiDeleteBinLine } from "react-icons/ri";
+
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 
@@ -388,9 +392,9 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
                 <Button
                   onClick={onEdit}
                   variant="outline"
-                  className="rounded-l-lg rounded-r-none bg-gray-700  text-white hover:z-10  hover:bg-gray-800  hover:text-white focus:z-10"
+                  className="rounded-l-lg rounded-r-none bg-cyan-500  px-4 py-3 text-white hover:z-10  hover:bg-cyan-600  hover:text-white focus:z-10"
                 >
-                  <Icon name="edit" />
+                  <FaEdit className="h-4 w-4" />
                 </Button>
               )}
               {onDelete && (
@@ -398,9 +402,9 @@ export default function BuilderElement({ type, data, editable, onEdit, onDelete,
                   onClick={onDelete}
                   variant="outline"
                   color="red"
-                  className="rounded-l-none rounded-r-lg bg-orange-700 text-white hover:z-10 hover:bg-orange-800  hover:text-white focus:z-10"
+                  className="rounded-l-none rounded-r-lg bg-orange-700  px-4 py-3 text-white hover:z-10 hover:bg-orange-800  hover:text-white focus:z-10"
                 >
-                  <Icon name="delete" />
+                  <RiDeleteBinLine className="h-4 w-4" />
                 </Button>
               )}
             </div>

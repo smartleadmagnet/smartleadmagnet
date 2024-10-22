@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   if (user?.id) {
     const payload = await req.json();
     const emailHtml = payload.content;
-    const result = await sendEmailToUnRegisterUser(user.email, payload.subject, convert(emailHtml), emailHtml);
+    const result = await sendEmailToUnRegisterUser(user?.email!, payload.subject, convert(emailHtml), emailHtml);
     return NextResponse.json(result);
   }
   return NextResponse.json({ error: "Not authenticated" }, { status: 401 });

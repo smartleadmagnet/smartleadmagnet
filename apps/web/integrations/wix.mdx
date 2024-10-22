@@ -1,0 +1,86 @@
+---
+name: Wix
+title: "Embed Smart Lead Magnet into Your Wix Website"
+summary: "Learn how to seamlessly integrate Smart Lead Magnet into your Wix website with this step-by-step guide."
+---
+
+# How to Add Smart Lead Magnet to Your Wix Website
+
+**Note:** You'll need administrative access to your Wix account to complete these steps.
+
+## 1. Log in to Your Wix Account
+
+- Go to [Wix.com](https://www.wix.com/) and click on **Sign In**.
+- Enter your email and password to access your Wix dashboard.
+
+## 2. Open Your Website Editor
+
+- From your dashboard, locate the website you want to edit.
+- Click on **Select & Edit Site** to open the Wix Editor.
+
+## 3. Navigate to the Desired Page
+
+- In the Wix Editor, use the **Pages** menu at the top to select the page where you want to embed the Smart Lead Magnet.
+
+## 4. Add an HTML Embed Element
+
+- Click on the **Add** (➕) button on the left-hand side menu.
+- Hover over **Embed Code**, then click on **Embed HTML**.
+
+## 5. Place the HTML Embed Element on Your Page
+
+- Drag the **HTML Embed** box to the location on the page where you want the Smart Lead Magnet to appear.
+- Resize the box as needed by dragging its edges.
+
+## 6. Enter the Smart Lead Magnet iFrame Code
+
+- Click on the **Enter Code** button inside the HTML Embed box.
+- In the code window that appears, paste the following iFrame code:
+
+  ```html
+  <iframe src="https://smartleadmagnet.com/share/{{magentid}}" width="100%"
+      height="600"
+      style="border-radius:0.5rem; border:none;
+      max-width: 100%;
+      height: 70vh; /* Responsive height based on viewport height */
+      min-height: 500px;"
+      loading="lazy"
+      referrerpolicy="unsafe-url"
+      allow="clipboard-read;clipboard-write"
+  ></iframe>
+  ```
+
+**Important:** Replace `{{magentid}}` with your unique Smart Lead Magnet ID. For example:
+
+  ```html
+  <iframe src="https://smartleadmagnet.com/share/your-unique-id" width="100%"
+      height="600"
+      style="border-radius:0.5rem; border:none;
+      max-width: 100%;
+      height: 70vh; /* Responsive height based on viewport height */
+      min-height: 500px;"
+      loading="lazy"
+      referrerpolicy="unsafe-url"
+      allow="clipboard-read;clipboard-write"
+  ></iframe>
+  ```
+
+- Click **Apply** to save the code.
+
+## 7. Adjust the HTML Embed Box
+
+- Ensure the HTML Embed box is large enough to display the Smart Lead Magnet without scrollbars.
+- You can adjust the size by clicking and dragging the corners of the box.
+
+## 8. Preview and Publish Your Site
+
+- Click on **Preview** at the top right to see how the Smart Lead Magnet looks on your page.
+- If everything appears correctly, click **Publish** to make the changes live on your website.
+
+## 9. Test the Embedded Smart Lead Magnet
+
+- Visit your live website to ensure the Smart Lead Magnet is functioning properly.
+- Interact with the embedded content to verify that it's capturing leads as expected.
+
+**Note:** If the iframe doesn't display correctly, check your Wix settings to ensure that embedding external content is allowed, and there are no restrictions blocking iframes.
+

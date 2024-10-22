@@ -1,0 +1,82 @@
+---
+name: Shopify
+title: "Embed Smart Lead Magnet into Your Shopify Store"
+summary: "Learn how to seamlessly integrate Smart Lead Magnet into your Shopify store with this step-by-step guide."
+---
+
+# How to Add Smart Lead Magnet to Your Shopify Store
+
+**Note:** You'll need administrative access to your Shopify store to complete these steps.
+
+## 1. Log in to Your Shopify Admin Dashboard
+
+Go to your Shopify admin page by visiting `https://your-store-name.myshopify.com/admin`.
+
+## 2. Create a New Page or Edit an Existing One
+
+- From the left-hand menu, click on **Online Store**, then select **Pages**.
+- Click **Add page** to create a new page, or click on an existing page to edit it.
+
+## 3. Enter a Title for Your Page
+
+Give your page a title in the **Title** field, such as "Smart Lead Magnet".
+
+## 4. Switch to HTML Editor
+
+- In the **Content** section, click on the **Show HTML** button (it looks like `<>`) in the rich text editor toolbar. This will allow you to add HTML code directly.
+
+## 5. Paste the Smart Lead Magnet iFrame Code
+
+Copy the following iFrame code and paste it into the HTML editor:
+
+```html
+<iframe src="https://smartleadmagnet.com/share/{{magentid}}" width="100%"
+    height="600"
+    style="border-radius:0.5rem; border:none;
+    max-width: 100%;
+    height: 70vh; /* Responsive height based on viewport height */
+    min-height: 500px;"
+    loading="lazy"
+    referrerpolicy="unsafe-url"
+    allow="clipboard-read;clipboard-write"
+></iframe>
+```
+
+**Important:** Replace `{{magentid}}` with your unique Smart Lead Magnet ID. For example:
+
+```html
+<iframe src="https://smartleadmagnet.com/share/your-unique-id" width="100%"
+    height="600"
+    style="border-radius:0.5rem; border:none;
+    max-width: 100%;
+    height: 70vh; /* Responsive height based on viewport height */
+    min-height: 500px;"
+    loading="lazy"
+    referrerpolicy="unsafe-url"
+    allow="clipboard-read;clipboard-write"
+></iframe>
+```
+
+## 6. Save Your Changes
+
+- Click **Save** at the top right corner to save your page.
+
+## 7. Add the Page to Your Navigation (Optional)
+
+If you want customers to access this page from your store's navigation menu:
+
+- Go to **Online Store** > **Navigation**.
+- Select the menu where you want to add the page (e.g., **Main menu**).
+- Click **Add menu item**.
+- Enter a **Name** for the menu item.
+- In the **Link** field, select **Pages** and choose the page you just created.
+- Click **Add** and then **Save Menu**.
+
+## 8. Preview Your Page
+
+- Go back to **Online Store** > **Pages**.
+- Find your page and click **View** to see how it looks on your store.
+
+Your Smart Lead Magnet should now be embedded and visible on your Shopify store page, ready to engage your visitors.
+
+**Note:** If you encounter any issues with the iframe not displaying correctly, make sure that your store's theme allows embedded content and that there are no restrictions blocking iframes.

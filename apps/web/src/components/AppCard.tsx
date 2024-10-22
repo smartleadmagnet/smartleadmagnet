@@ -1,52 +1,74 @@
 import React from "react";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@smartleadmagnet/ui/components/ui/card";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,DropdownMenuItem } from "@smartleadmagnet/ui/components/ui/dropdown-menu";
-import { ChevronDown, Edit, Share,List } from "lucide-react"; // Icons from lucide-react
-import DeleteMagnet from "@/components/DeleteMagnet";
-import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@smartleadmagnet/ui/components/ui/card";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@smartleadmagnet/ui/components/ui/dropdown-menu";
+import { ChevronDown, Edit, ImageIcon, List } from "lucide-react"; // Icons from lucide-react
+import DeleteMagnet from "@/components/DeleteMagnet";
+import CopyMagnet from "@/components/CopyMagnet";
+import ViewSchema from "@/components/ViewSchema";
+import ShareApp from "@/components/ShareApp";
+import Image from "next/image";
+import Link from "next/link";
+import { marked } from "marked";
 
 interface Props {
   id: string;
   name: string;
   description: string;
+  status: string;
+  image: string;
+  components: any[];
   analytics?: {
     impressions: number;
     used: number;
   };
 }
 
-export default function AppCard({ id, name, description, analytics }: Props) {
+export default function AppCard({ id, name, description, analytics, status, image, components }: Props) {
   return (
     <Card className="p-0 ">
-      <div className="flex items-center gap-2 mr-3 bg-gray-900 p-2 w-full text-white rounded px-4">
-          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-          <span className="text-sm font-normal flex items-center">
-            Published
-          </span>
-          {/* <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-          <span className="text-sm font-normal flex items-center">
-            Draft
-          </span> */}
-        </div>
+      <div className="mr-3 flex w-full items-center gap-2 rounded bg-gray-900 p-2 px-4 text-white">
+        {status === "pending" ? (
+          <>
+            <span className="h-2 w-2 rounded-full bg-red-500"></span>
+            <span className="flex items-center text-sm font-normal">Draft</span>
+          </>
+        ) : (
+          <>
+            <span className="h-2 w-2 rounded-full bg-green-500"></span>
+            <span className="flex items-center text-sm font-normal">Published</span>
+          </>
+        )}
+      </div>
       <CardHeader className="flex">
         <div className="flex items-start justify-between">
           <div className="flex">
-            <div className="flex-shrink-0">
-              <img
-                className="h-[60px] w-[60px] rounded-full"
-                src="https://picsum.photos/seed/picsum/100/300"
-                alt="Neil image"
-                width={100}
-                height={100}
-              />
+            <div>
+              {image ? (
+                <Image
+                  className="h-[60px] w-[60px] rounded-full object-cover object-center"
+                  src={image}
+                  alt={name}
+                  width={60}
+                  height={60}
+                />
+              ) : (
+                <div className="app_icon">
+                  <ImageIcon className="h-[40px] w-[40px] rounded-full" />
+                </div>
+              )}
+
               <CardTitle className="text-md truncate pt-2">{name}</CardTitle>
-              <CardDescription className="truncate text-sm">{description}</CardDescription>
             </div>
           </div>
           <div className="inline-flex items-center">
-          {/* <span className="me-2 text-sm bg-gray-300 px-3 py-2 rounded-lg   font-normal">Draft</span> */}
+            {/* <span className="me-2 text-sm bg-gray-300 px-3 py-2 rounded-lg   font-normal">Draft</span> */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="flex flex-row items-center justify-between">
@@ -55,28 +77,33 @@ export default function AppCard({ id, name, description, analytics }: Props) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-              <div className="flex flex-col p-1">
+                <div className="app-card-dropdown flex flex-col p-0">
                   {/* Edit Option */}
                   <DropdownMenuItem asChild>
-                    <Link href={`/builder/${id}`} className="flex items-center p-1 hover:bg-gray-100">
+                    <Link href={`/builder/${id}`} className="flex items-center  hover:bg-gray-100">
                       <Edit className="mr-2 h-4 w-4" />
                       Edit
                     </Link>
                   </DropdownMenuItem>
+                  {/* Copy Option*/}
+                  <DropdownMenuItem asChild>
+                    <CopyMagnet id={id} />
+                  </DropdownMenuItem>
 
                   {/* Share Option */}
                   <DropdownMenuItem asChild>
-                  <Link href={`/share/${id}`} className="flex items-center p-1 hover:bg-gray-100">
-                      <Share className="mr-2 h-4 w-4" />
-                      Share
-                    </Link>
+                    <ShareApp id={id} />
                   </DropdownMenuItem>
                   {/* view Submission  Option */}
                   <DropdownMenuItem asChild>
-                    <Link href={`/submission/${id}`} className="flex items-center p-1 hover:bg-gray-100">
+                    <Link href={`/submission/${id}`} className="flex items-center  hover:bg-gray-100">
                       <List className="mr-2 h-4 w-4" />
                       View Submission
                     </Link>
+                  </DropdownMenuItem>
+                  {/* view Schema  Option */}
+                  <DropdownMenuItem asChild>
+                    <ViewSchema id={id} components={components} />
                   </DropdownMenuItem>
 
                   {/* Delete Option */}
@@ -88,7 +115,16 @@ export default function AppCard({ id, name, description, analytics }: Props) {
             </DropdownMenu>
           </div>
         </div>
+        {description && (
+          <>
+            <span
+              className="app_description text-sm"
+              dangerouslySetInnerHTML={{ __html: marked(description.slice(0, 200)) }}
+            />
+          </>
+        )}
       </CardHeader>
+
       <CardContent className="bg-gray-200 px-0">
         <div className="mb-4 flex items-center justify-center">
           <div className="h-px w-full bg-gray-300 dark:bg-gray-600" />

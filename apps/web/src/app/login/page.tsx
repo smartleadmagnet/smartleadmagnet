@@ -12,14 +12,20 @@ export const metadata: Metadata = {
   description: "Authentication forms built using the components.",
 };
 
-export default function AuthenticationPage() {
+interface Props {
+  searchParams?: {
+    callbackUrl?: string;
+  };
+}
+
+export default function AuthenticationPage({ searchParams }: Props) {
   return (
     <>
       <div className="container relative  h-[100vh] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <div className="bg-muted relative hidden h-full flex-col p-10 text-white lg:flex dark:border-r">
           <div className="absolute inset-0 bg-zinc-900" />
           <div className="relative z-20 flex items-center text-lg font-medium">
-          <Link href="/">
+            <Link href="/">
               <Image src="/images/logo/logo.png" alt="Logo" width={200} height={0} />
             </Link>
           </div>
@@ -37,44 +43,37 @@ export default function AuthenticationPage() {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <Card className="m-auto w-full max-w-sm">
               <CardHeader>
-                <CardTitle className="text-2xl">Sign In or Register to  Get Started</CardTitle>
+                <CardTitle className="text-2xl">Sign In or Register to Get Started</CardTitle>
               </CardHeader>
               <CardContent className="pb-3">
                 <MagicLinkForm
                   id="email"
-                  callbackUrl="/"
+                  callbackUrl={searchParams?.callbackUrl ? decodeURIComponent(searchParams.callbackUrl) : "/"}
                   buttonClass="mt-4 tracking-wide font-semibold btn btn-primary w-full rounded hover:btn-primary transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                   inputClass="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   buttonTitle="Get Code to Log In"
                   placeholder="Email Address"
                 />
-                 <div className="flex items-center">
-  <div className="flex-grow border-t border-gray-300"></div>
-  <span className="mx-4 text-gray-600">or</span>
-  <div className="flex-grow border-t border-gray-300"></div>
-</div>
+                <div className="flex items-center">
+                  <div className="flex-grow border-t border-gray-300"></div>
+                  <span className="mx-4 text-gray-600">or</span>
+                  <div className="flex-grow border-t border-gray-300"></div>
+                </div>
               </CardContent>
               <CardFooter>
-             
                 <form
                   action={async () => {
                     "use server";
                     await signIn("google", {
-                      redirectTo: "/",
+                      redirectTo: searchParams?.callbackUrl ? decodeURIComponent(searchParams.callbackUrl) : "/",
                     });
                   }}
                   className="w-full"
                 >
-                  <Button className="flex items-center justify-center w-full text-gray  bg-white border border-gray-300 rounded  hover:bg-gray-100 rounded">
-      <Image
-        src="/images/google-icon.svg"
-        alt="Google Icon"
-        className="mr-2"
-        width={20}
-        height={20}
-      />
-      Sign in with Google
-    </Button>
+                  <Button className="text-gray flex w-full items-center justify-center  rounded rounded border border-gray-300  bg-white hover:bg-gray-100">
+                    <Image src="/images/google-icon.svg" alt="Google Icon" className="mr-2" width={20} height={20} />
+                    Sign in with Google
+                  </Button>
                 </form>
               </CardFooter>
             </Card>

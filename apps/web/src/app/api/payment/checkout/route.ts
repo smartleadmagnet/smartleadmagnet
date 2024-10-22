@@ -14,10 +14,10 @@ export async function GET(req: NextRequest) {
     if (user) {
       let stripeCustomerId = user?.stripeCustomerId;
       if (!stripeCustomerId) {
-        const email = sessionUser.email;
-        const customer = await createStripeCustomer({ email, name: user.name! });
+        const email = sessionUser?.email!;
+        const customer = await createStripeCustomer({ email, name: user?.name!! });
 
-        await updateStripeCustomerId({ id: user.id, stripeCustomerId: customer });
+        await updateStripeCustomerId({ id: user?.id!, stripeCustomerId: customer });
         stripeCustomerId = customer;
       }
       const paymentLink = await createPaymentLink(stripeCustomerId, priceId as string);

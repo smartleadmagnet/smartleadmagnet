@@ -21,6 +21,7 @@ const useAIForm = () => {
     onOutputTypeChange,
     filteredModels,
     setSelectedModel,
+    onPublicAccessChange,
   } = useBuilderContext();
   const [processing, setProcessing] = useState(false);
   const [preview, setPreview] = useState<Preview | undefined>();
@@ -29,7 +30,7 @@ const useAIForm = () => {
     setProcessing(true);
     try {
       if (outputType === "image") {
-        const textPayload = elementsList.reduce((acc, element) => {
+        const textPayload = elementsList.reduce((acc: any, element: any) => {
           if (!(element.type === "image" || element.type === "file")) {
             acc[element.name] = element.value;
           }
@@ -38,7 +39,7 @@ const useAIForm = () => {
         const result = await axios.post(`/api/lead/validate/${leadMagnet.id}`, textPayload);
         setPreview({ type: "image", content: result.data?.message });
       } else {
-        const payload = elementsList.reduce((acc, element) => {
+        const payload = elementsList.reduce((acc: any, element: any) => {
           acc[element.name] = element.value;
           return acc;
         }, {});
@@ -52,6 +53,7 @@ const useAIForm = () => {
   };
 
   return {
+    leadMagnet,
     prompt,
     setPrompt,
     providers: filteredProviders,
@@ -66,6 +68,7 @@ const useAIForm = () => {
     processing,
     elementsList,
     preview,
+    onPublicAccessChange,
     setPreview,
   };
 };

@@ -1,19 +1,19 @@
 import { NextResponse } from "next/server";
 import stripe from "@/lib/stripe";
-import { buffer } from "micro";
 import {
-  getUserById,
-  getPaymentBySessionId,
   createPayment,
   getCredit,
-  upsetCredits,
+  getPaymentBySessionId,
   getUserByStripeCustomerId,
+  upsetCredits,
 } from "@smartleadmagnet/services";
 import pricingConfig from "@/lib/config/pricingConfig";
 import Stripe from "stripe";
-import { getCheckoutSession } from "@/actions/stripe";
+import { getCheckoutSession, getSubscription } from "@/actions/stripe";
+import { PlanTier } from "@/lib/types";
+import prisma from "@smartleadmagnet/database";
 
-const stripeWebhookSecret = process.env.STRIPE_ENDPOINT_SECRET;
+const stripeWebhookSecret = process.env.STRIPE_ENDPOINT_SECRET!;
 
 export async function POST(req: Request) {
   const payload = await req.text();
@@ -42,6 +42,10 @@ export async function POST(req: Request) {
       await handleSubscriptionRenewal(event.data.object as Stripe.Invoice);
       break;
 
+    case "customer.subscription.deleted":
+      await handleSubscriptionCancellation(event.data.object as Stripe.Subscription);
+      break;
+
     default:
       console.warn(`Unhandled event type: ${event.type}`);
       break;
@@ -51,15 +55,17 @@ export async function POST(req: Request) {
 }
 
 // Function to handle checkout session completion
+// Function to handle checkout session completion
 async function handleCheckoutSessionCompleted(checkoutSession: Stripe.Checkout.Session) {
   try {
     const session = await getCheckoutSession(checkoutSession.id as string);
 
     const priceId = session.line_items?.data[0]?.price?.id;
-    const stripeCustomerId = session.customer; // Assuming you pass userId in metadata
+    const stripeCustomerId = session.customer;
+    const subscriptionId = session.subscription as string;
 
     if (!priceId || !stripeCustomerId) {
-      console.error("Missing priceId or userId");
+      console.error("Missing priceId or stripeCustomerId");
       return;
     }
 
@@ -84,14 +90,26 @@ async function handleCheckoutSessionCompleted(checkoutSession: Stripe.Checkout.S
     }
 
     // Update user's credits
-    const existingCredit = await getCredit(user.id);
+    const existingCredit = await getCredit(user?.id!);
     const totalCredit = existingCredit ? existingCredit.total + plan.credits : plan.credits;
 
-    const userId = user.id;
+    const userId = user?.id!;
     await upsetCredits({
       userId,
       totalCredit,
     });
+
+    // Determine subscription status and dates
+    let subscriptionStartDate = null;
+    let subscriptionEndDate = null;
+    let subscriptionStatus = null;
+
+    if (subscriptionId) {
+      const subscription = await getSubscription(subscriptionId);
+      subscriptionStartDate = new Date(subscription.current_period_start * 1000);
+      subscriptionEndDate = new Date(subscription.current_period_end * 1000);
+      subscriptionStatus = subscription.status;
+    }
 
     // Create payment record
     await createPayment({
@@ -101,6 +119,10 @@ async function handleCheckoutSessionCompleted(checkoutSession: Stripe.Checkout.S
       planType: plan.planTier,
       credits: plan.credits,
       price: plan.discountPrice,
+      subscriptionId,
+      subscriptionStartDate: subscriptionStartDate!,
+      subscriptionEndDate: subscriptionEndDate!,
+      subscriptionStatus: subscriptionStatus!,
     });
 
     console.log("Payment processed successfully");
@@ -110,19 +132,20 @@ async function handleCheckoutSessionCompleted(checkoutSession: Stripe.Checkout.S
 }
 
 // Function to handle subscription renewals
+// Function to handle subscription renewals
 async function handleSubscriptionRenewal(invoice: Stripe.Invoice) {
   try {
     const customerId = invoice.customer as string;
 
-    // Fetch user based on the customer ID (you may need to store this when the subscription is created)
+    // Fetch user based on the customer ID
     const user = await getUserByStripeCustomerId(customerId);
     if (!user) {
       console.error("User not found for subscription renewal");
       return;
     }
 
-    // Get the price ID from the invoice line items (only handle the main subscription item)
-    const priceId = invoice.lines.data[0].price.id;
+    const priceId = invoice?.lines?.data?.[0]?.price?.id!;
+    const subscriptionId = invoice.subscription as string;
 
     // Get plan details from price ID
     const plan = pricingConfig.plans.find((plan) => plan.priceId === priceId);
@@ -138,12 +161,16 @@ async function handleSubscriptionRenewal(invoice: Stripe.Invoice) {
       return;
     }
 
-    // Update user's credits for subscription renewal
-    // const existingCredit = await getCredit(user.id);
-    const totalCredit = plan.credits; // For subscription renewal, we just set the total credits to the plan credits
+    // Get subscription details for start, end dates, and status
+    const subscription = await getSubscription(subscriptionId);
+    const subscriptionStartDate = new Date(subscription.current_period_start * 1000);
+    const subscriptionEndDate = new Date(subscription.current_period_end * 1000);
+    const subscriptionStatus = subscription.status;
+
+    const totalCredit = plan.credits;
 
     await upsetCredits({
-      userId: user.id,
+      userId: user?.id!,
       totalCredit,
     });
 
@@ -151,10 +178,14 @@ async function handleSubscriptionRenewal(invoice: Stripe.Invoice) {
     await createPayment({
       stripeSessionId: invoice.id,
       stripeCustomerId: customerId,
-      userId: user.id,
-      planType: "subscription-renewal", // Mark as a subscription renewal
+      userId: user?.id!,
+      planType: PlanTier.SUBSCRIPTION,
       credits: plan.credits,
-      price: invoice.total / 100, // Convert to the actual amount in USD
+      price: invoice.total / 100,
+      subscriptionId,
+      subscriptionStartDate,
+      subscriptionEndDate,
+      subscriptionStatus,
     });
 
     console.log("Subscription renewal processed successfully");
@@ -163,8 +194,42 @@ async function handleSubscriptionRenewal(invoice: Stripe.Invoice) {
   }
 }
 
-export const config = {
-  api: {
-    bodyParser: false, // Stripe requires raw body for webhooks
-  },
-};
+// Function to handle subscription cancellations
+async function handleSubscriptionCancellation(subscription: Stripe.Subscription) {
+  try {
+    const customerId = subscription.customer as string;
+
+    // Fetch user based on the customer ID
+    const user = await getUserByStripeCustomerId(customerId);
+    if (!user) {
+      console.error("User not found for subscription cancellation");
+      return;
+    }
+
+    // Check if a payment record exists for this subscription
+    const existingPayment = await prisma.payment.findFirst({
+      where: {
+        subscriptionId: subscription.id,
+        stripeCustomerId: customerId,
+      },
+    });
+
+    if (!existingPayment) {
+      console.log("No payment record found for this subscription cancellation");
+      return;
+    }
+
+    // Update the subscription status and details
+    await prisma.payment.update({
+      where: { id: existingPayment.id },
+      data: {
+        subscriptionStatus: "canceled", // Update status to canceled
+        subscriptionEndDate: new Date(subscription.current_period_end * 1000), // Update the end date
+      },
+    });
+
+    console.log("Subscription cancellation processed successfully");
+  } catch (error) {
+    console.error("Error processing subscription cancellation:", error);
+  }
+}

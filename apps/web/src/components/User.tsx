@@ -26,16 +26,16 @@ export async function User() {
 
   if (!user) {
     return (
-      <div className="hidden gap-2 md:flex">
+      <div className="hidden gap-2 md:block">
         <Link
           href="/login"
-          className="rounded-lg bg-cyan-500 px-6 py-3 font-bold text-white  hover:bg-cyan-600 sm:px-10 sm:py-4 "
+          className="rounded-lg border-2 border-cyan-500  bg-cyan-500 px-3 py-2 font-bold text-white  hover:bg-cyan-600 sm:px-10 sm:py-4  mr-4"
         >
           Login
         </Link>
         <Link
           href="/login"
-          className="rounded-lg border-2 border-cyan-500 px-6 py-3 font-bold text-cyan-500  hover:bg-cyan-500 hover:text-white sm:px-8 sm:py-4"
+          className="rounded-lg border-2 border-cyan-500 px-3 py-2 font-bold text-cyan-500  hover:bg-cyan-500 hover:text-white sm:px-8 sm:py-4"
         >
           Sign Up
         </Link>
@@ -53,8 +53,8 @@ export async function User() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar>
-            <AvatarImage src={user.image} alt={user.name} />
-            <AvatarFallback>{(user.name || user.email).substring(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarImage src={user?.image!} alt={user?.name!} />
+            <AvatarFallback>{(user?.name! || user?.email!).substring(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

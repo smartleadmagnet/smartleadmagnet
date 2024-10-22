@@ -38,3 +38,4 @@ yarn-error.log*
 *.pem
 
 .idea
+apps/web/src/components/RichTextEditor copy.tsx

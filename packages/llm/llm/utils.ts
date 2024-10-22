@@ -9,7 +9,7 @@ const resultFormat = `
 The output should be inside <lead> html tag e.g. <lead>the response out</lead>
 `;
 
-function extractLeadContent(htmlString: string): string | null {
+function extractLeadContent(htmlString: string): string | undefined | null {
   const regex = /<lead>([\s\S]*?)<\/lead>/;
   const match = htmlString.match(regex);
 
@@ -30,7 +30,6 @@ export async function callTextLLM(leadMagnet: LeadMagnet, promptInput: any) {
   const llmApiCall: any = async () => {
     try {
       const result = await llmModel.invoke(messages);
-      console.log(result?.content);
       return extractLeadContent(result.content as string);
     } catch (error: any) {
       if (retryCount < totalRetry) {
@@ -44,7 +43,6 @@ export async function callTextLLM(leadMagnet: LeadMagnet, promptInput: any) {
   return llmApiCall();
 }
 
-export async function callImageLLM(leadMagnet: LeadMagnet, promptInput: any) {
-  // console.log(promptInput);
-  return getImageLLMModel(leadMagnet, promptInput);
+export async function callImageLLM(leadMagnet: LeadMagnet, promptInput: any, apiKey?: string | null) {
+  return getImageLLMModel(leadMagnet, promptInput, apiKey);
 }

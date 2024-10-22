@@ -25,21 +25,22 @@ export async function createApiKey(data: {
 
 // update api key
 export async function updateApiKey(
-  keyid:string,
+  keyId: string,
   userId: string,
   data: {
-  userId: string;
-  keyName?: string; 
-  apiKey?: string; 
-  provider?: string; 
-  isDefault?: boolean; 
-}): Promise<ApiKey> {
+    userId: string;
+    keyName?: string;
+    apiKey?: string;
+    provider?: string;
+    isDefault?: boolean;
+  }
+): Promise<ApiKey> {
   // Check if isDefault is true, then unset it for other keys
   if (data.isDefault) {
     await prisma.apiKey.updateMany({
       where: {
-        userId:userId,
-        NOT: { id: keyid }, // Exclude the current API key from the update
+        userId: userId,
+        NOT: { id: keyId }, // Exclude the current API key from the update
       },
       data: {
         isDefault: false,
@@ -50,7 +51,7 @@ export async function updateApiKey(
   // Update the API key with the provided data
   return prisma.apiKey.update({
     where: {
-      id: keyid,
+      id: keyId,
     },
     data: {
       ...data,
@@ -63,6 +64,20 @@ export async function getApiKeysByUserId(userId: string): Promise<ApiKey[]> {
   return prisma.apiKey.findMany({
     where: {
       userId,
+    },
+  });
+}
+
+export async function getApiKeysByUserIdWithoutKey(userId: string): Promise<ApiKey[]> {
+  return prisma.apiKey.findMany({
+    where: {
+      userId,
+    },
+    select: {
+      id: true,
+      keyName: true,
+      provider: true,
+      isDefault: true,
     },
   });
 }

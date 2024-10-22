@@ -1,8 +1,13 @@
 import Image from "next/image";
 import templateCategories from "@/data/categories.json";
 import Link from "next/link";
+import { getPublicLeadMagnets } from "@smartleadmagnet/services";
+import { ImageIcon } from "lucide-react";
+import React from "react";
+import { marked } from "marked";
+import { createSlug } from "@/utils/slug";
 
-export const templateData = [
+const templateData = [
   {
     id: "1",
     category: "marketing",
@@ -40,30 +45,23 @@ export const templateData = [
   },
   // Add more templates for other categories as needed...
 ];
-const TemplatesPage = ({ params }: { params: { id: string } }) => {
-  
+export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
-
-  
-  
-
-  // Filter templates based on selected category, or show all if 'all' is selected
-  const filteredTemplates = id === "all"
-    ? templateData
-    : templateData.filter((template) => template.category === id);
+  const leads = await getPublicLeadMagnets();
+  const filteredTemplates = id === "all" ? templateData : templateData.filter((template) => template.category === id);
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-center mb-8">Templates</h1>
+      <h1 className="mb-8 text-center text-4xl font-bold">Templates</h1>
 
       {/* Top Menu - Categories */}
-      <div className="flex justify-center mb-8">
-        <nav className="flex overflow-auto flex-wrap">
+      <div className="mb-8 flex justify-center">
+        <nav className="flex flex-wrap overflow-auto">
           {templateCategories.map((category) => (
             <Link
               key={category.id}
               href={`/templates/${category.id}`}
-              className={`py-2 px-4 ml-5 mb-3 rounded-lg no-wrap font-semibold hover:bg-gray-900 hover:text-white 
+              className={`no-wrap mb-3 ml-5 rounded-lg px-4 py-2 font-semibold hover:bg-gray-900 hover:text-white
               ${id === category.id ? "bg-gray-900 text-white" : "bg-gray-200"}`}
             >
               {category.name}
@@ -73,44 +71,59 @@ const TemplatesPage = ({ params }: { params: { id: string } }) => {
       </div>
 
       {/* Template Items Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredTemplates.length ? (
-          filteredTemplates.map((template) => (
-            <div
-              key={template.id}
-              className="bg-white shadow-md rounded-lg p-6 border border-gray-200"
-            >
-              <div className="flex items-center space-x-4 mb-4">
-                {/* Use Next.js Image component */}
-                <div className="relative w-16 h-16">
-                  <Image
-                    src={template.icon}
-                    alt={`${template.title} Icon`}
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-full"
-                    priority={true} // Use priority for important images to load faster
-                  />
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {leads.length ? (
+          leads.map((leadMagnet) => {
+            const slug = createSlug(leadMagnet.name);
+            return (
+              <div key={leadMagnet.id} className="rounded-lg border border-gray-200 bg-white p-6 shadow-md">
+                <div className="mb-4 flex items-center space-x-4">
+                  {/* Use Next.js Image component */}
+                  {leadMagnet.image ? (
+                    <Image
+                      className="h-[60px] w-[60px] rounded-full object-cover object-center"
+                      src={leadMagnet.image}
+                      alt={leadMagnet.name}
+                      width={60}
+                      height={60}
+                    />
+                  ) : (
+                    <div className="app_icon">
+                      <ImageIcon className="h-[40px] w-[40px] rounded-full" />
+                    </div>
+                  )}
+
+                  <h2 className="text-2xl font-semibold">{leadMagnet.name}</h2>
                 </div>
-                <h2 className="text-2xl font-semibold">{template.title}</h2>
-              </div>
-              <p className="text-gray-600 mb-4">{template.description}</p>
-              <div className="flex space-x-2">
-                <Link href={`/templates/view/${template.id}`} className="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded">
+                {leadMagnet.description && (
+                  <>
+                    <p
+                      className="mb-4 text-gray-600"
+                      dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description.slice(0, 200)) }}
+                    />
+                  </>
+                )}
+                <div className="flex space-x-2">
+                  <Link
+                    href={`/templates/view/${slug}`}
+                    className="rounded bg-cyan-500 px-4 py-2 text-white hover:bg-cyan-600"
+                  >
                     Use This
-                </Link>
-                <Link href={`/templates/use/${template.id}`} className="border text-cyan-500 border-cyan-500  hover:bg-cyan-600 hover:text-white  py-2 px-4 rounded">
+                  </Link>
+                  <Link
+                    href={`/templates/use/${slug}`}
+                    className="rounded border border-cyan-500  px-4 py-2  text-cyan-500 hover:bg-cyan-600 hover:text-white"
+                  >
                     Make it yours
-                </Link>
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <p>No templates available for this category.</p>
         )}
       </div>
     </div>
   );
-};
-
-export default TemplatesPage;
+}
