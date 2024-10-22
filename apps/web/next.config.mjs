@@ -12,7 +12,7 @@ const nextConfig = {
     return [
       {
         source: "/blog/:path*",
-        destination: "https://silver-caribou-278976.hostingersite.com/:path*",
+        destination: "https://silver-caribou-278976.hostingersite.com/blog/:path*",
       },
     ];
   },
