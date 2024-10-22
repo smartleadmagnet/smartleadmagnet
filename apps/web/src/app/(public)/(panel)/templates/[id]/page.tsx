@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-8 text-center text-5xl font-bold leading-[1.5]">
         Transform your website in <span className="text-cyan-500">Lead Generation Machine</span><br/>
-        with our <span className="text-cyan-900">Lead Magnets</span> Templates.
+        with our <span className="text-cyan-500">Lead Magnets</span> Templates.
       </h1>
 
 
