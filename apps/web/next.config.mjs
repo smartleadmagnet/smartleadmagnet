@@ -11,28 +11,12 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/blog/:path*",
-        destination: "https://silver-caribou-278976.hostingersite.com/blog/:path*",
-      },
-      {
-        source: "/wp-content/:path*",
-        destination: "https://silver-caribou-278976.hostingersite.com/wp-content/:path*",
-      },
-      {
-        source: "/admin.php",
-        destination: "https://silver-caribou-278976.hostingersite.com/admin.php",
-      },
-      {
-        source: "/wp-admin/:path*",
-        destination: "https://silver-caribou-278976.hostingersite.com/wp-admin/:path*",
-      },
-      {
-        source: "/wp-json/:path*",
-        destination: "https://silver-caribou-278976.hostingersite.com/wp-json/:path*",
-      },
-      {
         source: "/blog",
         destination: "https://silver-caribou-278976.hostingersite.com",
+      },
+      {
+        source: "/blog/:path*",
+        destination: "https://silver-caribou-278976.hostingersite.com/blog/:path*",
       },
     ];
   },
