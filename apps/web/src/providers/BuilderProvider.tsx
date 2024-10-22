@@ -39,6 +39,7 @@ interface BuilderContextType {
   generateLeadMagnetWithAI: (description: string) => void;
   isPublsiing: boolean;
   onPublicAccessChange: (isPublic: boolean) => Promise<void>;
+  isSavingSetting: boolean;
 }
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
@@ -211,12 +212,8 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
     toast({
       variant: "destructive",
       description: "Could not update lead magnet",
-      position: 'top right'
-
-    },
-
-  );
-  return;
+    });
+    return;
     setIsSavingSetting(true);
     try {
       await axios.post(`/api/lead/${leadMagnet.id}`, form);
@@ -226,11 +223,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
       toast({
         variant: "destructive",
         description: "Could not update lead magnet",
-        position: 'top'
-
-      },
-
-    );
+      });
     }
   };
 
@@ -380,7 +373,6 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         onPublicAccessChange,
         isPublsiing,
         isSavingSetting,
-
       }}
     >
       {children}

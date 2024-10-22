@@ -7,9 +7,7 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
@@ -19,9 +17,7 @@
     "**/*.tsx",
     "**/*.json",
     ".next/types/**/*.ts",
-    "postcss.config.mjs",
+    "postcss.config.mjs"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

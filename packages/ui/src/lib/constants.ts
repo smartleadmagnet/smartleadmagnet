@@ -188,5 +188,3 @@ export const formStyleOptions = [
     value: "sharp",
   },
 ];
-
-

@@ -1,7 +1,7 @@
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
-import { Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -24,7 +24,7 @@ import { BuilderSchemaForm, builderSchemaForm } from "@/types/builder";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 
 export default function SettingsForm() {
-  const { updateSettingFormData, leadMagnet,isSavingSetting } = useBuilderContext();
+  const { updateSettingFormData, leadMagnet, isSavingSetting } = useBuilderContext();
   const { uploadToS3, files } = useS3Upload();
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>(leadMagnet?.image || "");
@@ -191,8 +191,8 @@ export default function SettingsForm() {
       </div>
 
       {/* Submit Button */}
-      <Button type="submit" className="mt-4 btn-primary hover:bg-cyan-600">
-        {isSavingSetting ? <Loader2 className="animate-spin mr-2" /> : null}
+      <Button type="submit" className="btn-primary mt-4 hover:bg-cyan-600">
+        {isSavingSetting ? <Loader2 className="mr-2 animate-spin" /> : null}
         Save Settings
       </Button>
     </form>

@@ -93,7 +93,7 @@ export default function MentionTextArea({ options, onPromptChange, defaultValue 
             <small>
               {options.map((element: any) => (
                 <Badge
-                  className="mr-2 mb-2 inline-block cursor-pointer rounded px-2 py-1"
+                  className="mb-2 mr-2 inline-block cursor-pointer rounded px-2 py-1"
                   key={element.id}
                   onClick={() => insertVariable(element.display)} // Insert variable on click
                 >

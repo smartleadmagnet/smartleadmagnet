@@ -26,10 +26,10 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="mx-auto max-w-lg">
         <DialogHeader>
-          <DialogTitle >{title}</DialogTitle>
-          <div className="text-sm text-muted-foreground">{message}</div>
+          <DialogTitle>{title}</DialogTitle>
+          <div className="text-muted-foreground text-sm">{message}</div>
         </DialogHeader>
-        
+
         <DialogClose onClick={onClose} />
         <DialogFooter>
           <form
@@ -41,7 +41,11 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
             <Button type="submit" className="mr-2 bg-cyan-500 hover:bg-cyan-600">
               {confirmTitle}
             </Button>
-            <Button type="button" onClick={onClose} className="border border-cyan-500 bg-white text-cyan-500 hover:bg-cyan-600 hover:text-white">
+            <Button
+              type="button"
+              onClick={onClose}
+              className="border border-cyan-500 bg-white text-cyan-500 hover:bg-cyan-600 hover:text-white"
+            >
               {cancelTitle}
             </Button>
           </form>
