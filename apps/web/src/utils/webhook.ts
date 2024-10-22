@@ -6,6 +6,7 @@ export async function triggerWebhook(webhookUrl: string, data: any) {
       body: JSON.stringify(data),
     });
     if (!response.ok) {
+      // TODO handle sentry logging
       throw new Error(`Webhook failed with status ${response.status}`);
     }
     return { success: true };
