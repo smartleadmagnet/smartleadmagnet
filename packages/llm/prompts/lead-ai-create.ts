@@ -138,7 +138,7 @@ Example output structure:
 
 Ensure that your output is a valid JSON object and that all required properties are included for each form element.`;
 
-function extractLeadContent(htmlString: string): string | null {
+function extractLeadContent(htmlString: string): string | undefined | null {
   const regex = /<lead_magnet_form>([\s\S]*?)<\/lead_magnet_form>/;
   const match = htmlString.match(regex);
 

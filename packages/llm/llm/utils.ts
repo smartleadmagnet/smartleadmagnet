@@ -9,7 +9,7 @@ const resultFormat = `
 The output should be inside <lead> html tag e.g. <lead>the response out</lead>
 `;
 
-function extractLeadContent(htmlString: string): string | null {
+function extractLeadContent(htmlString: string): string | undefined | null {
   const regex = /<lead>([\s\S]*?)<\/lead>/;
   const match = htmlString.match(regex);
 
