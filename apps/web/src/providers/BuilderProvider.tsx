@@ -13,7 +13,7 @@ interface BuilderContextType {
   elementsList: any;
   formStyles: any;
   name: string;
-  selectedProvider: LLMProvider;
+  selectedProvider: LLMProvider | undefined;
   selectedModel: string;
   outputType: string;
   prompt: string;
@@ -113,28 +113,30 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
   children,
   leadMagnet,
 }) => {
-  const router = useRouter();
   const [selectedLeadMagnet, setSelectedLeadMagnet] = useState<LeadMagnet>(leadMagnet);
   const [paymentRequired, setPaymentRequired] = useState<boolean>(false);
   const [creditRequired, setCreditRequired] = useState<boolean>(false);
-  const [elementsList, setElementsList] = useState<ChildItem[]>(leadMagnet.components || []);
+  const [elementsList, setElementsList] = useState<ChildItem[]>((leadMagnet?.components as Array<any>) || []);
   const [name, setName] = useState<string>(leadMagnet?.name || "");
   const defaultLLMProvider = leadMagnet?.provider
     ? llm.find((provider) => provider.name === leadMagnet.provider)
-    : llm[0];
+    : llm?.[0];
   const [prompt, setPrompt] = useState<string>(leadMagnet?.prompt || "");
-  const [selectedProvider, setSelectedProvider] = useState<LLMProvider>(defaultLLMProvider);
+  // @ts-ignore
+  const [selectedProvider, setSelectedProvider] = useState<LLMProvider | undefined>(defaultLLMProvider);
   const [selectedModel, setSelectedModel] = useState<string>(
     leadMagnet.model || selectedProvider?.models[0]?.name || ""
   );
   const [outputType, setOutputType] = useState<string>(leadMagnet?.output || "text");
 
   // Ensure formStyles has the correct type and merge it properly
-  const [formStyles, setFormStyles] = useState({
-    ...defaultFormStyles,
-    ...(leadMagnet?.styles || {}),
+  const [formStyles, setFormStyles] = useState(() => {
+    const styles = leadMagnet?.styles;
+    return {
+      ...defaultFormStyles,
+      ...(styles && typeof styles === "object" ? styles : {}),
+    };
   });
-
   const onPublishLead = async () => {
     try {
       const leadResponse = await axios.post(`/api/lead/${leadMagnet.id}/publish`);
@@ -252,12 +254,12 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
     await updateData({ styles });
   };
 
-  const updateName = async (name: string) => {
+  const updateName = async (name: string | ((prevState: string) => string)) => {
     setName(name);
     await updateData({ name });
   };
 
-  const updatePrompt = async (prompt: string) => {
+  const updatePrompt = async (prompt: string | ((prevState: string) => string)) => {
     setPrompt(prompt);
     await updateData({ prompt });
   };
@@ -288,13 +290,15 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
 
   const onOutputTypeChange = async (type: string) => {
     setOutputType(type);
-    let provider = leadMagnet.provider;
+    let provider = llm?.find((item) => item.name === leadMagnet.provider) as LLMProvider;
     let model = leadMagnet.model;
+    // @ts-ignore
     const filteredProviders = filterProviders(llm, type);
     const filteredModels = filterModels(selectedProvider?.models || []);
 
     if (!filteredProviders.find((provider) => provider.name === selectedProvider?.name)) {
-      provider = filteredProviders[0];
+      provider = filteredProviders?.[0]!;
+      // @ts-ignore
       setSelectedProvider(provider);
     }
 
@@ -307,16 +311,16 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
 
   const onProviderChange = async (provider: string) => {
     const newProvider = llm.find((p) => p.name === provider);
-    setSelectedProvider(newProvider);
+    setSelectedProvider(newProvider as LLMProvider);
 
-    const filteredModels = filterModels(newProvider?.models || []);
+    const filteredModels = filterModels((newProvider?.models as Array<LLMModel>) || []);
     const model = filteredModels[0]?.name || "";
     setSelectedModel(model);
 
     await updateData({ provider, model });
   };
 
-  const filteredProviders = filterProviders(llm);
+  const filteredProviders = filterProviders(llm as LLMProvider[]);
   const filteredModels = filterModels(selectedProvider?.models || []);
 
   return (

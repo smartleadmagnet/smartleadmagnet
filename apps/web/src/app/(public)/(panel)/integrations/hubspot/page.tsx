@@ -4,6 +4,8 @@ import { WebPageJsonLd } from "next-seo";
 
 const slug = "integrations/hubspot";
 
+export const dynamic = "force-static";
+
 export function generateMetadata() {
   return getLocalMdxSeoTags("hubspot", "integrations");
 }

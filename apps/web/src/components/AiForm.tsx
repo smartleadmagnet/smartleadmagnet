@@ -74,7 +74,7 @@ export default function AIForm() {
             <div className="flex w-full gap-2">
               <div className="form-control mb-4 w-full">
                 <Label>Provider</Label>
-                <Select value={selectedProvider.name} onValueChange={onProviderChange}>
+                <Select value={selectedProvider?.name!} onValueChange={onProviderChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a LLM Provider" />
                   </SelectTrigger>

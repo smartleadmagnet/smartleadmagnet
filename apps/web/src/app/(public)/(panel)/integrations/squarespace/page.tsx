@@ -3,6 +3,7 @@ import { getLocalMdxSeoTags } from "@/lib/seo";
 import { WebPageJsonLd } from "next-seo";
 
 const slug = "integrations/squarespace";
+export const dynamic = "force-static";
 
 export function generateMetadata() {
   return getLocalMdxSeoTags("squarespace", "integrations");

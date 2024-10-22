@@ -36,7 +36,8 @@ async function sendVerificationRequest(params: any) {
       text: `${token}\n\nThis code will expire in 5 minutes.\n\n`,
       html: emailHtml,
     });
-    const failed = result.rejected.concat(result.pending).filter(Boolean);
+    // @ts-ignore
+    const failed = result.rejected.concat(result?.pending).filter(Boolean);
     if (failed.length) {
       throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`);
     }
@@ -55,15 +56,15 @@ const nextAuth = NextAuth({
     Nodemailer({
       id: "email-code",
       server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
+        host: process.env.EMAIL_SERVER_HOST!,
+        port: Number(process.env.EMAIL_SERVER_PORT!),
         auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
+          user: process.env.EMAIL_SERVER_USER!,
+          pass: process.env.EMAIL_SERVER_PASSWORD!,
         },
       },
       maxAge: verifyEmailMaxAge,
-      from: process.env.EMAIL_FROM,
+      from: process.env.EMAIL_FROM!,
       generateVerificationToken: () => {
         return newToken();
       },

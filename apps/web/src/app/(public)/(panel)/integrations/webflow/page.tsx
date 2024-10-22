@@ -3,6 +3,7 @@ import { getLocalMdxSeoTags } from "@/lib/seo";
 import { WebPageJsonLd } from "next-seo";
 
 const slug = "integrations/webflow";
+export const dynamic = "force-static";
 
 export function generateMetadata() {
   return getLocalMdxSeoTags("webflow", "integrations");
