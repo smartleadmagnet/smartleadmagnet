@@ -5,7 +5,9 @@ import PostCard from "@smartleadmagnet/ui/components/PostCard";
 import * as React from "react";
 import getSeo from "@/lib/seo";
 
-const directoryPath = `integrations`;
+export const dynamic = "force-static";
+
+const directoryPath = "integrations";
 export function generateMetadata() {
   const posts = getAllPages<any>(directoryPath);
   const names = posts.map((post) => post.name);

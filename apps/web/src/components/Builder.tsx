@@ -99,7 +99,7 @@ export default function Builder({ user }: { user?: any }) {
 
             <div className="flex items-center">
               <p className="mr-4 font-bold">
-                Last Saved ({formatDistanceToNow(new Date(leadMagnet.updatedAt), { addSuffix: true })})
+                Last Saved ({formatDistanceToNow(new Date(leadMagnet?.updatedAt!), { addSuffix: true })})
               </p>
               <Button className="btn-primary" onClick={leadMagnet?.status === "published" ? () => {} : onPublishLead}>
                 {leadMagnet?.status === "published" ? "Save" : "Publish"}
@@ -273,7 +273,7 @@ export default function Builder({ user }: { user?: any }) {
           </TabsContent>
         </div>
       </Tabs>
-      <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen} />
+      <EmbedModal open={embedOpen} setIsOpen={setEmbedOpen} magnetId={leadMagnet.id} />`
       <PurchasePlanDialog
         isOpen={creditRequired || paymentRequired}
         onClose={onClosePaymentModal}

@@ -172,7 +172,7 @@ export default function SettingsForm() {
       {/* Category Select */}
       <div className="form-control mb-4 w-full">
         <Label>Category</Label>
-        <Select defaultValue={defaultValues.category} onValueChange={(value) => setValue("category", value)}>
+        <Select defaultValue={defaultValues?.category!} onValueChange={(value) => setValue("category", value)}>
           <SelectTrigger>
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>

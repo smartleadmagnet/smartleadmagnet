@@ -75,8 +75,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Check user's credit and API key usage
-    const credit = await getCredit(user.id);
-    let apiKey = lead.apiKey;
+    const credit = await getCredit(user?.id!);
+    // @ts-ignore
+    let apiKey = lead?.apiKey?.apiKey;
     if (credit?.total > credit?.used) {
       apiKey = null;
     }
@@ -100,7 +101,7 @@ export async function POST(req: NextRequest) {
 
     // Increment the user's used credits count
     if (credit) {
-      await incrementCreditUsage(user.id);
+      await incrementCreditUsage(user?.id!);
     }
 
     let webhookStatus = "pending";
@@ -117,7 +118,8 @@ export async function POST(req: NextRequest) {
     }
 
     // Send an email if configured
-    const emailComponent = lead.components?.find((item) => item.type === "email");
+    // @ts-ignore
+    const emailComponent = lead?.components?.find((item) => item.type === "email");
     if (lead.emailSubject && lead.emailContent && emailComponent) {
       try {
         const emailHtml = lead.emailContent;

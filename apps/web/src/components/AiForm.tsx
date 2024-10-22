@@ -77,7 +77,7 @@ export default function AIForm({ user }: { user: any }) {
             <div className="flex w-full gap-2">
               <div className="form-control mb-4 w-full">
                 <Label>Provider</Label>
-                <Select value={selectedProvider.name} onValueChange={onProviderChange}>
+                <Select value={selectedProvider?.name!} onValueChange={onProviderChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a LLM Provider" />
                   </SelectTrigger>
@@ -140,7 +140,8 @@ export default function AIForm({ user }: { user: any }) {
                   Back to Form
                 </Button>
               </div>
-              <ContentViewer type={outputType} content={preview?.content!} isLoading={processing} />
+              {/* @ts-ignore */}
+              <ContentViewer type={outputType!} content={preview?.content!} isLoading={processing} />
             </div>
           </div>
         )}

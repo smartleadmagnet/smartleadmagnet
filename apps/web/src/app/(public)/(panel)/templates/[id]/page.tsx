@@ -7,7 +7,7 @@ import React from "react";
 import { marked } from "marked";
 import { createSlug } from "@/utils/slug";
 
-export const templateData = [
+const templateData = [
   {
     id: "1",
     category: "marketing",

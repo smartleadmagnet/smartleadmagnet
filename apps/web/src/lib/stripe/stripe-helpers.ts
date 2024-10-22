@@ -1,5 +1,3 @@
-import { PricingPlan } from "@/lib/types";
-
 export function formatAmountForDisplay(amount: number, currency: string): string {
   let numberFormat = new Intl.NumberFormat(["en-US"], {
     style: "currency",
@@ -24,6 +22,3 @@ export function formatAmountForStripe(amount: number, currency: string): number 
   }
   return zeroDecimalCurrency ? amount : Math.round(amount * 100);
 }
-export const getPrice = (plan: PricingPlan) => {
-  return plan.price;
-};

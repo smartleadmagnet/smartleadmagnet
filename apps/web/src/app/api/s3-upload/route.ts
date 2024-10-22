@@ -3,7 +3,8 @@ import { v4 } from "uuid";
 
 const getFileExtension = (filename: string) => filename.split(".").pop();
 
-const uploadAPIHandler = POST.configure({
+// @ts-ignore
+const uploadAPIHandler: typeof POST = POST.configure({
   async key(req, filename) {
     const uniqueId = v4();
     const fileExtension = getFileExtension(filename);

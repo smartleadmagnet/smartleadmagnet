@@ -1,10 +1,10 @@
 "use client";
 
-import { CheckIcon, CommitIcon, CopyIcon, FileIcon ,CodeIcon } from "@radix-ui/react-icons";
+import { CheckIcon, CommitIcon, CopyIcon, FileIcon, CodeIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import * as React from "react";
 // @ts-ignore
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard.tsx";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 type PreProps = {
   "data-lang"?: string;
@@ -16,16 +16,16 @@ type CopyButtonProps = {
 const getLanguageIcon = (lang: string): React.ReactNode => {
   switch (lang) {
     case "js": {
-      return <CodeIcon/>;
+      return <CodeIcon />;
     }
 
     case "ts": {
-      return <CodeIcon/>;
+      return <CodeIcon />;
     }
 
     case "jsx":
     case "tsx": {
-      return <CodeIcon/>;
+      return <CodeIcon />;
     }
 
     case "bash":
@@ -55,7 +55,7 @@ const Pre = (props: PreProps) => {
 
   return (
     <div className="w-full max-w-full">
-      <figure className="not-prose group relative my-6 rounded-lg bg-neutral p-2 text-white">
+      <figure className="not-prose bg-neutral group relative my-6 rounded-lg p-2 text-white">
         {title ? (
           <div className="flex flex-row items-center border-b px-4 py-1.5">
             {lang && <div className="text-muted-foreground">{getLanguageIcon(lang)}</div>}

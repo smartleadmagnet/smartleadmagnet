@@ -12,7 +12,7 @@ export default async function BillingPage() {
   const user = await getUserInfo();
   const payments = (await getUserPayments(user?.id!)) || [];
   const planInfo = payments?.find((payment: Payment) => payment.planType !== PlanTier.CREDIT);
-  const availableCredit = (user.Credit?.total || 0) - (user?.Credit?.used || 0);
+  const availableCredit = (user?.Credit?.total || 0) - (user?.Credit?.used || 0);
   return (
     <div className="space-y-6">
       <div>
@@ -22,7 +22,7 @@ export default async function BillingPage() {
       <Separator />
       <div className="space-y-2">
         <h3 className="flex flex-row items-center justify-start text-lg font-medium">
-          Plan Type: {getPlanName(planInfo?.planType)}
+          Plan Type: {getPlanName(planInfo?.planType!)}
           {planInfo?.subscriptionStatus === "active" && "(Active)"}
           {planInfo?.subscriptionStatus === "canceled" && <div className="ml-2 text-red-500">(Canceled)</div>}
         </h3>
@@ -38,12 +38,12 @@ export default async function BillingPage() {
               {planInfo?.planType === PlanTier.SUBSCRIPTION &&
                 planInfo?.subscriptionStatus === "canceled" &&
                 availableCredit > 0 && (
-                  <p>Credits will be expired on {format(new Date(planInfo?.subscriptionEndDate), "dd MMM yyyy")}</p>
+                  <p>Credits will be expired on {format(new Date(planInfo?.subscriptionEndDate!), "dd MMM yyyy")}</p>
                 )}
             </div>
             <div>
               {planInfo?.planType === PlanTier.SUBSCRIPTION && planInfo?.subscriptionStatus === "active" && (
-                <CancelSubscription id={planInfo?.subscriptionId} />
+                <CancelSubscription id={planInfo?.subscriptionId!} />
               )}
             </div>
           </div>
@@ -77,28 +77,29 @@ export default async function BillingPage() {
       {/* Billing history */}
       <div className="space-y-2">
         <h3 className="text-lg font-medium">Billing History:</h3>
-          <table className="min-w-full rounded-lg border border-gray-200 bg-white">
-            <thead>
-              <tr>
-                <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Date</th>
-                <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Amount</th>
-                <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Plan</th>
-                <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Status</th>
+        <table className="min-w-full rounded-lg border border-gray-200 bg-white">
+          <thead>
+            <tr>
+              <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Date</th>
+              <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Amount</th>
+              <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Plan</th>
+              <th className="border-b px-4 py-2 text-left text-sm font-medium text-gray-700">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {payments.map((payment: Payment, index: number) => (
+              <tr key={index} className={`hover:bg-gray-100 ${index % 2 === 0 ? "odd:bg-gray-50" : ""}`}>
+                <td className="whitespace-nowrap border-b px-4 py-2">
+                  {format(new Date(payment.createdAt), "dd MMM yyyy")}
+                </td>
+                <td className="whitespace-nowrap border-b px-4 py-2">{payment.price}</td>
+                <td className="whitespace-nowrap border-b px-4 py-2">{getPlanName(payment?.planType!)}</td>
+                <td className="whitespace-nowrap border-b px-4 py-2">{payment.subscriptionStatus}</td>
               </tr>
-            </thead>
-            <tbody>
-              {payments.map((payment: Payment, index: number) => (
-                <tr key={index} className={`hover:bg-gray-100 ${index % 2 === 0 ? "odd:bg-gray-50" : ""}`}>
-                  <td className="whitespace-nowrap border-b px-4 py-2">{format(new Date(payment.createdAt), "dd MMM yyyy")}</td>
-                  <td className="whitespace-nowrap border-b px-4 py-2">{payment.price}</td>
-                  <td className="whitespace-nowrap border-b px-4 py-2">{getPlanName(payment.planType)}</td>
-                  <td className="whitespace-nowrap border-b px-4 py-2">{payment.subscriptionStatus}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

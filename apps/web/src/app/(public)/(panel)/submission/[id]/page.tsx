@@ -1,6 +1,5 @@
 // pages/submission.tsx
 import React from "react";
-import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Link from "next/link";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@smartleadmagnet/ui/components/ui/table";
 import { ChevronLeft } from "lucide-react"; // Icons from lucide-react
@@ -24,8 +23,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           Back
         </Link>
 
-          <ExportSubmissionsButton usageData={usageData} leadMagnetName={leadMagnet.name} />
-        
+        <ExportSubmissionsButton usageData={usageData} leadMagnetName={leadMagnet.name} />
       </div>
       <div>
         <h1 className="mb-5 text-3xl font-bold text-gray-800">

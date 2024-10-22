@@ -9,14 +9,14 @@ const timeout = 10 * 10000; // 5 seconds
 const maxRetries = 1;
 const totalRetry = 3;
 
-export function replacePlaceholders(template, values) {
+export function replacePlaceholders(template: string, values: any) {
   // Regex to match the whole @[{{number_1}}](number_1) pattern
   return template.replace(/@\[\{\{(.*?)\}\}\]\((.*?)\)/g, (match, key) => {
     return values[key] || match; // Replace with value from object or keep the pattern if not found
   });
 }
 
-export function replaceMustachePlaceholders(template, values) {
+export function replaceMustachePlaceholders(template: string, values: any) {
   // Regex to match the whole {{number_1}} pattern
   return template.replace(/\{\{(.*?)\}\}/g, (match, key) => {
     return values[key] || match; // Replace with value from object or keep the pattern if not found
@@ -57,7 +57,8 @@ export const getImageLLMModel = async (leadMagnet: LeadMagnet, promptInput: any,
       n: 1,
       // response_format: "b64_json",
     });
-    return response.data[0]?.url;
+    // @ts-ignore
+    return response?.data?.[0]?.url!;
   } else {
     throw new Error("LLM not found in configuration");
   }

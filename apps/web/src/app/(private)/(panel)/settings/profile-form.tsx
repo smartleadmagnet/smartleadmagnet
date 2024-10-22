@@ -1,15 +1,13 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { User } from "@smartleadmagnet/database";
 import { z } from "zod";
 import { updateUserInfo } from "@/actions/user";
 import Alert, { AlertType } from "@/components/Alerts";
-import { Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react";
 
-import { cn } from "@smartleadmagnet/ui/lib/utils";
 import toast from "react-hot-toast";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import {
@@ -53,9 +51,9 @@ export function ProfileForm(props: ProfileFormProps) {
 
   // This can come from your database or API.
   const defaultValues: Partial<ProfileFormValues> = {
-    bio: user.bio,
-    email: user.email,
-    username: user.name,
+    bio: user?.bio!,
+    email: user?.email!,
+    username: user?.name!,
   };
 
   const form = useForm<ProfileFormValues>({
@@ -65,12 +63,8 @@ export function ProfileForm(props: ProfileFormProps) {
   });
 
   function onSubmit(data: ProfileFormValues) {
-
     setLoading(true);
-    updateUserInfo(
-      data.bio,
-      data.username,
-    )
+    updateUserInfo(data.bio, data.username)
       .then(() => {
         toast.custom(<Alert type={AlertType.Success} content="Profile updated sucesfully!" />);
         setLoading(false);

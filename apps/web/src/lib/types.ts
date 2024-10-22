@@ -37,7 +37,7 @@ export enum PlanTier {
   CREDIT = "CREDIT",
 }
 
-export const getPlanName = (plan: string): string => {
+export const getPlanName = (plan?: string): string => {
   switch (plan) {
     case "ONE_TIME":
       return "One Time";

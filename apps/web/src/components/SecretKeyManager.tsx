@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Input } from "@smartleadmagnet/ui/components/ui/input";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { CheckIcon, CopyIcon, Eye, EyeOff, RefreshCw } from "lucide-react"; // Importing icons from lucide-react
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard.tsx";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import Spinner from "@smartleadmagnet/ui/components/Spinner";
 
 interface SecretKeyManagerProps {

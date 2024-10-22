@@ -152,7 +152,7 @@ export const getLeadMagnetUsageById = async (
     usedCount: number;
     createdAt: Date;
     status: string;
-  } | null;
+  };
 }> => {
   // Fetch LeadMagnetUsage records for the given leadMagnetId
   const usageRecords = await prisma.leadMagnetUsage.findMany({

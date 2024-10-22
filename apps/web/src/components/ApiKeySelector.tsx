@@ -23,7 +23,7 @@ import Link from "next/link";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 
 const SmartLeadMagnetKey = "SmartLeadMagnet";
-const defaultAPIKey = { id: SmartLeadMagnetKey, keyName: "Smart Lead Magnet Key" };
+const defaultAPIKey = { id: SmartLeadMagnetKey, keyName: "Smart Lead Magnet Key" } as ApiKey;
 
 const ApiKeySelector = () => {
   const { fetchApiKeys, updateSettingFormData, leadMagnet } = useBuilderContext();
@@ -61,10 +61,12 @@ const ApiKeySelector = () => {
     if (selectedKey) {
       try {
         if (selectedKey === SmartLeadMagnetKey) {
+          // @ts-ignore
           await updateSettingFormData({
             apiKeyId: null,
           }); // Save the selected key to the database
         } else {
+          // @ts-ignore
           await updateSettingFormData({
             apiKeyId: selectedKey,
           });
