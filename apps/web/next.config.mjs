@@ -27,8 +27,8 @@ const nextConfig = {
         destination: "https://silver-caribou-278976.hostingersite.com/wp-admin/:path*",
       },
       {
-        source: "/wp-json/aioseo/:path*",
-        destination: "https://silver-caribou-278976.hostingersite.com/wp-json/aioseo/:path*",
+        source: "/wp-json/:path*",
+        destination: "https://silver-caribou-278976.hostingersite.com/wp-json/:path*",
       },
       {
         source: "/blog",
