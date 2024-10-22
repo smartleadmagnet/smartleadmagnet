@@ -135,7 +135,7 @@ const ApiKeySelector = () => {
         </DialogContent>
       </Dialog>
 
-      <Button variant="ghost" className="border border-cyan-600" onClick={() => setModalOpen(true)}>
+      <Button variant="ghost" className="border text-cyan-500 border-cyan-500 hover:bg-cyan-600 hover:text-white" onClick={() => setModalOpen(true)}>
         Manage Your Keys
       </Button>
     </>

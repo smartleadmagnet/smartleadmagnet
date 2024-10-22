@@ -147,7 +147,7 @@ export default function AIForm({ user }: { user: any }) {
         )}
 
         {!preview && !processing && (
-          <Button className="mt-4 flex" onClick={onValidatePrompt}>
+          <Button className="mt-4 flex btn-primary hover:bg-cyan-600" onClick={onValidatePrompt}>
             Validate Prompt
           </Button>
         )}

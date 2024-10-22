@@ -7,7 +7,6 @@ import llm from "@/data/llm.json";
 import { LLMModel, LLMProvider } from "@/types/llm";
 import { BuilderSchemaForm } from "@/types/builder";
 import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
-import { useRouter } from "next/navigation";
 
 interface BuilderContextType {
   elementsList: any;
@@ -38,6 +37,7 @@ interface BuilderContextType {
   paymentRequired: boolean;
   onClosePaymentModal: () => void;
   generateLeadMagnetWithAI: (description: string) => void;
+  isPublsiing: boolean;
   onPublicAccessChange: (isPublic: boolean) => Promise<void>;
 }
 
@@ -114,6 +114,9 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
   children,
   leadMagnet,
 }) => {
+  //loading states
+  const [isPublsiing, setIsPublishing] = useState<boolean>(false);
+  const [isSavingSetting, setIsSavingSetting] = useState<boolean>(false);
   const [selectedLeadMagnet, setSelectedLeadMagnet] = useState<LeadMagnet>(leadMagnet);
   const [paymentRequired, setPaymentRequired] = useState<boolean>(false);
   const [creditRequired, setCreditRequired] = useState<boolean>(false);
@@ -139,12 +142,15 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
     };
   });
   const onPublishLead = async () => {
+    setIsPublishing(true);
     try {
       const leadResponse = await axios.post(`/api/lead/${leadMagnet.id}/publish`);
       setSelectedLeadMagnet(leadResponse?.data);
       setCreditRequired(false);
       setPaymentRequired(false);
+      setIsPublishing(false);
     } catch (e: unknown) {
+      setIsPublishing(false);
       const error = e as AxiosError<ErrorResponse>;
 
       // Check if the error response indicates credits are required
@@ -202,13 +208,29 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
   };
 
   const updateSettingFormData = async (form: BuilderSchemaForm) => {
+    toast({
+      variant: "destructive",
+      description: "Could not update lead magnet",
+      position: 'top right'
+
+    },
+
+  );
+  return;
+    setIsSavingSetting(true);
     try {
       await axios.post(`/api/lead/${leadMagnet.id}`, form);
+      setIsSavingSetting(false);
     } catch (e) {
+      setIsSavingSetting(false);
       toast({
         variant: "destructive",
         description: "Could not update lead magnet",
-      });
+        position: 'top'
+
+      },
+
+    );
     }
   };
 
@@ -356,6 +378,9 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         onClosePaymentModal,
         generateLeadMagnetWithAI,
         onPublicAccessChange,
+        isPublsiing,
+        isSavingSetting,
+
       }}
     >
       {children}

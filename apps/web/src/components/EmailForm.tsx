@@ -7,7 +7,8 @@ import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
 import axios from "axios";
 import { useBuilderContext } from "@/providers/BuilderProvider";
-import RichTextEditor from "./RichTextEditor"; // Import the new component
+import ReactQuill from "react-quill";
+import { Controller } from "react-hook-form";
 
 // Zod schema for form validation
 const emailSchema = z.object({
@@ -81,18 +82,32 @@ export default function AutomatedEmailForm() {
         </div>
 
         {/* Email Content Rich Text Editor */}
-        <RichTextEditor
-          control={control}
-          name="content"
-          placeholder="Enter email content"
-          errorMessage={errors.content?.message}
-          mentions={elementsList
-            .filter((item: any) => item.formElement)
-            .map((element: any) => ({
-              id: element.name,
-              name: `{{${element.name}}}`,
-            }))}
-        />
+         {/* Email Content Rich Text Editor */}
+         <div className="form-control mb-4 w-full">
+          <Label className="mb-[10px] block text-sm font-semibold">Email Content</Label>
+          <Controller
+            name="content"
+            control={control}
+            render={({ field }) => (
+              <ReactQuill
+                {...field}
+                theme="snow"
+                className="w-full"
+                placeholder="Enter email content"
+                modules={{
+                  toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ["bold", "italic", "underline", "strike"],
+                    [{ list: "ordered" }, { list: "bullet" }],
+                    ["link", "image"],
+                    ["clean"],
+                  ],
+                }}
+              />
+            )}
+          />
+          {errors.content && <span className="text-sm text-red-500">{errors.content.message}</span>}
+        </div>
 
         {/* Save Button */}
         <Button className="mt-4" type="submit">
