@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import stripe from "@/lib/stripe";
+import getStripe from "@/lib/stripe";
 import {
   createPayment,
   getCredit,
@@ -23,6 +23,7 @@ export async function POST(req: Request) {
   let event;
 
   try {
+    const stripe = getStripe();
     // Use the Stripe SDK and request info to verify this Webhook request actually came from Stripe
     event = stripe.webhooks.constructEvent(
       payload, // Stringify the request for the Stripe library

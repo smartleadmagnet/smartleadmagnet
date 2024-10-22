@@ -2,13 +2,14 @@
 
 import Stripe from "stripe";
 import pricingConfig from "@/lib/config/pricingConfig";
-import stripe from "@/lib/stripe";
+import getStripe from "@/lib/stripe";
 import { getSessionUser } from "@/services/user";
 import { getUserById, updateStripeCustomerId, updateSubscriptionDetailsForCancel } from "@smartleadmagnet/services";
 import { getUserInfo } from "@/actions/user";
 import { revalidatePath } from "next/cache";
 
 export async function createPaymentLink(customerId: string, priceId: string) {
+  const stripe = getStripe();
   const plan = pricingConfig.plans.find((plan) => plan.priceId === priceId);
   const mode = plan?.isSubscription ? "subscription" : "payment";
   const checkoutSessionParams: Stripe.Checkout.SessionCreateParams = {
@@ -29,6 +30,7 @@ export async function createPaymentLink(customerId: string, priceId: string) {
 }
 
 export async function createStripeCustomer({ name, email }: { email: string; name: string }) {
+  const stripe = getStripe();
   const customer = await stripe.customers.create({
     name,
     email,
@@ -38,17 +40,20 @@ export async function createStripeCustomer({ name, email }: { email: string; nam
 }
 
 export async function getCheckoutSession(sessionId: string) {
+  const stripe = getStripe();
   return stripe.checkout.sessions.retrieve(sessionId, {
     expand: ["line_items"],
   });
 }
 
 export async function getSubscription(subscriptionId: string) {
+  const stripe = getStripe();
   return stripe.subscriptions.retrieve(subscriptionId);
 }
 
 export async function cancelSubscription(subscriptionId: string) {
   try {
+    const stripe = getStripe();
     // Cancel the subscription on Stripe
     const canceledSubscription = await stripe.subscriptions.update(subscriptionId, {
       cancel_at_period_end: true, // Set to cancel at the end of the current period

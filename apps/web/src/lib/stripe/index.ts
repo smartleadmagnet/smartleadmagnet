@@ -1,5 +1,7 @@
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const getStripe = () => {
+  return new Stripe(process.env.STRIPE_SECRET_KEY!);
+};
 
-export default stripe;
+export default getStripe;
