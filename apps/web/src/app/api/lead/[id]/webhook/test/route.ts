@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/services/user";
-import { updateLeadMagnet } from "@smartleadmagnet/services";
 import { triggerWebhook } from "@/utils/webhook";
 
 export const dynamic = "force-dynamic"; // defaults to force-static

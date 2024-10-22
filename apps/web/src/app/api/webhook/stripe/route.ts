@@ -15,6 +15,8 @@ import prisma from "@smartleadmagnet/database";
 
 const stripeWebhookSecret = process.env.STRIPE_ENDPOINT_SECRET!;
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   const payload = await req.text();
   const signature = req.headers.get("stripe-signature");

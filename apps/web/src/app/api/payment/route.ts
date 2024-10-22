@@ -4,6 +4,8 @@ import pricingConfig from "@/lib/config/pricingConfig";
 import { getSessionUser } from "@/services/user";
 import { createPayment, getCredit, getUserById, upsetCredits, getPaymentBySessionId } from "@smartleadmagnet/services";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   const session_id = req.nextUrl.searchParams.get("session_id");
   const sessionUser = await getSessionUser();

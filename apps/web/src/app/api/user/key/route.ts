@@ -3,6 +3,8 @@ import { updateUserKey } from "@smartleadmagnet/services";
 import { getSessionUser } from "@/services/user";
 import { uuid } from "next-s3-upload";
 
+export const dynamic = "force-dynamic";
+
 export async function POST() {
   try {
     const user = await getSessionUser();

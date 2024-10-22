@@ -7,6 +7,8 @@ import Day2 from "@/emails/day-2";
 import Day3 from "@/emails/day-3";
 import Day4 from "@/emails/day-4";
 
+export const dynamic = "force-dynamic";
+
 const { convert } = require("html-to-text");
 
 async function send(user: User, emailType: string, subject: string, template: any) {

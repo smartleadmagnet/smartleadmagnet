@@ -1,6 +1,8 @@
 import { POST } from "next-s3-upload/route";
 import { v4 } from "uuid";
 
+export const dynamic = "force-dynamic";
+
 const getFileExtension = (filename: string) => filename.split(".").pop();
 
 // @ts-ignore

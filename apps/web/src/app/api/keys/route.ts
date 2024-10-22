@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createApiKey, getApiKeysByUserId, getApiKeysByUserIdWithoutKey } from "@smartleadmagnet/services";
+import { createApiKey, getApiKeysByUserIdWithoutKey } from "@smartleadmagnet/services";
 import { getSessionUser } from "@/services/user";
+
+export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {

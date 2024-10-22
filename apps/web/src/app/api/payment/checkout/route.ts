@@ -3,6 +3,8 @@ import { createPaymentLink, createStripeCustomer } from "@/actions/stripe";
 import { getSessionUser } from "@/services/user";
 import { getUserById, updateStripeCustomerId } from "@smartleadmagnet/services";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   // get query params from the URL
   const priceId = req.nextUrl.searchParams.get("priceId");
