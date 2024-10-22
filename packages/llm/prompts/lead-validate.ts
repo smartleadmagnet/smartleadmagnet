@@ -15,7 +15,7 @@ export const validateLeadWithInput = async ({
   }
 
   const promptData = {};
-  const finalPayload = (leadMagnet?.components as Array<any>)?.reduce((acc, element) => {
+  const finalPayload = (leadMagnet?.components as Array<any>)?.reduce((acc: any, element: any) => {
     const promptInputElement = promptInput[element.name];
     if (promptInputElement) {
       if (element.type === "image" || element.type === "file") {
