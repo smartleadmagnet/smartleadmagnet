@@ -20,21 +20,17 @@ const AccordionSection = () => {
   ];
 
   return (
-    <div className="bg-gray-100 py-20">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row">
-          <div className="mb-8 md:mb-0 md:w-1/2 md:p-4">
-            {/* Right column content */}
-            <h2 className="mb-4 text-3xl font-bold md:text-5xl">Don’t Miss Out on Valuable Leads</h2>
-            <p className="text-xl text-gray-700 md:text-2xl">
-              With SmartLeadMagnet.com, you can easily build and deploy lead magnets that work. Say goodbye to slow,
-              manual lead generation efforts, and start using our AI-powered platform to grow your audience and boost
-              sales effortlessly.
-            </p>
-          </div>
-          <div className="md:w-1/2">
-            <Accordion faqs={faqs} />
-          </div>
+    <div className="bg-gradient-to-r from-cyan-500 to-blue-400 py-16">
+      <div className="max-w-[1000px] mx-auto px-4">
+        <div className="flex flex-col">
+          {/* Title Section */}
+          <h2 className="mb-4 text-3xl font-bold md:text-5xl text-center text-white">Frequently Asked Questions</h2>
+          <p className="text-xl text-gray-700 md:text-2xl mb-8 max-w-[600px] mx-auto text-center text-white">
+          Explore our FAQs to learn more about how SmartLead Magnet can transform your website to lead genration machine.
+          </p>
+          
+          {/* FAQ Section */}
+          <Accordion faqs={faqs} />
         </div>
       </div>
     </div>

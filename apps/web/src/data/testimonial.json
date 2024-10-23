@@ -1,0 +1,79 @@
+[
+  {
+    "rating": 5,
+    "imageSrc": "/images/users/1.png",
+    "description": "SmartLeadMagnet has completely transformed my approach to lead generation. The intuitive features allow me to create effective lead magnets effortlessly. I highly recommend it for anyone serious about growing their audience!",
+    "name": "Sarah T.",
+    "designation": "Marketing Manager"
+  },
+  {
+    "rating": 5,
+    "imageSrc": "/images/users/2.png",
+    "description": "As a busy professional, SmartLeadMagnet has simplified my lead generation process. The automation features save me hours, allowing me to focus on converting leads into clients!",
+    "name": "Michael K.",
+    "designation": "Consultant"
+  },
+  {
+    "rating": 5,
+    "imageSrc": "/images/users/3.png",
+    "description": "The customizable templates in SmartLeadMagnet are amazing! I've been able to create lead magnets that perfectly align with my brand and have significantly increased my lead conversion rates.",
+    "name": "Emily R.",
+    "designation": "Sales Executive"
+  },
+  {
+    "rating": 5,
+    "imageSrc": "/images/users/4.png",
+    "description": "SmartLeadMagnet's analytics dashboard provides valuable insights into my campaigns. I've seen a marked improvement in my lead quality and engagement since using it!",
+    "name": "David L.",
+    "designation": "Entrepreneur"
+  },
+  {
+    "rating": 5,
+    "imageSrc": "/images/users/5.png",
+    "description": "The integration capabilities of SmartLeadMagnet with my existing CRM have been a game-changer. I can seamlessly track leads and nurture them through the sales funnel!",
+    "name": "Isabelle D.",
+    "designation": "Global Account Manager"
+  },
+  {
+    "rating": 5,
+    "imageSrc": "/images/users/6.png",
+    "description": "I was hesitant to use another lead generation tool, but SmartLeadMagnet has exceeded my expectations. The user-friendly interface makes it easy to create and manage lead magnets!",
+    "name": "Alex W.",
+    "designation": "Business Development Executive"
+  },
+  {
+    "rating": 5,
+    "imageSrc": "/images/users/7.png",
+    "description": "Thanks to SmartLeadMagnet, my lead generation has become more efficient and effective. The automated follow-up sequences have helped me engage with leads consistently!",
+    "name": "Jessica P.",
+    "designation": "Job Seeker"
+  },
+  {
+    "rating": 5,
+    "imageSrc": "/images/users/8.png",
+    "description": "As a busy consultant, SmartLeadMagnet has streamlined my lead engagement efforts. The platform allows me to manage everything in one place, saving me countless hours!",
+    "name": "Robert S.",
+    "designation": "Consultant"
+  },
+  {
+    "rating": 5,
+    "imageSrc": "/images/users/9.png",
+    "description": "I've tried various lead generation tools, but SmartLeadMagnet stands out for its intelligent features. The leads I generate feel more authentic and engaged with my content!",
+    "name": "Sophia N.",
+    "designation": "Influencer"
+  },
+  {
+    "rating": 5,
+    "imageSrc": "/images/users/10.png",
+    "description": "SmartLeadMagnet has greatly improved our company's lead generation efforts. The engaging content it helps create has significantly boosted our visibility and customer engagement.",
+    "name": "James H.",
+    "designation": "Social Media Manager"
+  },
+  {
+    "rating": 5,
+    "imageSrc": "/images/users/12.png",
+    "description": "SmartLeadMagnet's context-aware suggestions for lead magnets have transformed how I interact with potential clients. I now generate leads that convert more effectively!",
+    "name": "Thomas B.",
+    "designation": "Sales Executive"
+  }
+]
