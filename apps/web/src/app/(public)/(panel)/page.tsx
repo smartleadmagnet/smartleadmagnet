@@ -25,7 +25,7 @@ export default async function Home() {
   return (
     <div className="flex size-full  flex-col">
       <HeroSection />
-      <BrandSection />
+      {/*<BrandSection />*/}
       <FeatureSection />
       {/* <ImageContentSection /> */}
       <ContentImageSection />
