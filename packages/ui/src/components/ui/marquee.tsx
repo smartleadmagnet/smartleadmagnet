@@ -1,4 +1,4 @@
-import { cn } from "@smartleadmagnet/ui/lib/utils";
+import { cn } from "../../lib/utils";
 
 interface MarqueeProps {
   className?: string;
@@ -28,7 +28,7 @@ export default function Marquee({
           "flex-row": !vertical,
           "flex-col": vertical,
         },
-        className,
+        className
       )}
     >
       {Array(repeat)
