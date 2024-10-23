@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.5.3",
+    "@next/third-parties": "^15.0.1",
     "@react-email/components": "^0.0.25",
     "@react-email/font": "^0.0.8",
     "@sentry/nextjs": "^8",
