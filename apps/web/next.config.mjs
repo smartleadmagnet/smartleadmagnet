@@ -16,8 +16,7 @@ const nextConfig = {
       // },
       {
         source: "/blog/:slug*",
-        destination: "https://silver-caribou-278976.hostingersite.com/blog/:slug*",
-        permanent: false
+        destination: "https://silver-caribou-278976.hostingersite.com/blog/:slug*"
       },
     ];
   },
