@@ -8,22 +8,8 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  trailingSlash: true,
+  // trailingSlash: true,
   // crossOrigin: 'anonymous',
-  async headers() {
-    return [
-      {
-        // matching all API routes
-        source: "/:path*",
-        headers: [
-          { key: "Access-Control-Allow-Credentials", value: "true" },
-          { key: "Access-Control-Allow-Origin", value: "*" }, // replace this your actual origin
-          { key: "Access-Control-Allow-Methods", value: "GET,DELETE,PATCH,POST,PUT" },
-          { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" },
-        ]
-      }
-    ]
-  },
   async rewrites() {
     return {
       beforeFiles: [
@@ -35,31 +21,7 @@ const nextConfig = {
           source: '/blog/:path*/',
           destination: 'https://silver-caribou-278976.hostingersite.com/blog/:path*/',
         },
-        {
-          source: "/wp-content/:slug*",
-          destination: "https://silver-caribou-278976.hostingersite.com/wp-content/:slug*"
-        },
-        {
-          source: "/wp-includes/:slug*",
-          destination: "https://silver-caribou-278976.hostingersite.com/wp-includes/:slug*"
-        },
-        {
-          source: "/wp-json/:slug*",
-          destination: "https://silver-caribou-278976.hostingersite.com/wp-json/:slug*"
-        },
-        {
-          source: "/wp-admin/:slug*",
-          destination: "https://silver-caribou-278976.hostingersite.com/wp-admin/:slug*"
-        },
-      ],
-      fallback: [
-        // These rewrites are checked after both pages/public files
-        // and dynamic routes are checked
-        {
-          source: '/:slug*',
-          destination: `https://silver-caribou-278976.hostingersite.com/:slug*`,
-        },
-      ],
+      ]
     };
   },
   images: {
