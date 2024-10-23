@@ -8,16 +8,20 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  skipTrailingSlashRedirect: true,
+  trailingSlash: true,
   async rewrites() {
     return [
       {
-        source: "/wp-content/:slug*",
-        destination: "https://silver-caribou-278976.hostingersite.com/wp-content/:slug*"
+        source: '/blog/',
+        destination: 'https://silver-caribou-278976.hostingersite.com/blog/',
       },
       {
-        source: "/:slug.php",
-        destination: "https://silver-caribou-278976.hostingersite.com/:slug.php"
+        source: '/blog/:path*/',
+        destination: 'https://silver-caribou-278976.hostingersite.com/blog/:path*/',
+      },
+      {
+        source: "/wp-content/:slug*",
+        destination: "https://silver-caribou-278976.hostingersite.com/wp-content/:slug*"
       },
       {
         source: "/wp-includes/:slug*",
@@ -30,10 +34,6 @@ const nextConfig = {
       {
         source: "/wp-admin/:slug*",
         destination: "https://silver-caribou-278976.hostingersite.com/wp-admin/:slug*"
-      },
-      {
-        source: "/blog/:slug*",
-        destination: "https://silver-caribou-278976.hostingersite.com/blog/:slug*"
       },
     ];
   },
