@@ -57,32 +57,32 @@ const VideoTestimonial = ({ videoSrc, title }: { videoSrc: string; title: string
 export default function ClientSection() {
   return (
     <>
-      <div className="bg-gray-900 py-16">
-        <div className="container max-w-[1000px] ">
-          <h2 className="mb-6 text-center text-5xl font-bold text-white">Some kind words from our clients</h2>
-          <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-3">
-            {/* Replace these video URLs with actual video sources */}
-            <VideoTestimonial
-              videoSrc="/videos/testimonial1.mp4"
-              title="Significant change in vistor after SmartLead Magnet"
-            />
-            <VideoTestimonial videoSrc="/videos/testimonial2.mp4" title="100 plus new client after SmartLead Magnet" />
-            <VideoTestimonial
-              videoSrc="/videos/testimonial3.mp4"
-              title="50% increase in lead conversion after SmartLead Magnet"
-            />
-            <VideoTestimonial
-              videoSrc="/videos/testimonial1.mp4"
-              title="Significant change in vistor after SmartLead Magnet"
-            />
-            <VideoTestimonial videoSrc="/videos/testimonial2.mp4" title="100 plus new client after SmartLead Magnet" />
-            <VideoTestimonial
-              videoSrc="/videos/testimonial3.mp4"
-              title="50% increase in lead conversion after SmartLead Magnet"
-            />
-          </div>
-        </div>
-      </div>
+      {/*<div className="bg-gray-900 py-16">*/}
+      {/*  <div className="container max-w-[1000px] ">*/}
+      {/*    <h2 className="mb-6 text-center text-5xl font-bold text-white">Some kind words from our clients</h2>*/}
+      {/*    <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-3">*/}
+      {/*      /!* Replace these video URLs with actual video sources *!/*/}
+      {/*      <VideoTestimonial*/}
+      {/*        videoSrc="/videos/testimonial1.mp4"*/}
+      {/*        title="Significant change in vistor after SmartLead Magnet"*/}
+      {/*      />*/}
+      {/*      <VideoTestimonial videoSrc="/videos/testimonial2.mp4" title="100 plus new client after SmartLead Magnet" />*/}
+      {/*      <VideoTestimonial*/}
+      {/*        videoSrc="/videos/testimonial3.mp4"*/}
+      {/*        title="50% increase in lead conversion after SmartLead Magnet"*/}
+      {/*      />*/}
+      {/*      <VideoTestimonial*/}
+      {/*        videoSrc="/videos/testimonial1.mp4"*/}
+      {/*        title="Significant change in vistor after SmartLead Magnet"*/}
+      {/*      />*/}
+      {/*      <VideoTestimonial videoSrc="/videos/testimonial2.mp4" title="100 plus new client after SmartLead Magnet" />*/}
+      {/*      <VideoTestimonial*/}
+      {/*        videoSrc="/videos/testimonial3.mp4"*/}
+      {/*        title="50% increase in lead conversion after SmartLead Magnet"*/}
+      {/*      />*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
       <div className="bg-background relative flex flex-col items-center justify-center overflow-hidden rounded-lg border py-16 md:shadow-xl">
         {/* Title */}
         <h2 className="mb-6 text-center text-5xl font-bold text-gray-900">Our Clients Thoughts on Us</h2>
@@ -96,7 +96,7 @@ export default function ClientSection() {
               <ReviewCard key={index} {...review} />
             ))}
           </Marquee>
-          <Marquee reverse pauseOnHover className="[--duration:20s]">
+          <Marquee reverse pauseOnHover className="[--duration:50s]">
             {secondRow.map((review, index) => (
               <ReviewCard key={index} {...review} />
             ))}
