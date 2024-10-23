@@ -28,25 +28,7 @@ const pricingConfig: IPricing = {
   description: "Choose the best plan to start creating high-converting lead magnets with AI.",
   defaultCurrency: "USD",
   plans: [
-    {
-      name: "Lifetime Plan",
-      originalPrice: 299,
-      discountPrice: 119, // Discounted price
-      credits: 250,
-      currency: "USD",
-      isSubscription: false,
-      description: "Lifetime access with 250 AI credits.",
-      planTier: PlanTier.LIFE_TIME,
-      features: [
-        "Two dedicated social media promotion campaigns across major platforms once",
-        "Guaranteed traffic boost of 3,000-6,000 visitors in the first month",
-        "250 AI Credits",
-        "Lifetime Access",
-        "Unlimited Lead Magnets",
-        "AI-Powered Personalization",
-      ],
-      priceId: process.env.STRIPE_SMARTLEADMAGNET_LIFE_TIME!,
-    },
+    
     {
       name: "One-Time Plan",
       originalPrice: 199,
@@ -67,7 +49,26 @@ const pricingConfig: IPricing = {
       priceId: process.env.STRIPE_SMARTLEADMAGNET_ONE_TIME!,
     },
     {
-      name: "Monthly Subscription",
+      name: "Lifetime Plan",
+      originalPrice: 299,
+      discountPrice: 119, // Discounted price
+      credits: 250,
+      currency: "USD",
+      isSubscription: false,
+      description: "Lifetime access with 250 AI credits.",
+      planTier: PlanTier.LIFE_TIME,
+      features: [
+        "Two dedicated social media promotion campaigns across major platforms once",
+        "Guaranteed traffic boost of 3,000-6,000 visitors in the first month",
+        "250 AI Credits",
+        "Lifetime Access",
+        "Unlimited Lead Magnets",
+        "AI-Powered Personalization",
+      ],
+      priceId: process.env.STRIPE_SMARTLEADMAGNET_LIFE_TIME!,
+    },
+    {
+      name: "Monthly Plan",
       originalPrice: 79,
       discountPrice: 49, // Discounted price
       credits: 250,
