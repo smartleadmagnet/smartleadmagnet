@@ -37,7 +37,14 @@ const pricingConfig: IPricing = {
       isSubscription: false,
       description: "Lifetime access with 250 AI credits.",
       planTier: PlanTier.LIFE_TIME,
-      features: ["250 AI Credits", "Lifetime Access", "Unlimited Lead Magnets", "AI-Powered Personalization"],
+      features: [
+        "Two dedicated social media promotion campaigns across major platforms once",
+        "Guaranteed traffic boost of 3,000-6,000 visitors in the first month",
+        "250 AI Credits",
+        "Lifetime Access",
+        "Unlimited Lead Magnets",
+        "AI-Powered Personalization",
+      ],
       priceId: process.env.STRIPE_SMARTLEADMAGNET_LIFE_TIME!,
     },
     {
@@ -49,7 +56,14 @@ const pricingConfig: IPricing = {
       isSubscription: false,
       description: "One-time payment with 100 AI credits, valid for 1 year.",
       planTier: PlanTier.ONE_TIME,
-      features: ["100 AI Credits", "Valid for 1 Year", "Access to Lead Magnet Builder", "AI-Powered Personalization"],
+      features: [
+        "Two dedicated social media promotion campaigns across major platforms once",
+        "Guaranteed traffic boost of 3,000-6,000 visitors in the first month",
+        "100 AI Credits",
+        "Valid for 1 Year",
+        "Access to Lead Magnet Builder",
+        "AI-Powered Personalization",
+      ],
       priceId: process.env.STRIPE_SMARTLEADMAGNET_ONE_TIME!,
     },
     {
@@ -62,6 +76,8 @@ const pricingConfig: IPricing = {
       planTier: PlanTier.SUBSCRIPTION,
       description: "Monthly subscription with 250 AI credits.",
       features: [
+        "Two dedicated social media promotion campaigns across major platforms every month",
+        "Guaranteed traffic boost of 3,000-6,000 visitors in the first month",
         "250 AI Credits per month",
         "Ongoing Access to AI Features",
         "Monthly Lead Magnet Creation",
