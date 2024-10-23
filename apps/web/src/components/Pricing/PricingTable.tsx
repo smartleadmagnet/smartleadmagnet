@@ -32,7 +32,9 @@ const PricingTable: React.FC<PricingProps> = ({ plans }) => {
               </div>
               <PricingCard plan={plan} />
               <ul className="mb-6 space-y-2 text-gray-300">
-                {plan.features?.map((feature) => <FeatureLine title={feature} key={plan.name + feature} />)}
+                {plan.features?.map((feature) => (
+                  <FeatureLine title={feature.name} hint={feature.hint} key={plan.name + feature.name} />
+                ))}
               </ul>
 
               <ButtonCheckout

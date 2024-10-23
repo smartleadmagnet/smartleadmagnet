@@ -10,7 +10,7 @@ export type PricingPlan = {
   isSubscription: boolean;
   description?: string;
   planTier: PlanTier; // For one-time or lifetime, this could be "one-time" or "lifetime"
-  features: string[];
+  features: { name: string; hint: string }[]; // Changed feature to name and hint
   priceId: string;
 };
 
@@ -28,7 +28,6 @@ const pricingConfig: IPricing = {
   description: "Choose the best plan to start creating high-converting lead magnets with AI.",
   defaultCurrency: "USD",
   plans: [
-    
     {
       name: "One-Time Plan",
       originalPrice: 199,
@@ -39,12 +38,18 @@ const pricingConfig: IPricing = {
       description: "One-time payment with 100 AI credits, valid for 1 year.",
       planTier: PlanTier.ONE_TIME,
       features: [
-        "Two dedicated social media promotion campaigns across major platforms once",
-        "Guaranteed traffic boost of 3,000-6,000 visitors in the first month",
-        "100 AI Credits",
-        "Valid for 1 Year",
-        "Access to Lead Magnet Builder",
-        "AI-Powered Personalization",
+        {
+          name: "Two dedicated social media promotion campaigns across major platforms once",
+          hint: "Our marketing team will promote your product, sharing it on multiple social media channels.",
+        },
+        {
+          name: "Guaranteed traffic boost of 3,000-6,000 visitors in the first month",
+          hint: "Our marketing team will try to bring organic social media traffic to your website.",
+        },
+        { name: "100 AI Credits", hint: "You can buy extra credits later too." },
+        { name: "Valid for 1 Year", hint: "" },
+        { name: "Access to Lead Magnet Builder", hint: "" },
+        { name: "AI-Powered Personalization", hint: "" },
       ],
       priceId: process.env.STRIPE_SMARTLEADMAGNET_ONE_TIME!,
     },
@@ -58,12 +63,18 @@ const pricingConfig: IPricing = {
       description: "Lifetime access with 250 AI credits.",
       planTier: PlanTier.LIFE_TIME,
       features: [
-        "Two dedicated social media promotion campaigns across major platforms once",
-        "Guaranteed traffic boost of 3,000-6,000 visitors in the first month",
-        "250 AI Credits",
-        "Lifetime Access",
-        "Unlimited Lead Magnets",
-        "AI-Powered Personalization",
+        {
+          name: "Two dedicated social media promotion campaigns across major platforms once",
+          hint: "Our marketing team will promote your product, sharing it on multiple social media channels.",
+        },
+        {
+          name: "Guaranteed traffic boost of 3,000-6,000 visitors in the first month",
+          hint: "Our marketing team will try to bring organic social media traffic to your website.",
+        },
+        { name: "250 AI Credits", hint: "You can buy extra credits later too." },
+        { name: "Lifetime Access", hint: "" },
+        { name: "Unlimited Lead Magnets", hint: "" },
+        { name: "AI-Powered Personalization", hint: "" },
       ],
       priceId: process.env.STRIPE_SMARTLEADMAGNET_LIFE_TIME!,
     },
@@ -77,16 +88,21 @@ const pricingConfig: IPricing = {
       planTier: PlanTier.SUBSCRIPTION,
       description: "Monthly subscription with 250 AI credits.",
       features: [
-        "Two dedicated social media promotion campaigns across major platforms every month",
-        "Guaranteed traffic boost of 3,000-6,000 visitors in the first month",
-        "250 AI Credits per month",
-        "Ongoing Access to AI Features",
-        "Monthly Lead Magnet Creation",
-        "AI-Powered Personalization",
+        {
+          name: "Two dedicated social media promotion campaigns across major platforms every month",
+          hint: "Our marketing team will promote your product, sharing it on multiple social media channels.",
+        },
+        {
+          name: "Guaranteed traffic boost of 3,000-6,000 visitors in the first month",
+          hint: "Our marketing team will try to bring organic social media traffic to your website.",
+        },
+        { name: "250 AI Credits per month", hint: "You can buy extra credits later too." },
+        { name: "Ongoing Access to AI Features", hint: "" },
+        { name: "Monthly Lead Magnet Creation", hint: "" },
+        { name: "AI-Powered Personalization", hint: "" },
       ],
       priceId: process.env.STRIPE_SMARTLEADMAGNET_MONTHLY_SUBSCRIPTION!,
     },
-
     {
       name: "Credit 250",
       originalPrice: 39,
