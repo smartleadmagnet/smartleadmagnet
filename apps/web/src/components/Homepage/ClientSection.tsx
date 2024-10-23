@@ -1,5 +1,5 @@
 import React from "react";
-import Marquee from "@smartleadmagnet/ui/components/ui/Marquee";
+import Marquee from "@smartleadmagnet/ui/components/ui/marquee";
 import testimonial from "@/data/testimonial.json";
 import Image from "next/image";
 
@@ -11,7 +11,7 @@ const ReviewCard = ({
   rating,
   name,
   designation,
-  description
+  description,
 }: {
   imageSrc: string;
   rating: number;
@@ -31,18 +31,8 @@ const ReviewCard = ({
               <span className="text-gray-500">· 2h</span>
             </div>
             <button className="text-gray-500 hover:text-gray-700">
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 12h.01M12 12h.01M18 12h.01"
-                />
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 12h.01M12 12h.01M18 12h.01" />
               </svg>
             </button>
           </div>
@@ -53,17 +43,13 @@ const ReviewCard = ({
   );
 };
 
-const VideoTestimonial = ({ videoSrc,title }: { videoSrc: string,title:string }) => {
+const VideoTestimonial = ({ videoSrc, title }: { videoSrc: string; title: string }) => {
   return (
-    <div className="mx-auto mb-4 rounded-lg overflow-hidden max-w-[300px]">
-      <video
-        className="w-full h-auto aspect-video"
-        controls
-        src={videoSrc}
-      >
+    <div className="mx-auto mb-4 max-w-[300px] overflow-hidden rounded-lg">
+      <video className="aspect-video h-auto w-full" controls src={videoSrc}>
         Your browser does not support the video tag.
       </video>
-      <h3 className="text-xl text-center mt-5 text-white">{title}</h3>
+      <h3 className="mt-5 text-center text-xl text-white">{title}</h3>
     </div>
   );
 };
@@ -71,52 +57,55 @@ const VideoTestimonial = ({ videoSrc,title }: { videoSrc: string,title:string })
 export default function ClientSection() {
   return (
     <>
-    <div className="bg-gray-900 py-16">
-    <div className="container max-w-[1000px] ">
-    <h2 className="mb-6 text-5xl font-bold text-center text-white">
-        Some kind words from our clients
-      </h2>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-16">
-        {/* Replace these video URLs with actual video sources */}
-        <VideoTestimonial videoSrc="/videos/testimonial1.mp4" title="Significant change in vistor after SmartLead Magnet" />
-        <VideoTestimonial videoSrc="/videos/testimonial2.mp4" title="100 plus new client after SmartLead Magnet" />
-        <VideoTestimonial videoSrc="/videos/testimonial3.mp4" title="50% increase in lead conversion after SmartLead Magnet" />
-        <VideoTestimonial videoSrc="/videos/testimonial1.mp4" title="Significant change in vistor after SmartLead Magnet" />
-        <VideoTestimonial videoSrc="/videos/testimonial2.mp4" title="100 plus new client after SmartLead Magnet" />
-        <VideoTestimonial videoSrc="/videos/testimonial3.mp4" title="50% increase in lead conversion after SmartLead Magnet" />
-        
+      <div className="bg-gray-900 py-16">
+        <div className="container max-w-[1000px] ">
+          <h2 className="mb-6 text-center text-5xl font-bold text-white">Some kind words from our clients</h2>
+          <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {/* Replace these video URLs with actual video sources */}
+            <VideoTestimonial
+              videoSrc="/videos/testimonial1.mp4"
+              title="Significant change in vistor after SmartLead Magnet"
+            />
+            <VideoTestimonial videoSrc="/videos/testimonial2.mp4" title="100 plus new client after SmartLead Magnet" />
+            <VideoTestimonial
+              videoSrc="/videos/testimonial3.mp4"
+              title="50% increase in lead conversion after SmartLead Magnet"
+            />
+            <VideoTestimonial
+              videoSrc="/videos/testimonial1.mp4"
+              title="Significant change in vistor after SmartLead Magnet"
+            />
+            <VideoTestimonial videoSrc="/videos/testimonial2.mp4" title="100 plus new client after SmartLead Magnet" />
+            <VideoTestimonial
+              videoSrc="/videos/testimonial3.mp4"
+              title="50% increase in lead conversion after SmartLead Magnet"
+            />
+          </div>
+        </div>
       </div>
-      </div>
-      </div>
-    <div className="bg-background relative flex flex-col items-center justify-center overflow-hidden rounded-lg border md:shadow-xl py-16">
-      {/* Title */}
-      <h2 className="mb-6 text-5xl font-bold text-center text-gray-900">
-        Our Clients Thoughts on Us
-      </h2>
+      <div className="bg-background relative flex flex-col items-center justify-center overflow-hidden rounded-lg border py-16 md:shadow-xl">
+        {/* Title */}
+        <h2 className="mb-6 text-center text-5xl font-bold text-gray-900">Our Clients Thoughts on Us</h2>
 
-      {/* Video Testimonials */}
-      
-    <div className="relative">
-      {/* Marquee for text testimonials */}
-      <Marquee pauseOnHover className="[--duration:20s]">
-        {firstRow.map((review, index) => (
-          <ReviewCard key={index} {...review} />
-        ))}
-      </Marquee>
-      <Marquee reverse pauseOnHover className="[--duration:20s]">
-        {secondRow.map((review, index) => (
-          <ReviewCard key={index} {...review} />
-        ))}
-      </Marquee>
+        {/* Video Testimonials */}
 
-      <div className="dark:from-background pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white"></div>
-      <div className="dark:from-background pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white"></div>
+        <div className="relative">
+          {/* Marquee for text testimonials */}
+          <Marquee pauseOnHover className="[--duration:20s]">
+            {firstRow.map((review, index) => (
+              <ReviewCard key={index} {...review} />
+            ))}
+          </Marquee>
+          <Marquee reverse pauseOnHover className="[--duration:20s]">
+            {secondRow.map((review, index) => (
+              <ReviewCard key={index} {...review} />
+            ))}
+          </Marquee>
+
+          <div className="dark:from-background pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white"></div>
+          <div className="dark:from-background pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white"></div>
+        </div>
       </div>
-      
-    </div>
-    
     </>
-
-
   );
 }
