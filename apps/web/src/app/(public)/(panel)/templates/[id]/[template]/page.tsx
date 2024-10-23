@@ -29,6 +29,10 @@ export default async function Page({ params }: { params: { id: string; template:
     redirect(`/builder/${lead?.id!}`);
   };
 
+  if (!leadMagnet) {
+    return redirect("/templates/all");
+  }
+
   return (
     <>
       <div className="container mx-auto mb-10 px-4 py-10">
