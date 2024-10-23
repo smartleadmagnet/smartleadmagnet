@@ -1,4 +1,4 @@
-import {withSentryConfig} from "@sentry/nextjs";
+// import {withSentryConfig} from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
 import {setupDevPlatform} from "@cloudflare/next-on-pages/next-dev";
 
@@ -38,32 +38,42 @@ const nextConfig = {
     ];
   },
   async rewrites() {
-    return [
-      {
-        source: '/blog/',
-        destination: 'https://silver-caribou-278976.hostingersite.com/blog/',
-      },
-      {
-        source: '/blog/:path*/',
-        destination: 'https://silver-caribou-278976.hostingersite.com/blog/:path*/',
-      },
-      {
-        source: "/wp-content/:slug*",
-        destination: "https://silver-caribou-278976.hostingersite.com/wp-content/:slug*"
-      },
-      {
-        source: "/wp-includes/:slug*",
-        destination: "https://silver-caribou-278976.hostingersite.com/wp-includes/:slug*"
-      },
-      {
-        source: "/wp-json/:slug*",
-        destination: "https://silver-caribou-278976.hostingersite.com/wp-json/:slug*"
-      },
-      {
-        source: "/wp-admin/:slug*",
-        destination: "https://silver-caribou-278976.hostingersite.com/wp-admin/:slug*"
-      },
-    ];
+    return {
+      beforeFiles: [
+        {
+          source: '/blog/',
+          destination: 'https://silver-caribou-278976.hostingersite.com/blog/',
+        },
+        {
+          source: '/blog/:path*/',
+          destination: 'https://silver-caribou-278976.hostingersite.com/blog/:path*/',
+        },
+        {
+          source: "/wp-content/:slug*",
+          destination: "https://silver-caribou-278976.hostingersite.com/wp-content/:slug*"
+        },
+        {
+          source: "/wp-includes/:slug*",
+          destination: "https://silver-caribou-278976.hostingersite.com/wp-includes/:slug*"
+        },
+        {
+          source: "/wp-json/:slug*",
+          destination: "https://silver-caribou-278976.hostingersite.com/wp-json/:slug*"
+        },
+        {
+          source: "/wp-admin/:slug*",
+          destination: "https://silver-caribou-278976.hostingersite.com/wp-admin/:slug*"
+        },
+      ],
+      fallback: [
+        // These rewrites are checked after both pages/public files
+        // and dynamic routes are checked
+        {
+          source: '/:slug*',
+          destination: `https://silver-caribou-278976.hostingersite.com/:slug*`,
+        },
+      ],
+    };
   },
   images: {
     remotePatterns: [
@@ -143,9 +153,9 @@ const nextConfig = {
   },
 };
 
-if (process.env.NODE_ENV === "development") {
-  await setupDevPlatform();
-}
+// if (process.env.NODE_ENV === "development") {
+//   await setupDevPlatform();
+// }
 
 export default withSentryConfig(nextConfig, {
   // For all available options, see:
