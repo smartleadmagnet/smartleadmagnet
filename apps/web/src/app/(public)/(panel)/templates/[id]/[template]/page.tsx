@@ -7,18 +7,18 @@ import BuilderElementPreview from "@/components/Share";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { AiOutlineCopy } from "react-icons/ai";
 import { ImEmbed2 } from "react-icons/im";
-import { cloneLead, createLead } from "@/actions/lead-magnet";
+import { cloneLead, createLead, getBySlug } from "@/actions/lead-magnet";
 import { IoIosPeople } from "react-icons/io";
 import { redirect } from "next/navigation";
 
 export default async function Page({ params }: { params: { id: string; template: string } }) {
   const { template } = params;
-  const leadMagnet = await getLeadBySlug(template);
+  const leadMagnet = await getBySlug(template);
 
   const onClone = async () => {
     "use server";
 
-    const lead = await cloneLead(leadMagnet.id);
+    const lead = await cloneLead(leadMagnet?.id);
 
     redirect(`/builder/${lead?.id!}`);
   };
@@ -41,8 +41,8 @@ export default async function Page({ params }: { params: { id: string; template:
             </div>
           </div>
           <div className="p-8 md:w-1/2">
-            <h1 className="mb-4 text-3xl font-bold text-gray-800">{leadMagnet.name}</h1>
-            {leadMagnet.description && (
+            <h1 className="mb-4 text-3xl font-bold text-gray-800">{leadMagnet?.name}</h1>
+            {leadMagnet?.description && (
               <>
                 <div
                   className="mx-auto mb-2 max-w-4xl text-gray-600"

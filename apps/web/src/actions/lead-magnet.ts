@@ -1,6 +1,14 @@
 "use server";
 
-import { createLeadMagnet, getLeadMagnetById, getLeadMagnetsByUser,deleteLeadMagnet,copyLeadMagnet,getLeadMagnetUsageById } from "@smartleadmagnet/services";
+import {
+  copyLeadMagnet,
+  createLeadMagnet,
+  deleteLeadMagnet,
+  getLeadBySlug,
+  getLeadMagnetById,
+  getLeadMagnetsByUser,
+  getLeadMagnetUsageById,
+} from "@smartleadmagnet/services";
 import { adjectives, Config, names, starWars, uniqueNamesGenerator } from "unique-names-generator";
 import { getSessionUser } from "@/services/user";
 import { LeadMagnet } from "@smartleadmagnet/database";
@@ -28,11 +36,11 @@ export async function createLead(): Promise<LeadMagnet> {
   }
 }
 
-export async function cloneLead(id:string): Promise<LeadMagnet> {
+export async function cloneLead(id: string): Promise<LeadMagnet> {
   const user = await getSessionUser();
   try {
     // @ts-ignore
-    return copyLeadMagnet(id,user?.id);
+    return copyLeadMagnet(id, user?.id);
   } catch (error: any) {
     console.error("Error cloning lead:", error);
     throw new Error(error.message);
@@ -41,7 +49,7 @@ export async function cloneLead(id:string): Promise<LeadMagnet> {
 
 export async function getByUser(status: string = "") {
   const user = await getSessionUser();
-  const leads = await getLeadMagnetsByUser(user?.id!,status);
+  const leads = await getLeadMagnetsByUser(user?.id!, status);
   return leads || [];
 }
 
@@ -52,9 +60,17 @@ export async function getById(id: string) {
 export async function deleteLead(keyId: string) {
   await deleteLeadMagnet(keyId);
   revalidatePath("/api/my-magnets");
-  
 }
 
 export async function getUsageById(id: string) {
   return getLeadMagnetUsageById(id);
+}
+
+export async function getBySlug(template: string) {
+  try {
+    return await getLeadBySlug(template);
+  } catch (e) {
+    console.log(e);
+  }
+  return null;
 }
