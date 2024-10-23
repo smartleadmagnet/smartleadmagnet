@@ -1,4 +1,4 @@
-import { cn } from "@smartleadmagnet/ui/lib/utils";
+import { cn } from "../../lib/utils";
 
 interface MarqueeProps {
   className?: string;
