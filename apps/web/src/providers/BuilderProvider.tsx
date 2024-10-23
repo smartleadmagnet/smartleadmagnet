@@ -209,22 +209,17 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
   };
 
   const updateSettingFormData = async (form: BuilderSchemaForm) => {
-    toast({
-      variant: "destructive",
-      description: "Could not update lead magnet",
-    });
-    return;
     setIsSavingSetting(true);
     try {
-      await axios.post(`/api/lead/${leadMagnet.id}`, form);
-      setIsSavingSetting(false);
+      const leadResponse = await axios.post(`/api/lead/${leadMagnet.id}`, form);
+      setSelectedLeadMagnet(leadResponse?.data);
     } catch (e) {
-      setIsSavingSetting(false);
       toast({
         variant: "destructive",
         description: "Could not update lead magnet",
       });
     }
+    setIsSavingSetting(false);
   };
 
   const generateLeadMagnetWithAI = async (description: string) => {

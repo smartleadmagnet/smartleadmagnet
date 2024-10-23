@@ -4,6 +4,8 @@ import ConfettiBackground from "@smartleadmagnet/ui/components/ConfettiBackgroun
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Link from "next/link";
 
+export const dynamic = "force-static";
+
 export default function PaymentSuccessPage() {
   return (
     <div className="bg-white">

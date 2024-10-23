@@ -12,7 +12,9 @@ const CategoryGrid = () => {
   return (
     <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {templateCategories.map((category) => (
-          <Link key={category.id} className="cat-item" href={`/templates/${category.id}`}>{category.name}</Link>
+        <Link key={category.id} className="cat-item" href={`/templates/${category.id}`}>
+          {category.name}
+        </Link>
       ))}
     </div>
   );
@@ -61,9 +63,9 @@ function DesktopNav() {
           </Link>
         </li>
         <li>
-          <Link href="/blog" className="hover:text-gray-500">
+          <a href="/blog" className="hover:text-gray-500">
             Blog
-          </Link>
+          </a>
         </li>
       </ul>
     </div>
@@ -98,9 +100,9 @@ function MobileNav() {
           <Link href="#" className="mobile-link">
             Pricing
           </Link>
-          <Link href="#" className="mobile-link">
+          <a href="#" className="mobile-link">
             Blog
-          </Link>
+          </a>
           <div className="flex gap-2">
             <Link
               href="/login"
