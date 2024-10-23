@@ -4,6 +4,7 @@ import { WebPageJsonLd } from "next-seo";
 
 const slug = "terms-and-conditions";
 
+export const dynamic = "force-static";
 export async function generateMetadata() {
   return getLocalMdxSeoTags("terms-and-conditions");
 }

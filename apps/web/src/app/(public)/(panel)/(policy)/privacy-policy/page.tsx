@@ -4,6 +4,8 @@ import { WebPageJsonLd } from "next-seo";
 
 const slug = "privacy-policy";
 
+export const dynamic = "force-static";
+
 export function generateMetadata() {
   return getLocalMdxSeoTags("privacy-policy");
 }

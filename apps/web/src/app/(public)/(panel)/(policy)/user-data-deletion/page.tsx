@@ -4,6 +4,8 @@ import { WebPageJsonLd } from "next-seo";
 
 const slug = "user-data-deletion";
 
+export const dynamic = "force-static";
+
 export async function generateMetadata() {
   return getLocalMdxSeoTags("user-data-deletion");
 }

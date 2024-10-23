@@ -131,21 +131,22 @@ const getSeo = (data?: Metadata, urlPath?: string) => {
 };
 
 export const getLocalMdxSeoTags = (slug: string, folderName?: string) => {
-  const post = getPage<any>(folderName ? `${folderName}/${slug}` : slug);
+  const filePath = folderName ? `${folderName}/${slug}` : slug;
+  const post = getPage<any>(filePath);
   const { title, summary } = post?.metadata;
   return getSeo(
     {
       title: title,
       description: summary,
     },
-    `${folderName}/${slug}`
+    filePath
   );
 };
 
 export const getBlogMdxSeoTags = (slug: string, folderName?: string) => {
   const url = process.env.NEXT_PUBLIC_SITE_URL!;
   const post = getPage<any>(folderName ? `${folderName}/${slug}` : slug);
-  const { date, modifiedTime, title, summary, tags } = post?.metadata;
+  const { date, modifiedTime, title, summary } = post?.metadata;
   return getSeo(
     {
       title: title,
