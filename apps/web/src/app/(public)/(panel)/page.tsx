@@ -9,6 +9,14 @@ import AccordionSection from "@/components/Homepage/AccordionSection";
 import CtaSection from "@/components/Homepage/CtaSection";
 import { getSessionUser } from "@/services/user";
 import { redirect } from "next/navigation";
+import getSeo from "@/lib/seo";
+
+export function generateMetadata() {
+  return getSeo({
+    title: "SmartLeadMagnet: AI Lead Magnets to Boost Website Traffic",
+    description: `Drive more traffic to your website with SmartLeadMagnet’s AI-powered lead magnets. Capture leads, grow your audience, and boost your business easily.`,
+  });
+}
 
 export default async function Home() {
   const user = await getSessionUser();

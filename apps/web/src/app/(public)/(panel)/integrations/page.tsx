@@ -17,7 +17,7 @@ export function generateMetadata() {
       title: "SmartLeadMagnet Integrations",
       description: `SmartLeadMagnet Integrations with ${names.join(", ")}`,
     },
-    "integrations"
+    directoryPath
   );
 }
 
@@ -39,7 +39,7 @@ export default async function Posts() {
           title="SmartLeadMagnet Integrations"
           description={`SmartLeadMagnet Integrations with ${names.join(", ")}`}
         />
-        <PostCard posts={modifiedPosts} rootPath="integrations" />
+        <PostCard posts={modifiedPosts} rootPath={directoryPath} />
       </div>
     </>
   );
