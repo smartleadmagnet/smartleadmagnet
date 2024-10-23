@@ -8,12 +8,13 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  skipTrailingSlashRedirect: true,
   async rewrites() {
     return [
-      // {
-      //   source: "/blog",
-      //   destination: "https://silver-caribou-278976.hostingersite.com",
-      // },
+      {
+        source: "/blog",
+        destination: "https://silver-caribou-278976.hostingersite.com",
+      },
       {
         source: "/blog/:slug*",
         destination: "https://silver-caribou-278976.hostingersite.com/blog/:slug*"
