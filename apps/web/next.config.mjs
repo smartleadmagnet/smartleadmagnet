@@ -9,6 +9,34 @@ const nextConfig = {
     styledComponents: true,
   },
   trailingSlash: true,
+  async headers() {
+    return [
+      {
+        // Routes this applies to
+        source: "/wp-json/(.*)",
+        // Headers
+        headers: [
+          // Allow for specific domains to have access or * for all
+          {
+            key: "Access-Control-Allow-Origin",
+            value: "silver-caribou-278976.hostingersite.com",
+            // DOES NOT WORK
+            // value: process.env.ALLOWED_ORIGIN,
+          },
+          // Allows for specific methods accepted
+          {
+            key: "Access-Control-Allow-Methods",
+            value: "GET, POST, PUT, DELETE, OPTIONS",
+          },
+          // Allows for specific headers accepted (These are a few standard ones)
+          {
+            key: "Access-Control-Allow-Headers",
+            value: "Content-Type, Authorization",
+          },
+        ],
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
