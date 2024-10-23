@@ -8,12 +8,12 @@ type PostCardsProps = {
 type PostCardProps = any;
 
 const PostCards = (props: PostCardsProps) => {
-  const { posts, rootPath = "blogs" } = props;
+  const { posts } = props;
 
   return (
     <div className="grid gap-4 sm:grid md:grid-cols-2">
       {posts.map((post) => (
-        <PostCard key={post.slug} {...post} link={`${rootPath}/${post.slug}`} />
+        <PostCard key={post.slug} {...post} link={post.slug} />
       ))}
     </div>
   );

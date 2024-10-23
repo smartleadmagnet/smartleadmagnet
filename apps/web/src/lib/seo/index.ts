@@ -8,56 +8,19 @@ const description =
 const metadata: Metadata = {
   title,
   description,
-  applicationName: "SmartEReply",
-  metadataBase: new URL("https://SmartEReply.com"),
+  applicationName: "SmartLeadMagnet",
+  metadataBase: new URL("https://smartleadmagnet.com"),
   authors: [
     {
-      name: "DCoderAI Team",
-      url: "https://dcoder.ai", // Update this URL to your team's website if available
+      name: "SmartLeadMagnet Team",
+      url: "https://smartleadmagnet.com", // Update this URL to your team's website if available
     },
   ],
-  generator: "Custom Web Application",
-  keywords: [
-    "linkedin ai tools",
-    "generative ai",
-    "ai tool",
-    "ai generated content",
-    "best ai tools",
-    "free ai tools",
-    "ai for business",
-    "linkedin automation software",
-    "automated linkedin messaging",
-    "best linkedin automation tools",
-    "ai for content creation",
-    "ai tools for linkedin",
-    "free generative ai",
-    "content generation ai",
-    "SmartEReply",
-    "create content with ai",
-    "ai tools for small business",
-    "generate content using ai",
-    "ai in linkedin",
-    "linkedin ai jobs",
-    "ai jobs linkedin",
-    "LinkedIn AI content automation",
-    "AI LinkedIn profile optimization",
-    "AI personalized connection requests",
-    "AI direct message generation",
-    "AI LinkedIn multilingual support",
-    "LinkedIn comment management",
-    "LinkedIn AI assistant jobs",
-    "LinkedIn AI engagement strategies",
-    "AI-driven LinkedIn networking",
-    "AI-enhanced LinkedIn visibility",
-    "LinkedIn AI interaction boost",
-    "Efficient LinkedIn AI communication",
-    "LinkedIn AI profile insights",
-    "LinkedIn AI cultural adaptation",
-    "LinkedIn AI response automation",
-  ],
+  generator: "Smart Lead Magnet",
+  keywords: [],
   referrer: "origin",
-  creator: "DCoderAi",
-  publisher: "DCoderAI",
+  creator: "SmartLeadMagnet",
+  publisher: "SmartLeadMagnet",
   robots: "index, follow",
   // alternates: {
   //   canonical: "/",
@@ -73,7 +36,7 @@ const metadata: Metadata = {
     // url: "https://SmartEReply.com",
     title,
     description,
-    siteName: "SmartEReply",
+    siteName: "SmartLeadMagnet",
     images: [
       {
         url: "/og-image.png", // Update path as necessary
@@ -88,10 +51,10 @@ const metadata: Metadata = {
     description,
   },
   // Update or remove verification codes as necessary
-  verification: {
-    google: "1234567890", // Update with your Google verification code
-    yandex: "0987654321", // Update with your Yandex verification code
-  },
+  // verification: {
+  //   google: "1234567890", // Update with your Google verification code
+  //   yandex: "0987654321", // Update with your Yandex verification code
+  // },
   appleWebApp: {
     capable: true,
     title,
@@ -104,7 +67,7 @@ const metadata: Metadata = {
 };
 
 const getSeo = (data?: Metadata, urlPath?: string) => {
-  const canonicalUrl = !urlPath ? "https://smartereply.com" : `https://smartereply.com/${urlPath}`;
+  const canonicalUrl = !urlPath ? "https://smartleadmagnet.com" : `https://smartleadmagnet.com/${urlPath}`;
   return {
     ...metadata,
     ...data,
