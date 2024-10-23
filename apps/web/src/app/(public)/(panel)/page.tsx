@@ -20,7 +20,7 @@ export default async function Home() {
       <HeroSection />
       <BrandSection />
       <FeatureSection />
-      <ImageContentSection />
+      {/* <ImageContentSection /> */}
       <ContentImageSection />
       <ServiceSection />
       <ClientSection />

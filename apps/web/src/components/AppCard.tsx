@@ -115,14 +115,16 @@ export default function AppCard({ id, name, description, analytics, status, imag
             </DropdownMenu>
           </div>
         </div>
+        <div className="min-h-[65px]">
         {description && (
           <>
             <span
-              className="app_description text-sm"
+              className="app_description text-sm "
               dangerouslySetInnerHTML={{ __html: marked(description.slice(0, 200)) }}
             />
           </>
         )}
+        </div>
       </CardHeader>
 
       <CardContent className="bg-gray-200 px-0">

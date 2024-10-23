@@ -1,91 +1,122 @@
-import TestimonialCard from "@/components/TestimonialCard";
-import Link from "next/link";
+import React from "react";
+import Marquee from "@smartleadmagnet/ui/components/ui/Marquee";
+import testimonial from "@/data/testimonial.json";
+import Image from "next/image";
 
-interface Testimonial {
-  title: string;
-  text: string;
-  authorImage: string;
-  authorName: string;
-  authorPosition: string;
-}
+const firstRow = testimonial.slice(0, testimonial.length / 2);
+const secondRow = testimonial.slice(testimonial.length / 2);
 
-const data: Testimonial[] = [
-  {
-    title: "Amazing home workout solution!",
-    text: "I found this app randomly and it's been a game changer. My energy is through the roof and I feel stronger than ever. Highly recommend!",
-    authorImage:
-      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDEwfHxtYW58ZW58MHx8fHwxNjYwNjM1ODcz&ixlib=rb-1.2.1&q=80&w=400",
-    authorName: "John Doe",
-    authorPosition: "Fitness Enthusiast",
-  },
-  {
-    title: "Incredible fitness app experience!",
-    text: "This app really pushed me to regain my fitness confidence after a long break. Absolutely love the personalized workouts! 🙌",
-    authorImage:
-      "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDIwfHxtYW58ZW58MHx8fHwxNjYwNjM1ODcz&ixlib=rb-1.2.1&q=80&w=400",
-    authorName: "Jane Smith",
-    authorPosition: "Software Engineer",
-  },
-  {
-    title: "Perfect for home workouts",
-    text: "No gym equipment? No problem! The workouts are effective and the tips are spot on. I've never felt better, and the nutritional guidance is a bonus.",
-    authorImage:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDI2fHxtYW58ZW58MHx8fHwxNjYwNjM1ODcz&ixlib=rb-1.2.1&q=80&w=400",
-    authorName: "Emily Johnson",
-    authorPosition: "University Student",
-  },
-  {
-    title: "Great fitness community",
-    text: "The workouts are fun and easy to follow, and the sense of community is a real plus. The recipes are delicious too! Great job team! 💪",
-    authorImage:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDI2fHxtYW58ZW58MHx8fHwxNjYwNjM1ODcz&ixlib=rb-1.2.1&q=80&w=400",
-    authorName: "Michael Brown",
-    authorPosition: "Entrepreneur",
-  },
-  {
-    title: "Highly recommend this app!",
-    text: "The exercises are challenging but enjoyable, and I always feel accomplished after a session. Plus, the community is very supportive. 👌",
-    authorImage:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDIwfHxtYW58ZW58MHx8fHwxNjYwNjM1ODcz&ixlib=rb-1.2.1&q=80&w=400",
-    authorName: "Sarah Williams",
-    authorPosition: "Content Creator",
-  },
-  {
-    title: "Back in shape with this app!",
-    text: "I hadn't exercised in years, but this app got me back into it. The workouts are fun, and my whole family is joining in. Love it! 😍",
-    authorImage:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDI5fHxtYW58ZW58MHx8fHwxNjYwNjM1ODcz&ixlib=rb-1.2.1&q=80&w=400",
-    authorName: "David Taylor",
-    authorPosition: "Graphic Designer",
-  },
-];
-
-const ClientSection = () => {
+const ReviewCard = ({
+  imageSrc,
+  rating,
+  name,
+  designation,
+  description
+}: {
+  imageSrc: string;
+  rating: number;
+  name: string;
+  designation: string;
+  description: string;
+}) => {
   return (
-    <div className="bg-gray-50 py-20" id="testimonial">
-      <div className="container mx-auto px-4">
-        {/* Section title */}
-        <div className="mb-10 text-center">
-          <h2 className="mb-8 text-5xl font-bold text-gray-800">What out clients say?</h2>
-        </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {data.map((item, index) => (
-            <div key={index} className="flex justify-center">
-              <TestimonialCard {...item} />
+    <div className="mx-auto max-w-md rounded-lg bg-white p-4 shadow-lg">
+      <div className="flex items-start">
+        <Image className="h-12 w-12 rounded-full" width={20} height={20} src={imageSrc} alt={name} />
+        <div className="ml-3 flex-1">
+          <div className="flex justify-between">
+            <div>
+              <span className="font-semibold text-gray-900">{name}</span>
+              <span className="text-gray-500">{designation}</span>
+              <span className="text-gray-500">· 2h</span>
             </div>
-          ))}
-        </div>
-        <div className="mt-20 text-center">
-          <Link
-            className="rounded-lg bg-cyan-500 px-6 py-3 text-xl font-bold text-white hover:bg-cyan-600 sm:px-8 sm:py-4 sm:text-2xl"
-            href="/app"
-          >
-            Read All The Reviews On Trustpilot.com
-          </Link>
+            <button className="text-gray-500 hover:text-gray-700">
+              <svg
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 12h.01M12 12h.01M18 12h.01"
+                />
+              </svg>
+            </button>
+          </div>
+          <p className="mt-2 text-gray-800">{description}</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default ClientSection;
+const VideoTestimonial = ({ videoSrc,title }: { videoSrc: string,title:string }) => {
+  return (
+    <div className="mx-auto mb-4 rounded-lg overflow-hidden max-w-[300px]">
+      <video
+        className="w-full h-auto aspect-video"
+        controls
+        src={videoSrc}
+      >
+        Your browser does not support the video tag.
+      </video>
+      <h3 className="text-xl text-center mt-5 text-white">{title}</h3>
+    </div>
+  );
+};
+
+export default function ClientSection() {
+  return (
+    <>
+    <div className="bg-gray-900 py-16">
+    <div className="container max-w-[1000px] ">
+    <h2 className="mb-6 text-5xl font-bold text-center text-white">
+        Some kind words from our clients
+      </h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-16">
+        {/* Replace these video URLs with actual video sources */}
+        <VideoTestimonial videoSrc="/videos/testimonial1.mp4" title="Significant change in vistor after SmartLead Magnet" />
+        <VideoTestimonial videoSrc="/videos/testimonial2.mp4" title="100 plus new client after SmartLead Magnet" />
+        <VideoTestimonial videoSrc="/videos/testimonial3.mp4" title="50% increase in lead conversion after SmartLead Magnet" />
+        <VideoTestimonial videoSrc="/videos/testimonial1.mp4" title="Significant change in vistor after SmartLead Magnet" />
+        <VideoTestimonial videoSrc="/videos/testimonial2.mp4" title="100 plus new client after SmartLead Magnet" />
+        <VideoTestimonial videoSrc="/videos/testimonial3.mp4" title="50% increase in lead conversion after SmartLead Magnet" />
+        
+      </div>
+      </div>
+      </div>
+    <div className="bg-background relative flex flex-col items-center justify-center overflow-hidden rounded-lg border md:shadow-xl py-16">
+      {/* Title */}
+      <h2 className="mb-6 text-5xl font-bold text-center text-gray-900">
+        Our Clients Thoughts on Us
+      </h2>
+
+      {/* Video Testimonials */}
+      
+    <div className="relative">
+      {/* Marquee for text testimonials */}
+      <Marquee pauseOnHover className="[--duration:20s]">
+        {firstRow.map((review, index) => (
+          <ReviewCard key={index} {...review} />
+        ))}
+      </Marquee>
+      <Marquee reverse pauseOnHover className="[--duration:20s]">
+        {secondRow.map((review, index) => (
+          <ReviewCard key={index} {...review} />
+        ))}
+      </Marquee>
+
+      <div className="dark:from-background pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white"></div>
+      <div className="dark:from-background pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white"></div>
+      </div>
+      
+    </div>
+    
+    </>
+
+
+  );
+}
