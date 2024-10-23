@@ -11,18 +11,16 @@ const nextConfig = {
   // trailingSlash: true,
   // crossOrigin: 'anonymous',
   async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: '/blog/',
-          destination: 'https://silver-caribou-278976.hostingersite.com/blog/',
-        },
-        {
-          source: '/blog/:path*/',
-          destination: 'https://silver-caribou-278976.hostingersite.com/blog/:path*/',
-        },
-      ]
-    };
+    return [
+      {
+        source: '/blog/',
+        destination: 'https://silver-caribou-278976.hostingersite.com/blog/',
+      },
+      {
+        source: '/blog/:path*/',
+        destination: 'https://silver-caribou-278976.hostingersite.com/blog/:path*/',
+      },
+    ];
   },
   images: {
     remotePatterns: [
