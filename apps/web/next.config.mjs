@@ -16,6 +16,10 @@ const nextConfig = {
         destination: "https://silver-caribou-278976.hostingersite.com/wp-content/:slug*"
       },
       {
+        source: "/:slug.php",
+        destination: "https://silver-caribou-278976.hostingersite.com/:slug.php"
+      },
+      {
         source: "/wp-includes/:slug*",
         destination: "https://silver-caribou-278976.hostingersite.com/wp-includes/:slug*"
       },
