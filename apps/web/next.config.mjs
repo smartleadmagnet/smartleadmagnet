@@ -1,6 +1,6 @@
-// import {withSentryConfig} from "@sentry/nextjs";
+import {withSentryConfig} from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
-import {setupDevPlatform} from "@cloudflare/next-on-pages/next-dev";
+// import {setupDevPlatform} from "@cloudflare/next-on-pages/next-dev";
 
 const nextConfig = {
   transpilePackages: ["@smartleadmagnet/ui", "next-mdx-remote"],
