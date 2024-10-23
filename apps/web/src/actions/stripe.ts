@@ -14,6 +14,7 @@ export async function createPaymentLink(customerId: string, priceId: string) {
   const mode = plan?.isSubscription ? "subscription" : "payment";
   const checkoutSessionParams: Stripe.Checkout.SessionCreateParams = {
     mode,
+    allow_promotion_codes: true,
     line_items: [
       {
         price: priceId, // The price_id of the product
