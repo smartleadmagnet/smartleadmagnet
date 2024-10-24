@@ -16,7 +16,7 @@ export const getLeadMagnetById = async (id: string): Promise<any> => {
 };
 
 export const getPublicLeadMagnets = async ({ category, term }: { category: string; term: string }) => {
-  const whereClause = {
+  const whereClause: any = {
     status: "published",
     public: true,
   };
