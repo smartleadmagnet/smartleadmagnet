@@ -8,6 +8,7 @@ import Day3 from "@/emails/day-3";
 import Day4 from "@/emails/day-4";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 300;
 
 const { convert } = require("html-to-text");
 

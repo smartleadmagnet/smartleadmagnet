@@ -54,7 +54,7 @@ async function sendVerificationRequest(params: any) {
 }
 
 const nextAuth = NextAuth({
-  debug: true,
+  debug: false,
   adapter: PrismaAdapter(prisma),
   providers: [
     Google({

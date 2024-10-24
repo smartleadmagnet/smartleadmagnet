@@ -5,6 +5,7 @@ import { getSessionUser } from "@/services/user";
 import { createPayment, getCredit, getUserById, upsetCredits, getPaymentBySessionId } from "@smartleadmagnet/services";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 export async function GET(req: NextRequest) {
   const session_id = req.nextUrl.searchParams.get("session_id");

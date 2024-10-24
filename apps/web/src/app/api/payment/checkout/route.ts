@@ -4,6 +4,7 @@ import { getSessionUser } from "@/services/user";
 import { getUserById, updateStripeCustomerId } from "@smartleadmagnet/services";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 export async function GET(req: NextRequest) {
   // get query params from the URL
