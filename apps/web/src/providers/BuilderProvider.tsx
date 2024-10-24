@@ -222,7 +222,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
           { signal: abortController.signal }
         );
         setSelectedLeadMagnet(leadResponse?.data);
-      } catch (e) {
+      } catch (e: any) {
         if (e.name === "AbortError") {
           console.log("Request aborted");
         } else {
@@ -256,7 +256,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
 
         const leadResponse = await axios.post(`/api/lead/${leadMagnet.id}`, form, { signal: abortController.signal });
         setSelectedLeadMagnet(leadResponse?.data);
-      } catch (e) {
+      } catch (e: any) {
         if (e.name === "AbortError") {
           console.log("Request aborted");
         } else {
