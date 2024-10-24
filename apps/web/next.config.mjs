@@ -17,10 +17,6 @@ const nextConfig = {
         destination: 'https://silver-caribou-278976.hostingersite.com/blog/',
       },
       {
-        source: '/sitemap-wp.xml',
-        destination: 'https://silver-caribou-278976.hostingersite.com/sitemap-wp.xml',
-      },
-      {
         source: '/blog/:path*/',
         destination: 'https://silver-caribou-278976.hostingersite.com/blog/:path*/',
       },

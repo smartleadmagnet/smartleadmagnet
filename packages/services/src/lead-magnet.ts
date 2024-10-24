@@ -34,6 +34,15 @@ export const getPublicLeadMagnets = async ({ category, term }: { category: strin
   });
 };
 
+export const getAllPublicLeads = async () => {
+  return prisma.leadMagnet.findMany({
+    where: {
+      status: "published",
+      public: true,
+    },
+  });
+};
+
 function convertSlugToName(slug: string): string {
   return slug
     .replace(/-/g, " ") // Replace hyphens with spaces
