@@ -13,6 +13,10 @@ const otherPages = ["user-data-deletion", "privacy-policy", "terms-and-condition
 
 const integrationsDirectoryPath = "integrations";
 
+export const dynamic = "force-dynamic";
+
+export const maxDuration = 120;
+
 export default async function sitemap() {
   const leads = await getAllPublicLeads();
 
