@@ -1,16 +1,20 @@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { ImMagicWand } from "react-icons/im";
 import ConfirmDialog from "./ConfirmDialog";
 
-export function GenerateModal({ onGenerate }: { onGenerate: Function }) {
+export function GenerateModal({ onGenerate, showWarning = false }: { onGenerate: Function; showWarning?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isConfirm, setIsConfirm] = useState(false);
+  const [isConfirm, setIsConfirm] = useState(!showWarning);
   const [submitting, setSubmitting] = useState(false);
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    setIsConfirm(!showWarning);
+  }, [showWarning]);
 
   const handleCancel = () => {
     setIsOpen(false);
