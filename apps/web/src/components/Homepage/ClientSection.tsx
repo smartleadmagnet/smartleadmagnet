@@ -28,13 +28,8 @@ const ReviewCard = ({
             <div>
               <span className="font-semibold text-gray-900">{name}</span>
               <span className="text-gray-500">{designation}</span>
-              <span className="text-gray-500">· 2h</span>
             </div>
-            <button className="text-gray-500 hover:text-gray-700">
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 12h.01M12 12h.01M18 12h.01" />
-              </svg>
-            </button>
+            
           </div>
           <p className="mt-2 text-gray-800">{description}</p>
         </div>

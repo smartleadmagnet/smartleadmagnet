@@ -10,6 +10,7 @@ import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import DynamicStyles from "@/components/DynamicStyles";
 import Image from "next/image";
 import { marked } from "marked";
+import FontPicker from "font-picker-react";
 import {
   Select,
   SelectContent,
@@ -21,14 +22,14 @@ import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/ra
 import { Separator } from "@smartleadmagnet/ui/components/ui/separator";
 import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 import useShareForm from "@/hooks/share.hook";
-import Spinner from "@smartleadmagnet/ui/components/Spinner";
+import { Loader2 } from "lucide-react"
 import AIResponse from "@smartleadmagnet/ui/components/AIResponse";
 import EmailInput from "@/components/EmailInput";
 import WebsiteInput from "@/components/WebsiteInput";
 import styled from "styled-components";
 import ImageUploader from "@/components/ImageUploader";
-
-
+import { BsFillInfoSquareFill } from "react-icons/bs";
+import { Dialog, DialogContent } from "@smartleadmagnet/ui/components/ui/dialog";
 
 
 function Loading() {
@@ -56,6 +57,7 @@ const FormWrapper = styled.div`
   max-width: 600px;
   color: ${(props) => props.theme.textColor};
   margin: 0 auto;
+  position: relative;
 
   padding: 20px;
   border-radius: 5px;
@@ -122,6 +124,7 @@ export default function BuilderElementPreview({hideInfo}: BuilderElementPreviewP
     leadMagnet,
   } = useShareForm();
   const [isLoading, setLoading] = useState(true);
+  const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
     if (leadMagnet) {
@@ -359,39 +362,50 @@ export default function BuilderElementPreview({hideInfo}: BuilderElementPreviewP
 
   return (
     <FormWrapper theme={formStyles} className="magnet-wrapper">
+      <Button variant="link" onClick={()=>{
+          setShowInfo(!showInfo);
+        }} 
+        className="absolute right-0">
+          <BsFillInfoSquareFill className="w-5 h-5 text-gray-500" />
+        </Button>
+      <Dialog open={showInfo}  onOpenChange={()=>{
+        setShowInfo(!showInfo);
+      }}>
+      
+        
+      <DialogContent className="mx-auto max-w-lg" >
+      <h1 className="mb-2 text-center text-xl font-bold">{leadMagnet.name}</h1>
+      <div className="mb-5 text-center" dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }} />
+      </DialogContent>
+    </Dialog>
       <DynamicStyles cssContent={formStyles.customCss} enableCustomCss={formStyles.enableCustomCss} />
-      {leadMagnet.image && (
+      
+      {response && <AIResponse response={response.content} type={response.type} onRegenerate={onRegenerate} />}
+      {!response && (
+        <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
+          {leadMagnet.image && (
         <div className="icon mx-auto mb-5 max-w-[100px] text-center">
           <Image src={leadMagnet.image} alt="Logo" width={100} height={100} />
         </div>
       )}
-      {!hideInfo && (<>
-        <h1 className="mb-2 text-center text-xl font-bold">{leadMagnet.name}</h1>
-        <div className="mb-5 text-center" dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }} />
-      </>)}
-      
-
-      {response && <AIResponse response={response.content} type={response.type} onRegenerate={onRegenerate} />}
-      {!response && (
-        <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
           {elementsList.map((element: any, index: number) => (
             <div className="form-item" key={index}>
               {renderElement(element)}
             </div>
           ))}
 
-          <Button type="submit">
-            {isSubmitting && <Spinner />}
-            {!isSubmitting && "Submit"}
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Submit
           </Button>
         </form>
       )}
-      {/* <div className="mb-[-20px] ml-[-20px] mr-[-20px] mt-10 flex items-center justify-center rounded-b bg-gray-900 p-5 text-white">
-        Carafted by
-        <Link href="/">
-          <Image src="/images/logo/logo.png" alt="Logo" width={150} height={0} />
-        </Link>
-      </div> */}
+      <div style={{ display: "none" }}>
+       <FontPicker
+        apiKey="AIzaSyAOSZtIN2QS_O1H3z6dsnle1rPBW7nxj9Y" // Replace with your actual API key
+        activeFontFamily={formStyles.selectedFont} // Will be displayed in the FontPicker
+      />
+      </div>
     </FormWrapper>
   );
 }

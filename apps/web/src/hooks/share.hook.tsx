@@ -11,7 +11,9 @@ interface Preview {
 
 const useShareForm = () => {
   const { leadMagnet, elementsList, outputType, formStyles } = useBuilderContext();
-  const [response, setResponse] = useState<Preview | undefined>();
+  const [response, setResponse] = useState<Preview | undefined>({
+    type: "text", content: "Smaple"
+  });
   const [lastInput, setLastInput] = useState<any>();
 
   const {

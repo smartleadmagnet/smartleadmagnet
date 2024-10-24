@@ -40,6 +40,7 @@ const ResponsiveScreen: React.FC<{ children: ReactNode; activeView: string; setA
   setActiveView,
 }) => {
   const [activeScreen, setActiveScreen] = useState("desktop");
+  
 
   // Function to handle button click
   const handleClick = (screen: string) => {
@@ -52,7 +53,7 @@ const ResponsiveScreen: React.FC<{ children: ReactNode; activeView: string; setA
       <div className="flex items-center justify-between space-x-4">
         {/* Left Select dropdown */}
         <div className="w-1/2">
-          <Select
+          {/* <Select
             value={activeView}
             onValueChange={(value: any) => {
               setActiveView(value);
@@ -65,7 +66,7 @@ const ResponsiveScreen: React.FC<{ children: ReactNode; activeView: string; setA
               <SelectItem value="Form">Form</SelectItem>
               <SelectItem value="Prompt">Prompt</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
         </div>
 
         {/* Right 3-button group */}
@@ -141,7 +142,7 @@ const ResponsiveScreen: React.FC<{ children: ReactNode; activeView: string; setA
         </BrowserScreen>
       )}
       {activeScreen === "mobile" && (
-        <BrowserScreen title="Mobile" width="400px">
+        <BrowserScreen title="Mobile" width="500px">
           {children}
         </BrowserScreen>
       )}

@@ -64,6 +64,7 @@ export default function Builder({ user }: { user?: any }) {
     defaultTab,
     pathname,
     isPublsiing,
+    
   } = useBuilder(); // Use the custom hook
 
   const filterItems = (searchTerm: string) => {

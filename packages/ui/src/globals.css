@@ -695,6 +695,9 @@
   top: 0;
  
 }
+.login-area{
+  background: linear-gradient(to left, cyan,   black);  
+}
 .pricing-content{
   position: relative;
   z-index: 1;
@@ -814,3 +817,4 @@
   }
 
 }
+
