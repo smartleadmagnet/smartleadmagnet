@@ -2,17 +2,23 @@ import Image from "next/image";
 import templateCategories from "@/data/categories.json";
 import Link from "next/link";
 import { getPublicLeadMagnets } from "@smartleadmagnet/services";
-import { Input } from "@smartleadmagnet/ui/components/ui/input";
-import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { ImageIcon } from "lucide-react";
-import { Search } from "lucide-react";
 import React from "react";
 import { marked } from "marked";
 import { createSlug } from "@/utils/slug";
+import SearchBox from "@/components/SearchBox";
+import { SearchParamType } from "@/lib/types";
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams?: SearchParamType;
+}) {
   const { id } = params;
-  const leads = await getPublicLeadMagnets({ category: id });
+  const query = decodeURIComponent(searchParams?.query || "");
+  const leads = await getPublicLeadMagnets({ category: id, term: query });
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -36,13 +42,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </Link>
           ))}
         </nav>
-        {/* Search Input */}
-        <div className="flex w-full max-w-sm items-center space-x-2">
-          <Input type="text" className="py-5" placeholder="Search..." />
-          <Button type="submit" className="bg-cyan-500 hover:bg-cyan-600">
-            <Search className="h-5 w-5" />
-          </Button>
-        </div>
+        <SearchBox />
       </div>
       <div className="mb-10 flex justify-end">
         <Link

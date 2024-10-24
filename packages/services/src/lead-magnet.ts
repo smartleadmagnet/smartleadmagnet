@@ -15,13 +15,19 @@ export const getLeadMagnetById = async (id: string): Promise<any> => {
   });
 };
 
-export const getPublicLeadMagnets = async ({ category }: { category: string }) => {
+export const getPublicLeadMagnets = async ({ category, term }: { category: string; term: string }) => {
   const whereClause = {
     status: "published",
     public: true,
   };
   if (category && category !== "all") {
     whereClause["category"] = category;
+  }
+  if (term) {
+    whereClause["name"] = {
+      contains: term,
+      mode: "insensitive",
+    };
   }
   return prisma.leadMagnet.findMany({
     where: whereClause,
