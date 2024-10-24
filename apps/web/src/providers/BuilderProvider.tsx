@@ -112,7 +112,7 @@ const defaultFormStyles = {
 };
 
 let abortController: AbortController | null = null;
-let debounceTimer: NodeJS.Timeout | null = null;
+let debounceTimer: any;
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
