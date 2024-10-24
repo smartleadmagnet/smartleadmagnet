@@ -1,4 +1,4 @@
-import prisma, { LeadMagnet, LeadMagnetUsage } from "@smartleadmagnet/database";
+import prisma, { LeadMagnet } from "@smartleadmagnet/database";
 
 export const createLeadMagnet = async (data: LeadMagnet) => {
   return prisma.leadMagnet.create({
@@ -15,12 +15,16 @@ export const getLeadMagnetById = async (id: string): Promise<any> => {
   });
 };
 
-export const getPublicLeadMagnets = async () => {
+export const getPublicLeadMagnets = async ({ category }: { category: string }) => {
+  const whereClause = {
+    status: "published",
+    public: true,
+  };
+  if (category && category !== "all") {
+    whereClause["category"] = category;
+  }
   return prisma.leadMagnet.findMany({
-    where: {
-      status: "published",
-      public: true,
-    },
+    where: whereClause,
   });
 };
 

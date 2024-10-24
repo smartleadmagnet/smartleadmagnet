@@ -63,7 +63,7 @@ export default function Builder({ user }: { user?: any }) {
     generateLeadMagnetWithAI,
     defaultTab,
     pathname,
-    isPublsiing,
+    isPublishing,
   } = useBuilder(); // Use the custom hook
 
   const filterItems = (searchTerm: string) => {
@@ -104,11 +104,11 @@ export default function Builder({ user }: { user?: any }) {
                 Last Saved ({formatDistanceToNow(new Date(leadMagnet?.updatedAt!), { addSuffix: true })})
               </p>
               <Button
-                disabled={isPublsiing}
+                disabled={isPublishing}
                 className="btn-primary"
                 onClick={leadMagnet?.status === "published" ? () => {} : onPublishLead}
               >
-                {isPublsiing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {isPublishing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {leadMagnet?.status === "published" ? "Save" : "Publish"}
               </Button>
             </div>

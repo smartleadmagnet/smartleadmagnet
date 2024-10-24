@@ -15,13 +15,6 @@ const PurchasePlanDialog: React.FC<PurchasePlanDialogProps> = ({
   creditRequired,
   paymentRequired,
 }) => {
-  console.log({
-    isOpen,
-    onClose,
-    creditRequired,
-    paymentRequired,
-  });
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="mx-auto max-w-lg">

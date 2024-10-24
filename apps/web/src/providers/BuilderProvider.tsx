@@ -37,7 +37,7 @@ interface BuilderContextType {
   paymentRequired: boolean;
   onClosePaymentModal: () => void;
   generateLeadMagnetWithAI: (description: string) => void;
-  isPublsiing: boolean;
+  isPublishing: boolean;
   onPublicAccessChange: (isPublic: boolean) => Promise<void>;
   isSavingSetting: boolean;
 }
@@ -111,12 +111,17 @@ const defaultFormStyles = {
 `,
 };
 
+let abortController: AbortController | null = null;
+let debounceTimer: NodeJS.Timeout | null = null;
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: LeadMagnet }> = ({
   children,
   leadMagnet,
 }) => {
   //loading states
-  const [isPublsiing, setIsPublishing] = useState<boolean>(false);
+  const [isPublishing, setIsPublishing] = useState<boolean>(false);
   const [isSavingSetting, setIsSavingSetting] = useState<boolean>(false);
   const [selectedLeadMagnet, setSelectedLeadMagnet] = useState<LeadMagnet>(leadMagnet);
   const [paymentRequired, setPaymentRequired] = useState<boolean>(false);
@@ -181,47 +186,89 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
     }
   };
 
-  const onClosePaymentModal = async () => {
+  const onClosePaymentModal = () => {
     setCreditRequired(false);
     setPaymentRequired(false);
   };
 
   const updateData = async (data?: any) => {
-    try {
-      const leadResponse = await axios.post(`/api/lead/${leadMagnet.id}`, {
-        components: elementsList,
-        styles: formStyles,
-        name,
-        prompt,
-        provider: selectedProvider?.name,
-        model: selectedModel,
-        output: outputType,
-        ...(data || {}),
-      });
-      setSelectedLeadMagnet(leadResponse?.data);
-    } catch (e) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Could not update lead magnet",
-      });
-    }
+    // Clear the previous debounce timer if it exists
+    if (debounceTimer) clearTimeout(debounceTimer);
+
+    // Set up a new debounce timer
+    debounceTimer = setTimeout(async () => {
+      // Cancel any ongoing request
+      if (abortController) {
+        abortController.abort();
+      }
+
+      abortController = new AbortController();
+
+      try {
+        await delay(300); // Add a 300 ms delay before sending the request
+
+        const leadResponse = await axios.post(
+          `/api/lead/${leadMagnet.id}`,
+          {
+            components: elementsList,
+            styles: formStyles,
+            name,
+            prompt,
+            provider: selectedProvider?.name,
+            model: selectedModel,
+            output: outputType,
+            ...(data || {}),
+          },
+          { signal: abortController.signal }
+        );
+        setSelectedLeadMagnet(leadResponse?.data);
+      } catch (e) {
+        if (e.name === "AbortError") {
+          console.log("Request aborted");
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Could not update lead magnet",
+          });
+        }
+      }
+    }, 300);
   };
 
   const updateSettingFormData = async (form: BuilderSchemaForm) => {
     setIsSavingSetting(true);
-    try {
-      const leadResponse = await axios.post(`/api/lead/${leadMagnet.id}`, form);
-      setSelectedLeadMagnet(leadResponse?.data);
-    } catch (e) {
-      toast({
-        variant: "destructive",
-        description: "Could not update lead magnet",
-      });
-    }
-    setIsSavingSetting(false);
-  };
 
+    // Clear the previous debounce timer if it exists
+    if (debounceTimer) clearTimeout(debounceTimer);
+
+    // Set up a new debounce timer
+    debounceTimer = setTimeout(async () => {
+      // Cancel any ongoing request
+      if (abortController) {
+        abortController.abort();
+      }
+
+      abortController = new AbortController();
+
+      try {
+        await delay(300); // Add a 300 ms delay before sending the request
+
+        const leadResponse = await axios.post(`/api/lead/${leadMagnet.id}`, form, { signal: abortController.signal });
+        setSelectedLeadMagnet(leadResponse?.data);
+      } catch (e) {
+        if (e.name === "AbortError") {
+          console.log("Request aborted");
+        } else {
+          toast({
+            variant: "destructive",
+            description: "Could not update lead magnet",
+          });
+        }
+      }
+      setIsSavingSetting(false);
+    }, 300);
+  };
   const generateLeadMagnetWithAI = async (description: string) => {
     try {
       await axios.post(`/api/lead/${selectedLeadMagnet.id}/create`, {
@@ -366,7 +413,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         onClosePaymentModal,
         generateLeadMagnetWithAI,
         onPublicAccessChange,
-        isPublsiing,
+        isPublishing,
         isSavingSetting,
       }}
     >
