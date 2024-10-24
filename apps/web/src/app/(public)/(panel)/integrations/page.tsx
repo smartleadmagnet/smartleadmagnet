@@ -27,7 +27,7 @@ export default async function Posts() {
     return {
       title: post.name, // change first later to Capital
       summary: post.title,
-      slug: post.slug,
+      slug: `${directoryPath}/${post.slug}`,
     };
   });
   const names = posts.map((post) => post.name);
