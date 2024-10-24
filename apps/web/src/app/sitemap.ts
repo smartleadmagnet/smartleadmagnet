@@ -1,9 +1,13 @@
 import { MetadataRoute } from "next";
 import { getAllPages } from "@/lib/mdx";
 import blog from "@/data/posts.json"; // https://silver-caribou-278976.hostingersite.com/post-sitemap.xml
-import postsTags from "@/data/postsTags.json";
+import postsTags from "@/data/postsTags.json"; // https://silver-caribou-278976.hostingersite.com/post_tag-sitemap.xml
 import { getAllPublicLeads } from "@smartleadmagnet/services";
-import { createSlug } from "@/utils/slug"; // https://silver-caribou-278976.hostingersite.com/post_tag-sitemap.xml
+import { createSlug } from "@/utils/slug";
+
+import dotenv from "dotenv";
+
+dotenv.config(); // Load environment variables from .env file
 
 const otherPages = ["user-data-deletion", "privacy-policy", "terms-and-conditions", "gdpr-commitment"];
 
