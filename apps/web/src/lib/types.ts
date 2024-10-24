@@ -53,8 +53,6 @@ export const getPlanName = (plan?: string): string => {
 };
 
 export interface SearchParamType {
-  page?: string;
-  filter?: string;
-  query?: string;
+  query: string;
   [key: string]: string;
 }
