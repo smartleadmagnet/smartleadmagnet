@@ -3,7 +3,7 @@ import { CheckIcon, CopyIcon, ReloadIcon, DownloadIcon,ImageIcon,TextIcon,CodeIc
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { marked } from "marked"; // Import marked
 import { solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism";
-import Spinner from "./Spinner";
+import Loader from "./Loader";
 
 import React from "react";
 
@@ -78,17 +78,9 @@ const AIResponse = ({
             )}
           </Button>
         </div>
-      ):(<div className="prompt-loader bg-gray-900 w-[100%]">
-        <Spinner/>
-        <div className="prompt-icon">
-        {type === "image"  && <ImageIcon className="h-8 w-8" />}
-        {type === "text"  && <TextIcon className="h-8 w-8" />}  
-        {type === "code"  && <CodeIcon className="h-8 w-8" />} 
-        {type === "markdown"  && <TextIcon className="h-8 w-8" />}   
-        
-        
-        </div>
-        </div>)}
+      ) : (
+        <Loader type={type as "image" | "text" | "code" | "markdown"} />
+      )}
       </div>
     </div>
   );

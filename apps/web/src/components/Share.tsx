@@ -30,6 +30,7 @@ import styled from "styled-components";
 import ImageUploader from "@/components/ImageUploader";
 import { BsFillInfoSquareFill } from "react-icons/bs";
 import { Dialog, DialogContent } from "@smartleadmagnet/ui/components/ui/dialog";
+import Loader from "@smartleadmagnet/ui/components/Loader";
 
 
 function Loading() {
@@ -359,52 +360,58 @@ export default function BuilderElementPreview() {
   };
 
   return (
-    <FormWrapper theme={formStyles} className="magnet-wrapper">
-      
-      <Dialog open={showInfo}  onOpenChange={()=>{
-        setShowInfo(!showInfo);
-      }}>
-      
-        
-      <DialogContent className="mx-auto max-w-lg" >
-      <h1 className="mb-2 text-center text-xl font-bold">{leadMagnet.name}</h1>
-      <div className="mb-5 text-center" dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }} />
-      </DialogContent>
-    </Dialog>
-      <DynamicStyles cssContent={formStyles.customCss} enableCustomCss={formStyles.enableCustomCss} />
-      
-      {response && <AIResponse isLoading={false} response={response.content} type={response.type} onRegenerate={onRegenerate} />}
-      {!response && (
-        <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
-          <Button variant="link" type="button" onClick={()=>{
+    <>
+    {isSubmitting && <Loader type={leadMagnet.output as "image" | "code" | "text" | "markdown"} />}
+    {
+      !isSubmitting && (<FormWrapper theme={formStyles} className="magnet-wrapper">
+        <Dialog open={showInfo}  onOpenChange={()=>{
           setShowInfo(!showInfo);
-        }} 
-        className="absolute right-0">
-          <BsFillInfoSquareFill className="w-5 h-5 text-gray-500" />
-        </Button>
-          {leadMagnet.image && (
-        <div className="icon mx-auto mb-5 max-w-[100px] text-center">
-          <Image src={leadMagnet.image} alt="Logo" className="rounded-[50%]" width={100} height={100} />
-        </div>
-      )}
-          {elementsList.map((element: any, index: number) => (
-            <div className="form-item" key={index}>
-              {renderElement(element)}
-            </div>
-          ))}
-
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Submit
+        }}>
+        
+          
+        <DialogContent className="mx-auto max-w-lg" >
+        <h1 className="mb-2 text-center text-xl font-bold">{leadMagnet.name}</h1>
+        <div className="mb-5 text-center" dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }} />
+        </DialogContent>
+      </Dialog>
+        <DynamicStyles cssContent={formStyles.customCss} enableCustomCss={formStyles.enableCustomCss} />
+        
+        {response && <AIResponse isLoading={false} response={response.content} type={response.type} onRegenerate={onRegenerate} />}
+        {!response && (
+          <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
+            <Button variant="link" type="button" onClick={()=>{
+            setShowInfo(!showInfo);
+          }} 
+          className="absolute right-0">
+            <BsFillInfoSquareFill className="w-5 h-5 text-gray-500" />
           </Button>
-        </form>
-      )}
-      <div style={{ display: "none" }}>
-       <FontPicker
-        apiKey="AIzaSyAOSZtIN2QS_O1H3z6dsnle1rPBW7nxj9Y" // Replace with your actual API key
-        activeFontFamily={formStyles.selectedFont} // Will be displayed in the FontPicker
-      />
-      </div>
-    </FormWrapper>
+            {leadMagnet.image && (
+          <div className="icon mx-auto mb-5 max-w-[100px] text-center">
+            <Image src={leadMagnet.image} alt="Logo" className="rounded-[50%]" width={100} height={100} />
+          </div>
+        )}
+            {elementsList.map((element: any, index: number) => (
+              <div className="form-item" key={index}>
+                {renderElement(element)}
+              </div>
+            ))}
+  
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Submit
+            </Button>
+          </form>
+        )}
+      
+        <div style={{ display: "none" }}>
+         <FontPicker
+          apiKey="AIzaSyAOSZtIN2QS_O1H3z6dsnle1rPBW7nxj9Y" // Replace with your actual API key
+          activeFontFamily={formStyles.selectedFont} // Will be displayed in the FontPicker
+        />
+        </div>
+      </FormWrapper>)
+    }
+    </>
+    
   );
 }
