@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { ChildItem } from "@/app/types/builder";
 import { ApiKey, LeadMagnet } from "@smartleadmagnet/database";
 import axios, { AxiosError } from "axios";
@@ -147,6 +147,23 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
       ...(styles && typeof styles === "object" ? styles : {}),
     };
   });
+  
+  useEffect(() => {
+    if (leadMagnet) {
+      setSelectedLeadMagnet(leadMagnet);
+      setElementsList(leadMagnet.components as Array<any> || []);
+      setName(leadMagnet.name || "");
+      setPrompt(leadMagnet.prompt || "");
+      setSelectedProvider(llm.find((provider) => provider.name === leadMagnet.provider) || llm[0]);
+      setSelectedModel(leadMagnet.model || selectedProvider?.models[0]?.name || "");
+      setOutputType(leadMagnet.output || "text");
+      setFormStyles((prevStyles) => ({
+        ...defaultFormStyles,
+        ...(leadMagnet.styles && typeof leadMagnet.styles === "object" ? leadMagnet.styles : {}),
+      }));
+    }
+  }, [leadMagnet])
+
   const onPublishLead = async () => {
     setIsPublishing(true);
     try {
@@ -271,10 +288,10 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
   };
   const generateLeadMagnetWithAI = async (description: string) => {
     try {
-      await axios.post(`/api/lead/${selectedLeadMagnet.id}/create`, {
+      const leadResponse = await axios.post(`/api/lead/${selectedLeadMagnet.id}/create`, {
         description,
       });
-      window.location.href = `/builder/${leadMagnet.id}`;
+      setSelectedLeadMagnet(leadResponse?.data);
     } catch (e) {
       toast({
         variant: "destructive",

@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@smartleadmagnet/ui/components/ui/select";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useS3Upload } from "next-s3-upload";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useDropzone } from "react-dropzone";
@@ -28,6 +28,16 @@ export default function SettingsForm() {
   const { uploadToS3, files } = useS3Upload();
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>(leadMagnet?.image || "");
+
+  // Effect to update form values when leadMagnet changes
+  useEffect(() => {
+    setValue("image", leadMagnet.image || "");
+    setValue("name", leadMagnet.name || "");
+    setValue("tagline", leadMagnet.tagline || "");
+    setValue("description", leadMagnet.description || "");
+    setValue("category", leadMagnet.category || "");
+    setImageUrl(leadMagnet.image || "");
+  }, [leadMagnet]);
 
   // Integrating react-hook-form with zod validation
   const {
