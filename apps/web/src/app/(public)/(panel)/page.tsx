@@ -1,13 +1,10 @@
 import HeroSection from "@/components/Homepage/Hero";
-import BrandSection from "@/components/Homepage/BrandSection";
 import FeatureSection from "@/components/Homepage/FeatureSection";
 import ContentImageSection from "@/components/Homepage/ContentImageSection";
 import ServiceSection from "@/components/Homepage/ServiceSection";
 import ClientSection from "@/components/Homepage/ClientSection";
 import AccordionSection from "@/components/Homepage/AccordionSection";
 import CtaSection from "@/components/Homepage/CtaSection";
-import { getSessionUser } from "@/services/user";
-import { redirect } from "next/navigation";
 import getSeo from "@/lib/seo";
 import { WebPageJsonLd, FAQPageJsonLd, ProductJsonLd, OrganizationJsonLd, BreadcrumbJsonLd } from "next-seo";
 import faq from "@/data/faq.json";

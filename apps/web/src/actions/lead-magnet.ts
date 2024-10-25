@@ -8,6 +8,7 @@ import {
   getLeadMagnetById,
   getLeadMagnetsByUser,
   getLeadMagnetUsageById,
+  getLeadMagnetsByPopularity,
 } from "@smartleadmagnet/services";
 import { adjectives, Config, names, starWars, uniqueNamesGenerator } from "unique-names-generator";
 import { getSessionUser } from "@/services/user";
@@ -98,4 +99,8 @@ export async function createFromWebsite(data: {
     console.error("Error creating lead from website:", error);
     throw new Error(error.message);
   }
+}
+
+export async function getTopLeadMagnets(limit: number = 10) {
+  return getLeadMagnetsByPopularity(limit);
 }

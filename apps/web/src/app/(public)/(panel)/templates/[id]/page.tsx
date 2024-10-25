@@ -2,12 +2,10 @@ import Image from "next/image";
 import templateCategories from "@/data/categories.json";
 import Link from "next/link";
 import { getPublicLeadMagnets } from "@smartleadmagnet/services";
-import { ImageIcon } from "lucide-react";
 import React from "react";
-import { marked } from "marked";
-import { createSlug } from "@/utils/slug";
 import SearchBox from "@/components/SearchBox";
 import { SearchParamType } from "@/lib/types";
+import LeadMagnetCard from "@/components/LeadMagnetCard";
 
 export default async function Page({
   params,
@@ -56,53 +54,9 @@ export default async function Page({
       {/* Template Items Section */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {leads.length ? (
-          leads.map((leadMagnet) => {
-            const slug = createSlug(leadMagnet.name);
-            return (
-              <div key={leadMagnet.id} className="rounded-lg border border-gray-200 bg-white p-6 shadow-md">
-                <div className="mb-4 flex items-center space-x-4">
-                  {/* Use Next.js Image component */}
-                  {leadMagnet.image ? (
-                    <Image
-                      className="h-[60px] w-[60px] rounded-full object-cover object-center"
-                      src={leadMagnet.image}
-                      alt={leadMagnet.name}
-                      width={60}
-                      height={60}
-                    />
-                  ) : (
-                    <div className="app_icon">
-                      <ImageIcon className="h-[40px] w-[40px] rounded-full" />
-                    </div>
-                  )}
-
-                  <h2 className="text-2xl font-semibold">{leadMagnet.name}</h2>
-                </div>
-                {leadMagnet.description && (
-                  <>
-                    <p
-                      className="mb-4 text-gray-600"
-                      dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description.slice(0, 200)) }}
-                    />
-                  </>
-                )}
-                <div className="flex space-x-2">
-                  <Link
-                    href={`/templates/view/${slug}`}
-                    className="rounded bg-cyan-500 px-4 py-2 text-white hover:bg-cyan-600"
-                  >
-                    Use This
-                  </Link>
-                  <Link
-                    href={`/templates/use/${slug}`}
-                    className="rounded border border-cyan-500  px-4 py-2  text-cyan-500 hover:bg-cyan-600 hover:text-white"
-                  >
-                    Make it yours
-                  </Link>
-                </div>
-              </div>
-            );
-          })
+          leads.map((leadMagnet) => (
+            <LeadMagnetCard key={leadMagnet.id} leadMagnet={leadMagnet} />
+          ))
         ) : (
           <p>No templates available for this category.</p>
         )}

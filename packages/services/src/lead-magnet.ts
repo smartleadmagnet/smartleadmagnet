@@ -179,3 +179,17 @@ export const getLeadMagnetUsageById = async (leadMagnetId: string): Promise<any>
     leadMagnet, // The LeadMagnet information
   };
 };
+
+export async function getLeadMagnetsByPopularity(limit: number = 10): Promise<LeadMagnet[]> {
+  return prisma.leadMagnet.findMany({
+    where: {
+      status: 'published',
+      public: true,
+    },
+    orderBy: [
+      { usedCount: 'desc' },
+      { impressionsCount: 'desc' },
+    ],
+    take: limit,
+  });
+}
