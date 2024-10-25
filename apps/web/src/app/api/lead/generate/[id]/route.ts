@@ -28,6 +28,7 @@ if (process.env.UPSTASH_REDIS_REST_URL) {
 }
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {

@@ -3,7 +3,8 @@ import { getSessionUser } from "@/services/user";
 import { updateLeadMagnet } from "@smartleadmagnet/services";
 import { createAILead } from "@smartleadmagnet/llm";
 
-export const dynamic = "force-dynamic"; // defaults to force-static
+export const dynamic = "force-dynamic";
+export const maxDuration = 60; // defaults to force-static
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   // get slug id value from the request

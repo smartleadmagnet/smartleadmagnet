@@ -5,7 +5,7 @@ import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Icon from "@smartleadmagnet/ui/components/icon";
 import { Card } from "@smartleadmagnet/ui/components/ui/card";
 import EditableInput from "@/components/EditableInput";
-import { Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@smartleadmagnet/ui/components/ui/tabs";
 import {
@@ -63,8 +63,7 @@ export default function Builder({ user }: { user?: any }) {
     generateLeadMagnetWithAI,
     defaultTab,
     pathname,
-    isPublsiing,
-    
+    isPublishing,
   } = useBuilder(); // Use the custom hook
 
   const filterItems = (searchTerm: string) => {
@@ -104,8 +103,12 @@ export default function Builder({ user }: { user?: any }) {
               <p className="mr-4 font-bold">
                 Last Saved ({formatDistanceToNow(new Date(leadMagnet?.updatedAt!), { addSuffix: true })})
               </p>
-              <Button disabled={isPublsiing} className="btn-primary" onClick={leadMagnet?.status === "published" ? () => {} : onPublishLead}>
-                {isPublsiing &&  <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Button
+                disabled={isPublishing}
+                className="btn-primary"
+                onClick={leadMagnet?.status === "published" ? () => {} : onPublishLead}
+              >
+                {isPublishing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {leadMagnet?.status === "published" ? "Save" : "Publish"}
               </Button>
             </div>
@@ -128,7 +131,7 @@ export default function Builder({ user }: { user?: any }) {
             <div className="flex flex-row items-center justify-center gap-2">
               <div className="relative mr-2">
                 <span className="animate-ripple-pulse absolute inline-flex h-full w-full rounded-md bg-blue-500 opacity-75"></span>
-                <GenerateModal onGenerate={generateLeadMagnetWithAI} />
+                <GenerateModal onGenerate={generateLeadMagnetWithAI} showWarning={elementsList?.length > 0} />
               </div>
               <div className="flex items-center">
                 <Button

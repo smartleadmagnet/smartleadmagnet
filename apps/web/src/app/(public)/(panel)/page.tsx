@@ -32,11 +32,7 @@ export function generateMetadata() {
   });
 }
 
-export default async function Home() {
-  const user = await getSessionUser();
-  if (user) {
-    return redirect("/my-magnets");
-  }
+export default async function Page() {
   return (
     <div className="flex size-full  flex-col">
       <WebPageJsonLd

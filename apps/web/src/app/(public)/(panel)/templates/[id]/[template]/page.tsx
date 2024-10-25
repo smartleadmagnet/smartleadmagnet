@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { getLeadBySlug } from "@smartleadmagnet/services";
 import { marked } from "marked";
 import React from "react";
 import { BuilderProvider } from "@/providers/BuilderProvider";

@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/services/user";
 import { triggerWebhook } from "@/utils/webhook";
 
-export const dynamic = "force-dynamic"; // defaults to force-static
+export const dynamic = "force-dynamic";
+export const maxDuration = 60; // defaults to force-static
 
 export async function POST(req: NextRequest) {
   // get slug id value from the request

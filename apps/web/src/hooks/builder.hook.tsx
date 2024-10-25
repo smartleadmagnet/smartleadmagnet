@@ -6,7 +6,7 @@ import { DropResult } from "react-beautiful-dnd";
 import { ChildItem } from "@/app/types/builder";
 import { builderItems } from "@smartleadmagnet/ui/lib/constants";
 import { useBuilderContext } from "@/providers/BuilderProvider";
-import { useRouter,usePathname,useSearchParams } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 const useBuilder = () => {
   const {
@@ -22,18 +22,18 @@ const useBuilder = () => {
     onPublishLead,
     onClosePaymentModal,
     generateLeadMagnetWithAI,
-    isPublsiing,
+    isPublishing,
   } = useBuilderContext();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  
+
   const [selectedItem, setSelectedItem] = useState<ChildItem | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [embedOpen, setEmbedOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  
-  const defaultTab =  searchParams.get('tab') || "form";
+
+  const defaultTab = searchParams.get("tab") || "form";
 
   const [activeOption, setActiveOption] = useState("info");
   const [selectedView, setSelectedView] = useState("Form");
@@ -248,7 +248,7 @@ const useBuilder = () => {
     creditRequired,
     paymentRequired,
     onPublishLead,
-    isPublsiing,
+    isPublishing,
     onClosePaymentModal,
     pathname,
     defaultTab,

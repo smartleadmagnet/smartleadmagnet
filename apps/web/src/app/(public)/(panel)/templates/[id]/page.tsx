@@ -2,57 +2,56 @@ import Image from "next/image";
 import templateCategories from "@/data/categories.json";
 import Link from "next/link";
 import { getPublicLeadMagnets } from "@smartleadmagnet/services";
-import { Input } from "@smartleadmagnet/ui/components/ui/input";
-import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { ImageIcon } from "lucide-react";
-import { Search } from "lucide-react";
 import React from "react";
 import { marked } from "marked";
 import { createSlug } from "@/utils/slug";
+import SearchBox from "@/components/SearchBox";
+import { SearchParamType } from "@/lib/types";
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams?: SearchParamType;
+}) {
   const { id } = params;
-  const leads = await getPublicLeadMagnets();
-  
+  const query = decodeURIComponent(searchParams?.query || "");
+  const leads = await getPublicLeadMagnets({ category: id, term: query });
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-8 text-center text-5xl font-bold leading-[1.5]">
-        Transform your website in <span className="text-cyan-500">Lead Generation Machine</span><br/>
+        Transform your website in <span className="text-cyan-500">Lead Generation Machine</span>
+        <br />
         with our <span className="text-cyan-500">Lead Magnets</span> Templates.
       </h1>
 
-
       {/* Top Menu - Categories */}
-      <div className="mb-2 flex space-between items-start">
+      <div className="space-between mb-2 flex items-start">
         <nav className="flex flex-wrap overflow-auto">
           {templateCategories.map((category) => (
             <Link
               key={category.id}
               href={`/templates/${category.id}`}
-              className={`no-wrap text-sm bg-cyan-500 mb-3 mr-5 rounded-lg px-4 py-2 font-semibold hover:bg-cyan-500 hover:text-white
+              className={`no-wrap mb-3 mr-5 rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold hover:bg-cyan-500 hover:text-white
               ${id === category.id ? "bg-cyan-500 text-white" : "bg-gray-200"}`}
             >
               {category.name}
             </Link>
           ))}
         </nav>
-        {/* Search Input */}
-        <div className="flex w-full max-w-sm items-center space-x-2">
-      <Input type="text" className="py-5" placeholder="Search..." />
-      <Button type="submit" className="bg-cyan-500 hover:bg-cyan-600"><Search className="w-5 h-5"/></Button>
-    </div>
-    
+        <SearchBox />
       </div>
-      <div className="flex justify-end mb-10">
-      <Link
-        href="/suggest-a-magnet"
-        className="btn btn-primary relative flex items-center px-4 py-2 hover:bg-cyan-600 rounded"
-      >
-        Suggest me a Magnet
-      </Link>
+      <div className="mb-10 flex justify-end">
+        <Link
+          href="/suggest-a-magnet"
+          className="btn btn-primary relative flex items-center rounded px-4 py-2 hover:bg-cyan-600"
+        >
+          Suggest me a Magnet
+        </Link>
       </div>
-      
 
       {/* Template Items Section */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

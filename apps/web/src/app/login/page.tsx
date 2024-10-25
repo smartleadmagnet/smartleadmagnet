@@ -58,7 +58,7 @@ export default function AuthenticationPage({ searchParams }: Props) {
               <CardContent className="pb-3">
                 <MagicLinkForm
                   id="email"
-                  callbackUrl={searchParams?.callbackUrl ? decodeURIComponent(searchParams.callbackUrl) : "/"}
+                  callbackUrl={searchParams?.callbackUrl ? decodeURIComponent(searchParams.callbackUrl) : "/my-magnets"}
                   buttonClass="mt-4 tracking-wide font-semibold btn btn-primary w-full rounded hover:btn-primary transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                   inputClass="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   buttonTitle="Get Code to Log In"
@@ -75,7 +75,9 @@ export default function AuthenticationPage({ searchParams }: Props) {
                   action={async () => {
                     "use server";
                     await signIn("google", {
-                      redirectTo: searchParams?.callbackUrl ? decodeURIComponent(searchParams.callbackUrl) : "/",
+                      redirectTo: searchParams?.callbackUrl
+                        ? decodeURIComponent(searchParams.callbackUrl)
+                        : "/my-magnets",
                     });
                   }}
                   className="w-full"

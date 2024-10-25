@@ -1,6 +1,7 @@
 import {withSentryConfig} from "@sentry/nextjs";
-/** @type {import('next').NextConfig} */
-// import {setupDevPlatform} from "@cloudflare/next-on-pages/next-dev";
+import dotenv from "dotenv";
+
+dotenv.config(); // Load environment variables from .env file
 
 const nextConfig = {
   transpilePackages: ["@smartleadmagnet/ui", "next-mdx-remote"],

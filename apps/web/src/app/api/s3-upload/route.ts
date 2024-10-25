@@ -2,6 +2,7 @@ import { POST } from "next-s3-upload/route";
 import { v4 } from "uuid";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 const getFileExtension = (filename: string) => filename.split(".").pop();
 

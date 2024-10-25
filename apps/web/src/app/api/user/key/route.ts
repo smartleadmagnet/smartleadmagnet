@@ -4,6 +4,7 @@ import { getSessionUser } from "@/services/user";
 import { uuid } from "next-s3-upload";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 export async function POST() {
   try {
