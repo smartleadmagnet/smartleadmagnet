@@ -45,8 +45,6 @@ const ContentViewer: React.FC<ContentViewerProps> = ({ type, content,isLoading }
           <CopyIcon className="h-5 w-5" />
           </button>
           <div className="text-gray-700">{content}</div>
-          
-          
         </div>
       )}
 

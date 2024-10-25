@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-
+import LoginClientSection from "@/components/Homepage/LoginClientSection";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@smartleadmagnet/ui/components/ui/card";
 import { signIn } from "@/lib/auth";
@@ -22,26 +22,36 @@ export default function AuthenticationPage({ searchParams }: Props) {
   return (
     <>
       <div className="container relative  h-[100vh] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-        <div className="bg-muted relative hidden h-full flex-col p-10 text-white lg:flex dark:border-r">
+        <div className="flex  justify-center bg-muted relative hidden h-full flex-col  text-white lg:flex dark:border-r">
           <div className="absolute inset-0 bg-zinc-900" />
-          <div className="relative z-20 flex items-center text-lg font-medium">
+          
+          <LoginClientSection/>
+          
+          
+          <div className="area login-area" >
+            <ul className="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+    </div >
+        </div>
+        <div className="flex h-[100vh] items-center justify-center lg:p-8 login-form-area bg-gray-900 relative">
+        <div className="z-20 flex items-center text-lg font-medium p-10 absolute top-0 justify-center text-center w-full">
             <Link href="/">
               <Image src="/images/logo/logo.png" alt="Logo" width={200} height={0} />
             </Link>
           </div>
-          <div className="relative z-20 mt-auto">
-            <blockquote className="space-y-2">
-              <p className="text-lg">
-                Boost your conversions with intelligent, customizable lead magnets that capture your audience’s
-                attention and grow your business.
-              </p>
-              <footer className="text-sm">Smart Lead Magnet Team</footer>
-            </blockquote>
-          </div>
-        </div>
-        <div className="flex h-[100vh] items-center justify-center lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-            <Card className="m-auto w-full max-w-sm">
+          
+            <Card className="m-auto w-full max-w-sm bg-white">
               <CardHeader>
                 <CardTitle className="text-2xl">Sign In or Register to Get Started</CardTitle>
               </CardHeader>
@@ -77,19 +87,10 @@ export default function AuthenticationPage({ searchParams }: Props) {
                     Sign in with Google
                   </Button>
                 </form>
+                
               </CardFooter>
             </Card>
-            <p className="text-muted-foreground px-8 text-center text-sm">
-              By clicking continue, you agree to our{" "}
-              <Link href="/terms" className="hover:text-primary underline underline-offset-4">
-                Terms of Service
-              </Link>{" "}
-              and{" "}
-              <Link href="/privacy" className="hover:text-primary underline underline-offset-4">
-                Privacy Policy
-              </Link>
-              .
-            </p>
+            
           </div>
         </div>
       </div>

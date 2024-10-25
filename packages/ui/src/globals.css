@@ -356,21 +356,43 @@
 .prompt-content-box {
   position: relative;
   padding-top: 50px;
+  button {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .reload-icon {
+    right: 60px;
+  }
+  .back-to-form{
+    right: auto;
+    left: 0;
+  }
 }
 
-.prompt-content-box button {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
+
 
 /* homepage */
 .hero-section {
   h1 {
-    font-size: 65px;
+    font-size: 60px;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.3;
   }
+  .iframe-container {
+    position: relative;
+    padding-top: 55%;
+    max-width: 1100px;
+    margin: 0 auto;
+    margin-top: -72px;
+}
+
+.iframe-container iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
 
   .hero-shape {
     position: absolute;
@@ -695,6 +717,9 @@
   top: 0;
  
 }
+.login-area{
+  background: linear-gradient(to left, cyan,   black);  
+}
 .pricing-content{
   position: relative;
   z-index: 1;
@@ -814,3 +839,4 @@
   }
 
 }
+

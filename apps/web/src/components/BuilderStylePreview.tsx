@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   Accordion,
   AccordionContent,
@@ -22,6 +22,10 @@ import { useBuilderContext } from "@/providers/BuilderProvider";
 import Image from "next/image";
 import { marked } from "marked";
 import DynamicStyles from "@/components/DynamicStyles";
+import { BsFillInfoSquareFill } from "react-icons/bs";
+import { Dialog, DialogContent } from "@smartleadmagnet/ui/components/ui/dialog";
+
+
 
 interface Props {
   formStyles: any;
@@ -45,6 +49,7 @@ const FormWrapper = styled.div`
   max-width: 600px;
   color: ${(props) => props.theme.textColor};
   margin: 0 auto;
+  position: relative;
 
   padding: 20px;
   border-radius: 5px;
@@ -105,6 +110,8 @@ export default function BuilderStylePreview({
   imageUrl,
 }: Props) {
   const { leadMagnet } = useBuilderContext();
+  const [showInfo, setShowInfo] = useState(false);
+  
 
   return (
     <div className="builder-wrapper flex flex-1">
@@ -244,9 +251,22 @@ export default function BuilderStylePreview({
                   <Image src={leadMagnet.image} alt="Logo" width={100} height={100} />
                 </div>
               )}
-
-              <h1 className="mb-2 text-center text-xl font-bold">{leadMagnet.name}</h1>
-              <div className="mb-5 text-center" dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }} />
+              <Button variant="link" onClick={()=>{
+          setShowInfo(!showInfo);
+        }} 
+        className="absolute right-0 top-0">
+          <BsFillInfoSquareFill className="w-5 h-5 text-gray-500" />
+        </Button>
+      <Dialog open={showInfo}  onOpenChange={()=>{
+        setShowInfo(!showInfo);
+      }}>
+      
+        
+      <DialogContent className="mx-auto max-w-lg" >
+      <h1 className="mb-2 text-center text-xl font-bold">{leadMagnet.name}</h1>
+      <div className="mb-5 text-center" dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }} />
+      </DialogContent>
+    </Dialog>
 
               {selectedView === "Form" ? (
                 <>
@@ -273,18 +293,6 @@ export default function BuilderStylePreview({
                 </>
               ) : (
                 <>
-                  {/* <ContentViewer
-                    type="text"
-                    content={textContent}
-                      /> */}
-                  {/* <ContentViewer
-                      type="markdown"
-                      content={markdownContent}
-                        /> */}
-                  {/* <ContentViewer
-                      type="code"
-                      content={codeContent}
-                        /> */}
                   <ContentViewer type="image" content={imageUrl} />
                 </>
               )}

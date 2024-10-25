@@ -52,7 +52,6 @@ const useShareForm = () => {
   }
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     setLastInput(data);
     await onGenerateLead(data);
   };
@@ -73,6 +72,7 @@ const useShareForm = () => {
     errors,
     onRegenerate,
     leadMagnet,
+    setResponse
   };
 };
 

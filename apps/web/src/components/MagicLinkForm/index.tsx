@@ -10,6 +10,9 @@ import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Spinner from "@smartleadmagnet/ui/components/Spinner";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+
+
 
 type MagicLinkFormProps = {
   id: string;
@@ -199,10 +202,12 @@ const VerifyCode: React.FC<VerifyCodeProps> = ({ email, onError, buttonClass, in
             </>
           )}
         </button>
-        <h3 className="mt-5 max-w-[250px] text-base">
-          {"Enter the code you received in your email (and don't forget to check your "}
-          <b>spam folder</b>).
-        </h3>
+        <IoMdCheckmarkCircleOutline className="text-green-500 w-20 h-20 mx-auto mt-5 mb-2" />
+        <h3 className="text-xl text-center font-bold">Check your email</h3>
+        <p className="mt-2  mx-auto text-base text-center">
+          Enter the code you received in your email <br/>and don't forget to check your 
+           {" "}<br/><b>spam folder</b>.
+        </p>
       </form>
     </div>
   );
