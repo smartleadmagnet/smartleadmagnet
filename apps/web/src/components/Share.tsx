@@ -373,7 +373,7 @@ export default function BuilderElementPreview() {
     </Dialog>
       <DynamicStyles cssContent={formStyles.customCss} enableCustomCss={formStyles.enableCustomCss} />
       
-      {response && <AIResponse isLoading={true} response={response.content} type={response.type} onRegenerate={onRegenerate} />}
+      {response && <AIResponse isLoading={false} response={response.content} type={response.type} onRegenerate={onRegenerate} />}
       {!response && (
         <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
           <Button variant="link" onClick={()=>{
