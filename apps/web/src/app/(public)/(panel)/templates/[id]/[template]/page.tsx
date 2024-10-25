@@ -39,7 +39,7 @@ export default async function Page({ params }: { params: { id: string; template:
           <div className="md:w-1/2">
             <div className="mx-auto max-w-lg">
               <BuilderProvider leadMagnet={leadMagnet}>
-                <BuilderElementPreview hideInfo />
+                <BuilderElementPreview />
               </BuilderProvider>
             </div>
           </div>
