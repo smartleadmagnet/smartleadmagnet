@@ -376,7 +376,7 @@ export default function BuilderElementPreview() {
       {response && <AIResponse isLoading={false} response={response.content} type={response.type} onRegenerate={onRegenerate} />}
       {!response && (
         <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
-          <Button variant="link" onClick={()=>{
+          <Button variant="link" type="button" onClick={()=>{
           setShowInfo(!showInfo);
         }} 
         className="absolute right-0">
