@@ -384,7 +384,7 @@ export default function BuilderElementPreview() {
         </Button>
           {leadMagnet.image && (
         <div className="icon mx-auto mb-5 max-w-[100px] text-center">
-          <Image src={leadMagnet.image} alt="Logo" width={100} height={100} />
+          <Image src={leadMagnet.image} alt="Logo" className="rounded-[50%]" width={100} height={100} />
         </div>
       )}
           {elementsList.map((element: any, index: number) => (
