@@ -356,13 +356,21 @@
 .prompt-content-box {
   position: relative;
   padding-top: 50px;
+  button {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .reload-icon {
+    right: 60px;
+  }
+  .back-to-form{
+    right: auto;
+    left: 0;
+  }
 }
 
-.prompt-content-box button {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
+
 
 /* homepage */
 .hero-section {

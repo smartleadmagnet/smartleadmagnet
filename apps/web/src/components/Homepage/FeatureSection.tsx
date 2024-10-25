@@ -68,7 +68,7 @@ const ProcessSection = () => {
                 <IoIosPeople className="h-[80px] w-[80px]" />
               </div>
               <div className="text-center lg:text-left">
-                <h3 className="mb-2 text-2xl font-bold text-white">Step 3: Collect Leads</h3>
+                <h3 className="mb-2 text-2xl font-bold text-white">Step 4: Collect Leads</h3>
                 <p className="text-lg text-white">
                   Capture valuable lead information, such as email addresses and names, when users interact with your
                   lead magnet.

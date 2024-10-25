@@ -11,9 +11,7 @@ interface Preview {
 
 const useShareForm = () => {
   const { leadMagnet, elementsList, outputType, formStyles } = useBuilderContext();
-  const [response, setResponse] = useState<Preview | undefined>({
-    type: "text", content: "Smaple"
-  });
+  const [response, setResponse] = useState<Preview | undefined>();
   const [lastInput, setLastInput] = useState<any>();
 
   const {
@@ -54,7 +52,6 @@ const useShareForm = () => {
   }
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     setLastInput(data);
     await onGenerateLead(data);
   };

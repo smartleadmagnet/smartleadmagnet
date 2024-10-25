@@ -107,10 +107,8 @@ const FormWrapper = styled.div`
 `;
 
 
-interface BuilderElementPreviewProps {
-  hideInfo?: boolean;
-}
-export default function BuilderElementPreview({hideInfo}: BuilderElementPreviewProps) {
+
+export default function BuilderElementPreview() {
   const {
     onSubmit,
     isSubmitting,
@@ -362,12 +360,7 @@ export default function BuilderElementPreview({hideInfo}: BuilderElementPreviewP
 
   return (
     <FormWrapper theme={formStyles} className="magnet-wrapper">
-      <Button variant="link" onClick={()=>{
-          setShowInfo(!showInfo);
-        }} 
-        className="absolute right-0">
-          <BsFillInfoSquareFill className="w-5 h-5 text-gray-500" />
-        </Button>
+      
       <Dialog open={showInfo}  onOpenChange={()=>{
         setShowInfo(!showInfo);
       }}>
@@ -380,9 +373,15 @@ export default function BuilderElementPreview({hideInfo}: BuilderElementPreviewP
     </Dialog>
       <DynamicStyles cssContent={formStyles.customCss} enableCustomCss={formStyles.enableCustomCss} />
       
-      {response && <AIResponse response={response.content} type={response.type} onRegenerate={onRegenerate} />}
+      {response && <AIResponse isLoading={true} response={response.content} type={response.type} onRegenerate={onRegenerate} />}
       {!response && (
         <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
+          <Button variant="link" onClick={()=>{
+          setShowInfo(!showInfo);
+        }} 
+        className="absolute right-0">
+          <BsFillInfoSquareFill className="w-5 h-5 text-gray-500" />
+        </Button>
           {leadMagnet.image && (
         <div className="icon mx-auto mb-5 max-w-[100px] text-center">
           <Image src={leadMagnet.image} alt="Logo" width={100} height={100} />
