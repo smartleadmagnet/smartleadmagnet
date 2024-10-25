@@ -15,12 +15,14 @@ const AIResponse = ({
   response,
   onRegenerate,
   type = "text",
-  isLoading
+  isLoading,
+  handleBack
 }: {
   response: string;
   onRegenerate: any;
   type?: string;
   isLoading?: boolean;
+  handleBack:()=>void;
 }) => {
   const [copy, isCopied] = useCopyToClipboard();
 
@@ -64,7 +66,9 @@ const AIResponse = ({
               </SyntaxHighlighter>
             </>
           )}
-          <Button onClick={onRegenerate} className="back-to-form bg-cyan-500 hover:bg-cyan-600">
+          <Button onClick={()=>{
+            handleBack();
+          }} type="button" className="back-to-form bg-cyan-500 hover:bg-cyan-600">
             Back to form
           </Button>
           <Button variant="outline" onClick={onRegenerate} className="reload-icon">
