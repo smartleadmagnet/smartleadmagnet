@@ -33,7 +33,7 @@ const useBuilder = () => {
   const [embedOpen, setEmbedOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-  const defaultTab = searchParams.get("tab") || "form";
+  const defaultTab = searchParams?.get("tab") || "form";
 
   const [activeOption, setActiveOption] = useState("info");
   const [selectedView, setSelectedView] = useState("Form");

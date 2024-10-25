@@ -15,7 +15,7 @@ export default function SearchBox({ placeholder = "Search..." }: SearchProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const query = searchParams.get("query");
+  const query = searchParams?.get("query");
 
   useEffect(() => {
     if (query) {
@@ -25,7 +25,7 @@ export default function SearchBox({ placeholder = "Search..." }: SearchProps) {
 
   const handleSearch = useCallback(
     async (term: string) => {
-      const params = new URLSearchParams(searchParams);
+      const params = new URLSearchParams(searchParams ?? "");
       params.delete("page");
       if (term) {
         params.set("query", encodeURIComponent(term));

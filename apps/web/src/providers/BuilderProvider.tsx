@@ -154,7 +154,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
       setElementsList(leadMagnet.components as Array<any> || []);
       setName(leadMagnet.name || "");
       setPrompt(leadMagnet.prompt || "");
-      setSelectedProvider(llm.find((provider) => provider.name === leadMagnet.provider) || llm[0]);
+      setSelectedProvider((llm.find((provider) => provider.name === leadMagnet.provider) || llm[0]) as LLMProvider);
       setSelectedModel(leadMagnet.model || selectedProvider?.models[0]?.name || "");
       setOutputType(leadMagnet.output || "text");
       setFormStyles((prevStyles) => ({
