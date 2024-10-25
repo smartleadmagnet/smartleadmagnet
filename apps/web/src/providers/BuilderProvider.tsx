@@ -240,8 +240,9 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         );
         setSelectedLeadMagnet(leadResponse?.data);
       } catch (e: any) {
-        if (e.name === "AbortError") {
-          console.log("Request aborted");
+        if (axios.isCancel(e)) {
+          console.log("Request cancelled");
+          // Don't show error toast for cancelled requests
         } else {
           toast({
             variant: "destructive",
@@ -274,16 +275,18 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         const leadResponse = await axios.post(`/api/lead/${leadMagnet.id}`, form, { signal: abortController.signal });
         setSelectedLeadMagnet(leadResponse?.data);
       } catch (e: any) {
-        if (e.name === "AbortError") {
-          console.log("Request aborted");
+        if (axios.isCancel(e)) {
+          console.log("Request cancelled");
+          // Don't show error toast for cancelled requests
         } else {
           toast({
             variant: "destructive",
             description: "Could not update lead magnet",
           });
         }
+      } finally {
+        setIsSavingSetting(false);
       }
-      setIsSavingSetting(false);
     }, 300);
   };
   const generateLeadMagnetWithAI = async (description: string) => {
