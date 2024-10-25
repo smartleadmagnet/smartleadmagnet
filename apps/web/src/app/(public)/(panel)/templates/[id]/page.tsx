@@ -46,7 +46,7 @@ export default async function Page({
       </div>
       <div className="mb-10 flex justify-end">
         <Link
-          href="/suggest-a-magnet"
+          href="/suggest-magnet"
           className="btn btn-primary relative flex items-center rounded px-4 py-2 hover:bg-cyan-600"
         >
           Suggest me a Magnet

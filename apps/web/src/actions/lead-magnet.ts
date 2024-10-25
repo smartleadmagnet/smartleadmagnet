@@ -74,3 +74,28 @@ export async function getBySlug(template: string) {
   }
   return null;
 }
+
+export async function createFromWebsite(data: {
+  name: string;
+  outputType: string;
+  prompt: string;
+  components: any[];
+  websiteUrl: string;
+}): Promise<LeadMagnet> {
+  const user = await getSessionUser();
+  try {
+    // @ts-ignore
+    return createLeadMagnet({
+      name: data.name,
+      status: "pending",
+      prompt: data.prompt,
+      components: data.components,
+      userId: user?.id!,
+      description: `Lead magnet generated from ${data.websiteUrl}`,
+      output: data.outputType
+    });
+  } catch (error: any) {
+    console.error("Error creating lead from website:", error);
+    throw new Error(error.message);
+  }
+}

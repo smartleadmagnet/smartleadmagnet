@@ -11,7 +11,7 @@ const CtaSection = () => {
           </p>
           <div className="flex flex-col items-center justify-center space-y-4 md:flex-row md:space-x-4 md:space-y-0">
             <Link
-              href="/suggest-a-magnet"
+              href="/suggest-magnet"
               className="w-full rounded border border-cyan-500 bg-cyan-500 px-6 py-4 text-center text-lg font-bold text-white hover:border-cyan-600 hover:bg-cyan-600 hover:text-white md:w-auto"
             >
               Suggest me a Magnet

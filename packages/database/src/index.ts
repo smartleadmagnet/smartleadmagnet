@@ -40,20 +40,20 @@ if (process.env.NODE_ENV === "production") {
       log: [
         {
           emit: "stdout",
-          level: "query",
-        },
-        {
-          emit: "stdout",
           level: "error",
         },
-        {
-          emit: "stdout",
-          level: "info",
-        },
-        {
-          emit: "stdout",
-          level: "warn",
-        },
+        // {
+        //   emit: "stdout",
+        //   level: "info",
+        // },
+        // {
+        //   emit: "stdout",
+        //   level: "query",
+        // },
+        // {
+        //   emit: "stdout",
+        //   level: "warn",
+        // },
       ],
     });
   }
