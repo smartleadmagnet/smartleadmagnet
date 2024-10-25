@@ -6,6 +6,7 @@ import React from "react";
 import SearchBox from "@/components/SearchBox";
 import { SearchParamType } from "@/lib/types";
 import LeadMagnetCard from "@/components/LeadMagnetCard";
+import { getSessionUser } from "@/services/user";
 
 export default async function Page({
   params,
@@ -17,6 +18,7 @@ export default async function Page({
   const { id } = params;
   const query = decodeURIComponent(searchParams?.query || "");
   const leads = await getPublicLeadMagnets({ category: id, term: query });
+  const user = await getSessionUser();
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -55,7 +57,7 @@ export default async function Page({
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {leads.length ? (
           leads.map((leadMagnet) => (
-            <LeadMagnetCard key={leadMagnet.id} leadMagnet={leadMagnet} />
+            <LeadMagnetCard key={leadMagnet.id} leadMagnet={leadMagnet} user={user} />
           ))
         ) : (
           <p>No templates available for this category.</p>

@@ -4,14 +4,16 @@ import Link from 'next/link';
 import { ImageIcon } from 'lucide-react';
 import { marked } from 'marked';
 import { createSlug } from '@/utils/slug';
-import { LeadMagnet } from '@smartleadmagnet/database';
+import { LeadMagnet, User } from '@smartleadmagnet/database';
+import CloneMagnetButton from './CloneMagnetButton';
 
 interface LeadMagnetCardProps {
   leadMagnet: LeadMagnet;
+  user?: any;
 }
 
-const LeadMagnetCard: React.FC<LeadMagnetCardProps> = ({ leadMagnet }) => {
-  const slug = createSlug(leadMagnet.name);
+const LeadMagnetCard: React.FC<LeadMagnetCardProps> = ({ leadMagnet, user }) => {
+  const slug = createSlug(leadMagnet?.name);
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md">
@@ -44,12 +46,7 @@ const LeadMagnetCard: React.FC<LeadMagnetCardProps> = ({ leadMagnet }) => {
         >
           Use This
         </Link>
-        <Link
-          href={`/templates/use/${slug}`}
-          className="rounded border border-cyan-500 px-4 py-2 text-cyan-500 hover:bg-cyan-600 hover:text-white"
-        >
-          Make it yours
-        </Link>
+        <CloneMagnetButton leadMagnetId={leadMagnet.id} userId={user?.id} />
       </div>
     </div>
   );

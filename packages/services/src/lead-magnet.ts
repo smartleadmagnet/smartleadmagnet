@@ -150,6 +150,7 @@ export async function copyLeadMagnet(id: string, userId: string) {
       status: "pending",
       apiKeyId: null,
       webhook: "",
+      public: false,
       userId,
       name: `${leadMagnet?.name!} - Copy`,
     },

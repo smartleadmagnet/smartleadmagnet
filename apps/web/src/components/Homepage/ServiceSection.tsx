@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { getTopLeadMagnets } from "@/actions/lead-magnet";
 import LeadMagnetCard from "@/components/LeadMagnetCard";
+import { getSessionUser } from "@/services/user";
 
 const ServiceSection: React.FC = async () => {
   const topLeadMagnets = await getTopLeadMagnets(10);
+  const user = await getSessionUser();
 
   return (
     <div className="service-section bg-gradient-to-r from-cyan-500 to-blue-600 py-16" id="services">
@@ -15,7 +17,7 @@ const ServiceSection: React.FC = async () => {
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {topLeadMagnets.map((magnet) => (
-            <LeadMagnetCard key={magnet.id} leadMagnet={magnet} />
+            <LeadMagnetCard key={magnet.id} leadMagnet={magnet} user={user} />
           ))}
         </div>
 

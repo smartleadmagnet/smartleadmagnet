@@ -8,7 +8,6 @@ export default function CopyMagnet({ id }: { id: string }) {
     "use server";
 
     const lead = await cloneLead(id);
-    console.log(lead);
     redirect(`/builder/${lead?.id!}`);
   };
 
