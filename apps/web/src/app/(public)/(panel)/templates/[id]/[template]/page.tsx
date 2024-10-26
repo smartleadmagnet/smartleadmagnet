@@ -9,6 +9,7 @@ import { ImEmbed2 } from "react-icons/im";
 import { cloneLead, createLead, getBySlug } from "@/actions/lead-magnet";
 import { IoIosPeople } from "react-icons/io";
 import { redirect } from "next/navigation";
+import CloneMagnetButton from "@/components/CloneMagnetButton";
 
 export default async function Page({ params }: { params: { id: string; template: string } }) {
   const { template } = params;
@@ -35,45 +36,46 @@ export default async function Page({ params }: { params: { id: string; template:
   return (
     <>
       <div className="container mx-auto mb-10 px-4 py-10">
-        <div className="md:flex">
-          <div className="md:w-1/2">
-            <div className="mx-auto max-w-lg">
-              <BuilderProvider leadMagnet={leadMagnet}>
-                <BuilderElementPreview />
-              </BuilderProvider>
-            </div>
-          </div>
-          <div className="p-8 md:w-1/2">
-            <h1 className="mb-4 text-3xl font-bold text-gray-800">{leadMagnet?.name}</h1>
-            {leadMagnet?.description && (
-              <>
-                <div
-                  className="mx-auto mb-2 max-w-4xl text-gray-600"
-                  dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }}
-                />
-              </>
-            )}
-            <div className="flex">
-              <form>
-                <Button
-                  formAction={onCreate}
-                  className="mr-5 rounded border border-cyan-500 bg-cyan-500 px-6 py-6 text-lg font-bold text-white hover:border-cyan-600 hover:bg-cyan-600 hover:text-white"
-                >
-                  Start From Scratch
-                </Button>
-              </form>
-              <form>
-                <Button
-                  formAction={onClone}
-                  className="rounded border border-cyan-500 bg-white px-6 py-6 text-lg font-bold text-cyan-500 hover:border-cyan-600 hover:bg-cyan-600 hover:text-white"
-                >
-                  Make it Yours
-                </Button>
-              </form>
-            </div>
-          </div>
-        </div>
+  <div className="flex flex-col md:flex-row">
+    {/* Left Section */}
+    <div className="w-full md:w-1/2">
+      <div className="mx-auto max-w-lg">
+        <BuilderProvider leadMagnet={leadMagnet}>
+          <BuilderElementPreview />
+        </BuilderProvider>
       </div>
+    </div>
+
+    {/* Right Section */}
+    <div className="p-6 md:p-8 w-full md:w-1/2 mt-8 md:mt-0">
+      <h1 className="mb-4 text-2xl md:text-3xl font-bold text-gray-800 text-center md:text-left">
+        {leadMagnet?.name}
+      </h1>
+      {leadMagnet?.description && (
+        <div
+          className="mx-auto mb-4  text-gray-600"
+          dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }}
+        />
+      )}
+
+      <div className="flex flex-col md:flex-row gap-4">
+        {/* Start From Scratch Button */}
+        <form>
+          <Button
+            formAction={onCreate}
+            className="rounded border border-cyan-500 bg-cyan-500 px-4 py-4  font-bold text-white hover:border-cyan-600 hover:bg-cyan-600"
+          >
+            Start From Scratch
+          </Button>
+        </form>
+
+        {/* Make it Yours Button */}
+        <CloneMagnetButton leadMagnetId={leadMagnet.id} />
+      </div>
+    </div>
+  </div>
+</div>
+
 
       {/* Three Steps */}
       <div className="bg-gradient-to-r from-cyan-500 to-blue-400 py-16">
@@ -96,7 +98,7 @@ export default async function Page({ params }: { params: { id: string; template:
                 <p className="mb-5 text-lg text-white">
                   Use the pre-built templates and customize them with your brand logo, title, and more.
                 </p>
-                <Button className="bg-cyan-900 px-8 py-6 font-bold text-white">Make it yours</Button>
+                <CloneMagnetButton leadMagnetId={leadMagnet.id} overrideClasses="bg-cyan-900 px-8 py-6 font-bold text-white" />
               </div>
             </div>
 
@@ -129,9 +131,7 @@ export default async function Page({ params }: { params: { id: string; template:
           </div>
 
           <div className="flex justify-center">
-            <button className="rounded-lg bg-cyan-900 px-10 py-5 text-xl font-bold text-white  transition duration-300 hover:bg-gray-900">
-              Make it Yours
-            </button>
+            <CloneMagnetButton leadMagnetId={leadMagnet.id} overrideClasses="rounded-lg bg-cyan-900 px-10 py-8 text-xl font-bold text-white  transition duration-300 hover:bg-gray-900" />
           </div>
         </div>
       </div>
