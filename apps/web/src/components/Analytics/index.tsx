@@ -12,7 +12,7 @@ const GoogleTagManager = dynamic(() => import("./google-tag-manager"), {
   ssr: false,
 });
 
-export const Index = () => {
+export const Analytics = () => {
   if (!isProd) {
     return null;
   }
@@ -29,4 +29,4 @@ export const Index = () => {
   return null;
 };
 
-export default Index;
+export default Analytics;

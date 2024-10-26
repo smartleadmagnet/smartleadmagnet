@@ -3,6 +3,7 @@ import { Providers } from "@/providers";
 import { Toaster } from "@smartleadmagnet/ui/components/ui/toaster";
 import { Toaster as ReactHotToast } from "react-hot-toast";
 import Support from "@/components/Support";
+import Analytics from "@/components/Analytics";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -25,6 +26,7 @@ export default function RootLayout({
         <Toaster />
         <ReactHotToast />
         <Support />
+        <Analytics />
       </body>
     </html>
   );
