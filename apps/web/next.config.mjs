@@ -1,9 +1,4 @@
 import {withSentryConfig} from "@sentry/nextjs";
-// import pkg from '@next/env';
-// const { loadEnvConfig } = pkg;
-
-const projectDir = process.cwd()
-loadEnvConfig(projectDir)
 
 const nextConfig = {
   transpilePackages: ["@smartleadmagnet/ui", "next-mdx-remote"],
