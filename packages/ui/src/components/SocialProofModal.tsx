@@ -19,29 +19,36 @@ const countries = [
 ];
 
 const showToast = () => {
-    const country = countries[Math.floor(Math.random() * countries.length)];
-    const hoursAgo = Math.floor(Math.random() * (12 - 3 + 1)) + 3;
-    toast.custom((t) => (
-      <div className="bg-white rounded-lg shadow-lg p-6 w-96" style={{ display: 'flex', alignItems: 'center', gap: '4' }}>
-        <img src="/logo-short.png" alt="SmartLeadMagnet Logo" className="w-16 h-16" />
-        <div className="flex flex-col gap-1 ml-4">
-          <p className="text-gray-700 font-medium">{`SmartLeadMagnet published in ${country}`}</p>
-          <p className="text-gray-500 text-sm">{`${hoursAgo} hours ago`}</p>
+  const country = countries[Math.floor(Math.random() * countries.length)];
+  const hoursAgo = Math.floor(Math.random() * (12 - 3 + 1)) + 3;
+  toast.custom(
+    (t) => (
+      <div
+        className="w-96 rounded-lg bg-white p-6 shadow-lg"
+        style={{ display: "flex", alignItems: "center", gap: "4" }}
+      >
+        <img src="/logo-short.png" alt="SmartLeadMagnet Logo" className="h-16 w-16" />
+        <div className="ml-4 flex flex-col gap-1">
+          <p className="font-medium text-gray-700">{`SmartLeadMagnet published in ${country}`}</p>
+          <p className="text-sm text-gray-500">{`${hoursAgo} hours ago`}</p>
         </div>
       </div>
-    ), {
-      position: "bottom-left"
-    });
-  };
+    ),
+    {
+      position: "bottom-left",
+    }
+  );
+};
 
 const SocialProofModal = () => {
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-        console.log("showToast")
-        showToast()
+    if (process.env.NEXT_PUBLIC_ENABLE_TOAST_SOCIAL_PROOF) {
+      const timeoutId = setTimeout(() => {
+        showToast();
       }, 3000);
 
       return () => clearTimeout(timeoutId);
+    }
   }, []);
   return <div />;
 };
