@@ -24,7 +24,7 @@ const ServiceSection: React.FC = async () => {
         <div className="mt-12 flex justify-center">
           <Link
             href="/templates"
-            className="rounded-lg bg-cyan-900 px-10 py-5 text-xl font-bold text-white transition duration-300 hover:bg-gray-900"
+            className="rounded-lg bg-cyan-800  hover:bg-cyan-900 px-10 py-5 text-xl font-bold text-white transition duration-300"
           >
             Browse All Templates
           </Link>

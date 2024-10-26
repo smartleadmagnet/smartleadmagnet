@@ -34,8 +34,8 @@ const LeadMagnetCard: React.FC<LeadMagnetCardProps> = ({ leadMagnet, user }) => 
         <h2 className="text-2xl font-semibold">{leadMagnet.name}</h2>
       </div>
       {leadMagnet.description && (
-        <p
-          className="mb-4 text-gray-600"
+        <div
+          className="mb-5 text-gray-600"
           dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description.slice(0, 200)) }}
         />
       )}
