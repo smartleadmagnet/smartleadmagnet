@@ -6,15 +6,15 @@ const ImageContentSection = () => {
       {/* Adjusted padding for mobile and larger screens */}
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row-reverse">
-          <div className="w-full sm:mb-5 lg:w-6/12 ">
-            <div className="relative flex justify-center lg:justify-end">
+          <div className="w-full sm:mb-5 lg:w-6/12  flex justify-center items-center">
+            <div className="relative flex justify-center items-center">
               {/* Responsive image */}
               <Image
-                src="https://placehold.co/600x400.png"
+                src="/images/home/dnd_design.jpg"
                 alt="alternative text"
-                width={400} // Adjust width based on screen size
+                width={600} // Adjust width based on screen size
                 height={400}
-                className="object-contain w-full max-w-xs sm:max-w-md lg:max-w-lg"
+                className="object-contain w-full lg:pl-10"
                 // Ensures the image is responsive
               />
             </div>
