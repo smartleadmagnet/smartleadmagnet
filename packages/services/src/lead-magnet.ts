@@ -57,6 +57,7 @@ export async function getLeadBySlug(slug: string): Promise<any> {
         equals: name,
         mode: "insensitive",
       },
+      status: "published",
     },
   });
 }
@@ -72,8 +73,11 @@ export const updateLeadMagnet = async (id: string, userId: string, data: Partial
 };
 
 export const deleteLeadMagnet = async (id: string) => {
-  return prisma.leadMagnet.delete({
+  return prisma.leadMagnet.update({
     where: { id },
+    data: {
+      status: "deleted",
+    },
   });
 };
 
@@ -81,6 +85,9 @@ export const getLeadMagnetsByUser = async (userId: string, status?: string) => {
   return prisma.leadMagnet.findMany({
     where: {
       userId,
+      status: {
+        in: ["published", "pending"],
+      },
       ...(status && { status }), // Only include status if it's provided
     },
   });
@@ -184,7 +191,7 @@ export const getLeadMagnetUsageById = async (leadMagnetId: string): Promise<any>
 export async function getLeadMagnetsByPopularity(limit: number = 10): Promise<LeadMagnet[]> {
   return prisma.leadMagnet.findMany({
     where: {
-      status: 'published',
+      status: "published",
       public: true,
     },
     orderBy: [

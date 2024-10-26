@@ -127,9 +127,10 @@ model LeadMagnet {
   updatedAt        DateTime?         @default(now()) @updatedAt
   apiKeyId         String?           @db.ObjectId
   apiKey           ApiKey?           @relation(fields: [apiKeyId], references: [id])
-
+  
   @@index([public])
   @@index([category])
+  @@index([status])
 }
 
 model LeadMagnetUsage {
