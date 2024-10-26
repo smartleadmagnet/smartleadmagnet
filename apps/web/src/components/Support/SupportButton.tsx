@@ -2,14 +2,15 @@
 
 import classNames from "classnames";
 import React from "react";
+import { Button } from "@smartleadmagnet/ui/components/ui/button";
 
 type ButtonProps = {
   className?: string;
   name?: string;
 };
-const Button: React.FC<ButtonProps> = ({ className, name = "Support" }) => {
+const SupportButton: React.FC<ButtonProps> = ({ className, name = "Support" }) => {
   return (
-    <button
+    <Button
       className={classNames(
         "flex text-base transition-all duration-200 hover:text-blue-600 focus:text-blue-600",
         className
@@ -19,8 +20,8 @@ const Button: React.FC<ButtonProps> = ({ className, name = "Support" }) => {
       }}
     >
       {name}
-    </button>
+    </Button>
   );
 };
 
-export default Button;
+export default SupportButton;

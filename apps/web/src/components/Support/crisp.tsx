@@ -2,7 +2,6 @@
 
 import { Crisp } from "crisp-sdk-web";
 import { useEffect } from "react";
-import { Env } from "@/lib/Env.mjs";
 import { useSearchParams } from "next/navigation";
 
 const CrispChat = () => {
@@ -10,8 +9,9 @@ const CrispChat = () => {
   const support = searchParams?.get("support");
 
   useEffect(() => {
-    if (Env.NEXT_PUBLIC_CRISP_ID) {
-      Crisp.configure(Env.NEXT_PUBLIC_CRISP_ID);
+    const crispPublicId = process.env.NEXT_PUBLIC_CRISP_ID;
+    if (crispPublicId) {
+      Crisp.configure(crispPublicId);
       Crisp?.session?.onLoaded(() => {
         if (support) {
           window.$crisp.push(["do", "chat:open"]);

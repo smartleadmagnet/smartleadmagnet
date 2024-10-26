@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import React from "react";
-import { Env } from "@/lib/Env.mjs";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -13,7 +12,7 @@ export const Index = () => {
     return null;
   }
 
-  if (isProd && Env.NEXT_PUBLIC_CRISP_ID) {
+  if (isProd && process.env.NEXT_PUBLIC_CRISP_ID) {
     return <Crisp />;
   }
 
