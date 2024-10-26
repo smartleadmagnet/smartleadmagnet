@@ -147,11 +147,11 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
       ...(styles && typeof styles === "object" ? styles : {}),
     };
   });
-  
+
   useEffect(() => {
     if (leadMagnet) {
       setSelectedLeadMagnet(leadMagnet);
-      setElementsList(leadMagnet.components as Array<any> || []);
+      setElementsList((leadMagnet.components as Array<any>) || []);
       setName(leadMagnet.name || "");
       setPrompt(leadMagnet.prompt || "");
       setSelectedProvider((llm.find((provider) => provider.name === leadMagnet.provider) || llm[0]) as LLMProvider);
@@ -162,7 +162,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         ...(leadMagnet.styles && typeof leadMagnet.styles === "object" ? leadMagnet.styles : {}),
       }));
     }
-  }, [leadMagnet])
+  }, [leadMagnet]);
 
   const onPublishLead = async () => {
     setIsPublishing(true);
@@ -319,6 +319,7 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
 
   const updateElementList = async (components: any) => {
     setElementsList(components);
+    console.log("components", JSON.stringify({ components }));
     await updateData({ components });
   };
 

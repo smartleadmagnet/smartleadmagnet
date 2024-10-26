@@ -130,7 +130,7 @@ const useBuilder = () => {
     }
 
     // Update the elements list with the modified item
-    setElementsList((prevList) => prevList.map((item, i) => (i === index ? updatedItem : item)));
+    setElementsList(elementsList.map((item, i) => (i === index ? updatedItem : item)));
 
     // If builderSelected exists, return the updated item
     if (builderSelected) {

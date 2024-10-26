@@ -34,23 +34,21 @@ export default function BuilderEditor(props: BuilderEditorProps) {
 
       {/* Edit Options Rendered from Data */}
       <div>
-            <Label className="mb-2 block text-sm font-semibold">Label</Label>
+        <Label className="mb-2 block text-sm font-semibold">Label</Label>
 
-            <div className="mb-4 flex flex-col">
-              <Input
-                value={data.label}
-                onChange={(e) => {
-                  updateData("label", e.target.value);
-                }}
-                className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            {data.error && <p className="mt-2 text-sm text-red-500">{data.error}</p>}
-          </div>
+        <div className="mb-4 flex flex-col">
+          <Input
+            value={data.label}
+            onChange={(e) => {
+              updateData("label", e.target.value);
+            }}
+            className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        {data.error && <p className="mt-2 text-sm text-red-500">{data.error}</p>}
+      </div>
       <div>
-        {!["image", "file", "radio", "select", "checkbox-group", "checkbox", "number", "color",].includes(
-          data.type
-        ) && (
+        {!["image", "file", "radio", "select", "checkbox-group", "checkbox", "number", "color"].includes(data.type) && (
           <div>
             <Label className="mb-2 block text-sm font-semibold">Value</Label>
 
@@ -66,9 +64,7 @@ export default function BuilderEditor(props: BuilderEditorProps) {
             {data.error && <p className="mt-2 text-sm text-red-500">{data.error}</p>}
           </div>
         )}
-        {!["image", "file", "radio",  "checkbox-group", "checkbox", "number", "color",].includes(
-          data.type
-        ) && (
+        {!["image", "file", "radio", "checkbox-group", "checkbox", "number", "color"].includes(data.type) && (
           <div>
             <Label className="mb-2 block text-sm font-semibold">Placeholder</Label>
 
@@ -180,7 +176,6 @@ export default function BuilderEditor(props: BuilderEditorProps) {
                 <MultiSelectCreatable
                   options={data?.options || []}
                   onChange={(value) => {
-                    // TODO
                     // @ts-ignore
                     updateData("options", value);
                   }}
