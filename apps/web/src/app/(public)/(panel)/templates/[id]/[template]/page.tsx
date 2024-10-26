@@ -63,14 +63,14 @@ export default async function Page({ params }: { params: { id: string; template:
         <form>
           <Button
             formAction={onCreate}
-            className="rounded border border-cyan-500 bg-cyan-500 px-4 py-4  font-bold text-white hover:border-cyan-600 hover:bg-cyan-600"
+            className="rounded border border-cyan-500 text-lg bg-cyan-500 px-4 py-6  font-bold text-white hover:border-cyan-600 hover:bg-cyan-600"
           >
             Start From Scratch
           </Button>
         </form>
 
         {/* Make it Yours Button */}
-        <CloneMagnetButton leadMagnetId={leadMagnet.id} />
+        <CloneMagnetButton leadMagnetId={leadMagnet.id} overrideClasses="flex items-center rounded border border-cyan-500 px-4 py-6 text-cyan-500 bg-white hover:bg-cyan-500 hover:text-white text-lg" />
       </div>
     </div>
   </div>
