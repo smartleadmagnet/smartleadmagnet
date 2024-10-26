@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import templateCategories from "@/data/categories.json";
-import Icon from "@smartleadmagnet/ui/components/icon";
+
 import { ChevronDown, PanelLeft } from "lucide-react";
+import { FaFacebook,FaYoutube,FaGithub } from "react-icons/fa";
+
 
 import { Sheet, SheetContent, SheetTrigger } from "@smartleadmagnet/ui/components/ui/sheet";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
@@ -139,19 +141,20 @@ function Footer() {
               height={75} // Adjust height as necessary
               className="mb-4 ml-[-20px]"
             />
-            <p className="mb-4 text-center text-xl md:text-left">Skyrocket Your Conversions</p>
+            <p className="mb-4 text-center text-xl md:text-left">Proudly Open Source ❤️ </p>
 
             {/* Social Media Links */}
             <div className="flex space-x-4">
-              <Link href="https://facebook.com" target="_blank" className="hover:text-gray-500">
-                <Icon name="facebook" />
+              <Link href="https://www.facebook.com/people/Smartleadmagnet/61567550700439/" target="_blank" className="hover:text-gray-500">
+                <FaFacebook className="w-8 h-8 text-blue-500" />
               </Link>
-              <Link href="https://twitter.com" target="_blank" className="hover:text-gray-500">
-                <Icon name="twitter" />
+              <Link href="https://www.youtube.com/channel/UCsYNmeoFcdVw37w_-xd4h3A" target="_blank" className="hover:text-gray-500">
+                <FaYoutube className="w-8 h-8 text-red-500" />
               </Link>
-              <Link href="https://linkedin.com" target="_blank" className="hover:text-gray-500">
-                <Icon name="linkedin" />
+              <Link href="https://github.com/smartleadmagnet/smartleadmagnet" target="_blank" className="hover:text-gray-500">
+                <FaGithub className="w-8 h-8 text-white" />
               </Link>
+              
             </div>
           </div>
 

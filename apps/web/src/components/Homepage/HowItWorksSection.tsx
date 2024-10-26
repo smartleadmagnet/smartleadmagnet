@@ -43,7 +43,7 @@ const HowItWorksSection: React.FC = () => {
                   <h3 className="text-xl font-semibold">Launch and start collecting leads</h3>
                   <p className="mt-2">User-friendly setup process, no technical expertise required.</p>
                   <SupportButton
-                    className="mt-2 inline-block rounded border border-cyan-500 px-4 py-2 text-cyan-500 hover:bg-cyan-500 hover:text-white"
+                    className="mt-2 inline-block bg-white rounded border border-cyan-500 px-4 py-2 text-cyan-500 hover:bg-cyan-500 hover:text-white"
                     name="Need help? Contact our support team" />
                 </div>
               </li>

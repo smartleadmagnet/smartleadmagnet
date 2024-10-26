@@ -11,7 +11,7 @@ export const InteractiveIframe: React.FC<InteractiveIframeProps> = ({ src, title
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="iframe-container relative w-full h-[500px]">
+    <div className="iframe-container relative w-full">
       {isLoading && (
         <>
           <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-transparent animate-pulse"></div>

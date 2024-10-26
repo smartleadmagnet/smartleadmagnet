@@ -32,7 +32,7 @@ const ProcessSection = () => {
                 </p>
                 <Link 
                 href="/login"
-                className="bg-cyan-900 px-8 py-4 font-bold text-white rounded">Register Now</Link>
+                className="bg-cyan-800  hover:bg-cyan-900 px-8 py-4 font-bold text-white rounded">Register Now</Link>
               </div>
             </div>
 
@@ -78,7 +78,7 @@ const ProcessSection = () => {
           </div>
 
           <div className="flex justify-center">
-            <Link  href="/templates" className="rounded-lg bg-cyan-900 px-10 py-5 text-xl font-bold text-white  transition duration-300 hover:bg-gray-900">
+            <Link  href="/templates" className="rounded-lg bg-cyan-800  hover:bg-cyan-900 px-10 py-5 text-xl font-bold text-white  transition duration-300">
               Browse Templates
             </Link>
           </div>

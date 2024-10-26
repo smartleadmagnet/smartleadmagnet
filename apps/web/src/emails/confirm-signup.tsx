@@ -10,6 +10,7 @@ import {
   Section,
   Tailwind,
   Text,
+  Font,
   Column,
   Row,
   
@@ -42,7 +43,18 @@ const ConfirmSignupEmail: React.FC<ConfirmSignupEmailProps> = ({
   return (
     <Html>
       <Tailwind>
-        <Head />
+        <Head>
+        <Font
+            fontFamily="Open Sans"
+            fallbackFontFamily="Arial"
+            webFont={{
+              url: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap",
+              format: "woff2",
+            }}
+            fontWeight={400}
+            fontStyle="normal"
+          />
+        </Head>
         <Body className="bg-white p-4 sm:p-8 ">
           <Container
             className="mx-auto overflow-hidden rounded-lg border  shadow-lg"
@@ -85,59 +97,47 @@ const ConfirmSignupEmail: React.FC<ConfirmSignupEmailProps> = ({
                 The {productName} Team
               </Text>
             </Section>
-            <Section className="bg-gray-900 p-[20px] text-white text-center">
-          <Row >
-            <Text style={footerHeading} >Stay in Touch</Text>
-          </Row>
-          <Row
-            align="center"
-            style={{
-              width: "104px",
-              
-              
-            }}
-          >
-            <Column style={{ paddingRight: "10px" }}>
-              <Link href="#">
-                <Img
-                  width="28"
-                  height="28"
-                  src="https://d3uu14lxe8399z.cloudfront.net/facebook.png"
-                />
-              </Link>
-            </Column>
-            <Column style={{ paddingRight: "10px" }}>
-              <Link href="https://notifications.google.com">
-                <Img
-                  width="28"
-                  height="28"
-                  src="https://d3uu14lxe8399z.cloudfront.net/twitter-white.png"
-                />
-              </Link>
-            </Column>
-            <Column style={{ paddingRight: "10px" }}>
-              <Link href="https://notifications.google.com">
-                <Img
-                  width="28"
-                  height="28"
-                  src="https://d3uu14lxe8399z.cloudfront.net/linkedin.png"
-                />
-              </Link>
-            </Column>
-          </Row>
-        </Section>
-        <Section className=" p-[5px] text-white text-center">
-        <Text className="text-center text-sm text-gray-500">
-        © 2024 SmartLeadMagnet. All rights reserved.
-      </Text>
-      <Text className="text-center text-sm text-gray-500">
-        Boost your conversions with AI-powered lead magnets.
-      </Text>
-      <Text className="text-center text-sm text-gray-500">
-        <a href="/privacy-policy" className="text-blue-500">Privacy Policy</a> {"  "}
-        <a href="/terms" className="text-blue-500">Terms of Service</a>
-      </Text>
-          </Section>
+          {/* Footer Section */}
+          <Section className="bg-gray-900 p-[20px] text-center text-white">
+              <Row>
+                <Text style={footerHeading}>Stay Connected</Text>
+              </Row>
+              <Row align="center" style={{ width: "104px" }}>
+              <Column style={{ paddingRight: "10px" }}>
+                  <Link href="https://www.facebook.com/people/Smartleadmagnet/61567550700439/">
+                    <Img width="28" height="28" src="https://d3uu14lxe8399z.cloudfront.net/facebook.png" />
+                  </Link>
+                </Column>
+                <Column style={{ paddingRight: "10px" }}>
+                  <Link href="https://www.youtube.com/channel/UCsYNmeoFcdVw37w_-xd4h3A">
+                    <Img width="28" height="28" src="https://d3uu14lxe8399z.cloudfront.net/youtube_icon.png" />
+                  </Link>
+                </Column>
+                <Column style={{ paddingRight: "10px" }}>
+                  <Link href="https://github.com/smartleadmagnet/smartleadmagnet">
+                    <Img width="28" height="28" src="https://d3uu14lxe8399z.cloudfront.net/github.png" />
+                  </Link>
+                </Column>
+              </Row>
+            </Section>
+
+            {/* Copyright and Terms */}
+            <Section className="p-[5px] text-center text-white">
+              <Text className="text-center text-sm text-gray-500">© 2024 SmartLeadMagnet. All rights reserved.</Text>
+              <Text className="text-center text-sm text-gray-500">
+                Explore your potential with our AI-powered solutions.
+              </Text>
+              <Text className="text-center text-sm text-gray-500">
+                <Link href="https://smartleadmagnet.com/privacy-policy" className="text-blue-500">
+                  Privacy Policy
+                </Link>{" "}
+                {" | "}
+                <Link href="https://smartleadmagnet.com/terms-and-conditions" className="text-blue-500">
+                  Terms of Service
+                </Link>
+              </Text>
+            </Section>
+        
           </Container>
         </Body>
       </Tailwind>

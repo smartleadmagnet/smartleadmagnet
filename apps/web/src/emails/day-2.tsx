@@ -77,14 +77,19 @@ const Day2: React.FC<BenefitsReminderEmailProps> = ({ name = "User" }) => {
                 <Text style={footerHeading}>Stay Connected</Text>
               </Row>
               <Row align="center" style={{ width: "104px" }}>
-                <Column style={{ paddingRight: "10px" }}>
-                  <Link href="https://twitter.com/dcoderai">
-                    <Img width="28" height="28" src="https://d3uu14lxe8399z.cloudfront.net/twitter-white.png" />
+              <Column style={{ paddingRight: "10px" }}>
+                  <Link href="https://www.facebook.com/people/Smartleadmagnet/61567550700439/">
+                    <Img width="28" height="28" src="https://d3uu14lxe8399z.cloudfront.net/facebook.png" />
                   </Link>
                 </Column>
                 <Column style={{ paddingRight: "10px" }}>
-                  <Link href="https://linkedin.com">
-                    <Img width="28" height="28" src="https://d3uu14lxe8399z.cloudfront.net/linkedin.png" />
+                  <Link href="https://www.youtube.com/channel/UCsYNmeoFcdVw37w_-xd4h3A">
+                    <Img width="28" height="28" src="https://d3uu14lxe8399z.cloudfront.net/youtube_icon.png" />
+                  </Link>
+                </Column>
+                <Column style={{ paddingRight: "10px" }}>
+                  <Link href="https://github.com/smartleadmagnet/smartleadmagnet">
+                    <Img width="28" height="28" src="https://d3uu14lxe8399z.cloudfront.net/github.png" />
                   </Link>
                 </Column>
               </Row>
@@ -97,11 +102,11 @@ const Day2: React.FC<BenefitsReminderEmailProps> = ({ name = "User" }) => {
                 Explore your potential with our AI-powered solutions.
               </Text>
               <Text className="text-center text-sm text-gray-500">
-                <Link href="/privacy-policy" className="text-blue-500">
+                <Link href="https://smartleadmagnet.com/privacy-policy" className="text-blue-500">
                   Privacy Policy
                 </Link>{" "}
                 {" | "}
-                <Link href="/terms-and-conditions" className="text-blue-500">
+                <Link href="https://smartleadmagnet.com/terms-and-conditions" className="text-blue-500">
                   Terms of Service
                 </Link>
               </Text>
