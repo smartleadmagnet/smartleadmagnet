@@ -1,6 +1,7 @@
 import "@smartleadmagnet/ui/globals.css";
 import { Providers } from "@/providers";
 import { Toaster } from "@smartleadmagnet/ui/components/ui/toaster";
+import { Toaster as ReactHotToast } from "react-hot-toast";
 import Support from "@/components/Support";
 
 // const geistSans = localFont({
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className={`bg-[#FCFCFC] dark:bg-black`}>
         <Providers>{children}</Providers>
         <Toaster />
+        <ReactHotToast />
         <Support />
       </body>
     </html>

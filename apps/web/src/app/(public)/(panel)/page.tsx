@@ -11,6 +11,8 @@ import { WebPageJsonLd, FAQPageJsonLd, ProductJsonLd, OrganizationJsonLd, Breadc
 import faq from "@/data/faq.json";
 import testimonial from "@/data/testimonial.json";
 import { AggregateRating } from "next-seo/lib/types";
+import { Suspense } from "react";
+import SocialProofModal from "@smartleadmagnet/ui/components/SocialProofModal";
 
 const title = "SmartLeadMagnet: AI Lead Magnets to Boost Website Traffic";
 const description = `Drive more traffic to your website with SmartLeadMagnet’s AI-powered lead magnets. Capture leads, grow your audience, and boost your business easily.`;
@@ -114,6 +116,9 @@ export default async function Page() {
       <AccordionSection />
       <HowItWorksSection />
       <CtaSection />
+      <Suspense fallback={<div>Loading...</div>}>
+        <SocialProofModal />
+      </Suspense>
     </div>
   );
 }
