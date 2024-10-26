@@ -18,9 +18,10 @@ import {
 interface CloneMagnetButtonProps {
   leadMagnetId: string;
   userId?: string;
+  overrideClasses?: string;
 }
 
-export default function CloneMagnetButton({ leadMagnetId, userId }: CloneMagnetButtonProps) {
+export default function CloneMagnetButton({ leadMagnetId, userId,overrideClasses }: CloneMagnetButtonProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -38,7 +39,7 @@ export default function CloneMagnetButton({ leadMagnetId, userId }: CloneMagnetB
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button 
-          className="flex items-center rounded border border-cyan-500 px-4 py-2 text-cyan-500 bg-white hover:bg-cyan-500 hover:text-white"
+          className={`${overrideClasses?overrideClasses:"flex items-center rounded border border-cyan-500 px-4 py-2 text-cyan-500 bg-white hover:bg-cyan-500 hover:text-white"} `}
         >
           <CopyIcon className="mr-2 h-4 w-4" />
           Make it yours
