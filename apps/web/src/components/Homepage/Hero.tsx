@@ -29,7 +29,7 @@ const HeroSection: React.FC = () => {
                 </p>
               </div>
               
-              <div className="mt-8 w-full max-w-4xl mx-auto">
+              <div className="mt-8 w-full  mx-auto">
                 <InteractiveIframe
                   src="https://app.supademo.com/embed/cm2n1nipb05s6k69dpnd4bolh?embed_v=2"
                   title="Smartleadmagnet Demo"
