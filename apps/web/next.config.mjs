@@ -12,11 +12,11 @@ const nextConfig = {
     return [
       {
         source: '/blog/',
-        destination: 'https://silver-caribou-278976.hostingersite.com/blog/',
+        destination: `${process.env.NEXT_PUBLIC_WORDPRESS_BLOG_URL}/blog/`,
       },
       {
         source: '/blog/:path*/',
-        destination: 'https://silver-caribou-278976.hostingersite.com/blog/:path*/',
+        destination: `${process.env.NEXT_PUBLIC_WORDPRESS_BLOG_URL}/blog/:path*/`,
       },
     ];
   },
