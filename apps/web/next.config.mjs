@@ -1,7 +1,9 @@
 import {withSentryConfig} from "@sentry/nextjs";
-import dotenv from "dotenv";
+// import pkg from '@next/env';
+// const { loadEnvConfig } = pkg;
 
-dotenv.config(); // Load environment variables from .env file
+const projectDir = process.cwd()
+loadEnvConfig(projectDir)
 
 const nextConfig = {
   transpilePackages: ["@smartleadmagnet/ui", "next-mdx-remote"],
@@ -116,4 +118,5 @@ export default withSentryConfig(nextConfig, {
   autoInstrumentMiddleware: false,
   autoInstrumentAppDirectory: false,
   automaticVercelMonitors: false,
+  telemetry: false,
 });
