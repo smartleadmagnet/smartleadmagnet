@@ -32,7 +32,7 @@ export function generateMetadata() {
   });
 }
 
-// export const dynamic = "force-static";
+export const dynamic = "force-static";
 
 export default async function Page() {
   return (
@@ -111,7 +111,9 @@ export default async function Page() {
       <HeroSection />
       <FeatureSection />
       <ContentImageSection />
-      <ServiceSection />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ServiceSection />
+      </Suspense>
       <ClientSection />
       <AccordionSection />
       <HowItWorksSection />
