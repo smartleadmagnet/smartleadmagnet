@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import { getPage } from "@/lib/mdx";
 
-const title = "SmartEReply: Boost Productivity with Human-Like AI Replies";
+const title = "SmartLeadMagnet: AI Lead Magnets to Boost Website Traffic";
 const description =
-  "Enhance productivity with SmartEReply's AI-driven, human-like replies. Experience seamless communication and efficiency like never before.";
+  "Drive more traffic to your website with SmartLeadMagnet’s AI-powered lead magnets. Capture leads, grow your audience, and boost your business easily.";
 
 const metadata: Metadata = {
   title,
@@ -22,10 +22,6 @@ const metadata: Metadata = {
   creator: "SmartLeadMagnet",
   publisher: "SmartLeadMagnet",
   robots: "index, follow",
-  // alternates: {
-  //   canonical: "/",
-  // //   languages: languages,
-  // },
   icons: [
     { rel: "icon", url: "/favicon.ico" }, // Update paths as necessary
     { rel: "apple-touch-icon", url: "/apple-touch-icon.png" },

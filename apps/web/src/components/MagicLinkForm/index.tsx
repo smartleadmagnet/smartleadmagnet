@@ -75,7 +75,7 @@ const EnterEmail: React.FC<EnterEmailProps> = ({
       } else {
         toast({
           title: "Success",
-          description: "Check your inbox (and spam folder)! Your SmartEReply login code is waiting.",
+          description: "Check your inbox (and spam folder)! Your SmartLeadMagnet login code is waiting.",
         });
         onSuccess(data.email);
       }
