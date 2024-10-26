@@ -32,8 +32,6 @@ export function generateMetadata() {
   });
 }
 
-export const dynamic = "force-static";
-
 export default async function Page() {
   return (
     <div className="flex size-full flex-col">
@@ -111,9 +109,7 @@ export default async function Page() {
       <HeroSection />
       <FeatureSection />
       <ContentImageSection />
-      <Suspense fallback={<div>Loading...</div>}>
-        <ServiceSection />
-      </Suspense>
+      <ServiceSection />
       <ClientSection />
       <AccordionSection />
       <HowItWorksSection />
