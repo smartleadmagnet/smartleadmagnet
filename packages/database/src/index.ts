@@ -42,18 +42,18 @@ if (process.env.NODE_ENV === "production") {
           emit: "stdout",
           level: "error",
         },
-        // {
-        //   emit: "stdout",
-        //   level: "info",
-        // },
-        // {
-        //   emit: "stdout",
-        //   level: "query",
-        // },
-        // {
-        //   emit: "stdout",
-        //   level: "warn",
-        // },
+        {
+          emit: "stdout",
+          level: "info",
+        },
+        {
+          emit: "stdout",
+          level: "query",
+        },
+        {
+          emit: "stdout",
+          level: "warn",
+        },
       ],
     });
   }

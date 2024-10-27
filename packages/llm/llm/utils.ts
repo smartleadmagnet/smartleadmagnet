@@ -9,6 +9,10 @@ const resultFormat = `
 The output should be inside <lead> html tag e.g. <lead>the response out</lead>
 `;
 
+const getFormat = (outputType: string) => {
+  return `The output type should be ${outputType} format.`;
+};
+
 function extractLeadContent(htmlString: string): string | undefined | null {
   const regex = /<lead>([\s\S]*?)<\/lead>/;
   const match = htmlString.match(regex);
@@ -20,8 +24,9 @@ function extractLeadContent(htmlString: string): string | undefined | null {
 export async function callTextLLM(leadMagnet: LeadMagnet, promptInput: any) {
   // console.log(promptInput);
   let llmModel = getTextLLMModel(leadMagnet.provider, leadMagnet.model);
+  const outputFormat = getFormat(leadMagnet.output);
   const messages = [
-    new SystemMessage(`${leadMagnet.prompt}${resultFormat}`),
+    new SystemMessage(`${leadMagnet.prompt}${outputFormat}${resultFormat}`),
     new HumanMessage({
       content: promptInput,
     }),
