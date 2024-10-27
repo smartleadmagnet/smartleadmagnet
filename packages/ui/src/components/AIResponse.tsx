@@ -1,7 +1,6 @@
 // import TextareaAutosize from "react-textarea-autosize";
-import { CheckIcon, CopyIcon, ReloadIcon, DownloadIcon,ImageIcon,TextIcon,CodeIcon } from "@radix-ui/react-icons";
+import { CheckIcon, CopyIcon, ReloadIcon, DownloadIcon } from "@radix-ui/react-icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { marked } from "marked"; // Import marked
 import { solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import Loader from "./Loader";
 
@@ -16,13 +15,13 @@ const AIResponse = ({
   onRegenerate,
   type = "text",
   isLoading,
-  handleBack
+  handleBack,
 }: {
   response: string;
-  onRegenerate: any;
+  onRegenerate?: any;
   type?: string;
   isLoading?: boolean;
-  handleBack:()=>void;
+  handleBack: () => void;
 }) => {
   const [copy, isCopied] = useCopyToClipboard();
 
@@ -44,47 +43,51 @@ const AIResponse = ({
   return (
     <div className="card flex flex-1 justify-start space-y-4 rounded-lg p-2 py-4 align-middle sm:border-2 sm:border-gray-600 sm:p-3 ">
       <div className="card bg-base-200/70 flex h-full w-full flex-1 flex-col justify-between rounded-lg p-2 align-middle sm:p-4">
-      {!isLoading ?(
-        <div className="prompt-content-box">
-          {type === "text" && (
-            <div className="markdown-body max-h-[450px] overflow-y-auto">
-              <MarkdownTypingEffect text={response} />
-            </div>
-          )}
-          {type === "image" && (
-            <div className="text-center">
-              <img src={response} alt="Content" className="h-auto max-w-full rounded-lg" />
-            </div>
-          )}
-          {type === "markdown" && 
-          
-          <div className="prose" dangerouslySetInnerHTML={{ __html: marked(response) }} />}
-          {type === "code" && (
-            <>
-              <SyntaxHighlighter language="typescript" style={solarizedlight}>
-                {response}
-              </SyntaxHighlighter>
-            </>
-          )}
-          <Button onClick={()=>{
-            handleBack();
-          }} type="button" className="back-to-form bg-cyan-500 hover:bg-cyan-600">
-            Back to form
-          </Button>
-          <Button variant="outline" onClick={onRegenerate} className="reload-icon">
-            <ReloadIcon className="size-4" />
-          </Button>
-          <Button onClick={() => onCopy()} className="bg-green-700 ">
-            {type === "image" ? (
-              <DownloadIcon className="size-4" />
-            ) : (
-              <>{isCopied ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}</>
+        {!isLoading ? (
+          <div className="prompt-content-box">
+            {(type === "text" || type === "markdown")  && (
+              <div className="markdown-body max-h-[450px] overflow-y-auto">
+                <MarkdownTypingEffect text={response} />
+              </div>
             )}
-          </Button>
-        </div>
-      ) : (
-        <Loader type={type as "image" | "text" | "code" | "markdown"} />
-      )}
+            {type === "image" && (
+              <div className="text-center">
+                <img src={response} alt="Content" className="h-auto max-w-full rounded-lg" />
+              </div>
+            )}
+            {type === "code" && (
+              <>
+                <SyntaxHighlighter language="typescript" style={solarizedlight}>
+                  {response}
+                </SyntaxHighlighter>
+              </>
+            )}
+            <Button
+              onClick={() => {
+                handleBack();
+              }}
+              type="button"
+              className="back-to-form bg-cyan-500 hover:bg-cyan-600"
+            >
+              Back to form
+            </Button>
+            {onRegenerate && (
+              <Button variant="outline" onClick={onRegenerate} className="reload-icon">
+                <ReloadIcon className="size-4" />
+              </Button>
+            )}
+
+            <Button onClick={() => onCopy()} className="bg-green-700 ">
+              {type === "image" ? (
+                <DownloadIcon className="size-4" />
+              ) : (
+                <>{isCopied ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}</>
+              )}
+            </Button>
+          </div>
+        ) : (
+          <Loader type={type as "image" | "text" | "code" | "markdown"} />
+        )}
       </div>
     </div>
   );

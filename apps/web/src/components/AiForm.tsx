@@ -14,6 +14,7 @@ import useAIForm from "@/hooks/aiform.hook";
 import { Badge } from "@smartleadmagnet/ui/components/ui/badge";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import ContentViewer from "@/components/ContentViewer";
+import AIResponse from "@smartleadmagnet/ui/components/AIResponse";
 import React from "react";
 import ApiKeySelector from "@/components/ApiKeySelector";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
@@ -135,13 +136,14 @@ export default function AIForm({ user }: { user: any }) {
         ) : (
           <div className="flex  items-center justify-center">
             <div className="w-full">
-              <div className="mb-4">
-                <Button className="mt-4" onClick={() => setPreview(undefined)}>
-                  Back to Form
-                </Button>
-              </div>
-              {/* @ts-ignore */}
-              <ContentViewer type={outputType!} content={preview?.content!} isLoading={processing} />
+              
+              
+              <AIResponse
+                response={preview?.content!}
+                type={outputType}
+                isLoading={processing}
+                handleBack={() => setPreview(undefined)}
+              />
             </div>
           </div>
         )}
