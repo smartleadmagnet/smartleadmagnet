@@ -3,8 +3,8 @@
     "name": "AWS BedRock",
     "models": [
       {
-        "displayName": "Claude 3.5 Sonnet",
-        "name": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+        "displayName": "Claude 3.5 Sonnet V2",
+        "name": "anthropic.claude-3-5-sonnet-20241022-v2:0",
         "generateImage": false,
         "text": true,
         "vision": true,
@@ -53,18 +53,6 @@
       {
         "displayName": "Llama 3.2 11B Vision Instruct",
         "name": "meta.llama3-2-11b-instruct-v1:0",
-        "text": true,
-        "vision": true,
-        "free": true,
-        "generateImage": false,
-        "cost": {
-          "incomingToken": 0.25,
-          "completionToken": 1.25
-        }
-      },
-      {
-        "displayName": "Llama 3.2 90B Vision Instruct",
-        "name": "meta.llama3-2-90b-instruct-v1:0",
         "text": true,
         "vision": true,
         "free": true,

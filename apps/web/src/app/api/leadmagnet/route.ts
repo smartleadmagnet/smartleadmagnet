@@ -17,6 +17,8 @@ import { convert } from "html-to-text";
 import { sendEmail } from "@/lib/email";
 
 import prisma from "@smartleadmagnet/database";
+import axios from "axios";
+import * as cheerio from "cheerio";
 
 let rateLimit: Ratelimit | undefined;
 
@@ -61,7 +63,7 @@ export async function POST(req: NextRequest) {
 
     // Parse the request body and extract the 'id' and other payload data
     const payload = await req.json();
-    const { id, ...rest } = payload;
+    let { id, ...rest } = payload;
 
     if (!id) {
       return NextResponse.json({ error: "Missing 'id' in request body" }, { status: 400 });
@@ -88,6 +90,36 @@ export async function POST(req: NextRequest) {
         { error: "No credits left. Buy extra credit or add your own API key." },
         { status: 402 }
       );
+    }
+
+    const websiteComponent = (lead?.components as Array<any>)?.find((item) => item.type === "website");
+
+    if (websiteComponent) {
+      // Check if the website URL is present in the payload
+      if (payload[websiteComponent.name]) {
+        try {
+          // Fetch the website content using axios
+          const response = await axios.get(payload[websiteComponent.name]);
+          const htmlContent = response.data;
+
+          // // Parse the HTML content using cheerio
+          const $ = cheerio.load(htmlContent);
+
+          const title = $("title").text();
+          const description = $('meta[name="description"]').attr("content") || "";
+          const bodyText = $("body").text().trim().replace(/\s+/g, " ").substring(0, 5000); // Limit to 5000 characters
+
+          // Add the website content to the payload
+          rest[websiteComponent.name] = {
+            title,
+            description,
+            bodyText,
+          };
+        } catch (error) {
+          // Absorb the error if the website is not accessible
+          console.error("Error fetching website content:", error);
+        }
+      }
     }
 
     // Validate the lead with the input payload
