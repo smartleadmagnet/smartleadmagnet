@@ -14,7 +14,6 @@ import FontSelector from "@smartleadmagnet/ui/components/ui/FontSelector";
 import ColorPicker from "@smartleadmagnet/ui/components/ColorPicker";
 import ResponsiveScreen from "@/components/ResponsiveScreen";
 import BuilderElement from "@/components/BuilderElement";
-import ContentViewer from "@/components/ContentViewer";
 import styled from "styled-components";
 import CustomCssEditor from "@/components/CustomCssEditor";
 import { Switch } from "@smartleadmagnet/ui/components/ui/switch";
@@ -268,7 +267,6 @@ export default function BuilderStylePreview({
       </DialogContent>
     </Dialog>
 
-              {selectedView === "Form" ? (
                 <>
                   {elementsList.length &&
                     elementsList.map((item: any) => (
@@ -291,11 +289,7 @@ export default function BuilderStylePreview({
                     <Button type="submit">{formStyles.buttonText}</Button>
                   </div>
                 </>
-              ) : (
-                <>
-                  <ContentViewer type="image" content={imageUrl} />
-                </>
-              )}
+              
             </FormWrapper>
           </ResponsiveScreen>
         </main>
