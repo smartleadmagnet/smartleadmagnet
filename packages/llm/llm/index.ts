@@ -26,11 +26,12 @@ export function replaceMustachePlaceholders(template: string, values: any) {
 export const getImageLLMModel = async (leadMagnet: LeadMagnet, promptInput: any, apiKey?: string | null) => {
   const promptText = replaceMustachePlaceholders(replacePlaceholders(leadMagnet.prompt, promptInput), promptInput);
   if (leadMagnet.provider === "Open AI") {
-    // console.log(promptInput);
     const llmModel = new DallEAPIWrapper({
       n: 1, // Default
       model: "dall-e-3", // Default
       apiKey: apiKey || process.env.OPEN_AI_KEY,
+      size:"1024x1024",
+      quality:"standard",
     });
     let retryCount = 0;
     const llmApiCall: any = async () => {
