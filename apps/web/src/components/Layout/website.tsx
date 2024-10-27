@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import templateCategories from "@/data/categories.json";
+import ProductHuntLaunchSupport from "../ProductHuntLaunchSupport";
 
 import { ChevronDown, PanelLeft } from "lucide-react";
 import { FaFacebook,FaYoutube,FaGithub } from "react-icons/fa";
@@ -25,8 +26,10 @@ const CategoryGrid = () => {
 export default async function WebsiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+    <ProductHuntLaunchSupport/>
       <main className="bg-muted/40 main-content flex w-full flex-col">
         <div className="flex flex-col sm:gap-4 ">
+          
           <header className="bg-background sticky top-0 z-30  flex h-36 items-center gap-4 border-b bg-gray-900 px-4 sm:static sm:h-auto sm:border-0 sm:px-6 sm:py-4 ">
             <MobileNav />
             <div className="flex-1">
@@ -142,6 +145,9 @@ function Footer() {
               className="mb-4 ml-[-20px]"
             />
             <p className="mb-4 text-center text-xl md:text-left">Proudly Open Source ❤️ </p>
+            <a href="https://www.producthunt.com/posts/smart-lead-magnet?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-smart&#0045;lead&#0045;magnet" target="_blank" className="mb-5">
+            <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=495729&theme=neutral" alt="Smart&#0032;Lead&#0032;Magnet - AI&#0032;Lead&#0032;Magnets&#0032;to&#0032;Easily&#0032;Boost&#0032;Website&#0032;Traffic | Product Hunt" style={{ width: '250px', height: '54px' }} width="250" height="54" /></a>
+            
 
             {/* Social Media Links */}
             <div className="flex space-x-4">
