@@ -13,7 +13,6 @@ import { RadioGroup, RadioGroupItem } from "@smartleadmagnet/ui/components/ui/ra
 import useAIForm from "@/hooks/aiform.hook";
 import { Badge } from "@smartleadmagnet/ui/components/ui/badge";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
-import ContentViewer from "@/components/ContentViewer";
 import AIResponse from "@smartleadmagnet/ui/components/AIResponse";
 import React from "react";
 import ApiKeySelector from "@/components/ApiKeySelector";
