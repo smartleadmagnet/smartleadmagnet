@@ -13,7 +13,7 @@ export default function Affiliates() {
           <h1 className="mb-6 mt-[120px] text-center text-[36px] font-extrabold leading-[40px] text-gray-900 sm:text-4xl lg:text-[52px] lg:leading-[60px] dark:text-white">
             Be our affiliate to
             <br />
-            <span className="from-secondary to-primary dark:from-primary dark:to-secondary bg-gradient-to-r bg-clip-text font-bold text-transparent">
+            <span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text font-bold text-transparent dark:from-cyan-300 dark:to-cyan-500">
               earn 40% commission.
             </span>
           </h1>
@@ -21,7 +21,7 @@ export default function Affiliates() {
             Partner with us to earn a <strong>recurring 20% commission</strong> every referral
           </h2>
           <div className="my-8 flex flex-col gap-4 sm:flex-row">
-            <Link target="_blank" className="btn-primary btn font-bold" href={affiliateProgramLink}>
+            <Link target="_blank" className="btn-primary rounded font-bold" href={affiliateProgramLink}>
               Join our affiliate program
             </Link>
           </div>
@@ -93,7 +93,7 @@ export default function Affiliates() {
           <h3 className="mb-4 mt-[140px] text-center text-4xl font-extrabold leading-[46px] text-gray-900 dark:text-white">
             Ready to partner with us?
           </h3>
-          <Link target="_blank" className="btn-primary btn mb-[120px] mt-4 font-bold" href={affiliateProgramLink}>
+          <Link target="_blank" className="btn-primary rounded mb-[120px] mt-4 font-bold" href={affiliateProgramLink}>
             Join our affiliate program
           </Link>
         </div>
