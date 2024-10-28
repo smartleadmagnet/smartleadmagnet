@@ -9,6 +9,7 @@ export const maxDuration = 60;
 export async function GET(req: NextRequest) {
   // get query params from the URL
   const priceId = req.nextUrl.searchParams.get("priceId");
+  const referer = req.nextUrl.searchParams.get("referer");
   const sessionUser = await getSessionUser();
   const userId = sessionUser?.id ?? "";
 
@@ -23,7 +24,7 @@ export async function GET(req: NextRequest) {
         await updateStripeCustomerId({ id: user?.id!, stripeCustomerId: customer });
         stripeCustomerId = customer;
       }
-      const paymentLink = await createPaymentLink(stripeCustomerId, priceId as string);
+      const paymentLink = await createPaymentLink(stripeCustomerId, priceId as string, referer);
       return Response.redirect(paymentLink!);
     }
   }

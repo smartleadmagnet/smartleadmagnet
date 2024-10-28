@@ -8,7 +8,7 @@ import { getUserById, updateStripeCustomerId, updateSubscriptionDetailsForCancel
 import { getUserInfo } from "@/actions/user";
 import { revalidatePath } from "next/cache";
 
-export async function createPaymentLink(customerId: string, priceId: string) {
+export async function createPaymentLink(customerId: string, priceId: string, referral?: string) {
   const stripe = getStripe();
   const plan = pricingConfig.plans.find((plan) => plan.priceId === priceId);
   const mode = plan?.isSubscription ? "subscription" : "payment";
@@ -21,10 +21,18 @@ export async function createPaymentLink(customerId: string, priceId: string) {
         quantity: 1, // The quantity of the product
       },
     ],
+    metadata: {},
     success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/payment?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/pricing`,
     customer: customerId,
   };
+
+  if (referral) {
+    checkoutSessionParams.metadata = {
+      ...checkoutSessionParams.metadata,
+      promotekit_referral: referral,
+    };
+  }
 
   const session = await stripe.checkout.sessions.create(checkoutSessionParams);
   return session.url;
@@ -122,7 +130,7 @@ export async function cancelSubscription(subscriptionId: string) {
 //   }
 // }
 //
-export const getSingInLink = async (priceId: string) => {
+export const getSingInLink = async (priceId: string, referer?: string) => {
   if (!priceId) {
     return "/";
   }
@@ -135,14 +143,14 @@ export const getSingInLink = async (priceId: string) => {
       let customerId = user?.stripeCustomerId;
 
       if (!customerId) {
-        const customer = await createStripeCustomer({ email: user?.email!, name: user?.name!! });
+        const customer = await createStripeCustomer({ email: user?.email!, name: user?.name! });
         await updateStripeCustomerId({ id: user?.id!, stripeCustomerId: customer });
         customerId = customer;
       }
       if (customerId && userId) {
-        return await createPaymentLink(customerId, priceId);
+        return await createPaymentLink(customerId, priceId, referer);
       }
     }
   }
-  return `${process.env.HOST_URL}/api/auth/signin?callbackUrl=${encodeURIComponent(`${process.env.HOST_URL}/api/payment/checkout?priceId=${priceId}`)}`;
+  return `${process.env.HOST_URL}/api/auth/signin?callbackUrl=${encodeURIComponent(`${process.env.HOST_URL}/api/payment/checkout?priceId=${priceId}&referer=${referer}`)}`;
 };
