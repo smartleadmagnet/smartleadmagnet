@@ -10,14 +10,14 @@ export default function Affiliates() {
       <div className="from-primary-400 to-primary-50 absolute left-0 top-[-500px] z-[-1] min-h-[800px] min-w-full bg-gradient-to-r opacity-10 blur-[200px] dark:from-gray-700 dark:to-gray-800" />
       <div className="container mx-auto flex flex-col">
         <div className="flex flex-col items-center">
-          <h1 className="mb-6 mt-[120px] text-center text-[36px] font-extrabold leading-[40px] sm:text-4xl lg:text-[52px] lg:leading-[60px] text-gray-900 dark:text-white">
+          <h1 className="mb-6 mt-[120px] text-center text-[36px] font-extrabold leading-[40px] text-gray-900 sm:text-4xl lg:text-[52px] lg:leading-[60px] dark:text-white">
             Be our affiliate to
             <br />
-            <span className="from-secondary to-primary bg-gradient-to-r bg-clip-text font-bold text-transparent dark:from-primary dark:to-secondary">
+            <span className="from-secondary to-primary dark:from-primary dark:to-secondary bg-gradient-to-r bg-clip-text font-bold text-transparent">
               earn 40% commission.
             </span>
           </h1>
-          <h2 className="text-primary-500 text-center dark:text-primary-400">
+          <h2 className="text-primary-500 dark:text-primary-400 text-center">
             Partner with us to earn a <strong>recurring 20% commission</strong> every referral
           </h2>
           <div className="my-8 flex flex-col gap-4 sm:flex-row">
@@ -30,29 +30,37 @@ export default function Affiliates() {
             <IncomeByAffiliateProgramCalculator />
           </div>
 
-          <h3 className="mb-4 mt-[80px] text-center text-4xl font-extrabold text-gray-900 dark:text-white">How it works</h3>
+          <h3 className="mb-4 mt-[80px] text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+            How it works
+          </h3>
           <div className="mt-4 flex flex-col gap-4">
             <div className="flex items-center gap-4">
-              <div className="bg-primary-300 rounded-[14px] p-2 dark:bg-primary-600">
+              <div className="bg-primary-300 dark:bg-primary-600 rounded-[14px] p-2">
                 <FaArrowUp size="20" className="text-white" />
               </div>
-              <p className="text-gray-900 dark:text-white">Sign up our affiliate program and get a unique link that can be shared</p>
+              <p className="text-gray-900 dark:text-white">
+                Sign up our affiliate program and get a unique link that can be shared
+              </p>
             </div>
             <div className="flex items-center gap-4">
-              <div className="bg-primary-300 rounded-[14px] p-2 dark:bg-primary-600">
+              <div className="bg-primary-300 dark:bg-primary-600 rounded-[14px] p-2">
                 <FaShare size="20" className="text-white" />
               </div>
               <p className="text-gray-900 dark:text-white">Share your link with your friends, customers, clients...</p>
             </div>
             <div className="flex items-center gap-4">
-              <div className="bg-primary-300 rounded-[14px] p-2 dark:bg-primary-600">
+              <div className="bg-primary-300 dark:bg-primary-600 rounded-[14px] p-2">
                 <FaCoins size="20" className="text-white" />
               </div>
-              <p className="text-gray-900 dark:text-white">You'll get 40% recurring commission for every successful referral</p>
+              <p className="text-gray-900 dark:text-white">
+                You'll get 40% recurring commission for every successful referral
+              </p>
             </div>
           </div>
 
-          <h3 className="mb-4 mt-[80px] text-center text-4xl font-extrabold text-gray-900 dark:text-white">Affiliate Terms</h3>
+          <h3 className="mb-4 mt-[80px] text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+            Affiliate Terms
+          </h3>
           <p className="max-w-[680px] text-center font-semibold text-gray-900 dark:text-white">
             There are a few rules about our affiliate program you should know about. <br />
             No "gotchas" here, just some terms to keep everyone happy.
@@ -75,8 +83,8 @@ export default function Affiliates() {
                 We reserve the right to modify the Terms of Service for our affiliate program at any time.
               </li>
               <li className="mt-4">
-                All content and materials available on our website, including but not limited to text, graphics,
-                logos, images, and software, are the property of <strong>OrbicAI</strong> and are protected by
+                All content and materials available on our website, including but not limited to text, graphics, logos,
+                images, and software, are the property of <strong>SmartLeadMagnet</strong> and are protected by
                 copyright, trademark, and other intellectual property laws.
               </li>
             </ul>
