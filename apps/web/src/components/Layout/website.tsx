@@ -3,6 +3,7 @@ import Image from "next/image";
 import templateCategories from "@/data/categories.json";
 import ProductHuntLaunchSupport from "../ProductHuntLaunchSupport";
 
+
 import { ChevronDown, PanelLeft } from "lucide-react";
 import { FaFacebook,FaYoutube,FaGithub } from "react-icons/fa";
 
@@ -10,6 +11,7 @@ import { FaFacebook,FaYoutube,FaGithub } from "react-icons/fa";
 import { Sheet, SheetContent, SheetTrigger } from "@smartleadmagnet/ui/components/ui/sheet";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { User } from "@/components/User";
+import ScheduleMeeting from "../ScheduleMeeting";
 
 const CategoryGrid = () => {
   return (
@@ -130,6 +132,8 @@ function MobileNav() {
 
 function Footer() {
   return (
+    <>
+    <ScheduleMeeting/>
     <footer className="bg-gray-900 py-10 text-white">
       <div className="container mx-auto px-4">
         {/* First Row */}
@@ -145,12 +149,24 @@ function Footer() {
               className="mb-4 ml-[-20px]"
             />
             <p className="mb-4 text-center text-xl md:text-left">Proudly Open Source ❤️ </p>
-            <a href="https://www.producthunt.com/posts/smart-lead-magnet?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-smart&#0045;lead&#0045;magnet" target="_blank" className="mb-5">
-            <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=495729&theme=neutral" alt="Smart&#0032;Lead&#0032;Magnet - AI&#0032;Lead&#0032;Magnets&#0032;to&#0032;Easily&#0032;Boost&#0032;Website&#0032;Traffic | Product Hunt" style={{ width: '250px', height: '54px' }} width="250" height="54" /></a>
+            <a 
+  href="https://www.producthunt.com/posts/smart-lead-magnet?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-smart&#0045;lead&#0045;magnet" 
+  target="_blank" 
+  rel="noopener noreferrer"
+>
+  <img 
+    src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=495729&theme=neutral&period=daily" 
+    alt="Smart Lead Magnet - AI Lead Magnets to Easily Boost Website Traffic | Product Hunt" 
+    style={{ width: "250px", height: "54px" }} 
+    width="250" 
+    height="54" 
+  />
+</a>
+
             
 
             {/* Social Media Links */}
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 mt-5">
               <Link href="https://www.facebook.com/people/Smartleadmagnet/61567550700439/" target="_blank" className="hover:text-gray-500">
                 <FaFacebook className="w-8 h-8 text-blue-500" />
               </Link>
@@ -215,5 +231,6 @@ function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }
