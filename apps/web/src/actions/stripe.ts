@@ -8,7 +8,7 @@ import { getUserById, updateStripeCustomerId, updateSubscriptionDetailsForCancel
 import { getUserInfo } from "@/actions/user";
 import { revalidatePath } from "next/cache";
 
-export async function createPaymentLink(customerId: string, priceId: string, referral?: string) {
+export async function createPaymentLink(customerId: string, priceId: string, referral?: string | null) {
   const stripe = getStripe();
   const plan = pricingConfig.plans.find((plan) => plan.priceId === priceId);
   const mode = plan?.isSubscription ? "subscription" : "payment";
@@ -130,7 +130,7 @@ export async function cancelSubscription(subscriptionId: string) {
 //   }
 // }
 //
-export const getSingInLink = async (priceId: string, referer?: string) => {
+export const getSingInLink = async (priceId: string, referer?: string | null) => {
   if (!priceId) {
     return "/";
   }
