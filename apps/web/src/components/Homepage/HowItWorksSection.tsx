@@ -50,13 +50,13 @@ const HowItWorksSection: React.FC = () => {
             </ol>
           </div>
           <div className="lg:w-1/2">
-            <div className="aspect-w-16 aspect-h-9">
+            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}> {/* 16:9 Aspect Ratio */}
               <iframe
-                src="https://www.youtube.com/embed/your-video-id"
+                src="https://www.youtube.com/embed/r8uO0VzcTuQ"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                className="h-full w-full rounded-lg shadow-lg"
+                className="absolute top-0 left-0 w-full h-full"
               ></iframe>
             </div>
           </div>

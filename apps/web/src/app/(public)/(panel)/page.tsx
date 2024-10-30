@@ -4,7 +4,7 @@ import ContentImageSection from "@/components/Homepage/ContentImageSection";
 import ServiceSection from "@/components/Homepage/ServiceSection";
 import ClientSection from "@/components/Homepage/ClientSection";
 import AccordionSection from "@/components/Homepage/AccordionSection";
-// import HowItWorksSection from "@/components/Homepage/HowItWorksSection";
+import HowItWorksSection from "@/components/Homepage/HowItWorksSection";
 import CtaSection from "@/components/Homepage/CtaSection";
 import getSeo from "@/lib/seo";
 import { WebPageJsonLd, FAQPageJsonLd, ProductJsonLd, OrganizationJsonLd, BreadcrumbJsonLd } from "next-seo";
@@ -112,7 +112,7 @@ export default async function Page() {
       <ServiceSection />
       <ClientSection />
       <AccordionSection />
-      {/* <HowItWorksSection /> */}
+      <HowItWorksSection />
       <CtaSection />
       <Suspense fallback={<div>Loading...</div>}>
         <SocialProofModal />
