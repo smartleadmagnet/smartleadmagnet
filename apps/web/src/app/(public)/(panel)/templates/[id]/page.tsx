@@ -7,6 +7,28 @@ import SearchBox from "@/components/SearchBox";
 import { SearchParamType } from "@/lib/types";
 import LeadMagnetCard from "@/components/LeadMagnetCard";
 import { getSessionUser } from "@/services/user";
+import getSeo from "@/lib/seo";
+
+export async function generateStaticParams() {
+  return templateCategories.map((category) => ({ id: category.id }));
+}
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const { id } = params;
+  const category = templateCategories.find((c) => c.id === id);
+  if (!category) {
+    return getSeo({
+      title: "Lead Magnet Templates - SmartLeadMagnet",
+      description: "Transform your website in Lead Generation Machine with our Lead Magnet Templates.",
+    }, "templates");
+  }
+  return getSeo({
+    title: `${category?.name} Lead Magnet Templates - SmartLeadMagnet`,
+    description: `Transform your website in Lead Generation Machine with our ${category?.name} Lead Magnet Templates.`,
+  }, `/templates/${category.id}`);
+}
+
+export const dynamic = "force-static";
 
 export default async function Page({
   params,

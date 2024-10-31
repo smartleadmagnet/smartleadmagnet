@@ -3,31 +3,59 @@ import { marked } from "marked";
 import React from "react";
 import { BuilderProvider } from "@/providers/BuilderProvider";
 import BuilderElementPreview from "@/components/Share";
-import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import { AiOutlineCopy } from "react-icons/ai";
 import { ImEmbed2 } from "react-icons/im";
-import { cloneLead, createLead, getBySlug } from "@/actions/lead-magnet";
+import { getBySlug } from "@/actions/lead-magnet";
 import { IoIosPeople } from "react-icons/io";
 import { redirect } from "next/navigation";
 import CloneMagnetButton from "@/components/CloneMagnetButton";
+import BuildNewMagnet from "@/components/BuildNewMagnet";
+import getSeo from "@/lib/seo";
+import { getPublicLeadMagnets } from "@smartleadmagnet/services";
+import { createSlug } from '@/utils/slug';
+
+export async function generateStaticParams({ params }: { params: { id: string } }) {
+  const { id } = params;
+  if (!id) {
+    return [];
+  }
+  const leadMagnets = await getPublicLeadMagnets({ category: id, term: "" });
+  return leadMagnets.map((leadMagnet) => {
+    const slug = createSlug(leadMagnet?.name);
+    return { template: slug };
+  });
+}
+
+export async function generateMetadata({ params }: { params: { id: string; template: string } }) {
+  const { id, template } = params;
+  if (!template || !id) {
+    return getSeo({
+      title: "Lead Magnet Template - SmartLeadMagnet",
+      description:
+        "Find the perfect Lead Magnet Template for your website. Browse our collection of high-quality templates and start generating leads today.",
+    });
+  }
+  const leadMagnet = await getBySlug(template);
+  if (!leadMagnet) {
+    return getSeo({
+      title: "Lead Magnet Template - SmartLeadMagnet",
+      description:
+        "Find the perfect Lead Magnet Template for your website. Browse our collection of high-quality templates and start generating leads today.",
+    });
+  }
+  const slug = createSlug(leadMagnet?.name);
+
+  return getSeo({
+    title: `${leadMagnet?.name} - SmartLeadMagnet`,
+    description: leadMagnet?.tagline,
+  }, `/templates/${id}/${slug}`);
+}
+
+export const dynamic = "force-static";
 
 export default async function Page({ params }: { params: { id: string; template: string } }) {
   const { template } = params;
   const leadMagnet = await getBySlug(template);
-
-  const onClone = async () => {
-    "use server";
-
-    const lead = await cloneLead(leadMagnet?.id);
-
-    redirect(`/builder/${lead?.id!}`);
-  };
-
-  const onCreate = async () => {
-    "use server";
-    const lead = await createLead();
-    redirect(`/builder/${lead?.id!}`);
-  };
 
   if (!leadMagnet) {
     return redirect("/templates/all");
@@ -36,46 +64,39 @@ export default async function Page({ params }: { params: { id: string; template:
   return (
     <>
       <div className="container mx-auto mb-10 px-4 py-10">
-  <div className="flex flex-col md:flex-row">
-    {/* Left Section */}
-    <div className="w-full md:w-1/2">
-      <div className="mx-auto max-w-lg">
-        <BuilderProvider leadMagnet={leadMagnet}>
-          <BuilderElementPreview />
-        </BuilderProvider>
+        <div className="flex flex-col md:flex-row">
+          {/* Left Section */}
+          <div className="w-full md:w-1/2">
+            <div className="mx-auto max-w-lg">
+              <BuilderProvider leadMagnet={leadMagnet}>
+                <BuilderElementPreview />
+              </BuilderProvider>
+            </div>
+          </div>
+
+          {/* Right Section */}
+          <div className="mt-8 w-full p-6 md:mt-0 md:w-1/2 md:p-8">
+            <h1 className="mb-4 text-center text-2xl font-bold text-gray-800 md:text-left md:text-3xl">
+              {leadMagnet?.name}
+            </h1>
+            {leadMagnet?.description && (
+              <div
+                className="mx-auto mb-4  text-gray-600"
+                dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }}
+              />
+            )}
+
+            <div className="flex flex-col gap-4 md:flex-row">
+              <BuildNewMagnet title="Start From Scratch" className="px-4 py-6" size="md" />
+              {/* Make it Yours Button */}
+              <CloneMagnetButton
+                leadMagnetId={leadMagnet.id}
+                overrideClasses="flex items-center rounded border border-cyan-500 px-4 py-6 text-cyan-500 bg-white hover:bg-cyan-500 hover:text-white text-lg"
+              />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-
-    {/* Right Section */}
-    <div className="p-6 md:p-8 w-full md:w-1/2 mt-8 md:mt-0">
-      <h1 className="mb-4 text-2xl md:text-3xl font-bold text-gray-800 text-center md:text-left">
-        {leadMagnet?.name}
-      </h1>
-      {leadMagnet?.description && (
-        <div
-          className="mx-auto mb-4  text-gray-600"
-          dangerouslySetInnerHTML={{ __html: marked(leadMagnet.description) }}
-        />
-      )}
-
-      <div className="flex flex-col md:flex-row gap-4">
-        {/* Start From Scratch Button */}
-        <form>
-          <Button
-            formAction={onCreate}
-            className="rounded border border-cyan-500 text-lg bg-cyan-500 px-4 py-6  font-bold text-white hover:border-cyan-600 hover:bg-cyan-600"
-          >
-            Start From Scratch
-          </Button>
-        </form>
-
-        {/* Make it Yours Button */}
-        <CloneMagnetButton leadMagnetId={leadMagnet.id} overrideClasses="flex items-center rounded border border-cyan-500 px-4 py-6 text-cyan-500 bg-white hover:bg-cyan-500 hover:text-white text-lg" />
-      </div>
-    </div>
-  </div>
-</div>
-
 
       {/* Three Steps */}
       <div className="bg-gradient-to-r from-cyan-500 to-blue-400 py-16">
@@ -98,7 +119,10 @@ export default async function Page({ params }: { params: { id: string; template:
                 <p className="mb-5 text-lg text-white">
                   Use the pre-built templates and customize them with your brand logo, title, and more.
                 </p>
-                <CloneMagnetButton leadMagnetId={leadMagnet.id} overrideClasses="bg-cyan-900 px-8 py-6 font-bold text-white" />
+                <CloneMagnetButton
+                  leadMagnetId={leadMagnet.id}
+                  overrideClasses="bg-cyan-900 px-8 py-6 font-bold text-white"
+                />
               </div>
             </div>
 
@@ -131,7 +155,10 @@ export default async function Page({ params }: { params: { id: string; template:
           </div>
 
           <div className="flex justify-center">
-            <CloneMagnetButton leadMagnetId={leadMagnet.id} overrideClasses="rounded-lg bg-cyan-900 px-10 py-8 text-xl font-bold text-white  transition duration-300 hover:bg-gray-900" />
+            <CloneMagnetButton
+              leadMagnetId={leadMagnet.id}
+              overrideClasses="rounded-lg bg-cyan-900 px-10 py-8 text-xl font-bold text-white  transition duration-300 hover:bg-gray-900"
+            />
           </div>
         </div>
       </div>
