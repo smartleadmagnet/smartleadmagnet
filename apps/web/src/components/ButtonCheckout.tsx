@@ -10,9 +10,10 @@ export type ButtonProps = {
 };
 
 export default function ButtonCheckout({ primaryClass = "rounded-2xl max-w-[200px]", priceId, title }: ButtonProps) {
+  // @ts-ignore
+  const referral = window?.promotekit_referral;
   return (
-    // @ts-ignore
-    <a href={`/api/payment/link?price_id=${priceId}&referer=${window?.promotekit_referral}`} className={primaryClass!}>
+    <a href={`/api/payment/link?price_id=${priceId}&referer=${referral}`} className={primaryClass!}>
       {title}
     </a>
   );

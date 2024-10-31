@@ -17,7 +17,7 @@ import Spinner from "@smartleadmagnet/ui/components/Spinner";
 import { signOut } from "next-auth/react";
 
 export default function User() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [creatingLead, setCreatingLead] = useState(false);
   const router = useRouter();
@@ -62,9 +62,7 @@ export default function User() {
     return <Spinner className="h-5 w-5 animate-spin" aria-hidden="true" />;
   }
 
-  console.log({ user });
-
-  if (!user) {
+  if (!user?.id) {
     return (
       <div className="hidden gap-2 md:block">
         <Link
@@ -82,8 +80,7 @@ export default function User() {
       </div>
     );
   }
-  console.log({ user1: user });
-
+  
   return (
     <div className="flex justify-center">
       <div className=" mr-3 flex justify-end">
@@ -101,8 +98,8 @@ export default function User() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar>
-            <AvatarImage src={user.image} alt={user.name} />
-            <AvatarFallback>{(user.name || user.email).substring(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarImage src={user?.image} alt={user?.name} />
+            <AvatarFallback>{(user?.name || user?.email).substring(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

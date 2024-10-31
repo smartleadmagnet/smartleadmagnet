@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import PricingCard from "@/components/Pricing/PricingCard";
 import FeatureLine from "@/components/Pricing/FeatureLine";
 import ButtonCheckout from "@/components/ButtonCheckout";
@@ -37,11 +37,13 @@ const PricingTable: React.FC<PricingProps> = ({ plans }) => {
                 ))}
               </ul>
 
-              <ButtonCheckout
-                title="Get Started"
-                priceId={plan.priceId}
-                primaryClass="block w-full rounded-lg border-2 border-white px-8 py-3 text-center text-sm font-semibold text-gray-100 transition duration-100 hover:bg-opacity-20 md:text-base"
-              />
+              <Suspense fallback={<div>Loading...</div>}>
+                <ButtonCheckout
+                  title="Get Started"
+                  priceId={plan.priceId}
+                  primaryClass="block w-full rounded-lg border-2 border-white px-8 py-3 text-center text-sm font-semibold text-gray-100 transition duration-100 hover:bg-opacity-20 md:text-base"
+                />
+              </Suspense>
             </div>
             {index === 1 && <BorderBeam size={700} duration={10} delay={9} borderWidth={10} />}
           </div>

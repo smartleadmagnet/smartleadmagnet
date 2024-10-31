@@ -26,7 +26,7 @@ const generateCSV = (data: LeadMagnetUsage[]) => {
 // Function to download the CSV file
 const downloadCSV = (csvData: string, filename: string) => {
   const blob = new Blob([csvData], { type: "text/csv" });
-  const url = window.URL.createObjectURL(blob);
+  const url = window?.URL?.createObjectURL(blob);
   const a = document.createElement("a");
   a.setAttribute("href", url);
   a.setAttribute("download", filename);
@@ -45,7 +45,6 @@ const ExportSubmissionsButton: React.FC<ExportSubmissionsButtonProps> = ({ usage
   };
 
   return (
-    
     <Button className="btn-primary" onClick={handleExportSubmissions}>
       Export Submissions
     </Button>

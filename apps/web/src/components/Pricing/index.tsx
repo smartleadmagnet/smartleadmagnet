@@ -19,7 +19,6 @@ const Pricing: React.FC<PricingProps> = ({ title = pricingConfig.title, descript
         {title}
       </h1>
       <div className="text-center text-lg font-medium text-gray-600 leading-relaxed mb-10  text-white " >{description}</div>
-
       <PricingTable plans={userPlans} />
     </div>
   );

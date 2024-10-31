@@ -295,7 +295,9 @@ export const BuilderProvider: React.FC<{ children: React.ReactNode; leadMagnet: 
         description,
       });
       setSelectedLeadMagnet(leadResponse?.data);
-      window.location.reload();
+      if (window) {
+        window?.location?.reload();
+      }
     } catch (e) {
       toast({
         variant: "destructive",
