@@ -60,7 +60,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       // Check if the lead has any website components
       const websiteComponent = (lead?.components as Array<any>)?.find((item) => item.type === "website");
 
-      if (payload?.[websiteComponent.name]) {
+      if (websiteComponent?.name && payload?.[websiteComponent?.name]) {
         try {
           // Fetch the website content using axios
           const response = await axios.get(payload[websiteComponent.name]);

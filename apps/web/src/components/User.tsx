@@ -29,7 +29,7 @@ export async function User() {
       <div className="hidden gap-2 md:block">
         <Link
           href="/login"
-          className="rounded-lg border-2 border-cyan-500  bg-cyan-500 px-3 py-2 font-bold text-white  hover:bg-cyan-600 sm:px-10 sm:py-4  mr-4"
+          className="mr-4 rounded-lg border-2  border-cyan-500 bg-cyan-500 px-3 py-2 font-bold  text-white hover:bg-cyan-600 sm:px-10  sm:py-4"
         >
           Login
         </Link>
