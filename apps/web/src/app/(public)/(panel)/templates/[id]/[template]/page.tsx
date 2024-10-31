@@ -14,17 +14,17 @@ import getSeo from "@/lib/seo";
 import { getPublicLeadMagnets } from "@smartleadmagnet/services";
 import { createSlug } from '@/utils/slug';
 
-export async function generateStaticParams({ params }: { params: { id: string } }) {
-  const { id } = params;
-  if (!id) {
-    return [];
-  }
-  const leadMagnets = await getPublicLeadMagnets({ category: id, term: "" });
-  return leadMagnets.map((leadMagnet) => {
-    const slug = createSlug(leadMagnet?.name);
-    return { template: slug };
-  });
-}
+// export async function generateStaticParams({ params }: { params: { id: string } }) {
+//   const { id } = params;
+//   if (!id) {
+//     return [];
+//   }
+//   const leadMagnets = await getPublicLeadMagnets({ category: id, term: "" });
+//   return leadMagnets.map((leadMagnet) => {
+//     const slug = createSlug(leadMagnet?.name);
+//     return { template: slug };
+//   });
+// }
 
 export async function generateMetadata({ params }: { params: { id: string; template: string } }) {
   const { id, template } = params;
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: { params: { id: string; templ
   }, `/templates/${id}/${slug}`);
 }
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export default async function Page({ params }: { params: { id: string; template: string } }) {
   const { template } = params;
