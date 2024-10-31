@@ -12,6 +12,7 @@ import getSeo from "@/lib/seo";
 import { getPublicLeadMagnets } from "@smartleadmagnet/services";
 import { createSlug } from "@/utils/slug";
 import TemplatePreview from "@/app/(public)/(panel)/templates/view/[template]/TemplatePreview";
+import { BreadcrumbJsonLd, WebPageJsonLd } from "next-seo";
 
 export async function generateStaticParams() {
   const leadMagnets = await getPublicLeadMagnets({ category: "all", term: "" });
@@ -38,14 +39,12 @@ export async function generateMetadata({ params }: { params: { id: string; templ
         "Find the perfect Lead Magnet Template for your website. Browse our collection of high-quality templates and start generating leads today.",
     });
   }
-  const slug = createSlug(leadMagnet?.name);
-
   return getSeo(
     {
       title: `${leadMagnet?.name} - SmartLeadMagnet`,
       description: leadMagnet?.tagline,
     },
-    `/templates/view/${slug}`
+    `/templates/view/${template}`
   );
 }
 
@@ -61,6 +60,40 @@ export default async function Page({ params }: { params: { id: string; template:
 
   return (
     <>
+      <WebPageJsonLd
+        useAppDir
+        id={`https://smartleadmagnet.com/templates/view/${template}`}
+        url={`https://smartleadmagnet.com/templates/view/${template}`}
+        title={leadMagnet.name}
+        description={leadMagnet.tagline}
+        images={[
+          "https://smartleadmagnet.com/og-image.png",
+          "https://smartleadmagnet.com/images/logo/logo.png",
+          "https://smartleadmagnet.com/lead-magnet-01.png",
+          "https://smartleadmagnet.com/lead-magnet-02.png",
+        ]}
+        inLanguage="en-US"
+      />
+      <BreadcrumbJsonLd
+        useAppDir
+        itemListElements={[
+          {
+            position: 1,
+            name: "Home",
+            item: "https://smartleadmagnet.com/",
+          },
+          {
+            position: 2,
+            name: "Templates",
+            item: "https://smartleadmagnet.com/templates",
+          },
+          {
+            position: 3,
+            name: leadMagnet.name,
+            item: `https://smartleadmagnet.com/templates/view/${template}`,
+          },
+        ]}
+      />
       <div className="container mx-auto mb-10 px-4 py-10">
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/2">
@@ -93,7 +126,6 @@ export default async function Page({ params }: { params: { id: string; template:
           </div>
         </div>
       </div>
-      Three Steps
       <div className="bg-gradient-to-r from-cyan-500 to-blue-400 py-16">
         <div className="container mx-auto px-6 lg:px-12">
           <h2 className="mb-6 text-center text-4xl font-extrabold leading-tight text-white lg:text-5xl">

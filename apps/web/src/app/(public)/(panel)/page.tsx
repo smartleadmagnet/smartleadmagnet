@@ -41,7 +41,7 @@ export default async function Page() {
         useAppDir
         id="https://smartleadmagnet.com/"
         url="https://smartleadmagnet.com/"
-        title={<title></title>}
+        title={title}
         description={description}
         images={[
           "https://smartleadmagnet.com/og-image.png",
