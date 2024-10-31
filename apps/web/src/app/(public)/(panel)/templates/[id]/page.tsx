@@ -1,4 +1,3 @@
-import Image from "next/image";
 import templateCategories from "@/data/categories.json";
 import Link from "next/link";
 import { getPublicLeadMagnets } from "@smartleadmagnet/services";
@@ -17,15 +16,21 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   const { id } = params;
   const category = templateCategories.find((c) => c.id === id);
   if (!category) {
-    return getSeo({
-      title: "Lead Magnet Templates - SmartLeadMagnet",
-      description: "Transform your website in Lead Generation Machine with our Lead Magnet Templates.",
-    }, "templates");
+    return getSeo(
+      {
+        title: "Lead Magnet Templates - SmartLeadMagnet",
+        description: "Transform your website in Lead Generation Machine with our Lead Magnet Templates.",
+      },
+      "templates"
+    );
   }
-  return getSeo({
-    title: `${category?.name} Lead Magnet Templates - SmartLeadMagnet`,
-    description: `Transform your website in Lead Generation Machine with our ${category?.name} Lead Magnet Templates.`,
-  }, `/templates/${category.id}`);
+  return getSeo(
+    {
+      title: `${category?.name} Lead Magnet Templates - SmartLeadMagnet`,
+      description: `Transform your website in Lead Generation Machine with our ${category?.name} Lead Magnet Templates.`,
+    },
+    `/templates/${category.id}`
+  );
 }
 
 export const dynamic = "force-static";
@@ -64,7 +69,7 @@ export default async function Page({
             </Link>
           ))}
         </nav>
-        <SearchBox />
+        {/*<SearchBox />*/}
       </div>
       <div className="mb-10 flex justify-end">
         <Link
@@ -78,9 +83,7 @@ export default async function Page({
       {/* Template Items Section */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {leads.length ? (
-          leads.map((leadMagnet) => (
-            <LeadMagnetCard key={leadMagnet.id} leadMagnet={leadMagnet} user={user} />
-          ))
+          leads.map((leadMagnet) => <LeadMagnetCard key={leadMagnet.id} leadMagnet={leadMagnet} user={user} />)
         ) : (
           <p>No templates available for this category.</p>
         )}

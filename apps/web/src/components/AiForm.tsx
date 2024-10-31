@@ -1,3 +1,5 @@
+"use client";
+
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import MentionTextArea from "@smartleadmagnet/ui/components/MentionTextArea";
 
@@ -14,7 +16,7 @@ import useAIForm from "@/hooks/aiform.hook";
 import { Badge } from "@smartleadmagnet/ui/components/ui/badge";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import AIResponse from "@smartleadmagnet/ui/components/AIResponse";
-import React from "react";
+import React, { Suspense } from "react";
 import ApiKeySelector from "@/components/ApiKeySelector";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 
@@ -135,20 +137,20 @@ export default function AIForm({ user }: { user: any }) {
         ) : (
           <div className="flex  items-center justify-center">
             <div className="w-full">
-              
-              
-              <AIResponse
-                response={preview?.content!}
-                type={outputType}
-                isLoading={processing}
-                handleBack={() => setPreview(undefined)}
-              />
+              <Suspense fallback={<div>Loading...</div>}>
+                <AIResponse
+                  response={preview?.content!}
+                  type={outputType}
+                  isLoading={processing}
+                  handleBack={() => setPreview(undefined)}
+                />
+              </Suspense>
             </div>
           </div>
         )}
 
         {!preview && !processing && (
-          <Button className="mt-4 flex btn-primary hover:bg-cyan-600" onClick={onValidatePrompt}>
+          <Button className="btn-primary mt-4 flex hover:bg-cyan-600" onClick={onValidatePrompt}>
             Validate Prompt
           </Button>
         )}

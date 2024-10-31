@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import React, { useEffect, useState } from "react";
 import { Skeleton } from "@smartleadmagnet/ui/components/ui/skeleton";
 import { Controller } from "react-hook-form";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
@@ -10,7 +11,6 @@ import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import DynamicStyles from "@/components/DynamicStyles";
 import Image from "next/image";
 import { marked } from "marked";
-import FontPicker from "font-picker-react";
 import {
   Select,
   SelectContent,
@@ -31,6 +31,8 @@ import ImageUploader from "@/components/ImageUploader";
 import { BsFillInfoSquareFill } from "react-icons/bs";
 import { Dialog, DialogContent } from "@smartleadmagnet/ui/components/ui/dialog";
 import Loader from "@smartleadmagnet/ui/components/Loader";
+import dynamic from "next/dynamic";
+// const FontPicker = dynamic(() => import("font-picker-react"), { ssr: false });
 
 function Loading() {
   return (
@@ -358,7 +360,7 @@ export default function BuilderElementPreview() {
   };
 
   return (
-   <FormWrapper theme={formStyles} className="magnet-wrapper">
+    <FormWrapper theme={formStyles} className="magnet-wrapper">
       <Dialog
         open={showInfo}
         onOpenChange={() => {
@@ -373,9 +375,15 @@ export default function BuilderElementPreview() {
       <DynamicStyles cssContent={formStyles.customCss} enableCustomCss={formStyles.enableCustomCss} />
       {isSubmitting && <Loader type={leadMagnet.output as "image" | "code" | "text" | "markdown"} />}
       {response && (
-        <AIResponse handleBack={()=>{
-          setResponse(undefined);
-        }} isLoading={false} response={response.content} type={response.type} onRegenerate={onRegenerate} />
+        <AIResponse
+          handleBack={() => {
+            setResponse(undefined);
+          }}
+          isLoading={false}
+          response={response.content}
+          type={response.type}
+          onRegenerate={onRegenerate}
+        />
       )}
       {!response && !isSubmitting && (
         <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
@@ -407,12 +415,12 @@ export default function BuilderElementPreview() {
         </form>
       )}
 
-      <div style={{ display: "none" }}>
-        <FontPicker
-          apiKey="AIzaSyAOSZtIN2QS_O1H3z6dsnle1rPBW7nxj9Y" // Replace with your actual API key
-          activeFontFamily={formStyles.selectedFont} // Will be displayed in the FontPicker
-        />
-      </div>
+      {/*<div style={{ display: "none" }}>*/}
+      {/*  <FontPicker*/}
+      {/*    apiKey="AIzaSyAOSZtIN2QS_O1H3z6dsnle1rPBW7nxj9Y" // Replace with your actual API key*/}
+      {/*    activeFontFamily={formStyles.selectedFont} // Will be displayed in the FontPicker*/}
+      {/*  />*/}
+      {/*</div>*/}
     </FormWrapper>
   );
 }

@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { marked } from "marked";
-import React from "react";
-import { BuilderProvider } from "@/providers/BuilderProvider";
-import BuilderElementPreview from "@/components/Share";
+import React, { Suspense } from "react";
 import { AiOutlineCopy } from "react-icons/ai";
 import { ImEmbed2 } from "react-icons/im";
 import { getBySlug } from "@/actions/lead-magnet";
@@ -12,23 +10,20 @@ import CloneMagnetButton from "@/components/CloneMagnetButton";
 import BuildNewMagnet from "@/components/BuildNewMagnet";
 import getSeo from "@/lib/seo";
 import { getPublicLeadMagnets } from "@smartleadmagnet/services";
-import { createSlug } from '@/utils/slug';
+import { createSlug } from "@/utils/slug";
+import TemplatePreview from "@/app/(public)/(panel)/templates/view/[template]/TemplatePreview";
 
-// export async function generateStaticParams({ params }: { params: { id: string } }) {
-//   const { id } = params;
-//   if (!id) {
-//     return [];
-//   }
-//   const leadMagnets = await getPublicLeadMagnets({ category: id, term: "" });
-//   return leadMagnets.map((leadMagnet) => {
-//     const slug = createSlug(leadMagnet?.name);
-//     return { template: slug };
-//   });
-// }
+export async function generateStaticParams() {
+  const leadMagnets = await getPublicLeadMagnets({ category: "all", term: "" });
+  return leadMagnets.map((leadMagnet) => {
+    const slug = createSlug(leadMagnet?.name);
+    return { template: slug };
+  });
+}
 
 export async function generateMetadata({ params }: { params: { id: string; template: string } }) {
-  const { id, template } = params;
-  if (!template || !id) {
+  const { template } = params;
+  if (!template) {
     return getSeo({
       title: "Lead Magnet Template - SmartLeadMagnet",
       description:
@@ -45,13 +40,16 @@ export async function generateMetadata({ params }: { params: { id: string; templ
   }
   const slug = createSlug(leadMagnet?.name);
 
-  return getSeo({
-    title: `${leadMagnet?.name} - SmartLeadMagnet`,
-    description: leadMagnet?.tagline,
-  }, `/templates/${id}/${slug}`);
+  return getSeo(
+    {
+      title: `${leadMagnet?.name} - SmartLeadMagnet`,
+      description: leadMagnet?.tagline,
+    },
+    `/templates/view/${slug}`
+  );
 }
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export default async function Page({ params }: { params: { id: string; template: string } }) {
   const { template } = params;
@@ -65,15 +63,13 @@ export default async function Page({ params }: { params: { id: string; template:
     <>
       <div className="container mx-auto mb-10 px-4 py-10">
         <div className="flex flex-col md:flex-row">
-          {/* Left Section */}
           <div className="w-full md:w-1/2">
             <div className="mx-auto max-w-lg">
-              <BuilderProvider leadMagnet={leadMagnet}>
-                <BuilderElementPreview />
-              </BuilderProvider>
+              <Suspense fallback={<div>Loading...</div>}>
+                <TemplatePreview leadMagnet={leadMagnet} />
+              </Suspense>
             </div>
           </div>
-
           {/* Right Section */}
           <div className="mt-8 w-full p-6 md:mt-0 md:w-1/2 md:p-8">
             <h1 className="mb-4 text-center text-2xl font-bold text-gray-800 md:text-left md:text-3xl">
@@ -97,8 +93,7 @@ export default async function Page({ params }: { params: { id: string; template:
           </div>
         </div>
       </div>
-
-      {/* Three Steps */}
+      Three Steps
       <div className="bg-gradient-to-r from-cyan-500 to-blue-400 py-16">
         <div className="container mx-auto px-6 lg:px-12">
           <h2 className="mb-6 text-center text-4xl font-extrabold leading-tight text-white lg:text-5xl">

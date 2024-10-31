@@ -1,3 +1,5 @@
+"use client";
+
 import FontPicker from "font-picker-react";
 
 interface FontSelectorProps {
@@ -15,9 +17,6 @@ const FontSelector = (props: FontSelectorProps) => {
         activeFontFamily={activeFontFamily}
         onChange={(nextFont) => onChange(nextFont.family)} // Call onChange instead
       />
-      {/* <p className="apply-font" style={{ fontFamily: activeFontFamily }}>
-                The font will be applied to this text.
-            </p> */}
     </div>
   );
 };

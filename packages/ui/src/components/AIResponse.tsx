@@ -1,4 +1,6 @@
 // import TextareaAutosize from "react-textarea-autosize";
+"use client";
+
 import { CheckIcon, CopyIcon, ReloadIcon, DownloadIcon } from "@radix-ui/react-icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -45,7 +47,7 @@ const AIResponse = ({
       <div className="card bg-base-200/70 flex h-full w-full flex-1 flex-col justify-between rounded-lg p-2 align-middle sm:p-4">
         {!isLoading ? (
           <div className="prompt-content-box">
-            {(type === "text" || type === "markdown")  && (
+            {(type === "text" || type === "markdown") && (
               <div className="markdown-body max-h-[450px] overflow-y-auto">
                 <MarkdownTypingEffect text={response} />
               </div>
