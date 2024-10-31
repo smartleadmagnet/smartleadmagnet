@@ -1,6 +1,8 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,20 +11,58 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@smartleadmagnet/ui/components/ui/dropdown-menu";
-import { getSessionUser } from "@/services/user";
-import React from "react";
-import { signOut } from "@/lib/auth";
-import { createLead } from "@/actions/lead-magnet";
 import { Avatar, AvatarFallback, AvatarImage } from "@smartleadmagnet/ui/components/ui/avatar";
+import { useRouter } from "next/navigation";
+import Spinner from "@smartleadmagnet/ui/components/Spinner";
+import { signOut } from "next-auth/react";
 
-export async function User() {
-  let user = await getSessionUser();
+export default function User() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [creatingLead, setCreatingLead] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Client-side API call to get user session
+    const fetchUser = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("/api/user"); // Update this endpoint as necessary
+        if (response.ok) {
+          const userData = await response.json();
+          setUser(userData?.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+      }
+      setLoading(false);
+    };
+
+    fetchUser();
+  }, []);
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/login");
+  };
 
   const onCreate = async () => {
-    "use server";
-    const lead = await createLead();
-    redirect(`/builder/${lead?.id!}`);
+    setCreatingLead(true);
+    try {
+      const response = await fetch("/api/lead", { method: "POST" }); // Update this endpoint
+      const lead = await response.json();
+      router.push(`/builder/${lead.id}`);
+    } catch (error) {
+      console.error("Failed to create lead:", error);
+    }
+    setCreatingLead(false);
   };
+
+  if (loading) {
+    return <Spinner className="h-5 w-5 animate-spin" aria-hidden="true" />;
+  }
+
+  console.log({ user });
 
   if (!user) {
     return (
@@ -42,19 +82,27 @@ export async function User() {
       </div>
     );
   }
+  console.log({ user1: user });
 
   return (
     <div className="flex justify-center">
-      <form className=" mr-3 flex justify-end">
-        <Button formAction={onCreate} variant="outline" size="sm" className="btn-primary">
-          Build New Magnet
+      <div className=" mr-3 flex justify-end">
+        <Button
+          onClick={onCreate}
+          variant="outline"
+          size="sm"
+          className="btn-primary flex flex-row gap-2"
+          disabled={creatingLead}
+        >
+          {creatingLead && <Spinner className="h-5 w-5 animate-spin" aria-hidden="true" />}
+          {creatingLead ? "Creating Magnet..." : "Build New Magnet"}
         </Button>
-      </form>
+      </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar>
-            <AvatarImage src={user?.image!} alt={user?.name!} />
-            <AvatarFallback>{(user?.name! || user?.email!).substring(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarImage src={user.image} alt={user.name} />
+            <AvatarFallback>{(user.name || user.email).substring(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
@@ -69,17 +117,9 @@ export async function User() {
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <form
-              action={async () => {
-                "use server";
-                await signOut({
-                  redirectTo: "/login",
-                });
-              }}
-              className="w-full"
-            >
-              <Button className="w-full">Logout</Button>
-            </form>
+            <button onClick={handleSignOut} className="w-full">
+              Logout
+            </button>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

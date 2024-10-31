@@ -7,7 +7,7 @@ import { FaFacebook, FaGithub, FaYoutube } from "react-icons/fa";
 
 import { Sheet, SheetContent, SheetTrigger } from "@smartleadmagnet/ui/components/ui/sheet";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
-import { User } from "@/components/User";
+import User from "@/components/User";
 import ScheduleMeeting from "../ScheduleMeeting";
 
 const CategoryGrid = () => {
