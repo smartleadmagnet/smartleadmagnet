@@ -147,7 +147,7 @@ function extractLeadContent(htmlString: string): string | undefined | null {
 }
 
 export const createAILead = async ({ description }: { description: string }) => {
-  let llmModel = getTextLLMModel("AWS BedRock", "anthropic.claude-3-haiku-20240307-v1:0");
+  let llmModel = getTextLLMModel("Google Cloud", "models/gemini-1.5-pro");
   const messages = [
     new SystemMessage(prompt),
     new HumanMessage({
