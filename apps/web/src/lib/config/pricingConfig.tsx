@@ -115,10 +115,6 @@ const pricingConfig: IPricing = {
         },
         {
           name: "Webhooks & Integrations",
-          hint: "",
-        },
-        {
-          name: "Webhooks & Integrations",
           hint: "Easily connect with Zapier, ActivePieces, and other platforms for seamless integration.",
         },
       ],
@@ -164,10 +160,6 @@ const pricingConfig: IPricing = {
         },
         {
           name: "Premium support",
-          hint: "",
-        },
-        {
-          name: "Webhooks & Integrations",
           hint: "",
         },
         {
