@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       title: `${category?.name} Lead Magnet Templates - SmartLeadMagnet`,
       description: `Transform your website in Lead Generation Machine with our ${category?.name} Lead Magnet Templates.`,
     },
-    `/templates/${category.id}`
+    `templates/${category.id}`
   );
 }
 

@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: { params: { id: string; templ
       title: `${leadMagnet?.name} - SmartLeadMagnet`,
       description: leadMagnet?.tagline,
     },
-    `/templates/view/${template}`
+    `templates/view/${template}`
   );
 }
 
