@@ -2,11 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import templateCategories from "@/data/categories.json";
 // import ProductHuntLaunchSupport from "../ProductHuntLaunchSupport";
-import { ChevronDown, PanelLeft } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { FaFacebook, FaGithub, FaYoutube, FaHandshake } from "react-icons/fa";
-
-import { Sheet, SheetContent, SheetTrigger } from "@smartleadmagnet/ui/components/ui/sheet";
-import { Button } from "@smartleadmagnet/ui/components/ui/button";
+import MobileNav from "@/components/MobileNav";
 import User from "@/components/User";
 import ScheduleMeeting from "../ScheduleMeeting";
 
@@ -29,7 +27,7 @@ export default async function WebsiteLayout({ children }: { children: React.Reac
       <main className="bg-muted/40 main-content flex w-full flex-col">
         <div className="flex flex-col sm:gap-4 ">
           <header className="bg-background sticky top-0 z-30  flex h-36 items-center gap-4 border-b bg-gray-900 px-4 sm:static sm:h-auto sm:border-0 sm:px-6 sm:py-4 ">
-            <MobileNav />
+            <MobileNav templateCategories={templateCategories}  />
             <div className="flex-1">
               <Link href="/">
                 <Image src="/images/logo/logo.png" alt="Logo" width={200} height={0} />
@@ -75,56 +73,7 @@ function DesktopNav() {
   );
 }
 
-function MobileNav() {
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button size="icon" variant="outline" className="md:hidden">
-          <PanelLeft className="h-5 w-5" />
-          <span className="sr-only">Toggle Menu</span>
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="left" className="mobile-menu bg-gray-900 sm:max-w-xs">
-        <nav className="grid gap-6 text-lg font-medium">
-          <div>
-            <Link href="#" className="mobile-link">
-              Templates
-            </Link>
-            <ul className="ml-4 mt-2 space-y-2">
-              {templateCategories.map((category) => (
-                <li key={category.id}>
-                  <Link href={`/templates/${category.id}`} className="mobile-link text-md block">
-                    {category.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <Link href="#" className="mobile-link">
-            Pricing
-          </Link>
-          <a href="#" className="mobile-link">
-            Blog
-          </a>
-          <div className="flex gap-2">
-            <Link
-              href="/login"
-              className="rounded-lg bg-cyan-500 px-6 py-3 font-bold text-white  hover:bg-cyan-600 sm:px-10 sm:py-4 "
-            >
-              Login
-            </Link>
-            <Link
-              href="/login"
-              className="rounded-lg border-2 border-cyan-500 px-6 py-3 font-bold text-cyan-500  hover:bg-cyan-500 hover:text-white sm:px-8 sm:py-4"
-            >
-              Sign Up
-            </Link>
-          </div>
-        </nav>
-      </SheetContent>
-    </Sheet>
-  );
-}
+
 
 function Footer() {
   return (
