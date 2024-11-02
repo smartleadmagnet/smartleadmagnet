@@ -30,7 +30,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ templateCategories }) => {
       <SheetContent side="left" className="mobile-menu bg-gray-900 sm:max-w-xs">
         <nav className="grid gap-6 text-lg font-medium">
           <div>
-            <Link href="#" className="mobile-link" onClick={closeSheet}>
+            <Link href="/templates/all" className="mobile-link" onClick={closeSheet}>
               Templates
             </Link>
             <ul className="ml-4 mt-2 space-y-2">
@@ -47,10 +47,10 @@ const MobileNav: React.FC<MobileNavProps> = ({ templateCategories }) => {
               ))}
             </ul>
           </div>
-          <Link href="#" className="mobile-link" onClick={closeSheet}>
+          <Link href="/pricing" className="mobile-link" onClick={closeSheet}>
             Pricing
           </Link>
-          <a href="#" className="mobile-link" onClick={closeSheet}>
+          <a href="/blog" className="mobile-link" onClick={closeSheet}>
             Blog
           </a>
           <div className="flex gap-2">
@@ -62,7 +62,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ templateCategories }) => {
               Login
             </Link>
             <Link
-              href="/signup"
+              href="/login"
               className="rounded-lg border-2 border-cyan-500 px-6 py-3 font-bold text-cyan-500 hover:bg-cyan-500 hover:text-white sm:px-8 sm:py-4"
               onClick={closeSheet}
             >
