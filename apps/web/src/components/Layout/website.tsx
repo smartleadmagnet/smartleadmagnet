@@ -3,7 +3,7 @@ import Image from "next/image";
 import templateCategories from "@/data/categories.json";
 // import ProductHuntLaunchSupport from "../ProductHuntLaunchSupport";
 import { ChevronDown, PanelLeft } from "lucide-react";
-import { FaFacebook, FaGithub, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaGithub, FaYoutube, FaHandshake } from "react-icons/fa";
 
 import { Sheet, SheetContent, SheetTrigger } from "@smartleadmagnet/ui/components/ui/sheet";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
@@ -158,6 +158,13 @@ function Footer() {
                   height="54"
                 />
               </a>
+              <Link
+                href="/affiliates"
+                className="text-primary mt-5 inline-flex min-w-[250px] items-center rounded-lg bg-white px-6 py-3 text-lg font-semibold transition-all duration-200 hover:bg-gray-100"
+              >
+                <FaHandshake className="mr-2 text-xl text-[#D2A679]" />
+                Be a Partner with us
+              </Link>
 
               {/* Social Media Links */}
               <div className="mt-5 flex space-x-4">
