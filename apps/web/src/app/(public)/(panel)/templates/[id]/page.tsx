@@ -1,6 +1,6 @@
 import templateCategories from "@/data/categories.json";
 import Link from "next/link";
-import { getPublicLeadMagnets } from "@smartleadmagnet/services";
+import { getPublicLeadMagnets, getPublicLeadMagnetsCount } from "@smartleadmagnet/services";
 import React from "react";
 import SearchBox from "@/components/SearchBox";
 import { SearchParamType } from "@/lib/types";
@@ -16,10 +16,12 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const { id } = params;
   const category = templateCategories.find((c) => c.id === id);
+  const count = await getPublicLeadMagnetsCount({ category: category || "all", term: "" });
+
   if (!category) {
     return getSeo(
       {
-        title: "Lead Magnet Templates - SmartLeadMagnet",
+        title: `${count} Lead Magnet Templates | SmartLeadMagnet`,
         description: "Transform your website in Lead Generation Machine with our Lead Magnet Templates.",
       },
       "templates"
@@ -27,7 +29,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   }
   return getSeo(
     {
-      title: `${category?.name} Lead Magnet Templates - SmartLeadMagnet`,
+      title: `${count} Lead Magnet Templates of Category ${category?.name} | SmartLeadMagnet`,
       description: `Transform your website in Lead Generation Machine with our ${category?.name} Lead Magnet Templates.`,
     },
     `templates/${category.id}`

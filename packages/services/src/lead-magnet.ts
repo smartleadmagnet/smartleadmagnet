@@ -34,6 +34,25 @@ export const getPublicLeadMagnets = async ({ category, term }: { category: strin
   });
 };
 
+export const getPublicLeadMagnetsCount = async ({ category, term }: { category: string; term: string }) => {
+  const whereClause: any = {
+    status: "published",
+    public: true,
+  };
+  if (category && category !== "all") {
+    whereClause["category"] = category;
+  }
+  if (term) {
+    whereClause["name"] = {
+      contains: term,
+      mode: "insensitive",
+    };
+  }
+  return prisma.leadMagnet.count({
+    where: whereClause,
+  });
+};
+
 export const getAllPublicLeads = async () => {
   return prisma.leadMagnet.findMany({
     where: {
@@ -194,10 +213,7 @@ export async function getLeadMagnetsByPopularity(limit: number = 10): Promise<Le
       status: "published",
       public: true,
     },
-    orderBy: [
-      { usedCount: 'desc' },
-      { impressionsCount: 'desc' },
-    ],
+    orderBy: [{ usedCount: "desc" }, { impressionsCount: "desc" }],
     take: limit,
   });
 }
