@@ -16,7 +16,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const { id } = params;
   const category = templateCategories.find((c) => c.id === id);
-  const count = await getPublicLeadMagnetsCount({ category: category || "all", term: "" });
+  const count = await getPublicLeadMagnetsCount({ category: id || "all", term: "" });
 
   if (!category) {
     return getSeo(
