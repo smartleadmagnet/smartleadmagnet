@@ -149,8 +149,16 @@ function extractLeadContent(htmlString: string): string | undefined | null {
   return match && match.length > 1 ? match[1] : null;
 }
 
-export const suggestLeadMagnet = async ({ title, description, content }: { title: string; description: string; content: string }) => {
-  let llmModel = getTextLLMModel("AWS BedRock", "anthropic.claude-3-haiku-20240307-v1:0");
+export const suggestLeadMagnet = async ({
+  title,
+  description,
+  content,
+}: {
+  title: string;
+  description: string;
+  content: string;
+}) => {
+  let llmModel = getTextLLMModel("Google Cloud", "models/gemini-1.5-pro");
   const messages = [
     new SystemMessage(prompt),
     new HumanMessage({

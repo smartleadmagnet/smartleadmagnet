@@ -20,6 +20,7 @@ export async function POST(request: Request) {
     const description = $('meta[name="description"]').attr("content") || "";
     const bodyText = $("body").text().trim().replace(/\s+/g, " ").substring(0, 5000); // Limit to 5000 characters
 
+    // console.log(title, description, bodyText);
     const suggestedMagnet = await suggestLeadMagnet({ title, description, content: bodyText });
     // Generate a unique name for the lead magnet
     // Extract the website name from the URL
