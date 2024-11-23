@@ -1,66 +1,72 @@
 "use client";
 
 import React, { useState } from "react";
-import { cloneLead } from "@/actions/lead-magnet";
 import { useRouter } from "next/navigation";
 import { Button } from "@smartleadmagnet/ui/components/ui/button";
-import { CopyIcon } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@smartleadmagnet/ui/components/ui/dialog";
+import { CopyIcon, Loader2 } from "lucide-react";
+import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
 
 interface CloneMagnetButtonProps {
   leadMagnetId: string;
-  userId?: string;
-  overrideClasses?: string;
 }
 
-export default function CloneMagnetButton({ leadMagnetId, userId, overrideClasses }: CloneMagnetButtonProps) {
-  const [open, setOpen] = useState(false);
+export default function CloneMagnetButton({ leadMagnetId }: CloneMagnetButtonProps) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onClone = async () => {
-    if (userId) {
-      const lead = await cloneLead(leadMagnetId);
-      router.push(`/builder/${lead?.id!}`);
-    } else {
-      router.push("/login");
+  const handleClone = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/lead/clone", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ templateId: leadMagnetId }),
+      });
+
+      const data = await response.json();
+
+      if (!data.isLoggedIn) {
+        // Redirect to sign in if not logged in
+        router.push("/login");
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to clone template");
+      }
+
+      toast({
+        title: "Template cloned successfully!",
+        description: "You can now edit and customize your cloned template.",
+      });
+      // Redirect to the edit page of the cloned lead magnet
+      router.push(`/builder/${data.lead.id}`);
+    } catch (error) {
+      toast({
+        title: "Failed to clone template",
+        description: "Please try again later.",
+      });
+      console.error("Error cloning template:", error);
+    } finally {
+      setIsLoading(false);
     }
-    setOpen(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button
-          className={`${overrideClasses ? overrideClasses : "flex items-center rounded border border-cyan-500 bg-white px-4 py-2 text-cyan-500 hover:bg-cyan-500 hover:text-white"} `}
-        >
+    <Button onClick={handleClone} disabled={isLoading} variant="outline">
+      {isLoading ? (
+        <>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Cloning...
+        </>
+      ) : (
+        <>
           <CopyIcon className="mr-2 h-4 w-4" />
           Make it yours
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{userId ? "Clone Lead Magnet" : "Login to Clone"}</DialogTitle>
-          <DialogDescription>
-            {userId
-              ? "Are you sure you want to clone this lead magnet? You'll be able to edit and customize it."
-              : "You'll need to login to clone this lead magnet."}
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
-          </Button>
-          <Button onClick={onClone}>{userId ? "Clone" : "Login"}</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </>
+      )}
+    </Button>
   );
 }

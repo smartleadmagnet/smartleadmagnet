@@ -37,14 +37,13 @@ export async function createLead(): Promise<LeadMagnet> {
   }
 }
 
-export async function cloneLead(id: string): Promise<LeadMagnet> {
-  const user = await getSessionUser();
+export async function cloneLead(templateId: string, userId: string): Promise<LeadMagnet> {
   try {
-    // @ts-ignore
-    return copyLeadMagnet(id, user?.id);
-  } catch (error: any) {
-    console.error("Error cloning lead:", error);
-    throw new Error(error.message);
+    const clonedLead = await copyLeadMagnet(templateId, userId);
+    return clonedLead;
+  } catch (error) {
+    console.error("Error in cloneLead action:", error);
+    throw error;
   }
 }
 
@@ -93,7 +92,7 @@ export async function createFromWebsite(data: {
       components: data.components,
       userId: user?.id!,
       description: `Lead magnet generated from ${data.websiteUrl}`,
-      output: data.outputType
+      output: data.outputType,
     });
   } catch (error: any) {
     console.error("Error creating lead from website:", error);
