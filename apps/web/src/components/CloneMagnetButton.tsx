@@ -15,6 +15,7 @@ import {
 
 interface CloneMagnetButtonProps {
   leadMagnetId: string;
+  overrideClasses?: string;
 }
 
 export default function CloneMagnetButton({ leadMagnetId }: CloneMagnetButtonProps) {
