@@ -46,7 +46,7 @@ const LeadMagnetCard: React.FC<LeadMagnetCardProps> = ({ leadMagnet, user }) => 
         >
           Use This
         </Link>
-        <CloneMagnetButton leadMagnetId={leadMagnet.id} userId={user?.id} />
+        <CloneMagnetButton leadMagnetId={leadMagnet.id} />
       </div>
     </div>
   );

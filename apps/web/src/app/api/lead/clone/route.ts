@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Template ID is required" }, { status: 400 });
     }
 
-    const clonedLead = await cloneLead(templateId, user.id!);
+    const clonedLead = await cloneLead(templateId);
 
     return NextResponse.json({
       isLoggedIn: true,
