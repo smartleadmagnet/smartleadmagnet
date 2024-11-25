@@ -1,5 +1,5 @@
 import { getLeadMagnetById } from "@smartleadmagnet/services";
-import BuilderContainer from "@/app/builder/[id]/BuilderContainer";
+import BuilderContainer from "./BuilderContainer";
 import { getSessionUser } from "@/services/user";
 
 export default async function Page({ params }: { params: { id: string } }) {

@@ -1,6 +1,6 @@
 import { BuilderProvider } from "@/providers/BuilderProvider";
 import Builder from "@/components/Builder";
-import { LeadMagnet, User } from "@smartleadmagnet/database";
+import { LeadMagnet } from "@smartleadmagnet/database";
 
 export default function BuilderContainer({ leadMagnet, user }: { leadMagnet: LeadMagnet; user?: any }) {
   return (
