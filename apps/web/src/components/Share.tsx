@@ -11,6 +11,8 @@ import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import DynamicStyles from "@/components/DynamicStyles";
 import Image from "next/image";
 import { marked } from "marked";
+import { FormProvider } from "react-hook-form";
+
 import {
   Select,
   SelectContent,
@@ -32,6 +34,11 @@ import { BsFillInfoSquareFill } from "react-icons/bs";
 import { Dialog, DialogContent } from "@smartleadmagnet/ui/components/ui/dialog";
 import Loader from "@smartleadmagnet/ui/components/Loader";
 import dynamic from "next/dynamic";
+import { FormField } from "@smartleadmagnet/ui/components/ui/form";
+import { contains } from "cheerio";
+import CheckboxGroup from "@/components/CheckboxGroup";
+import SelectGroup from "@/components/SelectGroup";
+
 // const FontPicker = dynamic(() => import("font-picker-react"), { ssr: false });
 
 function Loading() {
@@ -121,6 +128,7 @@ export default function BuilderElementPreview() {
     errors,
     leadMagnet,
     setResponse,
+    methods,
   } = useShareForm();
   const [isLoading, setLoading] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
@@ -239,51 +247,27 @@ export default function BuilderElementPreview() {
         );
       case "checkbox-group":
         return (
-          <div>
-            <Label className="mb-2 block text-sm font-semibold">
-              {element.label} {element.required && <span className="text-red-500">*</span>}
-            </Label>
-            {element.options.map((option: any) => (
-              <div key={option.value} className="flex items-center">
-                <Controller
-                  name={`${element.name}-${option.value}`}
-                  control={control}
-                  render={({ field }) => (
-                    <Checkbox checked={field.value} onCheckedChange={(checked) => field.onChange(checked)} />
-                  )}
-                />
-                <Label className="ml-2">{option.label}</Label>
-              </div>
-            ))}
-          </div>
+          <CheckboxGroup
+            label={element.label}
+            name={element.name}
+            required={element.required}
+            control={control}
+            errors={errors}
+            options={element.options}
+          />
         );
+
       case "select":
         return (
-          <div>
-            <Label className="mb-2 block text-sm font-semibold">
-              {element.label} {element.required && <span className="text-red-500">*</span>}
-            </Label>
-            <Controller
-              name={element.name}
-              control={control}
-              rules={{ required: element.required ? `${element.label} is required` : false }}
-              render={({ field }) => (
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={element.placeholder || "Select Option"} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {element.options.map((option: any) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
-            />
-            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
-          </div>
+          <SelectGroup
+            label={element.label}
+            name={element.name}
+            required={element.required}
+            control={control}
+            errors={errors}
+            options={element.options}
+            placeholder={element.placeholder}
+          />
         );
       case "radio-group":
         return (
@@ -386,33 +370,46 @@ export default function BuilderElementPreview() {
         />
       )}
       {!response && !isSubmitting && (
-        <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
-          <Button
-            variant="link"
-            type="button"
-            onClick={() => {
-              setShowInfo(!showInfo);
-            }}
-            className="absolute right-0"
-          >
-            <BsFillInfoSquareFill className="h-5 w-5 text-gray-500" />
-          </Button>
-          {leadMagnet.image && (
-            <div className="icon mx-auto mb-5 max-w-[100px] text-center">
-              <Image src={leadMagnet.image} alt="Logo" className="rounded-[50%]" width={100} height={100} />
-            </div>
-          )}
-          {elementsList.map((element: any, index: number) => (
-            <div className="form-item" key={index}>
-              {renderElement(element)}
-            </div>
-          ))}
+        <FormProvider {...methods}>
+          {/* <form onSubmit={handleSubmit(onSubmit)}>
+        <EmailInput
+          label="Email"
+          name="email"
+          required
+          control={control}
+          errors={errors}
+          placeholder="Enter your email"
+        />
+        <button type="submit">Submit</button>
+      </form> */}
+          <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
+            <Button
+              variant="link"
+              type="button"
+              onClick={() => {
+                setShowInfo(!showInfo);
+              }}
+              className="absolute right-0"
+            >
+              <BsFillInfoSquareFill className="h-5 w-5 text-gray-500" />
+            </Button>
+            {leadMagnet.image && (
+              <div className="icon mx-auto mb-5 max-w-[100px] text-center">
+                <Image src={leadMagnet.image} alt="Logo" className="rounded-[50%]" width={100} height={100} />
+              </div>
+            )}
+            {elementsList.map((element: any) => (
+              <div className="form-item" key={element.name}>
+                {renderElement(element)}
+              </div>
+            ))}
 
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Submit
-          </Button>
-        </form>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Submit
+            </Button>
+          </form>
+        </FormProvider>
       )}
 
       {/*<div style={{ display: "none" }}>*/}

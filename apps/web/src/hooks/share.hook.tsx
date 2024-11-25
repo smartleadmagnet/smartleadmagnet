@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import { useBuilderContext } from "@/providers/BuilderProvider";
 import { useForm } from "react-hook-form";
 import { toast } from "@smartleadmagnet/ui/hooks/use-toast";
+import { isValid } from "date-fns";
 
 interface Preview {
   type: string;
@@ -13,13 +14,14 @@ const useShareForm = () => {
   const { leadMagnet, elementsList, outputType, formStyles } = useBuilderContext();
   const [response, setResponse] = useState<Preview | undefined>();
   const [lastInput, setLastInput] = useState<any>();
-
+  const methods = useForm();
   const {
     control,
     handleSubmit,
-
+    trigger,
+    
     formState: { errors, isSubmitting },
-  } = useForm({});
+  } = methods;
 
   async function onGenerateLead(data: any) {
     try {
@@ -51,10 +53,46 @@ const useShareForm = () => {
     }
   }
 
-  const onSubmit = async (data: any) => {
-    setLastInput(data);
-    await onGenerateLead(data);
+  const modifyData = (data: any) => {
+    let copyData = { ...data };
+  
+    for (const key in copyData) {
+      if (Array.isArray(copyData[key])) {
+        copyData[key] = copyData[key].join(',');  // Join array items with commas
+      }
+    }
+    return copyData;
   };
+  
+
+  const onSubmit = async (data: any) => {
+    console.log(data)
+    // Trigger any necessary validations
+    trigger();
+    // Initialize isValid as true
+    let isValid = true;
+    // Filter the elementsList to get the required items
+    const requiredElements = elementsList.filter((item: any) => item.required);
+  
+    // Check if all required elements are present in the data
+    requiredElements.forEach((item: any) => {
+      if (!data[item.name]) {
+        isValid = false;
+      }
+    });
+  
+    // If any required element is missing or invalid, isValid will be false
+    if (!isValid) {
+      console.log("Form is invalid, required elements are missing or empty.");
+      return;
+    }
+    // If the form is valid, you can proceed with your logic (e.g., generating leads)
+    setLastInput(data);
+    await onGenerateLead(modifyData(data));
+  
+    
+  };
+  
 
   const onRegenerate = async () => {
     await onGenerateLead(lastInput);
@@ -72,7 +110,8 @@ const useShareForm = () => {
     errors,
     onRegenerate,
     leadMagnet,
-    setResponse
+    setResponse,
+    methods
   };
 };
 
