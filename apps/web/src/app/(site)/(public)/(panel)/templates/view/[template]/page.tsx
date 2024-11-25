@@ -11,7 +11,7 @@ import BuildNewMagnet from "@/components/BuildNewMagnet";
 import getSeo from "@/lib/seo";
 import { getPublicLeadMagnets } from "@smartleadmagnet/services";
 import { createSlug } from "@/utils/slug";
-import TemplatePreview from "@/app/(public)/(panel)/templates/view/[template]/TemplatePreview";
+import TemplatePreview from "./TemplatePreview";
 import { BreadcrumbJsonLd, WebPageJsonLd } from "next-seo";
 
 export async function generateStaticParams() {

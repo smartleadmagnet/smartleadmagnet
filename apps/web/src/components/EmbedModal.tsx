@@ -133,7 +133,7 @@ const EmbedModal = (props: EmbedModalProps) => {
                   <span className="text-xl">WordPress</span>
                 </Link>
                 <Link
-                  href="#"
+                  href="https://smartleadmagnet.com/integrations/webflow"
                   target="_blank"
                   className="flex items-center space-x-2 rounded-md border p-4 shadow-md transition hover:shadow-lg"
                 >
@@ -142,7 +142,7 @@ const EmbedModal = (props: EmbedModalProps) => {
                 </Link>
 
                 <Link
-                  href="#"
+                  href="https://smartleadmagnet.com/integrations/hubspot"
                   target="_blank"
                   className="flex items-center space-x-2 rounded-md border p-4 shadow-md transition hover:shadow-lg"
                 >
@@ -151,7 +151,7 @@ const EmbedModal = (props: EmbedModalProps) => {
                 </Link>
 
                 <Link
-                  href="#"
+                  href="https://smartleadmagnet.com/integrations/shopify"
                   target="_blank"
                   className="flex items-center space-x-2 rounded-md border p-4 shadow-md transition hover:shadow-lg"
                 >

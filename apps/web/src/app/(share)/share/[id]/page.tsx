@@ -1,5 +1,5 @@
 import { getLeadMagnetById, getUserById, updateLeadMagnetImpressions } from "@smartleadmagnet/services";
-import BuilderContainer from "@/app/share/[id]/BuilderContainer";
+import BuilderContainer from "./BuilderContainer";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const leadMagnet = await getLeadMagnetById(params.id);

@@ -1,5 +1,5 @@
-import { BuilderProvider } from "@/providers/BuilderProvider";
 import { LeadMagnet } from "@smartleadmagnet/database";
+import { BuilderProvider } from "@/providers/BuilderProvider";
 import BuilderElementPreview from "@/components/Share";
 
 export default function BuilderContainer({ leadMagnet }: { leadMagnet: LeadMagnet }) {
