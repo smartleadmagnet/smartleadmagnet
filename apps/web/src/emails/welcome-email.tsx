@@ -89,7 +89,15 @@ const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
               </Button>
 
               {/* Support Text */}
-              <Text className="mt-4">If you need help or have questions, please contact us.</Text>
+              <Text className="mt-4">
+                Need help or have questions? Join our Discord community for quick support:
+              </Text>
+              <Button
+                href="https://discord.gg/MjGw4NJn"
+                className="my-4 rounded bg-[#5865F2] px-5 py-3 text-center font-bold text-white hover:bg-[#4752C4]"
+              >
+                Join our Discord Community
+              </Button>
               <Text className="mt-4">
                 Best regards,
                 <br />
