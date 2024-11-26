@@ -107,10 +107,19 @@ function Footer() {
               </a>
               <Link
                 href="/affiliates"
-                className="text-primary mt-5 inline-flex min-w-[250px] items-center rounded-lg bg-white px-6 py-3 text-lg font-semibold transition-all duration-200 hover:bg-gray-100"
+                className="text-primary my-3 inline-flex min-w-[250px] items-center rounded-lg bg-white px-6 py-3 text-lg font-semibold transition-all duration-200 hover:bg-gray-100"
               >
                 <FaHandshake className="mr-2 text-xl text-[#D2A679]" />
                 Be a Partner with us
+              </Link>
+
+              <Link
+                href="https://discord.gg/HAuYts3vJF"
+                target="_blank"
+                className="text-primary inline-flex min-w-[250px] items-center rounded-lg bg-white px-6 py-3 text-lg font-semibold transition-all duration-200 hover:bg-gray-100"
+              >
+                <FaDiscord className="mr-2 text-xl text-[#7289DA]" />
+                Join our Community
               </Link>
 
               {/* Social Media Links */}
