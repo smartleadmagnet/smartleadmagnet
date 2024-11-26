@@ -19,3 +19,16 @@ export async function logEmail(userId: string, emailType: string): Promise<Email
     },
   });
 }
+
+export async function getLastEmailSentDate(userId: string): Promise<Date | null> {
+  const result = await prisma.emailLog.findFirst({
+    where: {
+      userId: userId,
+    },
+    orderBy: {
+      sentAt: 'desc'
+    }
+  });
+  
+  return result ? result.sentAt : null;
+}

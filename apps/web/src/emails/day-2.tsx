@@ -71,6 +71,20 @@ const Day2: React.FC<BenefitsReminderEmailProps> = ({ name = "User" }) => {
               </Text>
             </Section>
 
+            {/* Before the Footer Section */}
+            <Section className="bg-gray-50 p-4 sm:p-8 text-center">
+              <Text className="mb-4 font-bold">Get More Value from SmartLeadMagnet!</Text>
+              <Text className="mb-4">
+                Join our thriving Discord community to share experiences and get insider tips from power users.
+              </Text>
+              <Button
+                href="https://discord.gg/MjGw4NJn"
+                className="mb-4 rounded bg-indigo-600 px-5 py-3 text-center font-bold text-white hover:bg-indigo-700"
+              >
+                Join Our Community
+              </Button>
+            </Section>
+
             {/* Footer Section */}
             <Section className="bg-gray-900 p-[20px] text-center text-white">
               <Row>

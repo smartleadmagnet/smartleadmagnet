@@ -83,6 +83,20 @@ const Day1: React.FC<WelcomeEmailProps> = ({ name = "User" }) => {
               </Text>
             </Section>
 
+            {/* Before the Footer Section */}
+            <Section className="bg-gray-50 p-4 sm:p-8 text-center">
+              <Text className="mb-4 font-bold">Join Our Community!</Text>
+              <Text className="mb-4">
+                Connect with fellow marketers and get exclusive tips in our Discord community.
+              </Text>
+              <Button
+                href="https://discord.gg/MjGw4NJn"
+                className="mb-4 rounded bg-indigo-600 px-5 py-3 text-center font-bold text-white hover:bg-indigo-700"
+              >
+                Join Discord Community
+              </Button>
+            </Section>
+
             {/* Footer Section */}
             <Section className="bg-gray-900 p-[20px] text-center text-white">
               <Row>

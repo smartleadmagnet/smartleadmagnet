@@ -1,4 +1,4 @@
-import { getUsers, logEmail, wasEmailSent } from "@smartleadmagnet/services";
+import { getLastEmailSentDate, getUsers, logEmail, wasEmailSent } from "@smartleadmagnet/services";
 import { User } from "@smartleadmagnet/database";
 import { sendEmail } from "@/lib/email";
 import { render } from "@react-email/render";
@@ -18,29 +18,80 @@ async function send(user: User, emailType: string, subject: string, template: an
   await logEmail(user?.id!, emailType);
 }
 
-async function sendEmailChain(user: User) {
-  const currentDate = new Date();
-  const createdAt = new Date(user.createdAt);
-  // ts-ignore
-  const timeDiff: number = Math.floor((currentDate.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24)) as number; // in days
+async function getNextEmailToSend(user: User) {
+  const emailTypes = ["Day 1", "Day 2", "Day 3", "Day 4"];
+  let lastSentEmail = null;
+  
+  // Find the last email that was sent
+  for (const emailType of emailTypes) {
+    if (await wasEmailSent(user.id!, emailType)) {
+      lastSentEmail = emailType;
+    } else {
+      break;
+    }
+  }
+  
+  // If no email was sent, start with Day 1
+  if (!lastSentEmail) {
+    return "Day 1";
+  }
+  
+  // Get next email in sequence
+  const currentIndex = emailTypes.indexOf(lastSentEmail);
+  return currentIndex < emailTypes.length - 1 ? emailTypes[currentIndex + 1] : null;
+}
 
-  if (timeDiff === 1 && !(await wasEmailSent(user?.id!, "Day 1"))) {
-    // Send day 1 email
-    await send(user, "Day 1", "Create High-Converting Lead Magnets in Minutes", <Day1 name={user?.name!} />); // Replace with actual Day 1 template
-  } else if (timeDiff === 2 && !(await wasEmailSent(user?.id!, "Day 2"))) {
-    // Send day 2 email
-    await send(user, "Day 2", "Don’t Miss Out on Capturing More Leads!", <Day2 name={user?.name!} />); // Replace with actual Day 2 template
-  } else if (timeDiff === 3 && !(await wasEmailSent(user?.id!, "Day 3"))) {
-    // Send day 3 email
-    await send(user, "Day 3", "Boost Your Lead Magnet Performance with AI", <Day3 name={user?.name!} />); // Replace with actual Day 3 template
-  } else if (timeDiff === 4 && !(await wasEmailSent(user?.id!, "Day 4"))) {
-    // Send day 4 email
-    await send(
-      user,
-      "Day 4",
-      "Don’t Miss Out on Capturing More Leads with SmartLeadMagnet",
-      <Day4 name={user?.name!} />
-    ); // Replace with actual Day 4 template
+async function sendEmailChain(user: User) {
+  const nextEmail = await getNextEmailToSend(user);
+  if (!nextEmail) return; // All emails have been sent
+  
+  // Check if enough time has passed since user creation for first email
+  // or since the last email was sent
+  const currentDate = new Date();
+  const lastEmailSent = await getLastEmailSentDate(user.id!);
+  const timeToCheck = lastEmailSent || new Date(user.createdAt);
+  
+  const hoursSinceLastEmail = Math.floor(
+    (currentDate.getTime() - timeToCheck.getTime()) / (1000 * 60 * 60)
+  );
+
+  // Only send if at least 24 hours have passed
+  if (hoursSinceLastEmail < 24) return;
+
+  // Send the appropriate email based on the sequence
+  switch (nextEmail) {
+    case "Day 1":
+      await send(
+        user,
+        "Day 1",
+        "Create High-Converting Lead Magnets in Minutes",
+        <Day1 name={user?.name!} />
+      );
+      break;
+    case "Day 2":
+      await send(
+        user,
+        "Day 2",
+        "Don't Miss Out on Capturing More Leads!",
+        <Day2 name={user?.name!} />
+      );
+      break;
+    case "Day 3":
+      await send(
+        user,
+        "Day 3",
+        "Boost Your Lead Magnet Performance with AI",
+        <Day3 name={user?.name!} />
+      );
+      break;
+    case "Day 4":
+      await send(
+        user,
+        "Day 4",
+        "Don't Miss Out on Capturing More Leads with SmartLeadMagnet",
+        <Day4 name={user?.name!} />
+      );
+      break;
   }
 }
 
