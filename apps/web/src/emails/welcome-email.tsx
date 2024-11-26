@@ -89,11 +89,9 @@ const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
               </Button>
 
               {/* Support Text */}
-              <Text className="mt-4">
-                Need help or have questions? Join our Discord community for quick support:
-              </Text>
+              <Text className="mt-4">Need help or have questions? Join our Discord community for quick support:</Text>
               <Button
-                href="https://discord.gg/MjGw4NJn"
+                href="https://discord.gg/HAuYts3vJF"
                 className="my-4 rounded bg-[#5865F2] px-5 py-3 text-center font-bold text-white hover:bg-[#4752C4]"
               >
                 Join our Discord Community
@@ -111,7 +109,7 @@ const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
                 <Text style={footerHeading}>Stay Connected</Text>
               </Row>
               <Row align="center" style={{ width: "104px" }}>
-              <Column style={{ paddingRight: "10px" }}>
+                <Column style={{ paddingRight: "10px" }}>
                   <Link href="https://www.facebook.com/people/Smartleadmagnet/61567550700439/">
                     <Img width="28" height="28" src="https://d3uu14lxe8399z.cloudfront.net/facebook.png" />
                   </Link>

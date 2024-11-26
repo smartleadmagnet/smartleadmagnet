@@ -27,7 +27,7 @@ export default async function WebsiteLayout({ children }: { children: React.Reac
       <main className="bg-muted/40 main-content flex w-full flex-col">
         <div className="flex flex-col sm:gap-4 ">
           <header className="bg-background sticky top-0 z-30  flex h-36 items-center gap-4 border-b bg-gray-900 px-4 sm:static sm:h-auto sm:border-0 sm:px-6 sm:py-4 ">
-            <MobileNav templateCategories={templateCategories}  />
+            <MobileNav templateCategories={templateCategories} />
             <div className="flex-1">
               <Link href="/">
                 <Image src="/images/logo/logo.png" alt="Logo" width={200} height={0} />
@@ -72,8 +72,6 @@ function DesktopNav() {
     </div>
   );
 }
-
-
 
 function Footer() {
   return (
@@ -138,11 +136,7 @@ function Footer() {
                 >
                   <FaGithub className="h-8 w-8 text-white" />
                 </Link>
-                <Link
-                  href="https://discord.gg/MjGw4NJn"
-                  target="_blank"
-                  className="hover:text-gray-500"
-                >
+                <Link href="https://discord.gg/HAuYts3vJF" target="_blank" className="hover:text-gray-500">
                   <FaDiscord className="h-8 w-8 text-[#7289DA]" />
                 </Link>
               </div>

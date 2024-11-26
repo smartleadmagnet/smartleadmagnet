@@ -72,13 +72,13 @@ const Day3: React.FC<BenefitsReminderEmailProps> = ({ name = "User" }) => {
             </Section>
 
             {/* Before the Footer Section */}
-            <Section className="bg-gray-50 p-4 sm:p-8 text-center">
+            <Section className="bg-gray-50 p-4 text-center sm:p-8">
               <Text className="mb-4 font-bold">Learn from the Community!</Text>
               <Text className="mb-4">
                 Get inspired by success stories and share your own journey in our Discord community.
               </Text>
               <Button
-                href="https://discord.gg/MjGw4NJn"
+                href="https://discord.gg/HAuYts3vJF"
                 className="mb-4 rounded bg-indigo-600 px-5 py-3 text-center font-bold text-white hover:bg-indigo-700"
               >
                 Connect on Discord
@@ -91,7 +91,7 @@ const Day3: React.FC<BenefitsReminderEmailProps> = ({ name = "User" }) => {
                 <Text style={footerHeading}>Stay Connected</Text>
               </Row>
               <Row align="center" style={{ width: "104px" }}>
-              <Column style={{ paddingRight: "10px" }}>
+                <Column style={{ paddingRight: "10px" }}>
                   <Link href="https://www.facebook.com/people/Smartleadmagnet/61567550700439/">
                     <Img width="28" height="28" src="https://d3uu14lxe8399z.cloudfront.net/facebook.png" />
                   </Link>
