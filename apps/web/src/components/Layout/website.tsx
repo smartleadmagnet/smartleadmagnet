@@ -3,7 +3,7 @@ import Image from "next/image";
 import templateCategories from "@/data/categories.json";
 // import ProductHuntLaunchSupport from "../ProductHuntLaunchSupport";
 import { ChevronDown } from "lucide-react";
-import { FaFacebook, FaGithub, FaYoutube, FaHandshake } from "react-icons/fa";
+import { FaFacebook, FaGithub, FaYoutube, FaHandshake, FaDiscord } from "react-icons/fa";
 import MobileNav from "@/components/MobileNav";
 import User from "@/components/User";
 import ScheduleMeeting from "../ScheduleMeeting";
@@ -137,6 +137,13 @@ function Footer() {
                   className="hover:text-gray-500"
                 >
                   <FaGithub className="h-8 w-8 text-white" />
+                </Link>
+                <Link
+                  href="https://discord.gg/MjGw4NJn"
+                  target="_blank"
+                  className="hover:text-gray-500"
+                >
+                  <FaDiscord className="h-8 w-8 text-[#7289DA]" />
                 </Link>
               </div>
             </div>
