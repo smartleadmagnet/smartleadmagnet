@@ -14,12 +14,12 @@ jobs:
         with:
           sitemap-location: https://smartleadmagnet.com/sitemap/site/sitemap.xml
           key: f4eb10fb499147d0b7fc15df1152045c
-          key-location: https://screenshotsapi.dev/f4eb10fb499147d0b7fc15df1152045c.txt
+          key-location: https://smartleadmagnet.com/f4eb10fb499147d0b7fc15df1152045c.txt
           endpoint: api.indexnow.org
       - name: indexnow-action2
         uses: bojieyang/indexnow-action@v2
         with:
           sitemap-location: https://smartleadmagnet.com/sitemap/templates.xml
           key: f4eb10fb499147d0b7fc15df1152045c
-          key-location: https://screenshotsapi.dev/f4eb10fb499147d0b7fc15df1152045c.txt
+          key-location: https://smartleadmagnet.com/f4eb10fb499147d0b7fc15df1152045c.txt
           endpoint: api.indexnow.org
