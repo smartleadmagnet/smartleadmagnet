@@ -4,6 +4,7 @@ export async function GET() {
     <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <sitemap><loc>${process.env.NEXT_PUBLIC_SITE_URL!}/sitemap/site/sitemap.xml</loc></sitemap>
       <sitemap><loc>${process.env.NEXT_PUBLIC_SITE_URL!}/sitemap/templates.xml</loc></sitemap>
+      <sitemap><loc>${process.env.NEXT_PUBLIC_SITE_URL!}/sitemap/blog.xml</loc></sitemap>
     </sitemapindex>
   `;
 
