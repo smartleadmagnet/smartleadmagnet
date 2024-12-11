@@ -23,3 +23,10 @@ jobs:
           key: f4eb10fb499147d0b7fc15df1152045c
           key-location: https://smartleadmagnet.com/f4eb10fb499147d0b7fc15df1152045c.txt
           endpoint: api.indexnow.org
+      - name: indexnow-action3
+        uses: bojieyang/indexnow-action@v2
+        with:
+          sitemap-location: https://smartleadmagnet.com/sitemap/blog.xml
+          key: f4eb10fb499147d0b7fc15df1152045c
+          key-location: https://smartleadmagnet.com/f4eb10fb499147d0b7fc15df1152045c.txt
+          endpoint: api.indexnow.org
