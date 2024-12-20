@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { InteractiveIframe } from '../InteractiveIframe';
 
 const HeroSection: React.FC = () => {
   return (
@@ -29,11 +28,16 @@ const HeroSection: React.FC = () => {
                 </p>
               </div>
               
-              <div className="mt-8 w-full  mx-auto">
-                <InteractiveIframe
-                  src="https://app.supademo.com/embed/cm2n1nipb05s6k69dpnd4bolh?embed_v=2"
-                  title="Smartleadmagnet Demo"
-                />
+              <div className="mt-8 w-full mx-auto">
+                <div className="relative pb-[56.25%] h-0">
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                    src="https://www.youtube.com/embed/r8uO0VzcTuQ"
+                    title="Smartleadmagnet Demo"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
               </div>
             </div>
           </div>
