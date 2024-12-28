@@ -192,6 +192,7 @@ function Footer() {
                 <Link href="/integrations" className="hover:text-gray-500">
                   Integrations
                 </Link>
+                <a href="https://aistage.net" title="AIStage" className="hover:text-gray-500">AIStage</a>
               </div>
             </div>
           </div>
