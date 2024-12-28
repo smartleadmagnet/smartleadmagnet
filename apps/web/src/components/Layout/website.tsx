@@ -193,6 +193,7 @@ function Footer() {
                   Integrations
                 </Link>
                 <a href="https://aistage.net" title="AIStage" className="hover:text-gray-500">AIStage</a>
+                <a href="https://huntai.ai/" title="HuntAI.ai Tools Directory">HuntAI.ai Tools Diresctory</a>
               </div>
             </div>
           </div>
