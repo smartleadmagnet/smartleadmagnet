@@ -192,9 +192,18 @@ function Footer() {
                 <Link href="/integrations" className="hover:text-gray-500">
                   Integrations
                 </Link>
-                <a href="https://aistage.net" title="AIStage" className="hover:text-gray-500">AIStage</a>
-                <a href="https://huntai.ai/" title="HuntAI.ai Tools Directory">HuntAI.ai Tools Diresctory</a>
-                <a href="https://sprunked.dev/">Sprunked</a>
+                <a href="https://huntai.ai/" target="_blank" title="HuntAI.ai Tools Directory">
+                  HuntAI.ai Tools Diresctory
+                </a>
+                <a href="https://smartereply.com/" target="_blank" title="Smartereply">
+                  Smartereply
+                </a>
+                <a href="https://screenshotsapi.dev/" target="_blank" title="ScreenshotsAPI Dev">
+                  ScreenshotsAPI Dev
+                </a>
+                <a href="https://smartleadconnect.com/" target="_blank" title="SmartLeadConnect">
+                  SmartLeadConnect
+                </a>
               </div>
             </div>
           </div>
