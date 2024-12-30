@@ -21,16 +21,16 @@ jobs:
           bun-version: latest
 
       # Add cache for Bun dependencies
-      # - name: Cache Bun dependencies
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       ~/.bun/install/cache
-      #       node_modules
-      #       apps/web/node_modules
-      #     key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-bun-
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.bun/install/cache
+            node_modules
+            apps/web/node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
 
       # # Add cache for Next.js build
       # - name: Cache Next.js build
