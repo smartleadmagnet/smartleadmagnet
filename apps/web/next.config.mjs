@@ -8,18 +8,18 @@ const nextConfig = {
   },
   // trailingSlash: true,
   // crossOrigin: 'anonymous',
-  async rewrites() {
-    return [
-      {
-        source: '/blog/',
-        destination: `${process.env.NEXT_PUBLIC_WORDPRESS_BLOG_URL}/blog/`,
-      },
-      {
-        source: '/blog/:path*/',
-        destination: `${process.env.NEXT_PUBLIC_WORDPRESS_BLOG_URL}/blog/:path*/`,
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/blog/',
+  //       destination: `${process.env.NEXT_PUBLIC_WORDPRESS_BLOG_URL}/blog/`,
+  //     },
+  //     {
+  //       source: '/blog/:path*/',
+  //       destination: `${process.env.NEXT_PUBLIC_WORDPRESS_BLOG_URL}/blog/:path*/`,
+  //     },
+  //   ];
+  // },
   images: {
     unoptimized: true,
     remotePatterns: [
