@@ -11,6 +11,7 @@ export default $config({
   },
   async run() {
     new sst.aws.Nextjs("SmartLeadMagnetWeb", {
+      domain:  "smartleadmagnet.com",
       transform: {
         server: {
           timeout: "3 minutes"
