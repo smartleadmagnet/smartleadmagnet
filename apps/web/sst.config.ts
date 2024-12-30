@@ -10,6 +10,12 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.Nextjs("SmartLeadMagnetWeb");
+    new sst.aws.Nextjs("SmartLeadMagnetWeb", {
+      transform: {
+        server: {
+          timeout: "3 minutes"
+        }
+      }
+    });
   },
 });
