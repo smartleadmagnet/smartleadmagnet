@@ -1,4 +1,4 @@
-name: Deploy SST App
+name: Deploy SmartLeadMagnet
 
 on:
   push:
