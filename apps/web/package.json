@@ -9,8 +9,8 @@
     "lint": "eslint . --max-warnings 0",
     "email": "cd src && email dev",
     "webhook": "stripe listen --forward-to http://localhost:3000/api/webhook/stripe",
-    "deploy:production": "sst deploy --stage production",
-    "deploy:staging": "sst deploy --stage staging"
+    "deploy:production": "npx sst deploy --stage production",
+    "deploy:staging": "npx sst deploy --stage staging"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
