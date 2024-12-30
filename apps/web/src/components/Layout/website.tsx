@@ -195,6 +195,9 @@ function Footer() {
                 <a href="https://huntai.ai/" target="_blank" title="HuntAI.ai Tools Directory">
                   HuntAI.ai Tools Diresctory
                 </a>
+                <a href="https://whatisaitools.com/" title="What Is Ai Tools">
+                  What Is Ai Tools
+                </a>
                 <a href="https://smartereply.com/" target="_blank" title="Smartereply">
                   Smartereply
                 </a>
