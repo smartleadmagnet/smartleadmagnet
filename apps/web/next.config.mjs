@@ -1,4 +1,4 @@
-import {withSentryConfig} from "@sentry/nextjs";
+// import {withSentryConfig} from "@sentry/nextjs";
 
 const nextConfig = {
   transpilePackages: ["@smartleadmagnet/ui", "next-mdx-remote"],
@@ -103,15 +103,16 @@ const nextConfig = {
 //   await setupDevPlatform();
 // }
 
-export default withSentryConfig(nextConfig, {
-  org: "smartleadmagnet",
-  project: "javascript-nextjs",
-  silent: !process.env.CI,
-  hideSourceMaps: true,
-  disableLogger: true,
-  autoInstrumentServerFunctions: false,
-  autoInstrumentMiddleware: false,
-  autoInstrumentAppDirectory: false,
-  automaticVercelMonitors: false,
-  telemetry: false,
-});
+export default nextConfig;
+// export default withSentryConfig(nextConfig, {
+//   org: "smartleadmagnet",
+//   project: "javascript-nextjs",
+//   silent: !process.env.CI,
+//   hideSourceMaps: true,
+//   disableLogger: true,
+//   autoInstrumentServerFunctions: false,
+//   autoInstrumentMiddleware: false,
+//   autoInstrumentAppDirectory: false,
+//   automaticVercelMonitors: false,
+//   telemetry: false,
+// });

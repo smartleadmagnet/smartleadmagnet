@@ -13,7 +13,6 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.5",
     "@smartleadmagnet/eslint-config": "*",
     "@smartleadmagnet/typescript-config": "*",
     "husky": "^9.1.6",

@@ -6,17 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint . --max-warnings 0",
     "email": "cd src && email dev",
-    "pages:build": "bunx @cloudflare/next-on-pages",
-    "preview": "bun run pages:build && wrangler pages dev",
-    "deploy": "bun run pages:build && wrangler pages deploy",
-    "webhook": "stripe listen --forward-to http://localhost:3000/api/webhook/stripe"
+    "webhook": "stripe listen --forward-to http://localhost:3000/api/webhook/stripe",
+    "deploy:production": "sst deploy --stage production",
+    "deploy:staging": "sst deploy --stage staging"
   },
   "dependencies": {
-    "@auth/prisma-adapter": "^2.5.3",
+    "@auth/prisma-adapter": "^2.7.4",
     "@next/env": "^15.0.1",
-    "@next/third-parties": "^15.0.1",
+    "@next/third-parties": "^15.0.3",
     "@react-email/components": "^0.0.25",
     "@react-email/font": "^0.0.8",
     "@sentry/nextjs": "^8",
@@ -32,7 +31,7 @@
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",
     "html-to-text": "^9.0.5",
-    "next": "^14.2.14",
+    "next": "14.2.8",
     "next-auth": "^5.0.0-beta.22",
     "next-intl": "^3.21.1",
     "next-mdx-remote": "^5.0.0",
@@ -52,7 +51,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.5",
     "@smartleadmagnet/eslint-config": "*",
     "@smartleadmagnet/typescript-config": "*",
     "@types/draft-js": "^0.11.18",

@@ -1,0 +1,87 @@
+name: Deploy SST App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+          
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+        
+      - name: Create .env file
+        run: |
+          cd apps/web
+          cat << EOF > .env
+          PRISMA_DATABASE_URL=${{ secrets.PRISMA_DATABASE_URL }}
+          LLM_TYPE=${{ secrets.LLM_TYPE }}
+          LLM_MODEL=${{ secrets.LLM_MODEL }}
+          LLM_API_KEY=${{ secrets.LLM_API_KEY }}
+          AUTH_GOOGLE_ID=${{ secrets.AUTH_GOOGLE_ID }}
+          AUTH_GOOGLE_SECRET=${{ secrets.AUTH_GOOGLE_SECRET }}
+          AUTH_SECRET=${{ secrets.AUTH_SECRET }}
+          AUTH_URL=${{ secrets.AUTH_URL }}
+          S3_UPLOAD_KEY=${{ secrets.S3_UPLOAD_KEY }}
+          S3_UPLOAD_SECRET=${{ secrets.S3_UPLOAD_SECRET }}
+          S3_UPLOAD_BUCKET=${{ secrets.S3_UPLOAD_BUCKET }}
+          S3_UPLOAD_REGION=${{ secrets.S3_UPLOAD_REGION }}
+          NEXT_PUBLIC_MEDIA_CDN_NAME=${{ secrets.NEXT_PUBLIC_MEDIA_CDN_NAME }}
+          BEDROCK_AWS_REGION=${{ secrets.BEDROCK_AWS_REGION }}
+          BEDROCK_AWS_ACCESS_KEY_ID=${{ secrets.BEDROCK_AWS_ACCESS_KEY_ID }}
+          BEDROCK_AWS_SECRET_ACCESS_KEY=${{ secrets.BEDROCK_AWS_SECRET_ACCESS_KEY }}
+          OPEN_AI_KEY=${{ secrets.OPEN_AI_KEY }}
+          UPSTASH_REDIS_REST_URL=${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN=${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+          EMAIL_SERVER_USER=${{ secrets.EMAIL_SERVER_USER }}
+          EMAIL_SERVER_PASSWORD=${{ secrets.EMAIL_SERVER_PASSWORD }}
+          EMAIL_SERVER_HOST=${{ secrets.EMAIL_SERVER_HOST }}
+          EMAIL_SERVER_PORT=${{ secrets.EMAIL_SERVER_PORT }}
+          EMAIL_FROM=${{ secrets.EMAIL_FROM }}
+          TOGETHER_AI_KEY=${{ secrets.TOGETHER_AI_KEY }}
+          GOOGLE_GEMINI_API_KEY=${{ secrets.GOOGLE_GEMINI_API_KEY }}
+          STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_ENDPOINT_SECRET=${{ secrets.STRIPE_ENDPOINT_SECRET }}
+          STRIPE_SMARTLEADMAGNET_ONE_TIME=${{ secrets.STRIPE_SMARTLEADMAGNET_ONE_TIME }}
+          STRIPE_SMARTLEADMAGNET_LIFE_TIME=${{ secrets.STRIPE_SMARTLEADMAGNET_LIFE_TIME }}
+          STRIPE_SMARTLEADMAGNET_MONTHLY_SUBSCRIPTION=${{ secrets.STRIPE_SMARTLEADMAGNET_MONTHLY_SUBSCRIPTION }}
+          STRIPE_SMARTLEADMAGNET_250_CREDIT=${{ secrets.STRIPE_SMARTLEADMAGNET_250_CREDIT }}
+          STRIPE_SMARTLEADMAGNET_500_CREDIT=${{ secrets.STRIPE_SMARTLEADMAGNET_500_CREDIT }}
+          STRIPE_SMARTLEADMAGNET_750_CREDIT=${{ secrets.STRIPE_SMARTLEADMAGNET_750_CREDIT }}
+          STRIPE_SMARTLEADMAGNET_1000_CREDIT=${{ secrets.STRIPE_SMARTLEADMAGNET_1000_CREDIT }}
+          HOST_URL=${{ secrets.HOST_URL }}
+          NEXT_PUBLIC_SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+          NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}
+          NEZT_PUBLIC_GOOGLE_TAG_MANGER_ID=${{ secrets.NEZT_PUBLIC_GOOGLE_TAG_MANGER_ID }}
+          NEXT_PUBLIC_CRISP_ID=${{ secrets.NEXT_PUBLIC_CRISP_ID }}
+          NEXT_PUBLIC_ENABLE_TOAST_SOCIAL_PROOF=${{ secrets.NEXT_PUBLIC_ENABLE_TOAST_SOCIAL_PROOF }}
+          NEXT_PUBLIC_WORDPRESS_BLOG_URL=${{ secrets.NEXT_PUBLIC_WORDPRESS_BLOG_URL }}
+          EOF
+        
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          
+      - name: Deploy to production
+        run: |
+          cd apps/web
+          bun run deploy:production
+        env:
+          STAGE: production

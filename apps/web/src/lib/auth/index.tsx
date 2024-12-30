@@ -122,5 +122,6 @@ const nextAuth = NextAuth({
   },
 });
 
-export const { handlers, signIn, signOut } = nextAuth;
+export const { handlers, signOut } = nextAuth;
 export const auth: NextAuthResult["auth"] = nextAuth.auth;
+export const signIn: NextAuthResult["signIn"] = nextAuth.signIn;
