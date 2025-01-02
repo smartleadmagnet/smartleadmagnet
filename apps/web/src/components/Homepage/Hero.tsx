@@ -12,19 +12,22 @@ const HeroSection: React.FC = () => {
           <div className="w-full">
             <div className="py-2">
               <div className="mb-6">
-                <p className="text-lg text-gray-500">Having trouble generating leads from your website?</p>
+                <p className="text-lg text-gray-500">
+                  Need better lead generation tools to supercharge your landing page?
+                </p>
 
                 <h1 className="hero-heading max-w-[1000px] mx-auto text-4xl font-bold mt-4">
                   <span>
-                    Boost your website traffic in the first month with customized
+                    Level up lead generation with smart, AI-powered
                     <br />
                     <span className="rounded-md bg-[#BEF8FC] px-2">Lead Magnets</span>
                   </span>
                 </h1>
 
                 <p className="mt-4 text-lg">
-                  Transform your website into a powerful lead generation machine! With simple steps, you can create a
-                  lead magnet that will help you generate more leads and grow your business.
+                  Ready to turn your website into a leads marketing powerhouse? Our lead generation tools 
+                  make it easy to create lead magnets that your visitors can't resist. Whether you're just 
+                  discovering what lead generation is or looking to take it to the next level - we've got you covered.
                 </p>
               </div>
               
