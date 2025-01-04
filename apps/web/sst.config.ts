@@ -39,7 +39,9 @@ export default $config({
           if (args.origins && args.origins.length > 0) {
             // @ts-ignore
             args.origins = args.origins.map((origin) => {
-              console.log("origin", JSON.stringify(origin, null, 2));
+              if (!origin.customOriginConfig) {
+                return origin;
+              }
               return {
                 ...origin,
                 customOriginConfig: {
