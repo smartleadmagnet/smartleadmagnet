@@ -35,6 +35,7 @@
   ],
   "dependencies": {
     "monaco-editor-core": "^0.52.0",
+    "pdf-parse": "^1.1.1",
     "react": "^18.3.1",
     "stripe": "^17.2.0"
   }

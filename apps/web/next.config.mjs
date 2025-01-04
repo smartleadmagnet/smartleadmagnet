@@ -2,6 +2,10 @@
 
 const nextConfig = {
   transpilePackages: ["@smartleadmagnet/ui", "next-mdx-remote"],
+  experimental: {
+		serverComponentsExternalPackages: ['pdf-parse'],
+		serverSourceMaps: false,
+	},
   reactStrictMode: false,
   compiler: {
     styledComponents: true,
