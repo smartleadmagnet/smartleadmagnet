@@ -17,6 +17,20 @@ export default $config({
       transform: {
         // @ts-ignore
         cdn(args, opts, name) {
+          // Modify existing origins to add timeouts
+          // @ts-ignore
+          if (args.origins && args.origins.length > 0) {
+            // @ts-ignore
+            args.origins = args.origins.map(origin => ({
+              ...origin,
+              customOriginConfig: {
+                ...(origin.customOriginConfig || {}),
+                originReadTimeout: 180,
+                originKeepaliveTimeout: 60
+              }
+            }));
+          }
+
           // Add WordPress origin to existing origins
           // @ts-ignore
           const wpOrigin: typeof args.origins[0] = {
@@ -29,15 +43,15 @@ export default $config({
               httpsPort: 443,
               originProtocolPolicy: "https-only",
               originSslProtocols: ["TLSv1.2"],
-              originReadTimeout: 30,
-              originKeepaliveTimeout: 5
+              originReadTimeout: 180,
+              originKeepaliveTimeout: 60
             }
           };
 
           // @ts-ignore
           args.origins = [...args.origins, wpOrigin];
 
-          // Add blog behavior to ordered behaviors
+          // WordPress behavior without timeout settings
           const wpBehavior = {
             pathPattern: "blog*",
             targetOriginId: "wordpress-blog",
