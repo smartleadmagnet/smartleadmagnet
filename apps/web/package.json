@@ -9,7 +9,7 @@
     "lint": "eslint . --max-warnings 0",
     "email": "cd src && email dev",
     "webhook": "stripe listen --forward-to http://localhost:3000/api/webhook/stripe",
-    "deploy:production": "npx sst deploy --stage production",
+    "deploy:production": "npx sst deploy --stage production --print-logs",
     "deploy:staging": "npx sst deploy --stage staging"
   },
   "dependencies": {

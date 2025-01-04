@@ -17,26 +17,13 @@ export default $config({
       transform: {
         // @ts-ignore
         cdn(args, opts, name) {
-          // Modify existing origins to add timeouts
-          // @ts-ignore
-          if (args.origins && args.origins.length > 0) {
-            // @ts-ignore
-            args.origins = args.origins.map(origin => ({
-              ...origin,
-              customOriginConfig: {
-                ...(origin.customOriginConfig || {}),
-                originReadTimeout: 180,
-                originKeepaliveTimeout: 60
-              }
-            }));
-          }
-
           // Add WordPress origin to existing origins
+
           // @ts-ignore
-          const wpOrigin: typeof args.origins[0] = {
+          const wpOrigin: (typeof args.origins)[0] = {
             connectionAttempts: 3,
             connectionTimeout: 10,
-            domainName: wordpressBlogUrl.replace(/^https?:\/\//, ''),
+            domainName: wordpressBlogUrl.replace(/^https?:\/\//, ""),
             originId: "wordpress-blog",
             customOriginConfig: {
               httpPort: 80,
@@ -44,14 +31,30 @@ export default $config({
               originProtocolPolicy: "https-only",
               originSslProtocols: ["TLSv1.2"],
               originReadTimeout: 180,
-              originKeepaliveTimeout: 60
-            }
+              originKeepaliveTimeout: 60,
+            },
           };
+
+          // @ts-ignore
+          if (args.origins && args.origins.length > 0) {
+            // @ts-ignore
+            args.origins = args.origins.map((origin) => {
+              console.log("origin", JSON.stringify(origin, null, 2));
+              return {
+                ...origin,
+                customOriginConfig: {
+                  ...(origin.customOriginConfig || {}),
+                  originReadTimeout: 180,
+                  originKeepaliveTimeout: 60,
+                },
+              };
+            });
+          }
 
           // @ts-ignore
           args.origins = [...args.origins, wpOrigin];
 
-          // WordPress behavior without timeout settings
+          // Add blog behavior to ordered behaviors
           const wpBehavior = {
             pathPattern: "blog*",
             targetOriginId: "wordpress-blog",
@@ -65,24 +68,24 @@ export default $config({
             forwardedValues: {
               queryString: false,
               cookies: {
-                forward: "none"
+                forward: "none",
               },
-              headers: []
-            }
+              headers: [],
+            },
           };
 
           args.orderedCacheBehaviors = [
             // @ts-ignore
             ...(args.orderedCacheBehaviors || []),
-            wpBehavior
+            wpBehavior,
           ];
 
           return args;
         },
         server: {
-          timeout: "3 minutes"
-        }
-      }
+          timeout: "3 minutes",
+        },
+      },
     });
   },
 });
