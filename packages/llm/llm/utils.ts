@@ -23,15 +23,15 @@ function extractLeadContent(htmlString: string): string | undefined | null {
 function detectContentType(dataUrl: string): string | null {
   if (!dataUrl.startsWith('data:')) return null;
   const [header] = dataUrl.split(',');
-  const [mimeType] = header.split(';');
-  return mimeType.replace('data:', '');
+  const [mimeType] = header?.split(';') ?? [];
+  return mimeType?.replace('data:', '') ?? null;
 }
 
 // Helper function to extract content from base64 PDF
 async function extractPdfContent(base64String: string): Promise<string> {
   try {
     const pdfData = base64String.split(',')[1];
-    const buffer = Buffer.from(pdfData, 'base64');
+    const buffer = Buffer.from(pdfData ?? '', 'base64');
     const data = await pdfParse(buffer);
     return data.text;
   } catch (error) {
@@ -52,7 +52,7 @@ async function processContent(dataUrl: string): Promise<{ type: string; content:
 
   if (contentType.startsWith('text/')) {
     const base64Content = dataUrl.split(',')[1];
-    const textContent = Buffer.from(base64Content, 'base64').toString('utf8');
+    const textContent = Buffer.from(base64Content ?? '', 'base64').toString('utf8');
     return { type: "text", content: textContent };
   }
 
