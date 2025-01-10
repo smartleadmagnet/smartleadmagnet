@@ -12,6 +12,7 @@ export default $config({
     };
   },
   async run() {
+
     new sst.aws.Nextjs("SmartLeadMagnetWeb", {
       domain: "smartleadmagnet.com",
       transform: {
@@ -74,6 +75,10 @@ export default $config({
               },
               headers: [],
             },
+            functionAssociations: [{
+              functionArn: "arn:aws:cloudfront::241533160940:function/blog-append-forward-slash",
+              eventType: "viewer-request"
+            }],
           };
 
           args.orderedCacheBehaviors = [
