@@ -31,7 +31,7 @@ export default $config({
               httpsPort: 443,
               originProtocolPolicy: "https-only",
               originSslProtocols: ["TLSv1.2"],
-              originReadTimeout: 60,
+              originReadTimeout: 180,
               originKeepaliveTimeout: 60,
             },
           };
@@ -47,7 +47,7 @@ export default $config({
                 ...origin,
                 customOriginConfig: {
                   ...(origin.customOriginConfig || {}),
-                  originReadTimeout: 60,
+                  originReadTimeout: 180,
                   originKeepaliveTimeout: 60,
                 },
               };
@@ -66,7 +66,7 @@ export default $config({
             cachedMethods: ["GET", "HEAD"],
             compress: true,
             minTtl: 0,
-            maxTtl: 0,
+            maxTtl: 3600,
             defaultTtl: 3600,
             forwardedValues: {
               queryString: false,
