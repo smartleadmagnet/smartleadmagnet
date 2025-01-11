@@ -5,7 +5,7 @@ const wordpressBlogUrl = "https://silver-caribou-278976.hostingersite.com";
 export default $config({
   app(input) {
     return {
-      name: "web",
+      name: "slm",
       removal: input?.stage === "production" ? "retain" : "remove",
       protect: ["production"].includes(input?.stage),
       home: "aws",
