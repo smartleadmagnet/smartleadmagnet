@@ -31,7 +31,7 @@ export default $config({
               httpsPort: 443,
               originProtocolPolicy: "https-only",
               originSslProtocols: ["TLSv1.2"],
-              originReadTimeout: 180,
+              originReadTimeout: 60,
               originKeepaliveTimeout: 60,
             },
           };
@@ -47,7 +47,7 @@ export default $config({
                 ...origin,
                 customOriginConfig: {
                   ...(origin.customOriginConfig || {}),
-                  originReadTimeout: 180,
+                  originReadTimeout: 60,
                   originKeepaliveTimeout: 60,
                 },
               };
