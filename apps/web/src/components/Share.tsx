@@ -9,6 +9,7 @@ import { Textarea } from "@smartleadmagnet/ui/components/ui/textarea";
 import { Checkbox } from "@smartleadmagnet/ui/components/ui/checkbox";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 import DynamicStyles from "@/components/DynamicStyles";
+import FontSelector from "@smartleadmagnet/ui/components/ui/FontSelector";
 import Image from "next/image";
 import { marked } from "marked";
 import {
@@ -60,6 +61,10 @@ const FormWrapper = styled.div`
   color: ${(props) => props.theme.textColor};
   margin: 0 auto;
   position: relative;
+
+  *{
+  font-family:inherit;
+  }
 
   padding: 20px;
   border-radius: 5px;
@@ -358,9 +363,9 @@ export default function BuilderElementPreview() {
         return null;
     }
   };
-
+  console.log({formStyles})
   return (
-    <FormWrapper theme={formStyles} className="magnet-wrapper">
+    <FormWrapper theme={formStyles} className="magnet-wrapper apply-font">
       <Dialog
         open={showInfo}
         onOpenChange={() => {
@@ -415,12 +420,14 @@ export default function BuilderElementPreview() {
         </form>
       )}
 
-      {/*<div style={{ display: "none" }}>*/}
-      {/*  <FontPicker*/}
-      {/*    apiKey="AIzaSyAOSZtIN2QS_O1H3z6dsnle1rPBW7nxj9Y" // Replace with your actual API key*/}
-      {/*    activeFontFamily={formStyles.selectedFont} // Will be displayed in the FontPicker*/}
-      {/*  />*/}
-      {/*</div>*/}
+      <div style={{ display: "none" }}>
+       <FontSelector
+          activeFontFamily={formStyles.selectedFont} // Will be displayed in the FontPicker*/}
+          onChange={()=>{
+            //to avoide error
+          }}
+        />
+      </div>
     </FormWrapper>
   );
 }
