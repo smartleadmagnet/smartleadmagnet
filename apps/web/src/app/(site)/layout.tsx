@@ -43,6 +43,7 @@ export default function RootLayout({
             });
           `}
         </Script>
+        <Script src="https://cdnapp.websitepolicies.net/widgets/cookies/jdp5ngx4.js" defer></Script>
         <noscript>
           <div>
             <img 
