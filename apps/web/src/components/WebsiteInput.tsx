@@ -10,9 +10,10 @@ export type WebsiteInputProps = {
   control: any;
   errors: any;
   placeholder?: string;
+  clearError: (name: string) => void;
 };
 
-const WebsiteInput = ({ label, name, required, control, errors, placeholder }: WebsiteInputProps) => {
+const WebsiteInput = ({ label, name, required, control, errors, placeholder,clearError }: WebsiteInputProps) => {
   return (
     <div>
       <Label className="mb-2 block text-sm font-semibold">
@@ -25,19 +26,17 @@ const WebsiteInput = ({ label, name, required, control, errors, placeholder }: W
         <Controller
           name={name}
           control={control}
-          rules={{
-            required: required ? `${label} is required` : false,
-            pattern: {
-              value: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
-              message: "Invalid website URL",
-            },
-          }}
           render={({ field }) => (
-            <Input {...field} className="pl-14" type="url" placeholder={placeholder || "Enter your website URL"} />
+            <Input {...field} className="pl-14" type="url" placeholder={placeholder || "Enter your website URL"} 
+            onChange={(e) => {
+              field.onChange(e);
+              clearError(name);
+            }}
+            />
           )}
         />
       </div>
-      {errors[name] && <span className="text-red-500">{errors[name]?.message}</span>}
+      {errors[name] && <span className="text-red-500">{String(errors[name])}</span>}
     </div>
   );
 };

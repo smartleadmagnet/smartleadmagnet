@@ -128,7 +128,8 @@ export default function BuilderElementPreview() {
     handleSubmit,
     errors,
     leadMagnet,
-    setResponse
+    setResponse,
+    clearError
   } = useShareForm();
   const [isLoading, setLoading] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
@@ -182,6 +183,7 @@ export default function BuilderElementPreview() {
             placeholder={element.placeholder}
             control={control}
             errors={showErrors ? errors : {}}
+            clearError={clearError}
           />
         );
       case "website":
@@ -193,6 +195,7 @@ export default function BuilderElementPreview() {
             required={element.required}
             control={control}
             errors={showErrors ? errors : {}}
+            clearError={clearError}
           />
         );
       case "text_field":
@@ -204,7 +207,12 @@ export default function BuilderElementPreview() {
             <Controller
               name={element.name}
               control={control}
-              render={({ field }) => <Input {...field} type="text" placeholder={element.placeholder} />}
+              render={({ field }) => <Input {...field} type="text" placeholder={element.placeholder}
+                onChange={(e) => {
+                  field.onChange(e);
+                  clearError(element.name);
+                }}
+              />}
             />
             {showErrors && errors[element.name] && (
               <span className="mt-1 text-sm text-red-500">
@@ -302,7 +310,12 @@ export default function BuilderElementPreview() {
               name={element.name}
               control={control}
               render={({ field }) => (
-                <Select value={field.value} onValueChange={field.onChange}>
+                <Select value={field.value} 
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    clearError(element.name);
+                  }}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder={element.placeholder || "Select Option"} />
                   </SelectTrigger>
@@ -353,11 +366,16 @@ export default function BuilderElementPreview() {
       case "color":
         return (
           <div>
-            <Label className="mb-2 block text-sm font-semibold">{element.label}</Label>
+            <Label className="mb-2 block text-sm font-semibold">{element.label} {element.required && <span className="text-red-500">*</span>}</Label>
             <Controller
               name={element.name}
               control={control}
-              render={({ field }) => <ColorPicker color={field.value} onChange={field.onChange} />}
+              render={({ field }) => <ColorPicker color={field.value} 
+              onChange={(color) => {
+                field.onChange(color);
+                clearError(element.name);
+              }}
+              />}
             />
             {showErrors && errors[element.name] && (
               <span className="mt-1 text-sm text-red-500">
@@ -384,6 +402,7 @@ export default function BuilderElementPreview() {
                         const reader = new FileReader();
                         reader.onloadend = () => {
                           field.onChange(reader.result);
+                          clearError(element.name);
                         };
                         reader.readAsDataURL(file);
                       }
@@ -400,14 +419,13 @@ export default function BuilderElementPreview() {
           </div>
         );
       case "image":
-        return <ImageUploader control={control} element={element} errors={showErrors ? errors : {}} />;
+        return <ImageUploader control={control} element={element} errors={showErrors ? errors : {}} clearError={clearError} />;
       default:
         return null;
     }
   };
 
 
-  console.log({elementsList})
 
   return (
     <>

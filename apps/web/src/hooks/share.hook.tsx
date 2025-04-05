@@ -83,6 +83,18 @@ const useShareForm = () => {
         if (!value || (typeof value === 'string' && value.trim() === '')) {
           newErrors[element.name] = `${element.label} is required`;
           hasErrors = true;
+        } else if (element.type === 'website') {
+          const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+          if (!urlPattern.test(value)) {
+            newErrors[element.name] = "Invalid website URL";
+            hasErrors = true;
+          }
+        } else if (element.type === 'email') {
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailPattern.test(value)) {
+            newErrors[element.name] = "Invalid email address";
+            hasErrors = true;
+          }
         }
       }
     });
@@ -107,6 +119,13 @@ const useShareForm = () => {
       await onGenerateLead(lastInput);
     }
   };
+  const clearError = (name: string) => {
+    setFormErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+      delete newErrors[name];
+      return newErrors;
+    });
+  };
 
   return {
     outputType,
@@ -120,7 +139,8 @@ const useShareForm = () => {
     errors: formErrors,
     onRegenerate,
     leadMagnet,
-    setResponse
+    setResponse,
+    clearError
   };
 };
 

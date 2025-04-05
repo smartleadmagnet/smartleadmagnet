@@ -10,9 +10,10 @@ export type EmailInputProps = {
   control: any;
   errors: any;
   placeholder?: string;
+  clearError: (name: string) => void;
 };
 
-const EmailInput = ({ label, name, required, control, errors, placeholder }: EmailInputProps) => {
+const EmailInput = ({ label, name, required, control, errors, placeholder,clearError }: EmailInputProps) => {
   return (
     <div>
       <Label className="mb-2 block text-sm font-semibold">
@@ -25,17 +26,16 @@ const EmailInput = ({ label, name, required, control, errors, placeholder }: Ema
         <Controller
           name={name}
           control={control}
-          rules={{
-            required: required ? `${label} is required` : false,
-            pattern: {
-              value: /^\S+@\S+$/i,
-              message: "Invalid email address",
-            },
-          }}
-          render={({ field }) => <Input {...field} className="pl-14" placeholder={placeholder} type="email" />}
+          render={({ field }) => <Input {...field} className="pl-14" placeholder={placeholder} 
+            onChange={(e) => {
+              field.onChange(e);
+              clearError(name);
+            }}
+            type="email"
+          />}
         />
       </div>
-      {errors[name] && <span className="text-red-500">{errors[name]?.message}</span>}
+      {errors[name] && <span className="text-red-500">{String(errors[name])}</span>}
     </div>
   );
 };
