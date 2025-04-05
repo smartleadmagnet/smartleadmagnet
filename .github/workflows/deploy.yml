@@ -107,6 +107,7 @@ jobs:
       - name: Deploy to production
         run: |
           cd apps/web
+          npx sst unlock --stage production
           bun run deploy:production
         env:
           STAGE: production
