@@ -129,15 +129,24 @@ export default function BuilderElementPreview() {
     errors,
     leadMagnet,
     setResponse,
+    clearError
   } = useShareForm();
   const [isLoading, setLoading] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
+  const [showErrors, setShowErrors] = useState(false);
 
   useEffect(() => {
     if (leadMagnet) {
       setLoading(false);
     }
   }, [leadMagnet]);
+
+  // Show errors after form submission attempt
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      setShowErrors(true);
+    }
+  }, [errors]);
 
   if (isLoading) {
     return <Loading />;
@@ -173,7 +182,8 @@ export default function BuilderElementPreview() {
             required={element.required}
             placeholder={element.placeholder}
             control={control}
-            errors={errors}
+            errors={showErrors ? errors : {}}
+            clearError={clearError}
           />
         );
       case "website":
@@ -184,7 +194,8 @@ export default function BuilderElementPreview() {
             placeholder={element.placeholder}
             required={element.required}
             control={control}
-            errors={errors}
+            errors={showErrors ? errors : {}}
+            clearError={clearError}
           />
         );
       case "text_field":
@@ -196,10 +207,18 @@ export default function BuilderElementPreview() {
             <Controller
               name={element.name}
               control={control}
-              rules={{ required: element.required ? `${element.label} is required` : false }}
-              render={({ field }) => <Input {...field} placeholder={element.placeholder} />}
+              render={({ field }) => <Input {...field} type="text" placeholder={element.placeholder}
+                onChange={(e) => {
+                  field.onChange(e);
+                  clearError(element.name);
+                }}
+              />}
             />
-            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
+            {showErrors && errors[element.name] && (
+              <span className="mt-1 text-sm text-red-500">
+                {String(errors[element.name])}
+              </span>
+            )}
           </div>
         );
       case "number":
@@ -211,10 +230,13 @@ export default function BuilderElementPreview() {
             <Controller
               name={element.name}
               control={control}
-              rules={{ required: element.required ? `${element.label} is required` : false }}
               render={({ field }) => <Input {...field} type="number" placeholder={element.placeholder} />}
             />
-            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
+            {showErrors && errors[element.name] && (
+              <span className="mt-1 text-sm text-red-500">
+                {String(errors[element.name])}
+              </span>
+            )}
           </div>
         );
       case "textarea":
@@ -226,10 +248,13 @@ export default function BuilderElementPreview() {
             <Controller
               name={element.name}
               control={control}
-              rules={{ required: element.required ? `${element.label} is required` : false }}
               render={({ field }) => <Textarea {...field} placeholder={element.placeholder} />}
             />
-            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
+            {showErrors && errors[element.name] && (
+              <span className="mt-1 text-sm text-red-500">
+                {String(errors[element.name])}
+              </span>
+            )}
           </div>
         );
       case "checkbox":
@@ -243,6 +268,11 @@ export default function BuilderElementPreview() {
               )}
             />
             <Label className="ml-2">{element.label}</Label>
+            {showErrors && errors[element.name] && (
+              <span className="mt-1 text-sm text-red-500">
+                {String(errors[element.name])}
+              </span>
+            )}
           </div>
         );
       case "checkbox-group":
@@ -263,6 +293,11 @@ export default function BuilderElementPreview() {
                 <Label className="ml-2">{option.label}</Label>
               </div>
             ))}
+            {showErrors && errors[element.name] && (
+              <span className="mt-1 text-sm text-red-500">
+                {String(errors[element.name])}
+              </span>
+            )}
           </div>
         );
       case "select":
@@ -274,9 +309,13 @@ export default function BuilderElementPreview() {
             <Controller
               name={element.name}
               control={control}
-              rules={{ required: element.required ? `${element.label} is required` : false }}
               render={({ field }) => (
-                <Select value={field.value} onValueChange={field.onChange}>
+                <Select value={field.value} 
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    clearError(element.name);
+                  }}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder={element.placeholder || "Select Option"} />
                   </SelectTrigger>
@@ -290,7 +329,11 @@ export default function BuilderElementPreview() {
                 </Select>
               )}
             />
-            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
+            {showErrors && errors[element.name] && (
+              <span className="mt-1 text-sm text-red-500">
+                {String(errors[element.name])}
+              </span>
+            )}
           </div>
         );
       case "radio-group":
@@ -302,7 +345,6 @@ export default function BuilderElementPreview() {
             <Controller
               name={element.name}
               control={control}
-              rules={{ required: element.required ? `${element.label} is required` : false }}
               render={({ field }) => (
                 <RadioGroup value={field.value} onValueChange={field.onChange}>
                   {element.options.map((option: any) => (
@@ -314,20 +356,32 @@ export default function BuilderElementPreview() {
                 </RadioGroup>
               )}
             />
-            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
+            {showErrors && errors[element.name] && (
+              <span className="mt-1 text-sm text-red-500">
+                {String(errors[element.name])}
+              </span>
+            )}
           </div>
         );
       case "color":
         return (
           <div>
-            <Label className="mb-2 block text-sm font-semibold">{element.label}</Label>
+            <Label className="mb-2 block text-sm font-semibold">{element.label} {element.required && <span className="text-red-500">*</span>}</Label>
             <Controller
               name={element.name}
               control={control}
-              rules={{ required: element.required ? `${element.label} is required` : false }}
-              render={({ field }) => <ColorPicker color={field.value} onChange={field.onChange} />}
+              render={({ field }) => <ColorPicker color={field.value} 
+              onChange={(color) => {
+                field.onChange(color);
+                clearError(element.name);
+              }}
+              />}
             />
-            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
+            {showErrors && errors[element.name] && (
+              <span className="mt-1 text-sm text-red-500">
+                {String(errors[element.name])}
+              </span>
+            )}
           </div>
         );
       case "file":
@@ -337,7 +391,6 @@ export default function BuilderElementPreview() {
             <Controller
               name={element.name}
               control={control}
-              rules={{ required: element.required ? `${element.label} is required` : false }}
               render={({ field }) => (
                 <div className="relative max-w-full bg-white p-2">
                   <input
@@ -349,6 +402,7 @@ export default function BuilderElementPreview() {
                         const reader = new FileReader();
                         reader.onloadend = () => {
                           field.onChange(reader.result);
+                          clearError(element.name);
                         };
                         reader.readAsDataURL(file);
                       }
@@ -357,16 +411,22 @@ export default function BuilderElementPreview() {
                 </div>
               )}
             />
-            {errors[element.name] && <span className="text-red-500">{String(errors?.[element?.name]?.message)}</span>}
+            {showErrors && errors[element.name] && (
+              <span className="mt-1 text-sm text-red-500">
+                {String(errors[element.name])}
+              </span>
+            )}
           </div>
         );
       case "image":
-        return <ImageUploader control={control} element={element} errors={errors} />;
+        return <ImageUploader control={control} element={element} errors={showErrors ? errors : {}} clearError={clearError} />;
       default:
         return null;
     }
   };
-  console.log({formStyles})
+
+
+
   return (
     <>
       <GlobalStyle theme={formStyles} />
@@ -396,7 +456,13 @@ export default function BuilderElementPreview() {
           />
         )}
         {!response && !isSubmitting && (
-          <form onSubmit={handleSubmit(onSubmit)} className={`form-${formStyles.selectedFormStyle}`}>
+          <form 
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit(onSubmit)(e);
+            }} 
+            className={`form-${formStyles.selectedFormStyle}`}
+          >
             <Button
               variant="link"
               type="button"
@@ -417,7 +483,6 @@ export default function BuilderElementPreview() {
                 {renderElement(element)}
               </div>
             ))}
-
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Submit

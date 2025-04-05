@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { Label } from "@smartleadmagnet/ui/components/ui/label";
 
-function ImageUploader({ element, control, errors }: { element: any; control: any; errors: any }) {
+function ImageUploader({ element, control, errors, clearError }: { element: any; control: any; errors: any; clearError: (name: string) => void }) {
   const [imagePreview, setImagePreview] = useState(null);
 
   const onDrop = (acceptedFiles: any, field: any) => {
@@ -14,6 +14,7 @@ function ImageUploader({ element, control, errors }: { element: any; control: an
         field.onChange(reader.result);
         // @ts-ignore
         setImagePreview(reader?.result!); // Set image preview URL
+        clearError(element.name);
       };
       reader.readAsDataURL(file);
     }
@@ -49,7 +50,7 @@ function ImageUploader({ element, control, errors }: { element: any; control: an
           );
         }}
       />
-      {errors[element.name] && <span className="text-red-500">{errors[element.name]?.message}</span>}
+      {errors[element.name] && <span className="text-red-500">{String(errors[element.name])}</span>}
     </div>
   );
 }

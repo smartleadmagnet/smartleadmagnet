@@ -126,7 +126,13 @@ export default function BuilderEditor(props: BuilderEditorProps) {
               <Input
                 value={data.name}
                 onChange={(e) => {
-                  updateData("name", e.target.value);
+                  updateData("name", e.target.value
+                    .replace(/[^a-zA-Z0-9_\s]/g, '') // Keep letters, numbers, underscores, and spaces
+                    .replace(/([a-z])([A-Z])/g, '$1_$2') // Convert camelCase to snake_case
+                    .toLowerCase()
+                    .replace(/\s+/g, '_')); // Convert spaces to underscores
+
+
                 }}
                 className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
