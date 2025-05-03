@@ -281,18 +281,38 @@ export default function BuilderElementPreview() {
             <Label className="mb-2 block text-sm font-semibold">
               {element.label} {element.required && <span className="text-red-500">*</span>}
             </Label>
-            {element.options.map((option: any) => (
-              <div key={option.value} className="flex items-center">
-                <Controller
-                  name={`${element.name}-${option.value}`}
-                  control={control}
-                  render={({ field }) => (
-                    <Checkbox checked={field.value} onCheckedChange={(checked) => field.onChange(checked)} />
-                  )}
-                />
-                <Label className="ml-2">{option.label}</Label>
-              </div>
-            ))}
+            <Controller
+              name={element.name}
+              control={control}
+              defaultValue={[]}
+              render={({ field }) => (
+                <>
+                  {element.options.map((option: any, index: number) => (
+                    <div key={index} className="flex items-center mb-2">
+                      <Checkbox
+                        id={`${element.id}-${index}`}
+                        checked={field.value?.includes(option.value)}
+                        onCheckedChange={(checked) => {
+                          const currentValues = field.value || [];
+                          if (checked) {
+                            field.onChange([...currentValues, option.value]);
+                          } else {
+                            field.onChange(currentValues.filter((v: any) => v !== option.value));
+                          }
+                          clearError(element.name);
+                        }}
+                      />
+                      <Label
+                        htmlFor={`${element.id}-${index}`}
+                        className="ml-2 mb-0"
+                      >
+                        {option.label}
+                      </Label>
+                    </div>
+                  ))}
+                </>
+              )}
+            />
             {showErrors && errors[element.name] && (
               <span className="mt-1 text-sm text-red-500">
                 {String(errors[element.name])}

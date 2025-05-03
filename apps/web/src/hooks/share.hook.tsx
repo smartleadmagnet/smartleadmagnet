@@ -26,10 +26,6 @@ const useShareForm = () => {
     defaultValues: elementsList.reduce((acc: any, element: any) => {
       if (element.type === "checkbox") {
         acc[element.name] = false;
-      } else if (element.type === "checkbox-group") {
-        element.options.forEach((option: any) => {
-          acc[`${element.name}-${option.value}`] = false;
-        });
       } else if (element.type === "select" || element.type === "radio-group") {
         acc[element.name] = "";
       } else {
@@ -71,8 +67,6 @@ const useShareForm = () => {
   }
 
   const onSubmit = async (data: any) => {
-    console.log("Form submitted with data:", data);
-    
     // Manual validation for required fields
     const newErrors: Record<string, string> = {};
     let hasErrors = false;

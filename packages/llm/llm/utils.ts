@@ -70,7 +70,8 @@ export async function callTextLLM(leadMagnet: LeadMagnet, promptInput: Record<st
   
   // Process each input value
   for (const [key, value] of Object.entries(promptInput)) {
-    if (value.startsWith('data:')) {
+    console.log("key", key, "value", value);
+    if (!Array.isArray(value) && value?.startsWith('data:')) {
       const { type, content } = await processContent(value);
       if (type === "image_url") {
         messages.push({
@@ -83,6 +84,11 @@ export async function callTextLLM(leadMagnet: LeadMagnet, promptInput: Record<st
           text: content
         });
       }
+    } else if (Array.isArray(value)) {
+      messages.push({
+        type: "text",
+        text: value.join(", ")
+      });
     } else {
       messages.push({
         type: "text",
