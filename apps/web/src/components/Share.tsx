@@ -356,7 +356,7 @@ export default function BuilderElementPreview() {
             )}
           </div>
         );
-      case "radio-group":
+      case "radio" :
         return (
           <div>
             <Label className="mb-2 block text-sm font-semibold">
@@ -366,11 +366,19 @@ export default function BuilderElementPreview() {
               name={element.name}
               control={control}
               render={({ field }) => (
-                <RadioGroup value={field.value} onValueChange={field.onChange}>
+                <RadioGroup 
+                  value={field.value} 
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    clearError(element.name);
+                  }}
+                >
                   {element.options.map((option: any) => (
                     <div key={option.value} className="flex items-center space-x-2">
-                      <RadioGroupItem value={option.value} />
-                      <Label>{option.label}</Label>
+                      <RadioGroupItem id={`${element.name}-${option.value}`} value={option.value} />
+                      <Label htmlFor={`${element.name}-${option.value}`} className="cursor-pointer">
+                        {option.label}
+                      </Label>
                     </div>
                   ))}
                 </RadioGroup>
